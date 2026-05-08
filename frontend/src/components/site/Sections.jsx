@@ -155,7 +155,7 @@ export function SchemaSection() {
                 aria-label="Miembro institucional WDBTA"
               >
                 <span className="seal-frame">
-                  <img src="/logos/wdbta.png" alt="WDBTA" />
+                  <img src="/logos/wdbta.png" alt="Logo WDBTA — World Dialectical Behavior Therapy Association · InstitutoDBT.cl miembro institucional" />
                 </span>
                 <span className="seal-text">
                   <span className="seal-title dbt-serif">WDBTA</span>
@@ -169,7 +169,7 @@ export function SchemaSection() {
                 aria-label="Certificación ISST"
               >
                 <span className="seal-frame">
-                  <img src="/logos/isst.jpg" alt="ISST" />
+                  <img src="/logos/isst.jpg" alt="Logo ISST — International Society of Schema Therapy · Certificación InstitutoDBT.cl" />
                 </span>
                 <span className="seal-text">
                   <span className="seal-title dbt-serif">ISST</span>

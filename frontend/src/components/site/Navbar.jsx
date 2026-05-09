@@ -29,7 +29,16 @@ export default function Navbar() {
             data-testid="nav-brand-link"
             onClick={close}
           >
-            <span className="nav-brand-mark">D</span>
+            <span className="nav-brand-mark" aria-hidden="true">
+              <img
+                src="/logo/logo.png"
+                alt=""
+                width="42"
+                height="42"
+                loading="eager"
+                decoding="async"
+              />
+            </span>
             <span className="nav-brand-text">
               <span className="brand-name dbt-serif">{SITE.brandName}</span>
               <span className="brand-sub">

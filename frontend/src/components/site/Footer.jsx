@@ -32,7 +32,16 @@ export default function Footer() {
           <div className="footer-divider" aria-hidden="true" />
 
           <div className="footer-brand">
-            <span className="footer-brand-mark">D</span>
+            <span className="footer-brand-mark" aria-hidden="true">
+              <img
+                src="/logo/logo.png"
+                alt=""
+                width="46"
+                height="46"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
             <div>
               <div className="footer-brand-name dbt-serif">{SITE.brandName}</div>
               <div className="footer-brand-sub">

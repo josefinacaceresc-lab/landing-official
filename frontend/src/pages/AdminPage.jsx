@@ -305,7 +305,16 @@ export default function AdminPage() {
       <header className="admin-bar">
         <div className="admin-bar-inner">
           <div className="admin-bar-brand">
-            <span className="admin-bar-mark dbt-serif">D</span>
+            <span className="admin-bar-mark" aria-hidden="true">
+              <img
+                src="/logo/logo.png"
+                alt=""
+                width="36"
+                height="36"
+                loading="eager"
+                decoding="async"
+              />
+            </span>
             <div>
               <div className="admin-bar-name dbt-serif">Panel Foro</div>
               <div className="admin-bar-sub">InstitutoDBT.cl</div>

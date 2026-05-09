@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "@/App.css";
 import "@/styles/foro.css";
+import "@/styles/community.css";
 import { Toaster } from "sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -19,6 +20,7 @@ import {
   TestimonialsSection,
 } from "@/components/site/Sections2";
 import ForoSection from "@/components/site/ForoSection";
+import CommunitySection from "@/components/site/CommunitySection";
 import Contact from "@/components/site/Contact";
 import Footer from "@/components/site/Footer";
 import WDBTAConference from "@/components/site/WDBTAConference";
@@ -99,6 +101,7 @@ function Landing() {
         <ForoSection />
         <WDBTAConference />
         <TeamSection />
+        <CommunitySection />
         <TestimonialsSection />
         <Contact />
       </main>

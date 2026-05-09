@@ -2138,11 +2138,11 @@
 .wa-premium {
     position: fixed;
     bottom: 1.4rem;
-    left: 1.4rem;
+    right: 1.4rem;
     z-index: 60;
     display: inline-flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 8px;
     text-decoration: none;
     opacity: 0;
@@ -2176,12 +2176,12 @@
     content: "";
     position: absolute;
     bottom: -4px;
-    left: 22px;
+    right: 22px;
     width: 8px;
     height: 8px;
     background: #0E2333;
     transform: rotate(45deg);
-    box-shadow: -1px 1px 0 rgba(191, 160, 106, 0.35);
+    box-shadow: 1px 1px 0 rgba(191, 160, 106, 0.35);
 }
 .wa-premium-btn {
     position: relative;
@@ -2247,7 +2247,7 @@
 @media (max-width: 480px) {
     .wa-premium {
         bottom: 1.1rem;
-        left: 1.1rem;
+        right: 1.1rem;
         gap: 7px;
     }
     .wa-premium-tag {

@@ -92,8 +92,8 @@ export default function ForoSection() {
             Artículos & <em>reflexiones</em>
           </h2>
           <p className="foro-sub">
-            Publicaciones, reflexiones clínicas y aportes del equipo del
-            Instituto DBT Chile y colaboradores invitados.
+            Publicaciones, reflexiones clínicas y aportes del equipo de
+            InstitutoDBT.cl y colaboradores invitados.
           </p>
         </div>
 

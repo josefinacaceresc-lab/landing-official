@@ -27,7 +27,7 @@ export function ResearchSection() {
             fontSize: 15,
           }}
         >
-          El Instituto DBT Chile es miembro activo del capítulo de investigación
+          InstitutoDBT.cl es miembro activo del capítulo de investigación
           de la WDBTA, participando en estudios sobre eficacia de DBT en
           población latinoamericana.
         </p>

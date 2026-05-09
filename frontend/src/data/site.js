@@ -1,13 +1,14 @@
 export const SITE = {
-  brandName: "Instituto DBT Chile",
+  brandName: "InstitutoDBT.cl",
+  brandLegacy: "Instituto DBT Chile",
   brandSub: "Vitacura · Santiago",
   phone: "22 848 0652",
-  email: "contacto@dbtchile.cl",
+  email: "contacto@institutodbt.cl",
   address: "El Coihue 3776, Vitacura, Santiago",
   whatsappNumber: "56930550750",
   whatsappDisplay: "+56 9 3055 0750",
   whatsappMessage:
-    "Hola, me gustaría solicitar información sobre los programas del Instituto DBT Chile.",
+    "Hola, me gustaría solicitar una evaluación de alta complejidad en InstitutoDBT.cl. Mi nombre es...",
   researchUrl: "https://www.nexaryalabs.cl",
 };
 
@@ -88,7 +89,7 @@ export const PROGRAMS = [
   {
     tag: "Indicaciones clínicas",
     title: "Condiciones tratadas",
-    desc: "El Instituto DBT Chile trata condiciones asociadas a desregulación emocional con evidencia científica consolidada.",
+    desc: "InstitutoDBT.cl trata condiciones asociadas a desregulación emocional con evidencia científica consolidada.",
     features: [
       "Trastorno de personalidad límite (TLP)",
       "Trauma complejo y TEPT",
@@ -142,7 +143,7 @@ export const PUBLICATIONS = [
   {
     year: "2024",
     title: "DBT-PTSD: Adaptación latinoamericana del protocolo para trauma complejo",
-    journal: "Instituto DBT Chile — Working Paper",
+    journal: "InstitutoDBT.cl — Working Paper",
   },
   {
     year: "2023",
@@ -201,7 +202,7 @@ export const DIRECCION = [
     initials: "JCC",
     name: "Josefina Cáceres Cortés, Ph.D.(c)",
     role: "Directora Científica & Fundadora",
-    bio: "Psicóloga clínica y directora del Instituto DBT Chile. Única representante en Chile dentro del capítulo de investigación de la WDBTA. Formada y afiliada en terapia de esquemas, ISST. Su enfoque integra los aportes de Linehan, Bohus, Damasio, Porges, Siegel y Yi-Yuan Tang.",
+    bio: "Psicóloga clínica y directora de InstitutoDBT.cl. Única representante en Chile dentro del capítulo de investigación de la WDBTA. Formada y afiliada en terapia de esquemas, ISST. Su enfoque integra los aportes de Linehan, Bohus, Damasio, Porges, Siegel y Yi-Yuan Tang.",
     credentials: [
       "Ph.D.(c) — Formación doctoral en curso",
       "WDBTA Research Member — única en Chile",
@@ -287,7 +288,7 @@ export const CERTIFICATIONS = [
 
 export const TESTIMONIALS = [
   {
-    text: "El Instituto DBT Chile cambió mi relación conmigo misma. Después de años de tratamientos que no funcionaban, aquí encontré herramientas reales que puedo usar cada día.",
+    text: "InstitutoDBT.cl cambió mi relación conmigo misma. Después de años de tratamientos que no funcionaban, aquí encontré herramientas reales que puedo usar cada día.",
     author: "Virginia · Programa DBT Adultos",
   },
   {

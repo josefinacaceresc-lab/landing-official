@@ -308,7 +308,7 @@ export default function AdminPage() {
             <span className="admin-bar-mark dbt-serif">D</span>
             <div>
               <div className="admin-bar-name dbt-serif">Panel Foro</div>
-              <div className="admin-bar-sub">Instituto DBT Chile</div>
+              <div className="admin-bar-sub">InstitutoDBT.cl</div>
             </div>
           </div>
           <div className="admin-bar-actions">

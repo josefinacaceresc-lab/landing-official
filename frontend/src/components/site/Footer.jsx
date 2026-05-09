@@ -1,4 +1,5 @@
-import { NAV_ITEMS, SITE, whatsappUrl, CERTIFICATIONS } from "@/data/site";
+import { NAV_ITEMS, SITE, CERTIFICATIONS } from "@/data/site";
+import WhatsAppFloat from "./WhatsAppFloat";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -61,16 +62,7 @@ export default function Footer() {
         </div>
       </footer>
 
-      <a
-        href={whatsappUrl()}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contactar por WhatsApp"
-        className="whatsapp-float"
-        data-testid="whatsapp-float-btn"
-      >
-        <i className="fa-brands fa-whatsapp" />
-      </a>
+      <WhatsAppFloat />
     </>
   );
 }

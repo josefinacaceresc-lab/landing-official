@@ -138,7 +138,7 @@ export function SchemaSection() {
               DBT + Schema Therapy
             </h2>
             <p style={{ marginTop: "1.2rem", color: "var(--ink-3)" }}>
-              El Instituto DBT Chile es pionero en la integración de DBT con
+              InstitutoDBT.cl es pionero en la integración de DBT con
               Schema Therapy bajo certificación ISST. Esta combinación permite
               abordar no solo la desregulación emocional del presente, sino
               también los esquemas tempranos que la perpetúan.

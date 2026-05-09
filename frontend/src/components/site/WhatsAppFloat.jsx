@@ -19,7 +19,20 @@ export default function WhatsAppFloat() {
   }, []);
 
   const onClick = () => {
-    // Fire & forget tracking — do not block navigation
+    // Google Ads — fire conversion event on WhatsApp CTA click
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      try {
+        window.gtag("event", "conversion", {
+          send_to: "AW-18117776220/v-x9CJiSg-sZELyLidw_",
+          event_category: "engagement",
+          event_label: "whatsapp_floating_cta",
+        });
+      } catch {
+        /* no-op: gtag failure must not block navigation */
+      }
+    }
+
+    // Internal telemetry — fire & forget
     try {
       axios.post(
         `${API}/whatsapp-click`,

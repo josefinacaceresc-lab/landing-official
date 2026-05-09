@@ -18,6 +18,20 @@ export default function Contact() {
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
+  const onWhatsAppClick = () => {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      try {
+        window.gtag("event", "conversion", {
+          send_to: "AW-18117776220/v-x9CJiSg-sZELyLidw_",
+          event_category: "engagement",
+          event_label: "whatsapp_contact_section",
+        });
+      } catch {
+        /* no-op */
+      }
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (form.name.trim().length < 2) {
@@ -43,6 +57,18 @@ export default function Contact() {
         toast.success("¡Gracias! Hemos recibido tu consulta y enviado la notificación.");
       } else {
         toast.success("¡Gracias! Tu consulta fue registrada. Te contactaremos a la brevedad.");
+      }
+      // Google Ads conversion — successful lead from contact form
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        try {
+          window.gtag("event", "conversion", {
+            send_to: "AW-18117776220/v-x9CJiSg-sZELyLidw_",
+            event_category: "lead",
+            event_label: "contact_form_submitted",
+          });
+        } catch {
+          /* no-op */
+        }
       }
       setForm({ name: "", email: "", phone: "", program: "", message: "" });
     } catch (err) {
@@ -77,6 +103,7 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="contact-whatsapp"
               data-testid="contact-whatsapp-btn"
+              onClick={onWhatsAppClick}
             >
               <i className="fa-brands fa-whatsapp" style={{ fontSize: 20 }} />
               WhatsApp · {SITE.whatsappDisplay}

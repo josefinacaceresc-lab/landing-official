@@ -183,7 +183,7 @@
     font-size: 14.5px;
     line-height: 1.85;
     color: var(--ink-2);
-    margin: 0 0 1.8rem;
+    margin: 0 0 1.4rem;
     font-weight: 300;
     max-width: 360px;
     margin-left: auto;
@@ -192,6 +192,61 @@
 .serena-message strong {
     color: #0e6b4a;
     font-weight: 600;
+}
+
+/* ─── Name input · minimal premium ─── */
+.serena-field {
+    display: block;
+    text-align: left;
+    margin: 0 0 1.6rem;
+}
+.serena-field-label {
+    display: block;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 0.55rem;
+    font-weight: 500;
+}
+.serena-input {
+    width: 100%;
+    padding: 12px 2px 11px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(14, 35, 51, 0.18);
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    letter-spacing: 0.005em;
+    outline: none;
+    transition: border-color 0.3s ease, padding 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+.serena-input::placeholder {
+    color: rgba(14, 35, 51, 0.32);
+    font-style: italic;
+    font-size: 0.95rem;
+}
+.serena-input:hover {
+    border-bottom-color: rgba(14, 35, 51, 0.4);
+}
+.serena-input:focus {
+    border-bottom-color: var(--gold);
+    border-bottom-width: 1.5px;
+}
+.serena-field-hint {
+    display: block;
+    margin-top: 0.55rem;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--ink-3);
+    font-style: italic;
+    font-family: "DM Serif Display", Georgia, serif;
+    opacity: 0.75;
 }
 
 .serena-cta {
@@ -226,6 +281,19 @@
 .serena-cta:focus-visible {
     outline: 1px solid rgba(191, 160, 106, 0.7);
     outline-offset: 3px;
+}
+.serena-cta:disabled,
+.serena-cta[aria-disabled="true"] {
+    background: rgba(14, 35, 51, 0.08);
+    color: rgba(14, 35, 51, 0.45);
+    border-color: rgba(14, 35, 51, 0.06);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+.serena-cta:disabled i,
+.serena-cta[aria-disabled="true"] i {
+    opacity: 0.5;
 }
 
 .serena-foot {

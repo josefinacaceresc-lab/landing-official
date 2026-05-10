@@ -5,8 +5,10 @@ import SerenaModal from "./SerenaModal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-const SERENA_MESSAGE =
+const SERENA_TEMPLATE =
   "Hola Karina, soy [Nombre]. Serena me recibió en la web y me gustaría coordinar una evaluación en InstitutoDBT.cl para el programa de alta complejidad.";
+
+const buildSerenaMessage = (name) => SERENA_TEMPLATE.replace("[Nombre]", name);
 
 /**
  * Floating WhatsApp button — premium emerald, "Admisión Inmediata" badge,
@@ -49,7 +51,7 @@ export default function WhatsAppFloat() {
     }
   };
 
-  const onConfirmHandoff = () => {
+  const onConfirmHandoff = (name) => {
     // Google Ads conversion — fires only when user actually proceeds to WhatsApp
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       try {
@@ -62,7 +64,12 @@ export default function WhatsAppFloat() {
         /* no-op */
       }
     }
-    window.open(whatsappUrl(SERENA_MESSAGE), "_blank", "noopener,noreferrer");
+    const safeName = (name || "").trim() || "[Nombre]";
+    window.open(
+      whatsappUrl(buildSerenaMessage(safeName)),
+      "_blank",
+      "noopener,noreferrer"
+    );
     setSerenaOpen(false);
   };
 

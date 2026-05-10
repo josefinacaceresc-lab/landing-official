@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 /**
- * Serena · Welcome modal (Zen)
+ * Serena · Welcome modal (Zen) with name capture
  * Soft, human, premium handoff before opening WhatsApp.
  */
 export default function SerenaModal({ open, onClose, onConfirm }) {
   const closeBtnRef = useRef(null);
+  const inputRef = useRef(null);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (!open) return;
@@ -15,13 +17,32 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    // Focus close for a11y
-    setTimeout(() => closeBtnRef.current?.focus(), 80);
+    setTimeout(() => inputRef.current?.focus(), 120);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
   }, [open, onClose]);
+
+  // Reset name when modal opens fresh (after close)
+  useEffect(() => {
+    if (open) setName("");
+  }, [open]);
+
+  const trimmed = name.trim();
+  const valid = trimmed.length >= 2;
+
+  const submit = () => {
+    if (!valid) return;
+    onConfirm(trimmed);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      submit();
+    }
+  };
 
   if (!open) return null;
 
@@ -71,19 +92,48 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
 
         <p className="serena-message">
           Entiendo que dar este paso requiere valentía. Estoy aquí para
-          facilitarte el camino. Presiona el botón de abajo para que{" "}
-          <strong>Karina</strong>, nuestra asistente humana, te reciba con toda
-          tu información lista.
+          facilitarte el camino. Cuéntame tu nombre y te presentaré con{" "}
+          <strong>Karina</strong>, nuestra asistente humana, para que te reciba
+          con toda tu información lista.
         </p>
+
+        <label className="serena-field" htmlFor="serena-name">
+          <span className="serena-field-label">
+            ¿Cómo te gustaría que te llamemos?
+          </span>
+          <input
+            ref={inputRef}
+            id="serena-name"
+            type="text"
+            className="serena-input"
+            placeholder="Escribe tu nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={onKeyDown}
+            autoComplete="given-name"
+            maxLength={60}
+            aria-describedby="serena-field-hint"
+            data-testid="serena-name-input"
+          />
+          <span id="serena-field-hint" className="serena-field-hint">
+            Solo tu nombre — sin apellidos ni datos sensibles.
+          </span>
+        </label>
 
         <button
           type="button"
           className="serena-cta"
           data-testid="serena-confirm-btn"
-          onClick={onConfirm}
+          onClick={submit}
+          disabled={!valid}
+          aria-disabled={!valid}
         >
           <i className="fa-brands fa-whatsapp" aria-hidden="true" />
-          <span>Hablar con Karina en WhatsApp</span>
+          <span>
+            {valid
+              ? `Presentarme a Karina como ${trimmed.split(" ")[0]}`
+              : "Hablar con Karina en WhatsApp"}
+          </span>
         </button>
 
         <p className="serena-foot">

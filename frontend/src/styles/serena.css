@@ -194,6 +194,61 @@
     font-weight: 600;
 }
 
+/* ─── Off-hours empathy notice (after-hours weekday) ─── */
+.serena-offhours {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 0.95rem 1rem;
+    margin: 0 0 1.4rem;
+    background: rgba(14, 35, 51, 0.05);
+    border-left: 2px solid var(--gold);
+    text-align: left;
+}
+.serena-offhours-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(191, 160, 106, 0.14);
+    color: var(--gold);
+    margin-top: 2px;
+}
+.serena-offhours-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    font-weight: 300;
+}
+.serena-offhours-text strong {
+    color: var(--navy);
+    font-weight: 600;
+}
+.serena-offhours-text em {
+    color: #0e6b4a;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-style: italic;
+    font-size: 13.5px;
+}
+
+/* Weekend variant — slightly warmer (sunrise tint) */
+.serena-offhours--weekend {
+    background: linear-gradient(
+        135deg,
+        rgba(191, 160, 106, 0.08) 0%,
+        rgba(14, 107, 74, 0.05) 100%
+    );
+    border-left-color: #c89a5a;
+}
+.serena-offhours--weekend .serena-offhours-icon {
+    background: rgba(200, 154, 90, 0.18);
+    color: #b08246;
+}
+
 /* ─── Name input · minimal premium ─── */
 .serena-field {
     display: block;

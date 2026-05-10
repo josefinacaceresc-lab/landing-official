@@ -8,7 +8,17 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const SERENA_TEMPLATE =
   "Hola Karina, soy [Nombre]. Serena me recibió en la web y me gustaría coordinar una evaluación en InstitutoDBT.cl para el programa de alta complejidad.";
 
-const buildSerenaMessage = (name) => SERENA_TEMPLATE.replace("[Nombre]", name);
+const PREFIX_AFTER_HOURS =
+  "[Contacto Fuera de Horario · Mensaje recibido durante la noche]\n\n";
+const PREFIX_WEEKEND =
+  "[Contacto Fin de Semana · Mensaje recibido durante el descanso de Karina]\n\n";
+
+const buildSerenaMessage = (name, status) => {
+  let prefix = "";
+  if (status === "after-hours") prefix = PREFIX_AFTER_HOURS;
+  else if (status === "weekend") prefix = PREFIX_WEEKEND;
+  return prefix + SERENA_TEMPLATE.replace("[Nombre]", name);
+};
 
 /**
  * Floating WhatsApp button — premium emerald, "Admisión Inmediata" badge,
@@ -51,14 +61,15 @@ export default function WhatsAppFloat() {
     }
   };
 
-  const onConfirmHandoff = (name) => {
+  const onConfirmHandoff = (name, opts = {}) => {
+    const status = opts.status || "open";
     // Google Ads conversion — fires only when user actually proceeds to WhatsApp
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       try {
         window.gtag("event", "conversion", {
           send_to: "AW-18117776220/v-x9CJiSg-sZELyLidw_",
           event_category: "engagement",
-          event_label: "whatsapp_serena_handoff",
+          event_label: `whatsapp_serena_handoff_${status}`,
         });
       } catch {
         /* no-op */
@@ -66,7 +77,7 @@ export default function WhatsAppFloat() {
     }
     const safeName = (name || "").trim() || "[Nombre]";
     window.open(
-      whatsappUrl(buildSerenaMessage(safeName)),
+      whatsappUrl(buildSerenaMessage(safeName, status)),
       "_blank",
       "noopener,noreferrer"
     );

@@ -3,8 +3,10 @@ import "@/App.css";
 import "@/styles/foro.css";
 import "@/styles/community.css";
 import "@/styles/serena.css";
+import "@/styles/article-page.css";
 import { Toaster } from "sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import Navbar from "@/components/site/Navbar";
 import Hero from "@/components/site/Hero";
@@ -26,6 +28,8 @@ import Contact from "@/components/site/Contact";
 import Footer from "@/components/site/Footer";
 import WDBTAConference from "@/components/site/WDBTAConference";
 import AdminPage from "@/pages/AdminPage";
+import ArticlePage from "@/pages/ArticlePage";
+import SiteSeo from "@/components/site/SiteSeo";
 
 const TOASTER_OPTIONS = {
   style: {
@@ -90,6 +94,7 @@ function Landing() {
 
   return (
     <div className="App" data-testid="app-root">
+      <SiteSeo />
       <Navbar />
       <main>
         <Hero />
@@ -118,12 +123,15 @@ function Landing() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="*" element={<Landing />} />
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/foro/articulo/:slug" element={<ArticlePage />} />
+          <Route path="*" element={<Landing />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

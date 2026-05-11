@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { ArrowUpRight, Calendar, FileText, Download } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { articlePath } from "@/lib/articleSlug";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -111,64 +113,80 @@ export default function ForoSection() {
           </div>
         ) : (
           <div className="foro-grid" data-testid="foro-grid">
-            {articles.map((a) => (
-              <article
-                key={a.id}
-                className="foro-card"
-                data-testid={`foro-card-${a.id}`}
-                onClick={() => setActive(a)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setActive(a);
-                  }
-                }}
-              >
-                <div className="foro-card-cover">
-                  {a.cover_url ? (
-                    <img
-                      src={buildSrc(a.cover_url)}
-                      alt={a.title}
-                      loading="eager"
-                      decoding="async"
-                      fetchpriority="high"
-                    />
-                  ) : (
-                    <div className="foro-card-cover-fallback">
-                      <span className="dbt-serif">DBT</span>
+            {articles.map((a) => {
+              const href = articlePath(a);
+              const onCardClick = (e) => {
+                // Allow modifier-click / new-tab to follow the real link
+                if (
+                  e.metaKey ||
+                  e.ctrlKey ||
+                  e.shiftKey ||
+                  e.altKey ||
+                  e.button === 1
+                ) {
+                  return;
+                }
+                e.preventDefault();
+                setActive(a);
+              };
+              return (
+                <article
+                  key={a.id}
+                  className="foro-card"
+                  data-testid={`foro-card-${a.id}`}
+                >
+                  <Link
+                    to={href}
+                    className="foro-card-link-wrap"
+                    onClick={onCardClick}
+                    aria-label={`Leer: ${a.title}`}
+                    data-testid={`foro-card-link-${a.id}`}
+                  >
+                    <div className="foro-card-cover">
+                      {a.cover_url ? (
+                        <img
+                          src={buildSrc(a.cover_url)}
+                          alt={`${a.title} — publicación clínica de ${a.author || "InstitutoDBT.cl"}`}
+                          loading="eager"
+                          decoding="async"
+                          fetchpriority="high"
+                        />
+                      ) : (
+                        <div className="foro-card-cover-fallback">
+                          <span className="dbt-serif">DBT</span>
+                        </div>
+                      )}
+                      {a.category && (
+                        <span className="foro-card-cat">{a.category}</span>
+                      )}
+                      {a.pdf_url && (
+                        <span className="foro-card-pdf-badge" aria-label="PDF disponible">
+                          <FileText size={12} strokeWidth={2} /> PDF
+                        </span>
+                      )}
                     </div>
-                  )}
-                  {a.category && (
-                    <span className="foro-card-cat">{a.category}</span>
-                  )}
-                  {a.pdf_url && (
-                    <span className="foro-card-pdf-badge" aria-label="PDF disponible">
-                      <FileText size={12} strokeWidth={2} /> PDF
-                    </span>
-                  )}
-                </div>
-                <div className="foro-card-body">
-                  <h3 className="dbt-serif">{a.title}</h3>
-                  <div className="foro-card-meta">
-                    <span>{a.author}</span>
-                    <span className="foro-card-meta-sep">·</span>
-                    <span className="foro-card-meta-date">
-                      <Calendar size={11} strokeWidth={1.8} />
-                      {fmtDate(a)}
-                    </span>
-                  </div>
-                  {a.summary && (
-                    <p className="foro-card-summary">{a.summary}</p>
-                  )}
-                  <span className="foro-card-link">
-                    Leer artículo
-                    <ArrowUpRight size={13} strokeWidth={1.8} />
-                  </span>
-                </div>
-              </article>
-            ))}
+                    <div className="foro-card-body">
+                      <h3 className="dbt-serif">{a.title}</h3>
+                      <div className="foro-card-meta">
+                        <span>{a.author}</span>
+                        <span className="foro-card-meta-sep">·</span>
+                        <span className="foro-card-meta-date">
+                          <Calendar size={11} strokeWidth={1.8} />
+                          {fmtDate(a)}
+                        </span>
+                      </div>
+                      {a.summary && (
+                        <p className="foro-card-summary">{a.summary}</p>
+                      )}
+                      <span className="foro-card-link">
+                        Leer artículo
+                        <ArrowUpRight size={13} strokeWidth={1.8} />
+                      </span>
+                    </div>
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         )}
       </div>
@@ -196,7 +214,10 @@ export default function ForoSection() {
             </button>
             {active.cover_url && (
               <div className="foro-modal-cover">
-                <img src={buildSrc(active.cover_url)} alt={active.title} />
+                <img
+                  src={buildSrc(active.cover_url)}
+                  alt={`${active.title} — publicación clínica de ${active.author || "InstitutoDBT.cl"}`}
+                />
               </div>
             )}
             <div className="foro-modal-body">

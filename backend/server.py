@@ -166,6 +166,101 @@ async def _send_lead_email(lead: dict) -> str:
 
 
 # ─── Routes ─────────────────────────────────────────────
+SITE_ORIGIN = os.environ.get("SITE_ORIGIN", "https://www.institutodbt.cl").rstrip("/")
+
+# Static landing-page sections that should always live in the sitemap
+STATIC_SITEMAP_PATHS = [
+    ("/", "1.0", "weekly"),
+    ("/#tratamiento", "0.9", "monthly"),
+    ("/#schema", "0.9", "monthly"),
+    ("/#ciencia", "0.9", "monthly"),
+    ("/#foro", "0.9", "weekly"),
+    ("/#equipo", "0.8", "monthly"),
+    ("/#comunidad", "0.8", "monthly"),
+    ("/#contacto", "0.8", "monthly"),
+]
+
+
+def _slugify_article(title: str) -> str:
+    """Mirrors frontend slugify(strict=true) behavior for sitemap URLs."""
+    if not title:
+        return ""
+    s = title.lower().strip()
+    # Replace Spanish accents and common chars
+    replacements = {
+        "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "ñ": "n",
+        "à": "a", "è": "e", "ì": "i", "ò": "o", "ù": "u",
+        "â": "a", "ê": "e", "î": "i", "ô": "o", "û": "u",
+        "ä": "a", "ë": "e", "ï": "i", "ö": "o", "ü": "u",
+    }
+    for src, dst in replacements.items():
+        s = s.replace(src, dst)
+    s = re.sub(r"[^a-z0-9]+", "-", s)
+    s = re.sub(r"-+", "-", s).strip("-")
+    return s[:80]
+
+
+def _article_slug(article: dict) -> str:
+    base = _slugify_article(article.get("title", ""))
+    raw_id = (article.get("id") or "").replace("-", "")
+    suffix = raw_id[:8]
+    return f"{base}-{suffix}" if suffix else base
+
+
+async def _build_sitemap_xml() -> str:
+    """Build a fresh sitemap.xml from the current article list + static routes."""
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for path, priority, changefreq in STATIC_SITEMAP_PATHS:
+        lines += [
+            "  <url>",
+            f"    <loc>{SITE_ORIGIN}{path}</loc>",
+            f"    <lastmod>{now_iso}</lastmod>",
+            f"    <changefreq>{changefreq}</changefreq>",
+            f"    <priority>{priority}</priority>",
+            "  </url>",
+        ]
+    cursor = (
+        db.articles.find({}, {"_id": 0, "id": 1, "title": 1, "updated_at": 1, "article_date": 1})
+        .sort("created_at", -1)
+        .limit(500)
+    )
+    async for art in cursor:
+        slug = _article_slug(art)
+        if not slug:
+            continue
+        lastmod = art.get("updated_at") or art.get("article_date") or now_iso
+        if isinstance(lastmod, datetime):
+            lastmod = lastmod.strftime("%Y-%m-%d")
+        elif isinstance(lastmod, str):
+            lastmod = lastmod[:10]
+        lines += [
+            "  <url>",
+            f"    <loc>{SITE_ORIGIN}/foro/articulo/{slug}</loc>",
+            f"    <lastmod>{lastmod}</lastmod>",
+            "    <changefreq>monthly</changefreq>",
+            "    <priority>0.85</priority>",
+            "  </url>",
+        ]
+    lines.append("</urlset>")
+    return "\n".join(lines)
+
+
+async def _persist_static_sitemap() -> None:
+    """Write sitemap.xml to public/ so the frontend serves it at /sitemap.xml."""
+    try:
+        xml = await _build_sitemap_xml()
+        target = ROOT_DIR.parent / "frontend" / "public" / "sitemap.xml"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(xml, encoding="utf-8")
+        logger.info(f"sitemap.xml regenerated: {target}")
+    except Exception as e:
+        logger.warning(f"Could not persist static sitemap.xml: {e}")
+
+
 @api_router.get("/")
 async def root():
     return {"message": "Instituto DBT Chile API"}
@@ -177,6 +272,14 @@ async def health():
         "status": "ok",
         "email_configured": bool(RESEND_API_KEY) and RESEND_AVAILABLE,
     }
+
+
+@api_router.get("/sitemap.xml")
+async def dynamic_sitemap():
+    from fastapi.responses import Response
+    xml = await _build_sitemap_xml()
+    return Response(content=xml, media_type="application/xml")
+
 
 
 @api_router.post("/status", response_model=StatusCheck)
@@ -453,6 +556,7 @@ async def create_article(payload: ArticleCreate, _: bool = Depends(require_admin
     await db.articles.insert_one({**doc})
     doc["created_at"] = now
     doc["updated_at"] = now
+    await _persist_static_sitemap()
     return Article(**doc)
 
 
@@ -476,6 +580,7 @@ async def update_article(
                 merged[k] = datetime.fromisoformat(merged[k])
             except Exception:
                 merged[k] = datetime.now(timezone.utc)
+    await _persist_static_sitemap()
     return Article(**merged)
 
 
@@ -484,6 +589,7 @@ async def delete_article(article_id: str, _: bool = Depends(require_admin)):
     res = await db.articles.delete_one({"id": article_id})
     if res.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Artículo no encontrado")
+    await _persist_static_sitemap()
     return {"ok": True}
 
 

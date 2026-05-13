@@ -72,6 +72,51 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
+    // Store Lead from IDP-4 Assessment
+    if (pathname === '/api/leads/idp4') {
+      const { fullName, age, rut, email, domainScores, responses } = body
+      
+      if (!fullName || !age || !rut || !email) {
+        return Response.json({ error: 'Todos los campos son obligatorios' }, { status: 400 })
+      }
+      
+      if (!validateRUT(rut)) {
+        return Response.json({ error: 'RUT inválido' }, { status: 400 })
+      }
+      
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+      if (!emailRegex.test(email)) {
+        return Response.json({ error: 'Email inválido' }, { status: 400 })
+      }
+      
+      const { token, expiresAt } = generateAccessToken()
+      const db = await connectToDatabase()
+      const leadsCollection = db.collection('leads')
+      
+      const lead = {
+        fullName,
+        age: parseInt(age),
+        rut,
+        email,
+        domainScores: domainScores || {},
+        responses: responses || [],
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt,
+        source: 'idp4',
+        createdAt: new Date(),
+        status: 'new'
+      }
+      
+      await leadsCollection.insertOne(lead)
+      
+      return Response.json({
+        success: true,
+        message: 'Evaluación IDP-4 registrada exitosamente',
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt
+      })
+    }
+    
     // Store Lead from BSL-23 Assessment
     if (pathname === '/api/leads/bsl23') {
       const { fullName, rut, email, phone, totalScore, meanScore, subscaleScores, responses } = body

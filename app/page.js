@@ -215,7 +215,7 @@ export default function Home() {
                   </h2>
                   
                   <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-                    Test clínico validado + Acceso de prueba a <strong>LaKaira AI</strong> por 24 horas
+                    Test clínico validado + Reporte personalizado inmediato
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
@@ -237,7 +237,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      <span>Acceso LaKaira AI</span>
+                      <span>Reporte clínico</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />

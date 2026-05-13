@@ -328,7 +328,7 @@ export default function AutoevaluacionPage() {
                   disabled={!allQuestionsAnswered}
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold"
                 >
-                  {allQuestionsAnswered ? 'Ver Resultados y Acceder a LaKaira AI' : 'Completa todas las preguntas'}
+                  {allQuestionsAnswered ? 'Ver Resultados Clínicos' : 'Completa todas las preguntas'}
                 </Button>
               </div>
             </div>
@@ -339,10 +339,10 @@ export default function AutoevaluacionPage() {
             <Card className="border-0 shadow-2xl bg-white">
               <CardHeader className="bg-gradient-to-r from-emerald-50 to-amber-50 border-b border-emerald-100">
                 <CardTitle className="text-2xl font-serif text-gray-900 text-center">
-                  Accede a tus Resultados y Prueba LaKaira AI por 24 horas
+                  Accede a tus Resultados Clínicos
                 </CardTitle>
                 <p className="text-center text-gray-600 mt-2">
-                  Para acceder a tu análisis personalizado y probar nuestra plataforma de IA clínica, completa tus datos:
+                  Para acceder a tu análisis personalizado, completa tus datos:
                 </p>
               </CardHeader>
               <CardContent className="p-8">

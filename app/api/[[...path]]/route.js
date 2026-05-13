@@ -72,6 +72,69 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
+    // Store Lead from BSL-23 Assessment
+    if (pathname === '/api/leads/bsl23') {
+      const { fullName, rut, email, phone, totalScore, meanScore, subscaleScores, responses } = body
+      
+      // Validate required fields
+      if (!fullName || !rut || !email || !phone) {
+        return Response.json(
+          { error: 'Todos los campos son obligatorios' },
+          { status: 400 }
+        )
+      }
+      
+      // Validate RUT
+      if (!validateRUT(rut)) {
+        return Response.json(
+          { error: 'RUT inválido. Por favor verifica el número ingresado.' },
+          { status: 400 }
+        )
+      }
+      
+      // Validate email format
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+      if (!emailRegex.test(email)) {
+        return Response.json(
+          { error: 'Email inválido' },
+          { status: 400 }
+        )
+      }
+      
+      // Generate LaKaira AI access token
+      const { token, expiresAt } = generateAccessToken()
+      
+      const db = await connectToDatabase()
+      const leadsCollection = db.collection('leads')
+      
+      const lead = {
+        fullName,
+        rut,
+        email,
+        phone,
+        totalScore,
+        meanScore,
+        subscaleScores: subscaleScores || {},
+        responses: responses || [],
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt,
+        source: 'bsl23',
+        createdAt: new Date(),
+        status: 'new'
+      }
+      
+      await leadsCollection.insertOne(lead)
+      
+      return Response.json({
+        success: true,
+        message: 'Evaluación BSL-23 registrada exitosamente',
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt,
+        totalScore,
+        meanScore
+      })
+    }
+    
     // Store Lead from Self-Assessment
     if (pathname === '/api/leads/assessment') {
       const { fullName, rut, email, phone, assessmentScore, responses } = body

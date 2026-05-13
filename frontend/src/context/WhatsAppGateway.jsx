@@ -11,21 +11,11 @@ import SerenaModal from "@/components/site/SerenaModal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-const HANDOFF_TEMPLATE =
-  "Hola Karina, soy [Nombre] (RUT: [RUT]). Me interesa el tratamiento de alta complejidad.";
+const WA_TEMPLATE =
+  "Hola Karina, soy [Nombre]. Me interesa el tratamiento de alta complejidad.";
 
-const PREFIX_AFTER_HOURS =
-  "[Contacto Fuera de Horario · Mensaje recibido durante la noche]\n\n";
-const PREFIX_WEEKEND =
-  "[Contacto Fin de Semana · Mensaje recibido durante el descanso de Karina]\n\n";
-
-function buildHandoffMessage(name, rut, status) {
-  let prefix = "";
-  if (status === "after-hours") prefix = PREFIX_AFTER_HOURS;
-  else if (status === "weekend") prefix = PREFIX_WEEKEND;
-  return (
-    prefix + HANDOFF_TEMPLATE.replace("[Nombre]", name).replace("[RUT]", rut)
-  );
+function buildWaMessage(name) {
+  return WA_TEMPLATE.replace("[Nombre]", name || "[Nombre]");
 }
 
 const WhatsAppGatewayContext = createContext({
@@ -67,10 +57,12 @@ export function WhatsAppGatewayProvider({ children }) {
   }, []);
 
   const onConfirmHandoff = useCallback(
-    async (name, rut, opts = {}) => {
+    async (payload, opts = {}) => {
       const status = opts.status || "open";
-      const cleanName = (name || "").trim();
-      const cleanRut = (rut || "").trim().toUpperCase().replace(/\s+/g, "");
+      const shouldRedirect = opts.redirect !== false && status === "open";
+      const name = (payload?.name || "").trim();
+      const phone = (payload?.phone || "").trim();
+      const email = (payload?.email || "").trim() || null;
 
       // 1. Capture-first: persist BEFORE redirect, so we have the data even
       //    if the user never sends the WhatsApp message.
@@ -78,8 +70,9 @@ export function WhatsAppGatewayProvider({ children }) {
         await axios.post(
           `${API}/whatsapp-handoff`,
           {
-            name: cleanName,
-            rut: cleanRut,
+            name,
+            phone,
+            email,
             source: state.source,
             referrer: window.location.href,
             handoff_status: status,
@@ -87,7 +80,7 @@ export function WhatsAppGatewayProvider({ children }) {
           { timeout: 8000 }
         );
       } catch (err) {
-        // Even if persistence fails we still proceed to WhatsApp — user UX first.
+        // Even if persistence fails we still proceed — UX first.
         console.warn("WhatsApp handoff capture failed", err);
       }
 
@@ -104,14 +97,20 @@ export function WhatsAppGatewayProvider({ children }) {
         }
       }
 
-      // 3. Open WhatsApp with prefilled message
-      window.open(
-        whatsappUrl(buildHandoffMessage(cleanName || "[Nombre]", cleanRut || "[RUT]", status)),
-        "_blank",
-        "noopener,noreferrer"
-      );
+      // 3a. Business hours → open WhatsApp immediately.
+      if (shouldRedirect) {
+        window.open(
+          whatsappUrl(buildWaMessage(name)),
+          "_blank",
+          "noopener,noreferrer"
+        );
+        closeGateway();
+        return;
+      }
 
-      closeGateway();
+      // 3b. After-hours / weekend → SerenaModal handles the confirmation UI.
+      //     No WhatsApp redirect; modal will auto-close after showing the
+      //     "solicitud recibida" message.
     },
     [state.source, closeGateway]
   );

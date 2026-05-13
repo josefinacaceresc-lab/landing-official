@@ -4,15 +4,15 @@
  * user's device timezone.
  *
  * Schedule:
- *   • Mon–Fri 10:00–17:59 CL  → "open"
- *   • Mon–Fri 18:00–09:59 CL  → "after-hours"
+ *   • Mon–Fri 10:00–18:59 CL  → "open"
+ *   • Mon–Fri 19:00–09:59 CL  → "after-hours"
  *   • Sat & Sun (full day)    → "weekend"
  */
 
 const TZ = "America/Santiago";
 
 export const KARINA_OPEN_HOUR = 10;
-export const KARINA_CLOSE_HOUR = 18;
+export const KARINA_CLOSE_HOUR = 19;
 
 const WEEKDAY_TO_NUM = {
   Sun: 0,

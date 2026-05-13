@@ -52,6 +52,11 @@ try:
 except Exception:
     RESEND_AVAILABLE = False
 
+# Telegram notifications (one-way alerts → clinic owner)
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '').strip()
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '').strip()
+TELEGRAM_ENABLED = bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)
+
 app = FastAPI(title="Instituto DBT Chile API")
 api_router = APIRouter(prefix="/api")
 
@@ -104,10 +109,13 @@ class WhatsAppClickIn(BaseModel):
 
 
 class WhatsAppHandoffIn(BaseModel):
-    """Capture-first payload: name + RUT submitted in Serena before WA redirect."""
+    """Capture-first payload: name + phone (and optional email/RUT) submitted in
+    Serena before WA redirect or as an after-hours intake form."""
     model_config = ConfigDict(extra="ignore")
     name: str = Field(min_length=2, max_length=120)
-    rut: str = Field(min_length=4, max_length=20)
+    phone: Optional[str] = Field(default=None, max_length=40)
+    email: Optional[EmailStr] = None
+    rut: Optional[str] = Field(default=None, max_length=20)
     source: Optional[str] = Field(default="floating-cta-serena", max_length=40)
     referrer: Optional[str] = Field(default=None, max_length=500)
     handoff_status: Optional[str] = Field(default="open", max_length=20)  # open | after-hours | weekend
@@ -156,6 +164,105 @@ def _build_lead_email_html(lead: dict) -> str:
       </table>
     </div>
     """
+
+
+# ─── Telegram one-way alerts ────────────────────────────
+_TG_MD_ESCAPE_RE = re.compile(r"([_*\[\]()~`>#+\-=|{}.!\\])")
+
+
+def _tg_escape(text: str) -> str:
+    """Escape MarkdownV2 special chars for Telegram."""
+    if text is None:
+        return ""
+    return _TG_MD_ESCAPE_RE.sub(r"\\\1", str(text))
+
+
+def _format_lead_for_telegram(lead: dict, *, kind: str) -> str:
+    """Build a MarkdownV2 message for a new lead.
+
+    kind: 'contact' | 'whatsapp_open' | 'after_hours_lead'
+    """
+    title_map = {
+        "contact": "📩 Nueva consulta · Formulario",
+        "whatsapp_open": "🟢 WhatsApp · Lead en horario clínico",
+        "after_hours_lead": "🌙 WhatsApp · Lead fuera de horario",
+    }
+    title = title_map.get(kind, "📩 Nuevo lead")
+    name = _tg_escape(lead.get("name") or "—")
+    phone = _tg_escape(lead.get("phone") or "—")
+    email = _tg_escape(lead.get("email") or "—")
+    rut = _tg_escape(lead.get("rut") or "—")
+    program = _tg_escape(lead.get("program") or "—")
+    source = _tg_escape(lead.get("source") or "—")
+    handoff = _tg_escape(lead.get("handoff_status") or "—")
+    msg = _tg_escape(lead.get("message") or "")
+    created = _tg_escape(lead.get("created_at") or "")
+
+    lines = [
+        f"*{title}*",
+        "",
+        f"👤 *Nombre:* {name}",
+        f"📞 *Teléfono:* {phone}",
+    ]
+    if lead.get("email"):
+        lines.append(f"✉️ *Email:* {email}")
+    if lead.get("rut"):
+        lines.append(f"🆔 *RUT:* {rut}")
+    if lead.get("program"):
+        lines.append(f"🎯 *Programa:* {program}")
+    if lead.get("message"):
+        lines.append("")
+        lines.append(f"💬 _{msg}_")
+    lines.append("")
+    lines.append(f"📍 *Origen:* {source}")
+    if lead.get("handoff_status"):
+        lines.append(f"🕒 *Estado:* {handoff}")
+    if created:
+        lines.append(f"🗓️ {created}")
+    return "\n".join(lines)
+
+
+async def _send_telegram_alert(lead: dict, *, kind: str) -> str:
+    """Send a Telegram alert. Returns: 'sent' | 'disabled' | 'failed'.
+
+    Fire-and-forget friendly: never raises; lead persistence must not depend on this.
+    """
+    if not TELEGRAM_ENABLED:
+        return "disabled"
+    try:
+        import httpx  # local import to keep startup lean
+        text = _format_lead_for_telegram(lead, kind=kind)
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        payload = {
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": text,
+            "parse_mode": "MarkdownV2",
+            "disable_web_page_preview": True,
+        }
+        async with httpx.AsyncClient(timeout=6.0) as client_:
+            r = await client_.post(url, json=payload)
+        if r.status_code == 200 and r.json().get("ok"):
+            return "sent"
+        logger.warning(f"Telegram alert failed ({r.status_code}): {r.text[:200]}")
+        # Fallback: retry as plain text if MarkdownV2 escaping caused a 400
+        if r.status_code == 400:
+            try:
+                async with httpx.AsyncClient(timeout=6.0) as client_:
+                    r2 = await client_.post(url, json={
+                        "chat_id": TELEGRAM_CHAT_ID,
+                        "text": text.replace("\\", ""),
+                        "disable_web_page_preview": True,
+                    })
+                if r2.status_code == 200 and r2.json().get("ok"):
+                    return "sent"
+            except Exception:
+                pass
+        return "failed"
+    except Exception as e:
+        logger.warning(f"Telegram alert exception: {e}")
+        return "failed"
+
+
 
 
 async def _send_lead_email(lead: dict) -> str:
@@ -341,6 +448,9 @@ async def create_contact_lead(payload: ContactLeadCreate):
     if email_status != doc["email_status"]:
         await db.leads.update_one({"id": lead_id}, {"$set": {"email_status": email_status}})
         doc["email_status"] = email_status
+
+    # Telegram alert (fire-and-forget; never blocks the response)
+    asyncio.create_task(_send_telegram_alert(doc, kind="contact"))
 
     return ContactLead(
         id=doc["id"],
@@ -628,36 +738,54 @@ async def track_whatsapp_click(payload: WhatsAppClickIn):
 
 @api_router.post("/whatsapp-handoff", status_code=201)
 async def whatsapp_handoff(payload: WhatsAppHandoffIn):
-    """Capture-first: store name + RUT in 'leads' BEFORE redirecting to WhatsApp.
-    Status = 'whatsapp_initiated' so admin sees these as proactive-follow-up leads
-    even if the user never sends the WhatsApp message."""
+    """Capture-first: store name + phone (and optional email/RUT) in 'leads' BEFORE
+    redirecting to WhatsApp. Status logic:
+      • handoff_status == 'open'                         → 'whatsapp_initiated'
+      • handoff_status in {'after-hours', 'weekend'}     → 'after_hours_lead'
+    Always fires a Telegram alert (fire-and-forget) so the clinic is notified live.
+    """
     now = datetime.now(timezone.utc)
     name = payload.name.strip()[:120]
-    rut = payload.rut.strip().upper().replace(" ", "")[:20]
+    phone = (payload.phone or "").strip()[:40] or None
+    email = (payload.email or None)
+    rut = (payload.rut or "").strip().upper().replace(" ", "")[:20] or None
+    handoff = (payload.handoff_status or "open").strip()[:20]
+    if handoff in ("after-hours", "weekend"):
+        status = "after_hours_lead"
+        alert_kind = "after_hours_lead"
+    else:
+        status = "whatsapp_initiated"
+        alert_kind = "whatsapp_open"
+
     doc = {
         "id": str(uuid.uuid4()),
         "name": name,
         "rut": rut,
-        "email": None,
-        "phone": None,
+        "email": email,
+        "phone": phone,
         "program": None,
         "message": None,
         "source": (payload.source or "floating-cta-serena").strip()[:40],
-        "handoff_status": (payload.handoff_status or "open").strip()[:20],
+        "handoff_status": handoff,
         "referrer": (payload.referrer or "")[:500] or None,
-        "status": "whatsapp_initiated",
+        "status": status,
         "email_status": "n/a",
         "created_at": now.isoformat(),
     }
     try:
         await db.leads.insert_one({**doc})
         logger.info(
-            f"Capture-first handoff: name={name!r} rut={rut!r} status={doc['handoff_status']}"
+            f"Capture-first handoff: name={name!r} phone={phone!r} email={email!r} "
+            f"rut={rut!r} status={status} handoff_status={handoff}"
         )
     except Exception as e:
         logger.error(f"Capture-first handoff insert failed: {e}")
         raise HTTPException(status_code=500, detail="No se pudo registrar el handoff")
-    return {"ok": True, "id": doc["id"]}
+
+    # Telegram alert (fire-and-forget; never blocks the redirect)
+    asyncio.create_task(_send_telegram_alert(doc, kind=alert_kind))
+
+    return {"ok": True, "id": doc["id"], "status": status}
 
 
 @api_router.get("/admin/stats", response_model=StatsResponse)

@@ -3,64 +3,91 @@ import { X, Moon, Sunrise } from "lucide-react";
 import { getKarinaStatus } from "@/lib/karinaHours";
 
 /**
- * Serena · Welcome modal (Zen) with name capture and time-aware empathy.
- * Three states for Karina's availability (Chile time):
- *   • "open"        → Mon–Fri 10:00–18:00, immediate handoff
- *   • "after-hours" → Mon–Fri outside 10–18, response next morning
- *   • "weekend"     → Sat & Sun full day, response Monday morning
+ * Serena · Zen welcome modal with name + RUT capture (capture-first).
+ *
+ * onConfirm signature: (name, rut, { status }) => void
+ *
+ * Karina availability (Chile TZ):
+ *   • "open"        → Mon–Fri 10:00–18:00 — immediate handoff
+ *   • "after-hours" → Mon–Fri outside 10–18 — response next morning
+ *   • "weekend"     → Sat & Sun full day — response Monday morning
  */
+
+// Soft RUT validation (Chilean): allows formats like 12.345.678-9, 12345678-K, 8 dígitos + DV
+const RUT_RE = /^[0-9]{1,2}\.?[0-9]{3}\.?[0-9]{3}-?[0-9Kk]$/;
+
+function looksLikeRut(value) {
+  return RUT_RE.test(value.trim());
+}
+
+// Pretty-print as user types: 12345678-9 → 12.345.678-9
+function formatRut(value) {
+  const raw = value.replace(/[^0-9Kk]/g, "").toUpperCase();
+  if (!raw) return "";
+  if (raw.length === 1) return raw;
+  const body = raw.slice(0, -1);
+  const dv = raw.slice(-1);
+  const bodyFormatted = body.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return `${bodyFormatted}-${dv}`;
+}
+
 export default function SerenaModal({ open, onClose, onConfirm }) {
   const closeBtnRef = useRef(null);
-  const inputRef = useRef(null);
+  const nameRef = useRef(null);
   const [name, setName] = useState("");
+  const [rut, setRut] = useState("");
   const [status, setStatus] = useState("open");
 
   useEffect(() => {
     if (!open) return;
     setStatus(getKarinaStatus());
     setName("");
+    setRut("");
     const onKey = (e) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    setTimeout(() => inputRef.current?.focus(), 120);
+    setTimeout(() => nameRef.current?.focus(), 120);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
   }, [open, onClose]);
 
-  const trimmed = name.trim();
-  const valid = trimmed.length >= 2;
+  const trimmedName = name.trim();
+  const trimmedRut = rut.trim();
+  const nameValid = trimmedName.length >= 2;
+  const rutValid = looksLikeRut(trimmedRut);
+  const valid = nameValid && rutValid;
   const isOnline = status === "open";
 
   const submit = () => {
     if (!valid) return;
-    onConfirm(trimmed, { status });
+    onConfirm(trimmedName, trimmedRut, { status });
   };
 
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      submit();
+      if (valid) submit();
     }
   };
 
   if (!open) return null;
 
-  // ── Status-aware copy ────────────────────────────────────────────
+  // ── Status-aware CTA label ────────────────────────────────
+  const firstName = trimmedName.split(" ")[0] || "";
   const ctaLabel = (() => {
-    const firstName = trimmed.split(" ")[0];
     if (!valid) {
       if (status === "weekend") return "Dejar mensaje para Karina (lunes)";
       if (status === "after-hours") return "Dejar mensaje a Karina";
-      return "Hablar con Karina en WhatsApp";
+      return "Continuar a WhatsApp";
     }
     if (status === "weekend") return `Dejar mensaje a Karina como ${firstName}`;
     if (status === "after-hours")
       return `Dejar mensaje a Karina como ${firstName}`;
-    return `Presentarme a Karina como ${firstName}`;
+    return `Continuar a WhatsApp como ${firstName}`;
   })();
 
   return (
@@ -108,10 +135,9 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
         <div className="serena-rule" aria-hidden="true" />
 
         <p className="serena-message">
-          Entiendo que dar este paso requiere valentía. Estoy aquí para
-          facilitarte el camino. Cuéntame tu nombre y te presentaré con{" "}
-          <strong>Karina</strong>, nuestra asistente humana, para que te reciba
-          con toda tu información lista.
+          Para darte prioridad en la agenda de <strong>Karina</strong>, ingresa
+          tu Nombre y RUT. Así ella podrá preparar tu evaluación con toda tu
+          información lista.
         </p>
 
         {status === "after-hours" && (
@@ -125,11 +151,10 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
               <Moon size={15} strokeWidth={1.7} />
             </span>
             <p className="serena-offhours-text">
-              <strong>Karina</strong>, nuestra coordinadora humana, se encuentra
-              descansando en este momento para brindarte la mejor atención
-              mañana. Sé que la necesidad puede surgir a cualquier hora —{" "}
-              <em>no estás sola en esto</em>. Puedes dejarle tu mensaje ahora y
-              ella te responderá{" "}
+              <strong>Karina</strong> se encuentra descansando para brindarte la
+              mejor atención mañana. Sé que la necesidad puede surgir a
+              cualquier hora — <em>no estás sola en esto</em>. Tu mensaje queda
+              registrado y será atendido{" "}
               <strong>prioritariamente a partir de las 10:00 AM</strong>.
             </p>
           </div>
@@ -146,37 +171,50 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
               <Sunrise size={15} strokeWidth={1.7} />
             </span>
             <p className="serena-offhours-text">
-              <strong>Karina</strong>, nuestra coordinadora humana, se encuentra
-              en su descanso de fin de semana para recargar energías y
-              brindarte la mejor atención. Sé que el fin de semana también
-              pueden surgir momentos difíciles —{" "}
-              <em>te leo y tu mensaje no se perderá</em>. Déjale aquí tu nombre
-              y consulta, y ella te contactará de forma prioritaria{" "}
+              <strong>Karina</strong> se encuentra en su descanso de fin de
+              semana. Sé que pueden surgir momentos difíciles —{" "}
+              <em>te leo y tu mensaje no se perderá</em>. Te contactaremos{" "}
               <strong>el lunes a partir de las 10:00 AM</strong>.
             </p>
           </div>
         )}
 
         <label className="serena-field" htmlFor="serena-name">
-          <span className="serena-field-label">
-            ¿Cómo te gustaría que te llamemos?
-          </span>
+          <span className="serena-field-label">Nombre completo</span>
           <input
-            ref={inputRef}
+            ref={nameRef}
             id="serena-name"
             type="text"
             className="serena-input"
-            placeholder="Escribe tu nombre"
+            placeholder="Tu nombre"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={onKeyDown}
             autoComplete="given-name"
-            maxLength={60}
-            aria-describedby="serena-field-hint"
+            maxLength={120}
             data-testid="serena-name-input"
           />
-          <span id="serena-field-hint" className="serena-field-hint">
-            Solo tu nombre — sin apellidos ni datos sensibles.
+        </label>
+
+        <label className="serena-field" htmlFor="serena-rut">
+          <span className="serena-field-label">RUT</span>
+          <input
+            id="serena-rut"
+            type="text"
+            inputMode="text"
+            className="serena-input"
+            placeholder="12.345.678-9"
+            value={rut}
+            onChange={(e) => setRut(formatRut(e.target.value))}
+            onKeyDown={onKeyDown}
+            autoComplete="off"
+            maxLength={14}
+            aria-describedby="serena-rut-hint"
+            data-testid="serena-rut-input"
+          />
+          <span id="serena-rut-hint" className="serena-field-hint">
+            Tu información es confidencial · gestionada bajo secreto profesional
+            de salud.
           </span>
         </label>
 
@@ -195,7 +233,7 @@ export default function SerenaModal({ open, onClose, onConfirm }) {
 
         <p className="serena-foot">
           {isOnline
-            ? "Tu información es confidencial y se gestiona bajo secreto profesional."
+            ? "Te conectaremos con Karina ahora mismo."
             : "Tu mensaje queda registrado y será atendido prioritariamente."}
         </p>
       </div>

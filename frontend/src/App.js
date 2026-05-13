@@ -30,6 +30,7 @@ import WDBTAConference from "@/components/site/WDBTAConference";
 import AdminPage from "@/pages/AdminPage";
 import ArticlePage from "@/pages/ArticlePage";
 import SiteSeo from "@/components/site/SiteSeo";
+import { WhatsAppGatewayProvider } from "@/context/WhatsAppGateway";
 
 const TOASTER_OPTIONS = {
   style: {
@@ -124,13 +125,15 @@ function Landing() {
 function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/foro/articulo/:slug" element={<ArticlePage />} />
-          <Route path="*" element={<Landing />} />
-        </Routes>
-      </BrowserRouter>
+      <WhatsAppGatewayProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/foro/articulo/:slug" element={<ArticlePage />} />
+            <Route path="*" element={<Landing />} />
+          </Routes>
+        </BrowserRouter>
+      </WhatsAppGatewayProvider>
     </HelmetProvider>
   );
 }

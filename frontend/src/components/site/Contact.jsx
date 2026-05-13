@@ -2,7 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
-import { SITE, whatsappUrl } from "@/data/site";
+import { SITE } from "@/data/site";
+import { useWhatsAppGateway } from "@/context/WhatsAppGateway";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -15,21 +16,13 @@ export default function Contact() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const { openGateway } = useWhatsAppGateway();
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const onWhatsAppClick = () => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      try {
-        window.gtag("event", "conversion", {
-          send_to: "AW-18117776220/v-x9CJiSg-sZELyLidw_",
-          event_category: "engagement",
-          event_label: "whatsapp_contact_section",
-        });
-      } catch {
-        /* no-op */
-      }
-    }
+  const onWhatsAppClick = (e) => {
+    e.preventDefault();
+    openGateway("contact-section");
   };
 
   const onSubmit = async (e) => {
@@ -97,17 +90,15 @@ export default function Contact() {
               hábiles.
             </p>
 
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
               className="contact-whatsapp"
               data-testid="contact-whatsapp-btn"
               onClick={onWhatsAppClick}
             >
               <i className="fa-brands fa-whatsapp" style={{ fontSize: 20 }} />
               WhatsApp · {SITE.whatsappDisplay}
-            </a>
+            </button>
 
             <div className="contact-item" data-testid="contact-phone">
               <Phone size={16} strokeWidth={1.6} /> {SITE.phone}

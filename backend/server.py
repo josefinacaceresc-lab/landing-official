@@ -86,17 +86,31 @@ class ContactLead(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str
     name: str
-    email: EmailStr
+    email: Optional[EmailStr] = None
     phone: Optional[str] = None
     message: Optional[str] = None
     program: Optional[str] = None
-    email_status: str  # sent | pending | failed
+    rut: Optional[str] = None
+    source: Optional[str] = None
+    status: Optional[str] = None
+    handoff_status: Optional[str] = None
+    email_status: str  # sent | pending | failed | n/a
     created_at: datetime
 
 
 class WhatsAppClickIn(BaseModel):
     source: Optional[str] = Field(default="unknown", max_length=40)
     referrer: Optional[str] = Field(default=None, max_length=500)
+
+
+class WhatsAppHandoffIn(BaseModel):
+    """Capture-first payload: name + RUT submitted in Serena before WA redirect."""
+    model_config = ConfigDict(extra="ignore")
+    name: str = Field(min_length=2, max_length=120)
+    rut: str = Field(min_length=4, max_length=20)
+    source: Optional[str] = Field(default="floating-cta-serena", max_length=40)
+    referrer: Optional[str] = Field(default=None, max_length=500)
+    handoff_status: Optional[str] = Field(default="open", max_length=20)  # open | after-hours | weekend
 
 
 class StatsBucket(BaseModel):
@@ -355,10 +369,14 @@ async def list_contact_leads(limit: int = 100):
         out.append(ContactLead(
             id=r.get("id", str(uuid.uuid4())),
             name=r.get("name", ""),
-            email=r.get("email", "unknown@example.com"),
+            email=r.get("email"),
             phone=r.get("phone"),
             message=r.get("message"),
             program=r.get("program"),
+            rut=r.get("rut"),
+            source=r.get("source"),
+            status=r.get("status"),
+            handoff_status=r.get("handoff_status"),
             email_status=r.get("email_status", "pending"),
             created_at=ca or datetime.now(timezone.utc),
         ))
@@ -606,6 +624,40 @@ async def track_whatsapp_click(payload: WhatsAppClickIn):
     except Exception as e:
         logger.warning(f"WA click insert failed: {e}")
     return {"ok": True}
+
+
+@api_router.post("/whatsapp-handoff", status_code=201)
+async def whatsapp_handoff(payload: WhatsAppHandoffIn):
+    """Capture-first: store name + RUT in 'leads' BEFORE redirecting to WhatsApp.
+    Status = 'whatsapp_initiated' so admin sees these as proactive-follow-up leads
+    even if the user never sends the WhatsApp message."""
+    now = datetime.now(timezone.utc)
+    name = payload.name.strip()[:120]
+    rut = payload.rut.strip().upper().replace(" ", "")[:20]
+    doc = {
+        "id": str(uuid.uuid4()),
+        "name": name,
+        "rut": rut,
+        "email": None,
+        "phone": None,
+        "program": None,
+        "message": None,
+        "source": (payload.source or "floating-cta-serena").strip()[:40],
+        "handoff_status": (payload.handoff_status or "open").strip()[:20],
+        "referrer": (payload.referrer or "")[:500] or None,
+        "status": "whatsapp_initiated",
+        "email_status": "n/a",
+        "created_at": now.isoformat(),
+    }
+    try:
+        await db.leads.insert_one({**doc})
+        logger.info(
+            f"Capture-first handoff: name={name!r} rut={rut!r} status={doc['handoff_status']}"
+        )
+    except Exception as e:
+        logger.error(f"Capture-first handoff insert failed: {e}")
+        raise HTTPException(status_code=500, detail="No se pudo registrar el handoff")
+    return {"ok": True, "id": doc["id"]}
 
 
 @api_router.get("/admin/stats", response_model=StatsResponse)

@@ -1,7 +1,8 @@
 import { Heart, Users, Sparkles } from "lucide-react";
-import { whatsappUrl } from "@/data/site";
+import { useWhatsAppGateway } from "@/context/WhatsAppGateway";
 
 export default function CommunitySection() {
+  const { openGateway } = useWhatsAppGateway();
   return (
     <section
       className="section-pad community-sec"
@@ -107,18 +108,15 @@ export default function CommunitySection() {
             preferencial y a la red de profesionales colaboradores de
             InstitutoDBT.cl.
           </p>
-          <a
-            href={whatsappUrl(
-              "Hola, me gustaría recibir información sobre el programa Family Parents en InstitutoDBT.cl. Mi nombre es..."
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
             className="community-cta-btn"
             data-testid="community-cta-btn"
+            onClick={() => openGateway("community-family-parents")}
           >
             <i className="fa-brands fa-whatsapp" />
             <span>Solicitar información del programa</span>
-          </a>
+          </button>
         </div>
       </div>
     </section>

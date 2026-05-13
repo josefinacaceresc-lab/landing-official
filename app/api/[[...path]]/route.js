@@ -1,104 +1,197 @@
 import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
-import { NextResponse } from 'next/server'
 
-// MongoDB connection
-let client
-let db
+const client = new MongoClient(process.env.MONGO_URL || 'mongodb://localhost:27017')
+const dbName = process.env.DB_NAME || 'institutodbt'
 
-async function connectToMongo() {
-  if (!client) {
-    client = new MongoClient(process.env.MONGO_URL)
-    await client.connect()
-    db = client.db(process.env.DB_NAME)
+let cachedDb = null
+
+async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb
   }
+  await client.connect()
+  const db = client.db(dbName)
+  cachedDb = db
   return db
 }
 
-// Helper function to handle CORS
-function handleCORS(response) {
-  response.headers.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS || '*')
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  response.headers.set('Access-Control-Allow-Credentials', 'true')
-  return response
+// RUT Validation for Chile
+function validateRUT(rut) {
+  // Remove dots and dash
+  const cleanRUT = rut.replace(/\./g, '').replace(/-/g, '')
+  
+  if (cleanRUT.length < 2) return false
+  
+  const body = cleanRUT.slice(0, -1)
+  const dv = cleanRUT.slice(-1).toUpperCase()
+  
+  // Calculate verification digit
+  let sum = 0
+  let multiplier = 2
+  
+  for (let i = body.length - 1; i >= 0; i--) {
+    sum += parseInt(body[i]) * multiplier
+    multiplier = multiplier === 7 ? 2 : multiplier + 1
+  }
+  
+  const calculatedDV = 11 - (sum % 11)
+  let expectedDV
+  
+  if (calculatedDV === 11) expectedDV = '0'
+  else if (calculatedDV === 10) expectedDV = 'K'
+  else expectedDV = calculatedDV.toString()
+  
+  return dv === expectedDV
 }
 
-// OPTIONS handler for CORS
-export async function OPTIONS() {
-  return handleCORS(new NextResponse(null, { status: 200 }))
+// Generate 24-hour access token
+function generateAccessToken() {
+  const token = uuidv4()
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
+  return { token, expiresAt }
 }
 
-// Route handler function
-async function handleRoute(request, { params }) {
-  const { path = [] } = params
-  const route = `/${path.join('/')}`
-  const method = request.method
+export async function GET(request) {
+  const { pathname } = new URL(request.url)
+  
+  if (pathname === '/api/' || pathname === '/api') {
+    return Response.json({ 
+      message: 'InstitutoDBT.cl API - Centro de Alta Complejidad',
+      status: 'operational',
+      services: ['leads', 'lakaira-tokens', 'assessments']
+    })
+  }
+  
+  return Response.json({ error: 'Endpoint not found' }, { status: 404 })
+}
 
+export async function POST(request) {
+  const { pathname } = new URL(request.url)
+  
   try {
-    const db = await connectToMongo()
-
-    // Root endpoint - GET /api/root (since /api/ is not accessible with catch-all)
-    if (route === '/root' && method === 'GET') {
-      return handleCORS(NextResponse.json({ message: "Hello World" }))
-    }
-    // Root endpoint - GET /api/root (since /api/ is not accessible with catch-all)
-    if (route === '/' && method === 'GET') {
-      return handleCORS(NextResponse.json({ message: "Hello World" }))
-    }
-
-    // Status endpoints - POST /api/status
-    if (route === '/status' && method === 'POST') {
-      const body = await request.json()
+    const body = await request.json()
+    
+    // Store Lead from Self-Assessment
+    if (pathname === '/api/leads/assessment') {
+      const { fullName, rut, email, phone, assessmentScore, responses } = body
       
-      if (!body.client_name) {
-        return handleCORS(NextResponse.json(
-          { error: "client_name is required" }, 
+      // Validate required fields
+      if (!fullName || !rut || !email || !phone) {
+        return Response.json(
+          { error: 'Todos los campos son obligatorios' },
           { status: 400 }
-        ))
+        )
       }
-
-      const statusObj = {
-        id: uuidv4(),
-        client_name: body.client_name,
-        timestamp: new Date()
-      }
-
-      await db.collection('status_checks').insertOne(statusObj)
-      return handleCORS(NextResponse.json(statusObj))
-    }
-
-    // Status endpoints - GET /api/status
-    if (route === '/status' && method === 'GET') {
-      const statusChecks = await db.collection('status_checks')
-        .find({})
-        .limit(1000)
-        .toArray()
-
-      // Remove MongoDB's _id field from response
-      const cleanedStatusChecks = statusChecks.map(({ _id, ...rest }) => rest)
       
-      return handleCORS(NextResponse.json(cleanedStatusChecks))
+      // Validate RUT
+      if (!validateRUT(rut)) {
+        return Response.json(
+          { error: 'RUT inválido. Por favor verifica el número ingresado.' },
+          { status: 400 }
+        )
+      }
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        return Response.json(
+          { error: 'Email inválido' },
+          { status: 400 }
+        )
+      }
+      
+      // Generate LaKaira AI access token
+      const { token, expiresAt } = generateAccessToken()
+      
+      const db = await connectToDatabase()
+      const leadsCollection = db.collection('leads')
+      
+      const lead = {
+        fullName,
+        rut,
+        email,
+        phone,
+        assessmentScore,
+        responses: responses || [],
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt,
+        source: 'autoevaluacion',
+        createdAt: new Date(),
+        status: 'new'
+      }
+      
+      await leadsCollection.insertOne(lead)
+      
+      return Response.json({
+        success: true,
+        message: 'Evaluación registrada exitosamente',
+        lakairaToken: token,
+        lakairaExpiresAt: expiresAt,
+        assessmentScore
+      })
     }
-
-    // Route not found
-    return handleCORS(NextResponse.json(
-      { error: `Route ${route} not found` }, 
-      { status: 404 }
-    ))
-
+    
+    // Verify LaKaira Token
+    if (pathname === '/api/lakaira/verify-token') {
+      const { token } = body
+      
+      if (!token) {
+        return Response.json(
+          { error: 'Token requerido' },
+          { status: 400 }
+        )
+      }
+      
+      const db = await connectToDatabase()
+      const leadsCollection = db.collection('leads')
+      
+      const lead = await leadsCollection.findOne({ lakairaToken: token })
+      
+      if (!lead) {
+        return Response.json(
+          { valid: false, error: 'Token no encontrado' },
+          { status: 404 }
+        )
+      }
+      
+      const now = new Date()
+      const expired = new Date(lead.lakairaExpiresAt) < now
+      
+      if (expired) {
+        return Response.json({
+          valid: false,
+          expired: true,
+          error: 'Token expirado. Por favor realiza una nueva evaluación.'
+        })
+      }
+      
+      return Response.json({
+        valid: true,
+        fullName: lead.fullName,
+        expiresAt: lead.lakairaExpiresAt,
+        assessmentScore: lead.assessmentScore
+      })
+    }
+    
+    return Response.json({ error: 'Endpoint not found' }, { status: 404 })
+    
   } catch (error) {
     console.error('API Error:', error)
-    return handleCORS(NextResponse.json(
-      { error: "Internal server error" }, 
+    return Response.json(
+      { error: 'Error interno del servidor', details: error.message },
       { status: 500 }
-    ))
+    )
   }
 }
 
-// Export all HTTP methods
-export const GET = handleRoute
-export const POST = handleRoute
-export const PUT = handleRoute
-export const DELETE = handleRoute
-export const PATCH = handleRoute
+export async function OPTIONS(request) {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  })
+}

@@ -59,10 +59,18 @@ export default function Navigation() {
             <Link href="/equipo" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
               Equipo
             </Link>
+            <Link href="/tratamientos/patologia-dual" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
+              Patología Dual
+            </Link>
             <Link href="/blog" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
               Blog
             </Link>
             
+            <Button asChild className="bg-amber-600 hover:bg-amber-700 text-white">
+              <Link href="/autoevaluacion">
+                Test Gratuito
+              </Link>
+            </Button>
             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
               Agendar Consulta
             </Button>

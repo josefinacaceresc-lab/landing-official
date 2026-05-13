@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu } from 'lucide-react'
+import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
 
 export const metadata = {
   title: 'InstitutoDBT.cl | Centro de Alta Complejidad & Psiquiatría Computacional',
@@ -196,6 +196,61 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
+
+      {/* Self-Assessment CTA */}
+      <section className="py-20 bg-gradient-to-br from-amber-50 via-emerald-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <Card className="border-0 shadow-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 text-white overflow-hidden">
+              <CardContent className="p-12">
+                <div className="text-center">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                  </div>
+                  
+                  <h2 className="text-4xl font-light mb-4">
+                    Evalúa tu <span className="font-serif font-semibold">Desregulación Emocional</span>
+                  </h2>
+                  
+                  <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
+                    Test clínico validado + Acceso de prueba a <strong>LaKaira AI</strong> por 24 horas
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                    <Button size="lg" asChild className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-6 text-lg font-semibold">
+                      <Link href="/autoevaluacion">
+                        Comenzar Test Gratuito
+                      </Link>
+                    </Button>
+                  </div>
+                  
+                  <div className="flex flex-wrap justify-center gap-6 text-sm text-emerald-100">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>10 minutos</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Resultados inmediatos</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Acceso LaKaira AI</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>100% confidencial</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section id="contacto" className="py-20 bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">

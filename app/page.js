@@ -16,16 +16,27 @@ export default function Home() {
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
+            {/* Vertical Logo - transparent white background via mix-blend-multiply */}
+            <div className="flex justify-center mb-8">
+              <img
+                src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg"
+                alt="Instituto DBT Chile"
+                className="h-32 md:h-40 w-auto object-contain"
+                style={{ mixBlendMode: 'multiply' }}
+                loading="eager"
+              />
+            </div>
+
             <div className="mb-6 text-sm font-semibold text-primary uppercase tracking-wider">
               Único Miembro Institucional WDBTA en Chile
             </div>
             
             <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 tracking-tight">
-              Donde la ciencia encuentra a las <em className="font-serif italic text-primary">personas</em>
+              Instituto <em className="font-serif italic text-primary">DBT Chile</em>
             </h1>
             
             <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Dirigido por la <strong>Dra.(c) Josefina Cáceres Cortés, Ph.D.(c)</strong> — el centro de salud mental más avanzado de Chile. Combinamos el tratamiento DBT de mayor evidencia científica con Schema Therapy y tecnología clínica propia, bajo el único sello institucional <strong>WDBTA</strong> del país.
+              Terapia Dialéctico Conductual de excelencia internacional. <strong>Único representante WDBTA en Chile.</strong>
             </p>
             
             <Button

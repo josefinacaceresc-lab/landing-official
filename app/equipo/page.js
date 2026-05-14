@@ -38,7 +38,6 @@ const direccion = [
     role: 'Subdirectora Clínica · Psicóloga',
     description: 'Especialista en DBT, Género, Psicología Criminal y Forense. Cofundadora Unidad Transitando del Instituto Psiquiátrico Dr. José Horwitz Barak.',
     credentials: [
-      'Máster Psicología Criminal — Univ. Europea, España',
       'Formación completa DBT individual, grupal y familiar',
       'Formación DBT-SUD — trastornos uso de sustancias',
       'Socia activa Sociedad Española de DBT'

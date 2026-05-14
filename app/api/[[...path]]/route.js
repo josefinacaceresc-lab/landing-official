@@ -72,6 +72,61 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
+    // Store Fast WhatsApp Capture Lead (Name + Phone)
+    if (pathname === '/api/leads/fast-capture') {
+      const { fullName, phone, source } = body || {}
+
+      if (!fullName || !phone) {
+        return Response.json({ error: 'Nombre y teléfono son obligatorios' }, { status: 400 })
+      }
+
+      const cleanName = String(fullName).trim()
+      const cleanPhone = String(phone).trim()
+      const phoneDigits = cleanPhone.replace(/\D/g, '')
+
+      if (cleanName.length < 2) {
+        return Response.json({ error: 'Nombre inválido' }, { status: 400 })
+      }
+      if (phoneDigits.length < 8) {
+        return Response.json({ error: 'Teléfono inválido' }, { status: 400 })
+      }
+
+      const db = await connectToDatabase()
+      const leadsCollection = db.collection('leads')
+
+      const lead = {
+        fullName: cleanName,
+        phone: cleanPhone,
+        phoneDigits,
+        source: 'whatsapp-fast-capture',
+        sourceContext: source || 'general',
+        createdAt: new Date(),
+        status: 'new',
+      }
+
+      const result = await leadsCollection.insertOne(lead)
+
+      // Fire-and-forget Telegram notification (only if env token is configured)
+      try {
+        const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN
+        const TG_CHAT = process.env.TELEGRAM_CHAT_ID || '533798039'
+        if (TG_TOKEN) {
+          const msg = `🟢 NUEVO LEAD WhatsApp\nNombre: ${cleanName}\nTeléfono: ${cleanPhone}\nOrigen: ${source || 'general'}`
+          fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: TG_CHAT, text: msg }),
+          }).catch(() => {})
+        }
+      } catch (_) { /* ignore */ }
+
+      return Response.json({
+        success: true,
+        leadId: result.insertedId?.toString?.() || null,
+        message: 'Lead registrado, redirigiendo a WhatsApp',
+      })
+    }
+
     // Store Lead from IDP-4 Assessment
     if (pathname === '/api/leads/idp4') {
       const { fullName, age, rut, email, domainScores, responses } = body

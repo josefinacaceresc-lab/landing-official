@@ -73,7 +73,11 @@ export default function Navigation() {
                 Test Gratuito
               </Link>
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-white">
+            <Button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'nav-desktop' } }))}
+              className="bg-primary hover:bg-primary/90 text-white"
+            >
               Agendar Consulta
             </Button>
           </div>
@@ -125,7 +129,14 @@ export default function Navigation() {
                 Blog
               </Link>
               
-              <Button className="w-full bg-primary hover:bg-primary/90 text-white">
+              <Button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false)
+                  window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'nav-mobile' } }))
+                }}
+                className="w-full bg-primary hover:bg-primary/90 text-white"
+              >
                 Agendar Consulta
               </Button>
             </div>

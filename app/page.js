@@ -28,11 +28,16 @@ export default function Home() {
               Dirigido por la <strong>Dra.(c) Josefina Cáceres Cortés, Ph.D.(c)</strong> — el centro de salud mental más avanzado de Chile. Combinamos el tratamiento DBT de mayor evidencia científica con Schema Therapy y tecnología clínica propia, bajo el único sello institucional <strong>WDBTA</strong> del país.
             </p>
             
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12">
-              <Link href="#contacto" className="flex items-center gap-2">
+            <Button
+              size="lg"
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'hero' } }))}
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12"
+            >
+              <span className="flex items-center gap-2">
                 Solicitar hora
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </span>
             </Button>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
@@ -532,18 +537,16 @@ export default function Home() {
             <p className="text-xl mb-12 text-emerald-50">
               Da el primer paso. Nuestro equipo responde en menos de 24 horas hábiles.
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
+              type="button"
+              onClick={() => {
+                trackWhatsAppClick('contacto-section')
+                window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'home-contacto' } }))
+              }}
               className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
-              onClick={() => trackWhatsAppClick('contacto-section')}
             >
-              <a 
-                href="https://wa.me/56930550750?text=Hola,%20me%20gustaría%20solicitar%20una%20evaluación%20de%20alta%20complejidad%20en%20InstitutoDBT.cl.%20Mi%20nombre%20es..." 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                WhatsApp · +56 9 3055 0750
-              </a>
+              WhatsApp · +56 9 3055 0750
             </Button>
             <p className="mt-6 text-sm text-emerald-100">
               Horario: Lunes a Viernes, 9:00 - 18:00 hrs (Chile)

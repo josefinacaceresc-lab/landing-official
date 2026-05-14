@@ -77,8 +77,8 @@ const fases = [
 const poblaciones = [
   {
     titulo: 'Trastorno Límite de Personalidad (TLP)',
-    href: '/tratamiento',
-    descripcion: 'Tratamiento de primera línea con evidencia de mayor calidad. Reducción de conductas suicidas, autolesivas y hospitalizaciones.',
+    href: '/tratamiento/tlp',
+    descripcion: 'Tratamiento de primera línea con evidencia de mayor calidad. Reducción de conductas suicidas, autolesivas y hospitalizaciones bajo estándar WDBTA.',
   },
   {
     titulo: 'Patología Dual (TLP + TUS)',
@@ -86,9 +86,9 @@ const poblaciones = [
     descripcion: 'Protocolo DBT-SUD de Fidelidad Total. Único Centro de Alta Complejidad en Chile para comorbilidad TLP + Trastorno por Uso de Sustancias.',
   },
   {
-    titulo: 'Desregulación emocional severa',
-    href: '/tratamiento',
-    descripcion: 'Adultos y adolescentes con cuadros complejos: trauma complejo, trastornos de conducta alimentaria, depresión crónica resistente.',
+    titulo: 'DBT Infanto-Juvenil (DBT-A)',
+    href: '/tratamiento/dbt-infanto-juvenil',
+    descripcion: 'Programa DBT para Adolescentes con Fidelidad Total al modelo Rathus & Miller. Integración mandatoria del sistema familiar a través del Camino del Medio.',
   },
 ]
 

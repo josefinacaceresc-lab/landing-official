@@ -78,8 +78,8 @@ export default function FastCaptureModal() {
   }
 
   const buildWhatsAppUrl = (name) => {
-    const firstName = (name || '').trim().split(/\s+/)[0] || ''
-    const message = `Hola Karina, soy ${firstName}. Me gustaría agendar una consulta en Instituto DBT Chile.`
+    const fullName = (name || '').trim()
+    const message = `Me gustaría poder contactarme con ustedes, mi nombre es ${fullName}`
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
   }
 

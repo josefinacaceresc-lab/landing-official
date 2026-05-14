@@ -173,18 +173,35 @@ export default function WDBTAPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
+      <section className="py-20 bg-gradient-to-br from-primary via-primary/95 to-primary/85 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-light mb-6">
               Tratamiento <span className="font-semibold">Certificado WDBTA</span>
             </h2>
-            <p className="text-xl mb-8 text-emerald-50">
+            <p className="text-xl mb-8 text-white/90">
               Recibe terapia DBT de clase mundial con nuestro equipo certificado
             </p>
-            <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50">
-              Agendar Evaluación Inicial
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90 font-bold shadow-2xl">
+                <a
+                  href="mailto:contacto@dbtchile.cl?subject=Agendar%20Evaluaci%C3%B3n%20Inicial%20-%20Tratamiento%20WDBTA&body=Hola%20Instituto%20DBT%20Chile%2C%0A%0AQuisiera%20agendar%20una%20evaluaci%C3%B3n%20inicial%20para%20tratamiento%20DBT%20certificado%20WDBTA.%0A%0ANombre%20completo%3A%20%0ATel%C3%A9fono%3A%20%0AEmail%3A%20%0ABreve%20descripci%C3%B3n%20del%20motivo%3A%20%0A%0AGracias."
+                >
+                  Agendar Evaluación Inicial
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="!bg-transparent border-2 border-white text-white hover:!bg-white hover:!text-primary font-bold">
+                <a href="mailto:contacto@dbtchile.cl?subject=Consulta%20sobre%20WDBTA%20Chile">
+                  Contactar al equipo
+                </a>
+              </Button>
+            </div>
+            <p className="text-white/80 text-sm mt-6">
+              <strong>Contacto directo:</strong>{' '}
+              <a href="mailto:contacto@dbtchile.cl" className="underline hover:text-white">
+                contacto@dbtchile.cl
+              </a>
+            </p>
           </div>
         </div>
       </section>

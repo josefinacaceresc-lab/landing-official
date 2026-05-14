@@ -83,8 +83,8 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">
                 <Mail className="w-4 h-4 mt-1 text-emerald-400 flex-shrink-0" />
-                <a href="mailto:contacto@institutodbt.cl" className="hover:text-emerald-400 transition-colors">
-                  contacto@institutodbt.cl
+                <a href="mailto:contacto@dbtchile.cl" className="hover:text-emerald-400 transition-colors">
+                  contacto@dbtchile.cl
                 </a>
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">

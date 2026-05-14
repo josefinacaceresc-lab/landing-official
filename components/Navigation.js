@@ -69,7 +69,11 @@ export default function Navigation() {
               Equipo
             </Link>
             
-            <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">
+            <Button
+              asChild
+              variant="ghost"
+              className="rounded-full px-5 text-primary hover:text-primary hover:bg-primary/10 font-medium"
+            >
               <Link href="/autoevaluacion">
                 Test Gratuito
               </Link>
@@ -77,7 +81,7 @@ export default function Navigation() {
             <Button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'nav-desktop' } }))}
-              className="bg-primary hover:bg-primary/90 text-white"
+              className="rounded-full px-6 bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
             >
               Agendar Consulta
             </Button>
@@ -136,7 +140,7 @@ export default function Navigation() {
                   setIsOpen(false)
                   window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'nav-mobile' } }))
                 }}
-                className="w-full bg-primary hover:bg-primary/90 text-white"
+                className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20"
               >
                 Agendar Consulta
               </Button>

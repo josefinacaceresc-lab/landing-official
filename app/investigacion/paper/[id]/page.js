@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowLeft, FileText, Printer, Download, Calendar, BookOpen, Tag } from 'lucide-react'
+import { ArrowLeft, FileText, Printer, Download, Calendar, BookOpen, Tag, X, Info } from 'lucide-react'
 import { papers, getPaperById } from '@/lib/papers'
 
 // Note: this is a client component (needs print trigger via query param).
@@ -15,18 +15,20 @@ export default function PaperDetailPage({ params }) {
   const search = useSearchParams()
   const router = useRouter()
   const paper = getPaperById(params?.id)
+  const isPrintMode = search?.get('print') === '1'
+  const [showPrintHelp, setShowPrintHelp] = useState(isPrintMode)
 
   // Auto-trigger native print dialog when opened with ?print=1
   useEffect(() => {
     if (!paper) return
-    if (search?.get('print') === '1') {
+    if (isPrintMode) {
       // Give the page a tick to layout fonts/images, then open print dialog.
       const t = setTimeout(() => {
         try { window.print() } catch (_) {}
-      }, 500)
+      }, 1200) // Slightly longer so user sees the instruction banner first
       return () => clearTimeout(t)
     }
-  }, [search, paper])
+  }, [isPrintMode, paper])
 
   if (!paper) {
     return (
@@ -43,6 +45,34 @@ export default function PaperDetailPage({ params }) {
 
   return (
     <article className="bg-white print:bg-white">
+      {/* Print help banner — only shown when ?print=1, before the dialog opens */}
+      {showPrintHelp && (
+        <div className="print:hidden fixed top-0 left-0 right-0 z-50 bg-primary text-white shadow-lg">
+          <div className="container mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+            <Info className="w-5 h-5 flex-shrink-0" />
+            <p className="flex-1 text-sm leading-snug">
+              <strong>Diálogo de impresión abriéndose…</strong> En el campo <em>Destino</em> elige <strong>"Guardar como PDF"</strong> (Save as PDF) y haz click en <strong>Guardar</strong>.
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="px-3 py-1.5 bg-white text-primary text-sm font-semibold rounded-md hover:bg-white/90"
+              >
+                Reabrir diálogo
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowPrintHelp(false)}
+                aria-label="Cerrar aviso"
+                className="p-1.5 hover:bg-white/10 rounded-md"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Toolbar (hidden on print) */}
       <div className="print:hidden bg-gradient-to-br from-primary/5 to-white border-b border-gray-100">
         <div className="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">

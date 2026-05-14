@@ -72,17 +72,17 @@ export default function Home() {
                 La máxima distinción <em className="font-serif italic text-emerald-700">clínica</em> en Chile.
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-                Somos la única institución del país acreditada como <strong>miembro institucional de la WDBTA</strong> y <strong>certificada por la ISST</strong>. Dos sellos internacionales que garantizan un estándar científico y ético sin precedentes en salud mental.
+                Somos la única institución del país acreditada como <strong>miembro institucional de la WDBTA</strong>, <strong>miembro categoría APA</strong> y <strong>certificada por la ISST</strong>. Tres sellos internacionales que garantizan un estándar científico y ético sin precedentes en salud mental.
               </p>
               
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">
                 <div><strong className="text-emerald-700">País:</strong> Único en Chile</div>
-                <div><strong className="text-emerald-700">Acreditaciones:</strong> WDBTA · ISST</div>
+                <div><strong className="text-emerald-700">Acreditaciones:</strong> WDBTA · APA · ISST</div>
                 <div><strong className="text-emerald-700">Dirección:</strong> Ph.D.(c) clínica</div>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <Card className="border-0 shadow-2xl hover:shadow-3xl transition-shadow bg-white overflow-hidden">
                 <CardContent className="p-8">
                   <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg">
@@ -97,6 +97,24 @@ export default function Home() {
                   <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">WDBTA</h3>
                   <p className="text-sm text-gray-600 mb-4">World Dialectical Behavior Therapy Association</p>
                   <p className="text-emerald-700 font-semibold">Miembro institucional</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-shadow bg-white overflow-hidden">
+                <CardContent className="p-8">
+                  <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                    <Image
+                      src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/ebe15d76640a47118ddc6ff68a1b73e6_LOGO%20APA.webp"
+                      alt="American Psychological Association Logo"
+                      width={200}
+                      height={80}
+                      className="object-contain max-h-24"
+                      unoptimized
+                    />
+                  </div>
+                  <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">APA</h3>
+                  <p className="text-sm text-gray-600 mb-4">American Psychological Association</p>
+                  <p className="text-blue-700 font-semibold uppercase tracking-wider text-sm">Categoría Miembro</p>
                 </CardContent>
               </Card>
 

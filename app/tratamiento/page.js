@@ -82,6 +82,7 @@ const poblaciones = [
   },
   {
     titulo: 'Patología Dual (TLP + TUS)',
+    subtitulo: 'Desregulación con adicciones',
     href: '/tratamientos/patologia-dual',
     descripcion: 'Protocolo DBT-SUD de Fidelidad Total. Único Centro de Alta Complejidad en Chile para comorbilidad TLP + Trastorno por Uso de Sustancias.',
   },
@@ -179,7 +180,10 @@ export default function TratamientoPage() {
               {poblaciones.map((pob, i) => (
                 <Card key={i} className="border-gray-200 hover:shadow-xl transition-all">
                   <CardContent className="p-8">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{pob.titulo}</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{pob.titulo}</h3>
+                    {pob.subtitulo && (
+                      <p className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">{pob.subtitulo}</p>
+                    )}
                     <p className="text-gray-600 mb-6 leading-relaxed">{pob.descripcion}</p>
                     <Link href={pob.href} className="text-primary font-semibold hover:underline flex items-center gap-2">
                       Conocer más <ArrowRight className="w-4 h-4" />

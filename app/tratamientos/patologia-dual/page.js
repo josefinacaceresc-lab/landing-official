@@ -5,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Brain, Activity, Shield, Cpu, AlertTriangle, TrendingDown, CheckCircle } from 'lucide-react'
 
 export const metadata = {
-  title: 'Patología Dual: TLP + Trastorno por Uso de Sustancias | DBT-SUD de Fidelidad Total',
-  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) con protocolo DBT-SUD de Fidelidad Total. Estabilización de sistemas de regulación emocional con monitoreo LaKaira AI. Único en Chile con certificación WDBTA.',
+  title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD de Fidelidad Total',
+  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD de Fidelidad Total + monitoreo LaKaira AI. Único en Chile con certificación WDBTA.',
   keywords: [
     'Patología Dual Chile',
     'DBT-SUD de Fidelidad Total',
@@ -135,13 +135,17 @@ export default function PatologiaDualPage() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-6 text-center tracking-tight">
-              Patología <span className="font-serif font-semibold text-emerald-700">Dual</span>
+            <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-4 text-center tracking-tight">
+              Patología <span className="font-serif font-semibold text-primary">Dual</span> <span className="font-light text-gray-700">(TLP + TUS)</span>
             </h1>
-            
-            <h2 className="text-2xl md:text-3xl font-light text-gray-700 mb-8 text-center">
-              TLP + Trastorno por Uso de Sustancias
+
+            <h2 className="text-2xl md:text-3xl font-semibold text-primary mb-8 text-center">
+              Desregulación con adicciones
             </h2>
+
+            <p className="text-lg text-gray-600 mb-4 text-center max-w-3xl mx-auto italic">
+              TLP + Trastorno por Uso de Sustancias
+            </p>
             
             <p className="text-xl text-gray-600 leading-relaxed mb-6 text-center max-w-4xl mx-auto">
               Protocolo especializado <strong className="text-emerald-700">DBT-SUD de Fidelidad Total</strong> para el tratamiento de la comorbilidad más desafiante en salud mental: Trastorno Límite de Personalidad con Trastorno por Uso de Sustancias.

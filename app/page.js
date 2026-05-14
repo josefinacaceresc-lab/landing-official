@@ -429,6 +429,65 @@ export default function Home() {
               </h2>
             </div>
 
+            {/* Programas Clínicos — Patient-facing landing cards */}
+            <div className="mb-20">
+              <div className="text-center mb-10">
+                <div className="mb-3 text-sm font-semibold text-primary uppercase tracking-wider">Programas Clínicos</div>
+                <h3 className="text-3xl md:text-4xl font-light text-gray-900">
+                  Tratamientos de <em className="font-serif italic text-primary">alta complejidad</em>
+                </h3>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* TLP */}
+                <Link href="/tratamiento/tlp" className="group">
+                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>
+                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">TLP</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        Tratamiento de primera línea con la mayor evidencia científica. Reducción de conductas suicidas, autolesivas y hospitalizaciones bajo estándar WDBTA.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer más <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                {/* Patología Dual — destacado */}
+                <Link href="/tratamientos/patologia-dual" className="group">
+                  <Card className="border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-primary/5 to-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + TUS)</span></h4>
+                      <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Desregulación con adicciones</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        Único Centro de Alta Complejidad en Chile para TLP + Trastorno por Uso de Sustancias. Protocolo DBT-SUD de Fidelidad Total con monitoreo LaKaira AI.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer más <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                {/* DBT-A */}
+                <Link href="/tratamiento/dbt-infanto-juvenil" className="group">
+                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">DBT Infanto-Juvenil</h4>
+                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">DBT-A</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        Programa para Adolescentes con Fidelidad Total al modelo Rathus & Miller. Integración mandatoria del sistema familiar vía Camino del Medio.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer más <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
                 <CardContent className="p-6 text-center">

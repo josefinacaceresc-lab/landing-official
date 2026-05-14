@@ -164,7 +164,11 @@ export default function PaperDetailPage({ params }) {
             </p>
             <div className="mt-4 flex flex-wrap gap-2 print:hidden">
               <Button asChild className="bg-primary hover:bg-primary/90 text-white font-semibold">
-                <Link href="/equipo">Solicitar acceso</Link>
+                <a
+                  href={`mailto:contacto@dbtchile.cl?subject=${encodeURIComponent('Solicitud de acceso a artículo: ' + paper.title)}&body=${encodeURIComponent('Hola Instituto DBT Chile,\n\nSolicito acceso a la versión completa del artículo doctoral:\n\n• Título: ' + paper.title + '\n• Autor: Dra. Josefina Cáceres, Ph.D.(c)\n• Referencia: https://institutodbt.cl/investigacion/paper/' + paper.id + '\n\nMis datos:\nNombre completo: \nProfesión / Institución: \nMotivo de la solicitud: \n\nGracias.')}`}
+                >
+                  Solicitar acceso
+                </a>
               </Button>
             </div>
           </CardContent>

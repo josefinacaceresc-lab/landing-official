@@ -73,9 +73,14 @@ export default function InvestigacionPage() {
                       <span>Intervenciones preventivas personalizadas</span>
                     </li>
                   </ul>
-                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                    Ver Proyecto
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white font-semibold">
+                    <a
+                      href="mailto:contacto@dbtchile.cl?subject=Consulta%20sobre%20LaKaira%20AI&body=Hola%2C%20quisiera%20más%20información%20sobre%20el%20proyecto%20LaKaira%20AI.%0A%0AMi%20nombre%3A%20%0ATeléfono%3A%20%0AContexto%3A%20"
+                      className="flex items-center gap-2"
+                    >
+                      Ver Proyecto
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
@@ -107,7 +112,7 @@ export default function InvestigacionPage() {
                       <span>Fundamentos neurocientíficos del DBT</span>
                     </li>
                   </ul>
-                  <Button variant="outline" className="border-amber-600 text-amber-700 hover:bg-amber-50">
+                  <Button asChild variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold">
                     <Link href="/investigacion/la-mente-algoritmica" className="flex items-center gap-2">
                       Explorar Papers
                       <ArrowRight className="w-4 h-4" />
@@ -213,35 +218,42 @@ export default function InvestigacionPage() {
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                size="lg" 
-                asChild 
+              <Button
+                size="lg"
+                asChild
                 className="bg-white text-primary hover:bg-white/90 px-10 py-7 text-lg font-bold shadow-2xl"
               >
-                <Link href="#contacto" className="flex items-center gap-2">
+                <a
+                  href="mailto:contacto@dbtchile.cl?subject=Ser%20parte%20de%20la%20Investigaci%C3%B3n%20-%20Instituto%20DBT%20Chile&body=Hola%2C%20me%20gustar%C3%ADa%20ser%20parte%20de%20la%20investigaci%C3%B3n%20del%20Instituto%20DBT%20Chile.%0A%0AMi%20nombre%3A%20%0ARol%20%2F%20Profesi%C3%B3n%3A%20%0ATel%C3%A9fono%3A%20%0AComentario%3A%20"
+                  className="flex items-center gap-2"
+                >
                   Ser parte de esta Investigación
                   <ArrowRight className="w-5 h-5" />
-                </Link>
+                </a>
               </Button>
-              
-              <Button 
-                size="lg" 
+
+              <Button
+                size="lg"
+                asChild
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white/10 px-10 py-7 text-lg font-semibold"
+                className="!bg-transparent border-2 border-white text-white hover:!bg-white hover:!text-primary px-10 py-7 text-lg font-semibold"
               >
-                <a 
-                  href="mailto:investigacion@institutodbt.cl?subject=Propuesta%20de%20Colaboración%20Científica"
+                <a
+                  href="mailto:contacto@dbtchile.cl?subject=Propuesta%20de%20Colaboraci%C3%B3n%20Cient%C3%ADfica&body=Hola%20equipo%20DBT%20Chile%2C%0A%0ATengo%20una%20propuesta%20de%20colaboraci%C3%B3n%20cient%C3%ADfica%20que%20me%20gustar%C3%ADa%20presentar.%0A%0ANombre%3A%20%0AInstituci%C3%B3n%3A%20%0AResumen%20de%20la%20propuesta%3A%20"
                   className="flex items-center gap-2"
                 >
                   Propuesta de Colaboración
                 </a>
               </Button>
             </div>
-            
+
             {/* Contact Info */}
             <div className="mt-10 text-center">
-              <p className="text-white/80 text-sm mb-2">
-                <strong>Contacto directo:</strong> investigacion@institutodbt.cl
+              <p className="text-white/90 text-sm mb-2">
+                <strong>Contacto directo:</strong>{' '}
+                <a href="mailto:contacto@dbtchile.cl" className="underline hover:text-white">
+                  contacto@dbtchile.cl
+                </a>
               </p>
               <p className="text-white/70 text-xs">
                 Respondemos propuestas científicas en un plazo máximo de 72 horas hábiles

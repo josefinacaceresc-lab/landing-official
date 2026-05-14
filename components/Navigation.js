@@ -77,7 +77,7 @@ export default function Navigation() {
               variant="outline"
               className="rounded-full px-5 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold transition-colors"
             >
-              <Link href="/autoevaluacion">
+              <Link href="/evaluacion-idp4">
                 Test Gratuito
               </Link>
             </Button>

@@ -403,33 +403,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Team Gallery - Clean */}
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-900 text-center mb-8">Equipo Clínico</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[
-                  'Ps. Moraga',
-                  'Ps. Bizama',
-                  'Ps. Alliende',
-                  'Ps. Jara',
-                  'Ps. Contreras',
-                  'Ps. Loyola',
-                  'Ps. Sánchez',
-                  'Ps. Castillo'
-                ].map((name, i) => (
-                  <div key={i} className="text-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
-                      <Users className="w-6 h-6 text-primary" />
-                    </div>
-                    <p className="text-sm font-semibold text-gray-900">{name}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* CTA */}
-            <div className="text-center mt-12">
-              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white px-8 py-6">
+            <div className="text-center mt-4">
+              <Button
+                size="lg"
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'family-cta' } }))}
+                className="bg-secondary hover:bg-secondary/90 text-white px-8 py-6"
+              >
                 Solicitar Información
               </Button>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones</p>

@@ -72,23 +72,31 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
-    // Store Fast WhatsApp Capture Lead (Name + Phone)
+    // Store Fast WhatsApp Capture Lead (Name + optional Phone/Email)
     if (pathname === '/api/leads/fast-capture') {
-      const { fullName, phone, source } = body || {}
+      const { fullName, phone, email, source, mode, timestamp } = body || {}
 
-      if (!fullName || !phone) {
-        return Response.json({ error: 'Nombre y teléfono son obligatorios' }, { status: 400 })
+      if (!fullName) {
+        return Response.json({ error: 'Nombre es obligatorio' }, { status: 400 })
       }
 
       const cleanName = String(fullName).trim()
-      const cleanPhone = String(phone).trim()
-      const phoneDigits = cleanPhone.replace(/\D/g, '')
-
       if (cleanName.length < 2) {
         return Response.json({ error: 'Nombre inválido' }, { status: 400 })
       }
-      if (phoneDigits.length < 8) {
-        return Response.json({ error: 'Teléfono inválido' }, { status: 400 })
+
+      const cleanPhone = phone ? String(phone).trim() : ''
+      const phoneDigits = cleanPhone.replace(/\D/g, '')
+      const cleanEmail = email ? String(email).trim() : ''
+
+      // After-hours mode requires phone + email
+      if (mode === 'after-hours') {
+        if (phoneDigits.length < 8) {
+          return Response.json({ error: 'Teléfono inválido' }, { status: 400 })
+        }
+        if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+          return Response.json({ error: 'Email inválido' }, { status: 400 })
+        }
       }
 
       const db = await connectToDatabase()
@@ -96,10 +104,13 @@ export async function POST(request) {
 
       const lead = {
         fullName: cleanName,
-        phone: cleanPhone,
-        phoneDigits,
+        phone: cleanPhone || null,
+        phoneDigits: phoneDigits || null,
+        email: cleanEmail || null,
         source: 'whatsapp-fast-capture',
         sourceContext: source || 'general',
+        mode: mode || 'business-hours',
+        clientTimestamp: timestamp || null,
         createdAt: new Date(),
         status: 'new',
       }
@@ -111,11 +122,18 @@ export async function POST(request) {
         const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN
         const TG_CHAT = process.env.TELEGRAM_CHAT_ID || '533798039'
         if (TG_TOKEN) {
-          const msg = `🟢 NUEVO LEAD WhatsApp\nNombre: ${cleanName}\nTeléfono: ${cleanPhone}\nOrigen: ${source || 'general'}`
+          const tag = mode === 'after-hours' ? '🌙 FUERA DE HORARIO' : '🟢 EN HORARIO'
+          const lines = [
+            `${tag} · Lead WhatsApp`,
+            `Nombre: ${cleanName}`,
+          ]
+          if (cleanPhone) lines.push(`Teléfono: ${cleanPhone}`)
+          if (cleanEmail) lines.push(`Email: ${cleanEmail}`)
+          lines.push(`Origen: ${source || 'general'}`)
           fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TG_CHAT, text: msg }),
+            body: JSON.stringify({ chat_id: TG_CHAT, text: lines.join('\n') }),
           }).catch(() => {})
         }
       } catch (_) { /* ignore */ }
@@ -123,7 +141,7 @@ export async function POST(request) {
       return Response.json({
         success: true,
         leadId: result.insertedId?.toString?.() || null,
-        message: 'Lead registrado, redirigiendo a WhatsApp',
+        mode: mode || 'business-hours',
       })
     }
 

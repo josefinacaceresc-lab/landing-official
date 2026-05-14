@@ -11,12 +11,6 @@ export const metadata = {
 
 const eventos = [
   {
-    fecha: 'Próximamente · 2025',
-    titulo: 'Jornada Internacional WDBTA Chile',
-    formato: 'Presencial · Santiago',
-    descripcion: 'Encuentro académico anual con clínicos formados en DBT estándar y patología dual. Conferencias magistrales, mesas clínicas y presentación de casos.',
-  },
-  {
     fecha: 'Programa permanente',
     titulo: 'Seminarios Mensuales de Investigación',
     formato: 'Online · Streaming abierto',

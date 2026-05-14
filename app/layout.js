@@ -1,9 +1,14 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const poppins = Poppins({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap'
+})
 
 export const metadata = {
   metadataBase: new URL('https://institutodbt.cl'),
@@ -65,7 +70,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es-CL">
+    <html lang="es-CL" className={poppins.variable}>
       <head>
         <link rel="canonical" href="https://institutodbt.cl" />
         <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
@@ -105,7 +110,7 @@ export default function RootLayout({ children }) {
           })
         }} />
       </head>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <Navigation />
         <main className="min-h-screen">
           {children}

@@ -267,18 +267,18 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Left: Barcelona 2023 */}
+              {/* Left: Barcelona 2023 REAL PHOTO */}
               <div className="relative">
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-primary/5">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Award className="w-12 h-12 text-primary" />
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">Barcelona 2023</h3>
-                      <p className="text-gray-600">WDBTA Research Chapter</p>
-                    </div>
-                  </div>
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/aecd20208fec4060be44c1b61f5f61a0_1697991434321.jpeg"
+                    alt="WDBTA Research Chapter Barcelona 2023"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg">
+                  <p className="text-sm font-bold text-gray-900">Barcelona 2023</p>
+                  <p className="text-xs text-gray-600">WDBTA Research Chapter</p>
                 </div>
               </div>
 
@@ -348,6 +348,27 @@ export default function Home() {
               <div className="p-6 bg-white rounded-xl shadow-lg">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Grupos de Apoyo</h3>
                 <p className="text-gray-600">Espacios seguros para compartir experiencias con otras familias.</p>
+              </div>
+            </div>
+
+            {/* Family Photos Gallery */}
+            <div className="mb-12">
+              <h3 className="text-2xl font-semibold text-gray-900 text-center mb-8">Comunidad Family Parents</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="relative aspect-[3/2] rounded-2xl overflow-hidden shadow-xl">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/21926a5786ce45b0914d6e0075ddcaf2_family%201.jpg"
+                    alt="Family Parents Community Event"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="relative aspect-[3/2] rounded-2xl overflow-hidden shadow-xl">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/8fdca2d979464b4497fd743618d8e38b_family%202.jpg"
+                    alt="Family Parents Support Group"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
 

@@ -10,16 +10,19 @@ export default function Navigation() {
   const [researchOpen, setResearchOpen] = useState(false)
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo - Official Vertical DBT Chile (transparent white bg via blend mode) */}
-          <Link href="/" className="flex items-center gap-3 group">
+        <div className="flex items-center justify-between h-24">
+          {/* Logo - Official Vertical DBT Chile (white bg neutralized via mix-blend-multiply on pure-white nav) */}
+          <Link href="/" className="flex items-center group pl-1 pr-2 py-1" aria-label="Instituto DBT Chile · Inicio">
             <img 
               src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg" 
               alt="Instituto DBT Chile"
-              className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
-              style={{ mixBlendMode: 'multiply' }}
+              width="160"
+              height="80"
+              draggable="false"
+              className="h-20 w-auto object-contain select-none transition-transform duration-300 group-hover:scale-[1.03]"
+              style={{ mixBlendMode: 'multiply', imageRendering: '-webkit-optimize-contrast' }}
             />
           </Link>
 

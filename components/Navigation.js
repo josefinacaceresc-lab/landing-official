@@ -16,7 +16,7 @@ export default function Navigation() {
           {/* Logo - Official Vertical DBT Chile (white bg neutralized via mix-blend-multiply on pure-white nav) */}
           <Link href="/" className="flex items-center group pl-1 pr-2 py-1" aria-label="Instituto DBT Chile · Inicio">
             <img 
-              src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg" 
+              src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg" 
               alt="Instituto DBT Chile"
               width="160"
               height="80"

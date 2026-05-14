@@ -372,7 +372,7 @@ export default function IDP4Page() {
               <div className="flex items-center gap-4">
                 <div className="bg-white rounded-lg p-2 flex-shrink-0 shadow-md">
                   <img
-                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg"
+                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg"
                     alt="Instituto DBT Chile"
                     width="64"
                     height="64"

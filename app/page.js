@@ -19,7 +19,7 @@ export default function Home() {
             {/* Vertical Logo - transparent white background via mix-blend-multiply */}
             <div className="flex justify-center mb-8">
               <img
-                src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg"
+                src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg"
                 alt="Instituto DBT Chile"
                 className="h-32 md:h-40 w-auto object-contain"
                 style={{ mixBlendMode: 'multiply' }}
@@ -439,7 +439,7 @@ export default function Home() {
               </div>
               <div className="grid md:grid-cols-3 gap-6">
                 {/* TLP */}
-                <Link href="/tratamiento/tlp" className="group">
+                <Link href="/tratamiento/tlp-alta-gama" className="group">
                   <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
                     <CardContent className="p-7">
                       <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>

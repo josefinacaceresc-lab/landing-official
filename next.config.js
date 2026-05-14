@@ -45,32 +45,37 @@ const nextConfig = {
       // legacy URL from the old dbtchile.cl WordPress site). Catch all variants.
       {
         source: '/tlp_-_dbt/alta-gama',
-        destination: '/tratamientos/patologia-dual',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {
         source: '/tlp_-_dbt/alta-gama/',
-        destination: '/tratamientos/patologia-dual',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {
         source: '/tlp_-_dbt/:slug*',
-        destination: '/tratamiento/tlp',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {
         source: '/tlp-dbt/:slug*',
-        destination: '/tratamiento/tlp',
+        destination: '/tratamiento/tlp-alta-gama',
+        permanent: true,
+      },
+      {
+        source: '/tratamiento/tlp',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {
         source: '/tlp/alta-gama',
-        destination: '/tratamientos/patologia-dual',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {
         source: '/alta-gama',
-        destination: '/tratamientos/patologia-dual',
+        destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
       {

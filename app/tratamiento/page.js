@@ -77,7 +77,7 @@ const fases = [
 const poblaciones = [
   {
     titulo: 'Trastorno Límite de Personalidad (TLP)',
-    href: '/tratamiento/tlp',
+    href: '/tratamiento/tlp-alta-gama',
     descripcion: 'Tratamiento de primera línea con evidencia de mayor calidad. Reducción de conductas suicidas, autolesivas y hospitalizaciones bajo estándar WDBTA.',
   },
   {

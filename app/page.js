@@ -1,26 +1,11 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
-
-export const metadata = {
-  title: 'InstitutoDBT.cl | Centro de Alta Complejidad & Psiquiatría Computacional',
-  description: 'InstitutoDBT.cl — Centro de Alta Complejidad y Psiquiatría Computacional. Único miembro institucional WDBTA en Chile. DBT de Fidelidad Total + Schema Therapy bajo dirección de la Dra. Josefina Cáceres, Ph.D.(c).',
-  alternates: {
-    canonical: 'https://institutodbt.cl',
-  },
-  openGraph: {
-    title: 'InstitutoDBT.cl | Centro de Alta Complejidad & Psiquiatría Computacional',
-    description: 'Único miembro institucional WDBTA en Chile. DBT de Fidelidad Total + Schema Therapy.',
-    url: 'https://institutodbt.cl',
-    images: [{
-      url: 'https://institutodbt.cl/media/wdbta-barcelona-2023.jpeg',
-      width: 1200,
-      height: 630,
-    }],
-  },
-}
+import { trackWhatsAppClick, trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
 
 export default function Home() {
   return (
@@ -397,8 +382,16 @@ export default function Home() {
             <p className="text-xl mb-12 text-emerald-50">
               Da el primer paso. Nuestro equipo responde en menos de 24 horas hábiles.
             </p>
-            <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold">
-              <a href="https://wa.me/56930550750?text=Hola,%20me%20gustaría%20solicitar%20una%20evaluación%20de%20alta%20complejidad%20en%20InstitutoDBT.cl.%20Mi%20nombre%20es..." target="_blank" rel="noopener noreferrer">
+            <Button 
+              size="lg" 
+              className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
+              onClick={() => trackWhatsAppClick('contacto-section')}
+            >
+              <a 
+                href="https://wa.me/56930550750?text=Hola,%20me%20gustaría%20solicitar%20una%20evaluación%20de%20alta%20complejidad%20en%20InstitutoDBT.cl.%20Mi%20nombre%20es..." 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
                 WhatsApp · +56 9 3055 0750
               </a>
             </Button>
@@ -406,8 +399,20 @@ export default function Home() {
               Horario: Lunes a Viernes, 9:00 - 18:00 hrs (Chile)
             </p>
             <div className="mt-8 text-sm text-emerald-100 space-y-2">
-              <p>📞 22 848 0652</p>
-              <p>✉️ contacto@institutodbt.cl</p>
+              <button 
+                onClick={() => trackPhoneClick('contacto-section')}
+                className="hover:text-white transition-colors"
+              >
+                <p>📞 22 848 0652</p>
+              </button>
+              <button 
+                onClick={() => trackEmailClick('contacto-section')}
+                className="hover:text-white transition-colors"
+              >
+                <a href="mailto:contacto@institutodbt.cl">
+                  <p>✉️ contacto@institutodbt.cl</p>
+                </a>
+              </button>
               <p>📍 El Coihue 3776, Vitacura, Santiago</p>
             </div>
           </div>

@@ -27,23 +27,23 @@ export default function Home() {
     <div className="bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-primary/10" />
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-6 text-sm font-semibold text-emerald-700 uppercase tracking-wider">
+            <div className="mb-6 text-sm font-semibold text-primary uppercase tracking-wider">
               Único Miembro Institucional WDBTA en Chile
             </div>
             
             <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 tracking-tight">
-              Donde la ciencia encuentra a las <em className="font-serif italic text-emerald-700">personas</em>
+              Donde la ciencia encuentra a las <em className="font-serif italic text-primary">personas</em>
             </h1>
             
             <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
               Dirigido por la <strong>Dra.(c) Josefina Cáceres Cortés, Ph.D.(c)</strong> — el centro de salud mental más avanzado de Chile. Combinamos el tratamiento DBT de mayor evidencia científica con Schema Therapy y tecnología clínica propia, bajo el único sello institucional <strong>WDBTA</strong> del país.
             </p>
             
-            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-6 text-lg mb-12">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12">
               <Link href="#contacto" className="flex items-center gap-2">
                 Solicitar hora
                 <ArrowRight className="w-5 h-5" />
@@ -52,19 +52,19 @@ export default function Home() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               <div>
-                <div className="text-3xl font-serif font-light text-emerald-700 mb-1">15+</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">15+</div>
                 <div className="text-sm text-gray-600">Años en DBT</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-emerald-700 mb-1">WDBTA</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">WDBTA</div>
                 <div className="text-sm text-gray-600">Miembro institucional</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-emerald-700 mb-1">2</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">2</div>
                 <div className="text-sm text-gray-600">Terapias integradas</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-emerald-700 mb-1">AI</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">AI</div>
                 <div className="text-sm text-gray-600">LaKaira · Tecnología clínica</div>
               </div>
             </div>
@@ -130,6 +130,143 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Lakaira AI & NexariaLabs Section - PROMINENT */}
+      <section className="py-24 bg-gradient-to-br from-primary/10 via-white to-primary/5 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">
+                <Cpu className="w-5 h-5 text-primary" />
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+                  Psiquiatría Computacional
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-light text-gray-900 mb-6">
+                <span className="font-bold text-primary">Lakaira AI</span>
+                <br />
+                <span className="text-3xl md:text-4xl">El Puente entre DBT Clínico y Ciencia de Datos</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Desarrollado por <strong>NexariaLabs</strong>, Lakaira AI es nuestra extensión de inteligencia artificial que integra análisis de lenguaje natural, modelos predictivos y psicometría computacional para potenciar la precisión diagnóstica y el monitoreo terapéutico en tiempo real.
+              </p>
+            </div>
+
+            {/* Main Card */}
+            <Card className="border-2 border-primary/20 shadow-2xl hover:shadow-3xl transition-all duration-300 bg-white overflow-hidden">
+              <CardContent className="p-0">
+                <div className="grid md:grid-cols-2 gap-0">
+                  {/* Left: Content */}
+                  <div className="p-10">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                      ¿Qué hace Lakaira AI?
+                    </h3>
+                    <ul className="space-y-4 mb-8">
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <strong className="text-gray-900">Fenotipado Digital:</strong>
+                          <span className="text-gray-600"> Análisis multidimensional de desregulación emocional mediante IDP-4.</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <strong className="text-gray-900">Predicción de Riesgo:</strong>
+                          <span className="text-gray-600"> Modelos de machine learning para prevención de crisis.</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <strong className="text-gray-900">Monitoreo Continuo:</strong>
+                          <span className="text-gray-600"> Análisis de progreso terapéutico con métricas objetivas.</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <strong className="text-gray-900">Interoperabilidad Clínica:</strong>
+                          <span className="text-gray-600"> Integración con protocolos DBT y Schema Therapy.</span>
+                        </div>
+                      </li>
+                    </ul>
+                    
+                    <Button 
+                      size="lg" 
+                      asChild 
+                      className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg font-semibold w-full md:w-auto"
+                    >
+                      <a 
+                        href="https://www.nexaryalabs.cl" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2"
+                      >
+                        Explorar NexariaLabs
+                        <ArrowRight className="w-5 h-5" />
+                      </a>
+                    </Button>
+                  </div>
+
+                  {/* Right: Visual/Stats */}
+                  <div className="bg-gradient-to-br from-primary to-primary/80 p-10 text-white flex flex-col justify-center">
+                    <div className="mb-8">
+                      <Cpu className="w-16 h-16 mb-4 opacity-90" />
+                      <h4 className="text-2xl font-bold mb-2">NexariaLabs</h4>
+                      <p className="text-primary-foreground/90 leading-relaxed">
+                        Laboratorio de Psiquiatría Computacional y Data Science aplicado a salud mental. Desarrollo de herramientas IA para clínica de alta complejidad.
+                      </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="text-3xl font-bold mb-1">IDP-4</div>
+                        <div className="text-sm text-primary-foreground/80">Test de Fenotipado</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="text-3xl font-bold mb-1">24/7</div>
+                        <div className="text-sm text-primary-foreground/80">Monitoreo AI</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="text-3xl font-bold mb-1">ML</div>
+                        <div className="text-sm text-primary-foreground/80">Machine Learning</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="text-3xl font-bold mb-1">NLP</div>
+                        <div className="text-sm text-primary-foreground/80">Análisis Lingüístico</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Bottom Badge */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500">
+                <strong className="text-primary">Lakaira AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para InstitutoDBT.cl
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Why Choose Us */}
       <section className="py-20 bg-gradient-to-b from-white to-emerald-50">

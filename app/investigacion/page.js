@@ -27,11 +27,11 @@ export default function InvestigacionPage() {
     <div className="bg-white">
       {/* Hero */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-primary/10" />
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-6">
-              Investigación <span className="font-semibold text-emerald-600">Científica</span>
+              Investigación <span className="font-semibold text-primary">Científica</span>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
               Desarrollamos ciencia aplicada de vanguardia en neurociencia, 
@@ -47,9 +47,9 @@ export default function InvestigacionPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               {/* LaKaira AI */}
-              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-emerald-50">
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-primary/5">
                 <CardHeader>
-                  <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
+                  <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-3xl font-semibold text-gray-900">LaKaira AI</CardTitle>
@@ -61,19 +61,19 @@ export default function InvestigacionPage() {
                   </p>
                   <ul className="space-y-2 mb-6 text-gray-700">
                     <li className="flex items-start gap-2">
-                      <span className="text-emerald-600 mt-1">•</span>
+                      <span className="text-primary mt-1">•</span>
                       <span>Machine Learning aplicado a DBT</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-emerald-600 mt-1">•</span>
+                      <span className="text-primary mt-1">•</span>
                       <span>Monitoreo continuo de regulación emocional</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-emerald-600 mt-1">•</span>
+                      <span className="text-primary mt-1">•</span>
                       <span>Intervenciones preventivas personalizadas</span>
                     </li>
                   </ul>
-                  <Button variant="outline" className="border-emerald-600 text-emerald-700 hover:bg-emerald-50">
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
                     Ver Proyecto
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -81,9 +81,9 @@ export default function InvestigacionPage() {
               </Card>
 
               {/* La Mente Algorítmica */}
-              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-amber-50">
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-secondary/5">
                 <CardHeader>
-                  <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                  <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-secondary to-secondary/90 flex items-center justify-center">
                     <Brain className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-3xl font-semibold text-gray-900">La Mente Algorítmica</CardTitle>
@@ -95,7 +95,7 @@ export default function InvestigacionPage() {
                   </p>
                   <ul className="space-y-2 mb-6 text-gray-700">
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-600 mt-1">•</span>
+                      <span className="text-secondary mt-1">•</span>
                       <span>Tratado Maestro (6,454 palabras, 33 refs APA 7)</span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -162,19 +162,91 @@ export default function InvestigacionPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-light mb-6">
-              ¿Interesado en <span className="font-semibold">Colaborar</span>?
-            </h2>
-            <p className="text-xl mb-8 text-emerald-50">
-              Aceptamos propuestas de investigación conjunta y alianzas estratégicas
-            </p>
-            <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50">
-              Contactar Equipo de Investigación
-            </Button>
+      {/* CTA - Join Research (CRITICAL FEATURE - Dra. Cáceres Priority) */}
+      <section className="py-24 bg-gradient-to-br from-primary via-primary/95 to-secondary text-white relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            {/* Main Content */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
+                <Brain className="w-5 h-5" />
+                <span className="text-sm font-semibold uppercase tracking-wider">
+                  Convocatoria Abierta
+                </span>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-light mb-6">
+                ¿Quieres <span className="font-bold">ser parte de esta investigación</span>?
+              </h2>
+              
+              <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Invitamos a <strong>profesionales de la salud mental</strong>, <strong>investigadores</strong> y <strong>pacientes con diagnóstico de TLP o desregulación emocional</strong> a participar en nuestros estudios científicos de alta complejidad.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto text-left">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <h3 className="font-bold text-lg mb-2">Participantes Clínicos</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Personas con diagnóstico de TLP o alta desregulación emocional interesadas en contribuir al avance científico.
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <h3 className="font-bold text-lg mb-2">Investigadores & Co-autores</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Profesionales que buscan alianzas estratégicas en psiquiatría computacional y neurociencia aplicada.
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <h3 className="font-bold text-lg mb-2">Colaboradores Institucionales</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Universidades, centros de investigación y entidades que buscan proyectos conjuntos.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                size="lg" 
+                asChild 
+                className="bg-white text-primary hover:bg-white/90 px-10 py-7 text-lg font-bold shadow-2xl"
+              >
+                <Link href="#contacto" className="flex items-center gap-2">
+                  Ser parte de esta Investigación
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+              
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white/10 px-10 py-7 text-lg font-semibold"
+              >
+                <a 
+                  href="mailto:investigacion@institutodbt.cl?subject=Propuesta%20de%20Colaboración%20Científica"
+                  className="flex items-center gap-2"
+                >
+                  Propuesta de Colaboración
+                </a>
+              </Button>
+            </div>
+            
+            {/* Contact Info */}
+            <div className="mt-10 text-center">
+              <p className="text-white/80 text-sm mb-2">
+                <strong>Contacto directo:</strong> investigacion@institutodbt.cl
+              </p>
+              <p className="text-white/70 text-xs">
+                Respondemos propuestas científicas en un plazo máximo de 72 horas hábiles
+              </p>
+            </div>
           </div>
         </div>
       </section>

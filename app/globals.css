@@ -4,40 +4,40 @@
 
 @layer base {
   :root {
-        /* Instituto DBT Custom Colors - Emerald, Gold, White */
+        /* Instituto DBT Official Colors - Teal from logos #00A3A3 and #007373 */
         --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
+        --foreground: 180 100% 22.5%; /* #007373 - Dark Teal */
         --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
+        --card-foreground: 180 100% 22.5%;
         --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 160 84% 39%; /* Emerald-600 */
+        --popover-foreground: 180 100% 22.5%;
+        --primary: 180 100% 32%; /* #00A3A3 - Official Logo Teal */
         --primary-foreground: 0 0% 100%;
-        --secondary: 43 96% 56%; /* Amber-400 (Gold) */
-        --secondary-foreground: 222.2 47.4% 11.2%;
-        --muted: 160 40% 96.1%;
+        --secondary: 180 100% 29%; /* #009688 - Family Parents Teal */
+        --secondary-foreground: 0 0% 100%;
+        --muted: 180 40% 96.1%;
         --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 43 96% 56%; /* Gold accent */
-        --accent-foreground: 222.2 47.4% 11.2%;
+        --accent: 180 100% 32%; /* Teal accent */
+        --accent-foreground: 0 0% 100%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
         --border: 214.3 31.8% 91.4%;
         --input: 214.3 31.8% 91.4%;
-        --ring: 160 84% 39%; /* Emerald ring */
-        --chart-1: 160 84% 39%; /* Emerald */
-        --chart-2: 43 96% 56%; /* Gold */
-        --chart-3: 197 37% 24%;
-        --chart-4: 160 60% 50%;
-        --chart-5: 43 87% 67%;
+        --ring: 180 100% 32%; /* Teal ring */
+        --chart-1: 180 100% 32%; /* #00A3A3 */
+        --chart-2: 180 100% 29%; /* #009688 */
+        --chart-3: 180 100% 22.5%; /* #007373 */
+        --chart-4: 180 60% 50%;
+        --chart-5: 180 40% 70%;
         --radius: 0.75rem;
         --sidebar-background: 0 0% 98%;
         --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 160 84% 39%;
+        --sidebar-primary: 180 100% 32%;
         --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 160 40% 95.9%;
+        --sidebar-accent: 180 40% 95.9%;
         --sidebar-accent-foreground: 240 5.9% 10%;
         --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 160 84% 39%;
+        --sidebar-ring: 180 100% 32%;
     }
   .dark {
         --background: 222.2 84% 4.9%;
@@ -46,32 +46,32 @@
         --card-foreground: 210 40% 98%;
         --popover: 222.2 84% 4.9%;
         --popover-foreground: 210 40% 98%;
-        --primary: 160 84% 39%;
+        --primary: 180 100% 32%; /* #00A3A3 */
         --primary-foreground: 0 0% 100%;
-        --secondary: 43 96% 56%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
+        --secondary: 180 100% 29%; /* #009688 */
+        --secondary-foreground: 0 0% 100%;
         --muted: 217.2 32.6% 17.5%;
         --muted-foreground: 215 20.2% 65.1%;
-        --accent: 43 96% 56%;
+        --accent: 180 100% 32%;
         --accent-foreground: 210 40% 98%;
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 210 40% 98%;
         --border: 217.2 32.6% 17.5%;
         --input: 217.2 32.6% 17.5%;
-        --ring: 160 84% 39%;
-        --chart-1: 160 84% 39%;
-        --chart-2: 43 96% 56%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 160 60% 50%;
-        --chart-5: 43 75% 55%;
+        --ring: 180 100% 32%;
+        --chart-1: 180 100% 32%;
+        --chart-2: 180 100% 29%;
+        --chart-3: 180 80% 55%;
+        --chart-4: 180 60% 50%;
+        --chart-5: 180 75% 55%;
         --sidebar-background: 240 5.9% 10%;
         --sidebar-foreground: 240 4.8% 95.9%;
-        --sidebar-primary: 160 84% 39%;
+        --sidebar-primary: 180 100% 32%;
         --sidebar-primary-foreground: 0 0% 100%;
         --sidebar-accent: 240 3.7% 15.9%;
         --sidebar-accent-foreground: 240 4.8% 95.9%;
         --sidebar-border: 240 3.7% 15.9%;
-        --sidebar-ring: 160 84% 39%;
+        --sidebar-ring: 180 100% 32%;
     }
 }
 

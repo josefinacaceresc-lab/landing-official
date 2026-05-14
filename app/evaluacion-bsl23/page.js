@@ -408,8 +408,158 @@ export default function BSL23Page() {
     )
   }
 
+  // Form step (data collection)
+  if (currentStep === 'form') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-amber-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <Card className="border-0 shadow-2xl bg-white">
+              <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-white">
+                <CardTitle className="text-3xl font-light">Tus datos de contacto</CardTitle>
+                <p className="text-white/90 mt-2">Para enviarte los resultados de tu evaluación BSL-23</p>
+              </CardHeader>
+              <CardContent className="p-8">
+                {submitError && (
+                  <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
+                    {submitError}
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
+                    <input
+                      type="text"
+                      value={formData.fullName}
+                      onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    {errors.fullName && <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">RUT</label>
+                    <input
+                      type="text"
+                      value={formData.rut}
+                      onChange={handleRUTChange}
+                      placeholder="12.345.678-9"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    {errors.rut && <p className="text-red-600 text-sm mt-1">{errors.rut}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                      placeholder="+56 9 1234 5678"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone}</p>}
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    size="lg"
+                    className="w-full bg-primary hover:bg-primary/90 text-white"
+                  >
+                    {isSubmitting ? (
+                      <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Procesando...</>
+                    ) : (
+                      <><CheckCircle className="w-5 h-5 mr-2" /> Ver mis resultados</>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Assessment step (questions)
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-amber-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Introduction - continuing in next message due to character limit */}
+          <Card className="border-0 shadow-2xl bg-white">
+            <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <CardTitle className="text-3xl font-light">Evaluación BSL-23</CardTitle>
+              <p className="text-white/90 mt-2">Borderline Symptom List — Dr. Martin Bohus (23 ítems · 0–4)</p>
+            </CardHeader>
+            <CardContent className="p-8">
+              {/* Progress */}
+              <div className="mb-8">
+                <div className="flex justify-between text-sm text-gray-600 mb-2">
+                  <span>Progreso</span>
+                  <span>{Object.keys(responses).length} / {bsl23Questions.length}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-primary h-2 rounded-full transition-all"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+
+              <p className="text-gray-600 mb-6 italic">Durante la <strong>última semana</strong>, ¿con qué intensidad has experimentado lo siguiente?</p>
+
+              <div className="space-y-6 mb-8">
+                {bsl23Questions.map((q) => (
+                  <div key={q.id} className="border border-gray-200 rounded-lg p-5">
+                    <div className="flex items-start gap-3 mb-4">
+                      <span className="text-primary font-semibold">{q.id}.</span>
+                      <div className="flex-1">
+                        <p className="text-gray-900">{q.text}</p>
+                        <p className="text-xs text-gray-500 mt-1">{q.subscale}</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-5 gap-2">
+                      {scaleOptions.map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => handleResponseChange(q.id, opt.value)}
+                          className={`py-2 px-1 rounded-md border-2 text-xs font-medium transition-colors ${
+                            responses[q.id] === opt.value
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-gray-300 text-gray-600 hover:border-primary/50'
+                          }`}
+                          title={opt.description}
+                        >
+                          <div className="font-bold">{opt.value}</div>
+                          <div className="text-[10px] mt-1">{opt.label}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Button
+                onClick={handleAssessmentComplete}
+                disabled={!allQuestionsAnswered}
+                size="lg"
+                className="w-full bg-primary hover:bg-primary/90 text-white"
+              >
+                {allQuestionsAnswered ? 'Continuar a mis datos' : `Faltan ${bsl23Questions.length - Object.keys(responses).length} respuestas`}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+}

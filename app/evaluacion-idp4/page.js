@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle, CheckCircle, Loader2, Brain, Clock } from 'lucide-react'
+import { AlertTriangle, CheckCircle, Loader2, Brain, Clock, Shield, Lock, Phone, X } from 'lucide-react'
 
 // IDP-4: Inventario Dimensional de Personalidad (4 dominios)
 // Dra. Josefina Cáceres, 2026 - InstitutoDBT.cl
@@ -71,7 +71,9 @@ export default function IDP4Page() {
   const [questionStartTime, setQuestionStartTime] = useState({})
   const [showModal, setShowModal] = useState(false)
   const [showSafety, setShowSafety] = useState(false)
-  const [formData, setFormData] = useState({ fullName: '', age: '', email: '', rut: '' })
+  const [formData, setFormData] = useState({ fullName: '', gender: '', age: '', comuna: '', rut: '' })
+  const [showConsent, setShowConsent] = useState(false)
+  const [consentTimestamp, setConsentTimestamp] = useState(null)
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
@@ -179,16 +181,80 @@ export default function IDP4Page() {
     if (errors.rut) setErrors(prev => ({ ...prev, rut: '' }))
   }
 
+  // Chilean RUT validation (Modulo 11 algorithm)
+  const validateRUT = (rut) => {
+    if (!rut) return false
+    const clean = rut.replace(/[^0-9kK]/g, '').toUpperCase()
+    if (clean.length < 8 || clean.length > 9) return false
+    const body = clean.slice(0, -1)
+    const dv = clean.slice(-1)
+    let sum = 0
+    let mul = 2
+    for (let i = body.length - 1; i >= 0; i--) {
+      sum += parseInt(body[i], 10) * mul
+      mul = mul === 7 ? 2 : mul + 1
+    }
+    const mod = 11 - (sum % 11)
+    const expected = mod === 11 ? '0' : mod === 10 ? 'K' : String(mod)
+    return expected === dv
+  }
+
   const validateForm = () => {
     const newErrors = {}
-    if (!formData.fullName.trim()) newErrors.fullName = 'Nombre es requerido'
-    if (!formData.rut.trim()) newErrors.rut = 'RUT es requerido'
-    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Email válido es requerido'
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Ingresa tu nombre completo'
     }
-    if (!formData.phone.trim()) newErrors.phone = 'Teléfono es requerido'
+    if (!formData.gender) newErrors.gender = 'Selecciona tu género'
+    const ageNum = parseInt(formData.age, 10)
+    if (!formData.age || isNaN(ageNum) || ageNum < 18 || ageNum > 99) {
+      newErrors.age = 'Edad debe estar entre 18 y 99'
+    }
+    if (!formData.comuna.trim() || formData.comuna.trim().length < 2) {
+      newErrors.comuna = 'Ingresa tu comuna'
+    }
+    if (!formData.rut.trim()) {
+      newErrors.rut = 'RUT es requerido'
+    } else if (!validateRUT(formData.rut)) {
+      newErrors.rut = 'RUT inválido (revisa dígito verificador)'
+    }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
+  }
+
+  // Save intake (gate the test) — sends initial lead with personal data; full results sent at end
+  const handleIntakeSubmit = async (e) => {
+    e.preventDefault()
+    if (!validateForm()) return
+    setIsSubmitting(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/leads/idp4', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName.trim(),
+          gender: formData.gender,
+          age: parseInt(formData.age, 10),
+          comuna: formData.comuna.trim(),
+          rut: formData.rut.trim(),
+          stage: 'intake',
+          source: 'evaluacion-idp4',
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSubmitError(data?.error || 'No pudimos registrar tus datos. Intenta nuevamente.')
+        setIsSubmitting(false)
+        return
+      }
+      // Persist lead reference for the assessment submission later
+      try { sessionStorage.setItem('idp4LeadId', data.leadId || '') } catch (_) {}
+      setCurrentStep('assessment')
+    } catch (_) {
+      setSubmitError('Conexión inestable. Intenta nuevamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -262,8 +328,116 @@ export default function IDP4Page() {
     )
   }
 
+  // ── Informed Consent (Chilean Law 19.628 / 21.331 / 20.584) ────────────
+  const handleAcceptConsent = async () => {
+    const ts = new Date().toISOString()
+    setConsentTimestamp(ts)
+    // Fire-and-forget: register consent event server-side
+    try {
+      fetch('/api/leads/idp4-consent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          consentAccepted: true,
+          consentedAt: ts,
+          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+          legalFramework: ['Ley 19.628', 'Ley 21.331', 'Ley 20.584'],
+        }),
+      }).catch(() => {})
+    } catch (_) {}
+    try { sessionStorage.setItem('idp4Consent', ts) } catch (_) {}
+    setShowConsent(false)
+    setCurrentStep('intake')
+  }
+
+  const handleRejectConsent = () => {
+    setShowConsent(false)
+    // Redirect back to home on rejection
+    try { router.push('/') } catch (_) {}
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-amber-50 py-12">
+      {/* ── INFORMED CONSENT MODAL ────────────────────────────────────────── */}
+      {showConsent && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="consent-title"
+          className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/70 backdrop-blur-sm p-0 md:p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) handleRejectConsent() }}
+        >
+          <Card className="w-full max-w-xl border-0 shadow-2xl rounded-t-2xl md:rounded-2xl max-h-[90vh] flex flex-col">
+            <CardHeader className="bg-gradient-to-br from-primary to-primary/85 text-white rounded-t-2xl">
+              <div className="flex items-start gap-3">
+                <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <CardTitle id="consent-title" className="text-xl md:text-2xl font-semibold leading-tight">
+                    Instituto DBT Chile · Investigación IDP-4
+                  </CardTitle>
+                  <p className="text-white/90 text-sm mt-1 leading-relaxed">
+                    Antes de comenzar. Lee esto — toma menos de 30 segundos
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-6 overflow-y-auto flex-1">
+              <ul className="space-y-3 text-sm text-gray-800 leading-relaxed">
+                <li className="flex gap-3">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Este test evalúa tus emociones. <strong>No es un diagnóstico clínico.</strong></span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Tus datos (edad, género, comuna) se usan solo para <strong>investigación anónima</strong>.</span>
+                </li>
+                <li className="flex gap-3">
+                  <Lock className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Tu <strong>RUT se guarda encriptado</strong> — nadie puede recuperarlo, ni nosotros.</span>
+                </li>
+                <li className="flex gap-3">
+                  <Phone className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                  <span>Si aparecen pensamientos de daño, el sistema te conecta al <strong>1414</strong> <span className="text-gray-500">(gratis, 24/7)</span>.</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span><strong>Participación voluntaria</strong> — puedes salir en cualquier momento.</span>
+                </li>
+                <li className="flex gap-3">
+                  <Shield className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Datos protegidos bajo <strong>Ley 19.628 · Ley 21.331 · Ley 20.584</strong>.</span>
+                </li>
+              </ul>
+            </CardContent>
+
+            <div className="p-6 pt-2 border-t border-gray-100 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleRejectConsent}
+                  className="min-h-[52px] border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold"
+                >
+                  No acepto
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleAcceptConsent}
+                  className="min-h-[52px] bg-primary hover:bg-primary/90 text-white font-semibold shadow-md shadow-primary/20"
+                >
+                  Acepto y comienzo →
+                </Button>
+              </div>
+              <p className="text-[11px] text-gray-500 leading-relaxed text-center">
+                Al aceptar confirmas tener 18 años o más y haber leído lo anterior. Consentimiento registrado con fecha y hora (Ley 19.628 Art. 4).
+              </p>
+            </div>
+          </Card>
+        </div>
+      )}
       <div className="container mx-auto px-4 max-w-4xl">
         {currentStep === 'introduction' && (
           <Card className="border-0 shadow-2xl">
@@ -291,8 +465,184 @@ export default function IDP4Page() {
                     <strong className="text-amber-700">Estado del instrumento:</strong> Test en <strong>proceso de validación</strong> + Reporte personalizado inmediato. Los resultados son orientativos y deben ser interpretados por un profesional clínico entrenado.
                   </p>
                 </div>
-                <Button size="lg" onClick={() => setCurrentStep('assessment')} className="w-full bg-primary hover:bg-primary/90 py-6 text-lg text-white font-semibold">Comenzar IDP-4 (28 preguntas)</Button>
+                <Button size="lg" onClick={() => setShowConsent(true)} className="w-full bg-primary hover:bg-primary/90 py-6 text-lg text-white font-semibold">Comenzar IDP-4 (28 preguntas)</Button>
               </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {currentStep === 'intake' && (
+          <Card className="border-0 shadow-2xl">
+            <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <CardTitle className="text-3xl font-light">Acceso al test IDP-4</CardTitle>
+              <p className="text-white/90 mt-2">Completa tus datos para abrir el cuestionario de 28 preguntas</p>
+            </CardHeader>
+            <CardContent className="p-8">
+              {submitError && (
+                <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                  {submitError}
+                </div>
+              )}
+              <form onSubmit={handleIntakeSubmit} className="space-y-5" autoComplete="on">
+                <div>
+                  <label htmlFor="ipd-name" className="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
+                  <input
+                    id="ipd-name"
+                    type="text"
+                    autoComplete="name"
+                    value={formData.fullName}
+                    onChange={(e) => { setFormData(p => ({ ...p, fullName: e.target.value })); if (errors.fullName) setErrors(p => ({ ...p, fullName: '' })) }}
+                    placeholder="Tu nombre completo"
+                    className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.fullName ? 'border-red-400' : 'border-gray-200 focus:border-primary'}`}
+                  />
+                  {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="ipd-gender" className="block text-sm font-semibold text-gray-700 mb-2">Género</label>
+                    <select
+                      id="ipd-gender"
+                      value={formData.gender}
+                      onChange={(e) => { setFormData(p => ({ ...p, gender: e.target.value })); if (errors.gender) setErrors(p => ({ ...p, gender: '' })) }}
+                      className={`w-full px-4 py-3 text-base bg-white border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.gender ? 'border-red-400' : 'border-gray-200 focus:border-primary'}`}
+                    >
+                      <option value="">Selecciona</option>
+                      <option value="femenino">Femenino</option>
+                      <option value="masculino">Masculino</option>
+                      <option value="no-binario">No binario</option>
+                      <option value="prefiero-no-decir">Prefiero no decir</option>
+                    </select>
+                    {errors.gender && <p className="text-xs text-red-600 mt-1">{errors.gender}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="ipd-age" className="block text-sm font-semibold text-gray-700 mb-2">Edad</label>
+                    <input
+                      id="ipd-age"
+                      type="number"
+                      inputMode="numeric"
+                      min="18"
+                      max="99"
+                      value={formData.age}
+                      onChange={(e) => { setFormData(p => ({ ...p, age: e.target.value })); if (errors.age) setErrors(p => ({ ...p, age: '' })) }}
+                      placeholder="Ej: 28"
+                      className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.age ? 'border-red-400' : 'border-gray-200 focus:border-primary'}`}
+                    />
+                    {errors.age && <p className="text-xs text-red-600 mt-1">{errors.age}</p>}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="ipd-comuna" className="block text-sm font-semibold text-gray-700 mb-2">Comuna</label>
+                  <input
+                    id="ipd-comuna"
+                    type="text"
+                    list="comunas-cl"
+                    autoComplete="address-level2"
+                    value={formData.comuna}
+                    onChange={(e) => { setFormData(p => ({ ...p, comuna: e.target.value })); if (errors.comuna) setErrors(p => ({ ...p, comuna: '' })) }}
+                    placeholder="Ej: Providencia"
+                    className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.comuna ? 'border-red-400' : 'border-gray-200 focus:border-primary'}`}
+                  />
+                  <datalist id="comunas-cl">
+                    <option value="Las Condes" />
+                    <option value="Providencia" />
+                    <option value="Vitacura" />
+                    <option value="Lo Barnechea" />
+                    <option value="Ñuñoa" />
+                    <option value="Santiago" />
+                    <option value="La Reina" />
+                    <option value="Peñalolén" />
+                    <option value="Macul" />
+                    <option value="Maipú" />
+                    <option value="La Florida" />
+                    <option value="Puente Alto" />
+                    <option value="San Bernardo" />
+                    <option value="Colina" />
+                    <option value="Huechuraba" />
+                    <option value="Quilicura" />
+                    <option value="Recoleta" />
+                    <option value="Independencia" />
+                    <option value="Estación Central" />
+                    <option value="Pudahuel" />
+                    <option value="Cerrillos" />
+                    <option value="Renca" />
+                    <option value="Conchalí" />
+                    <option value="San Miguel" />
+                    <option value="San Joaquín" />
+                    <option value="La Cisterna" />
+                    <option value="El Bosque" />
+                    <option value="La Granja" />
+                    <option value="La Pintana" />
+                    <option value="Pedro Aguirre Cerda" />
+                    <option value="Lo Espejo" />
+                    <option value="Lo Prado" />
+                    <option value="Cerro Navia" />
+                    <option value="Quinta Normal" />
+                    <option value="Buin" />
+                    <option value="Pirque" />
+                    <option value="San José de Maipo" />
+                    <option value="Calera de Tango" />
+                    <option value="Padre Hurtado" />
+                    <option value="Talagante" />
+                    <option value="Melipilla" />
+                    <option value="Valparaíso" />
+                    <option value="Viña del Mar" />
+                    <option value="Concón" />
+                    <option value="Concepción" />
+                    <option value="Talcahuano" />
+                    <option value="Antofagasta" />
+                    <option value="La Serena" />
+                    <option value="Coquimbo" />
+                    <option value="Rancagua" />
+                    <option value="Talca" />
+                    <option value="Chillán" />
+                    <option value="Temuco" />
+                    <option value="Valdivia" />
+                    <option value="Puerto Montt" />
+                    <option value="Punta Arenas" />
+                    <option value="Iquique" />
+                    <option value="Arica" />
+                  </datalist>
+                  {errors.comuna && <p className="text-xs text-red-600 mt-1">{errors.comuna}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="ipd-rut" className="block text-sm font-semibold text-gray-700 mb-2">RUT</label>
+                  <input
+                    id="ipd-rut"
+                    type="text"
+                    inputMode="text"
+                    value={formData.rut}
+                    onChange={handleRUTChange}
+                    maxLength={12}
+                    placeholder="12.345.678-9"
+                    className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.rut ? 'border-red-400' : 'border-gray-200 focus:border-primary'}`}
+                  />
+                  {errors.rut && <p className="text-xs text-red-600 mt-1">{errors.rut}</p>}
+                </div>
+
+                <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded">
+                  <p className="text-xs text-gray-800 leading-relaxed">
+                    <strong className="text-amber-700">Test en proceso de validación.</strong> Los resultados son orientativos y deben ser interpretados por un profesional clínico entrenado. Datos protegidos · uso exclusivo InstitutoDBT.cl
+                  </p>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button type="button" variant="outline" onClick={() => setCurrentStep('introduction')} className="flex-1 min-h-[52px]">Atrás</Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold min-h-[52px]"
+                  >
+                    {isSubmitting ? (
+                      <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Procesando…</>
+                    ) : (
+                      'Acceder al test'
+                    )}
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
         )}

@@ -72,6 +72,30 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
+    // Register IDP-4 informed consent (Chilean Law 19.628 / 21.331 / 20.584)
+    if (pathname === '/api/leads/idp4-consent') {
+      const { consentAccepted, consentedAt, userAgent, legalFramework } = body || {}
+      if (!consentAccepted) {
+        return Response.json({ error: 'Consentimiento requerido' }, { status: 400 })
+      }
+      const db = await connectToDatabase()
+      const consents = db.collection('idp4_consents')
+      const doc = {
+        consentAccepted: true,
+        consentedAt: consentedAt || new Date().toISOString(),
+        legalFramework: Array.isArray(legalFramework) ? legalFramework : ['Ley 19.628', 'Ley 21.331', 'Ley 20.584'],
+        userAgent: typeof userAgent === 'string' ? userAgent.slice(0, 500) : '',
+        ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || null,
+        createdAt: new Date(),
+      }
+      const result = await consents.insertOne(doc)
+      return Response.json({
+        success: true,
+        consentId: result.insertedId?.toString?.() || null,
+        registeredAt: doc.consentedAt,
+      })
+    }
+
     // Store Fast WhatsApp Capture Lead (Name + optional Phone/Email)
     if (pathname === '/api/leads/fast-capture') {
       const { fullName, phone, email, source, mode, timestamp } = body || {}

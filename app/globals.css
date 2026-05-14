@@ -196,3 +196,35 @@
     text-rendering: optimizeLegibility;
   }
 }
+
+/* ────────────────────────────────────────────────────────────────────
+ * Print stylesheet — clean PDF output for /investigacion/paper/[id]
+ * Hides chrome (nav, footer, toolbar), forces serif body, A4 margins.
+ * ──────────────────────────────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  html, body {
+    background: #fff !important;
+    color: #111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Hide site chrome */
+  nav, footer, [role="dialog"] { display: none !important; }
+  /* Hide elements explicitly tagged as non-print */
+  .print\:hidden { display: none !important; }
+  /* Ensure article content uses full width */
+  article {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* Avoid awkward page breaks inside headings & lists */
+  h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+  li, p { orphans: 3; widows: 3; }
+  /* Links: show URL after for citations (optional, kept subtle) */
+  a[href]::after { content: ""; }
+}

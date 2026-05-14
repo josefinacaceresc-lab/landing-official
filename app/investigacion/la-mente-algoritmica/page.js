@@ -209,9 +209,18 @@ export default function LaMenteAlgoritmicaPage() {
                       </span>
                       <span>• {paper.references} referencias</span>
                     </div>
-                    <Button variant="outline" size="sm" className="border-amber-600 text-amber-700 hover:bg-amber-50">
-                      Leer Paper
-                    </Button>
+                    <div className="flex flex-wrap gap-2">
+                      <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-white font-semibold">
+                        <a href={`/investigacion/paper/${paper.id}`} target="_blank" rel="noopener noreferrer">
+                          Leer artículo
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" size="sm" className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold">
+                        <a href={`/investigacion/paper/${paper.id}?print=1`} target="_blank" rel="noopener noreferrer">
+                          Ver versión PDF
+                        </a>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}

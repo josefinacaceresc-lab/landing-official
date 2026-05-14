@@ -40,6 +40,45 @@ const nextConfig = {
   // CRITICAL: 301 Redirects to preserve 3 years of SEO authority from dbtchile.cl
   async redirects() {
     return [
+      // ── Legacy "ugly" WordPress URLs → clean SEO paths (301) ──────────
+      // The Dra. reported seeing /tlp_-_dbt/alta-gama in the wild (likely a Google-cached
+      // legacy URL from the old dbtchile.cl WordPress site). Catch all variants.
+      {
+        source: '/tlp_-_dbt/alta-gama',
+        destination: '/tratamientos/patologia-dual',
+        permanent: true,
+      },
+      {
+        source: '/tlp_-_dbt/alta-gama/',
+        destination: '/tratamientos/patologia-dual',
+        permanent: true,
+      },
+      {
+        source: '/tlp_-_dbt/:slug*',
+        destination: '/tratamiento/tlp',
+        permanent: true,
+      },
+      {
+        source: '/tlp-dbt/:slug*',
+        destination: '/tratamiento/tlp',
+        permanent: true,
+      },
+      {
+        source: '/tlp/alta-gama',
+        destination: '/tratamientos/patologia-dual',
+        permanent: true,
+      },
+      {
+        source: '/alta-gama',
+        destination: '/tratamientos/patologia-dual',
+        permanent: true,
+      },
+      {
+        source: '/alta-complejidad',
+        destination: '/tratamientos/patologia-dual',
+        permanent: true,
+      },
+
       // Main pages - Core SEO authority
       {
         source: '/inicio',

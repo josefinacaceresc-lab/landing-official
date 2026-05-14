@@ -72,6 +72,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es-CL" className={poppins.variable}>
       <head>
+        {/* Viewport optimized for mobile */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+        {/* PWA optimizations */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Theme color for mobile browsers */}
+        <meta name="theme-color" content="#00A3A3" />
+        
         <link rel="canonical" href="https://institutodbt.cl" />
         <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
         {/* Google Tag Manager */}
@@ -110,7 +119,7 @@ export default function RootLayout({ children }) {
           })
         }} />
       </head>
-      <body className={poppins.className}>
+      <body className={`${poppins.className} prevent-horizontal-scroll font-smooth`}>
         <Navigation />
         <main className="min-h-screen">
           {children}

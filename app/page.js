@@ -409,7 +409,7 @@ export default function Home() {
                 size="lg"
                 type="button"
                 onClick={() => window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source: 'family-cta' } }))}
-                className="bg-secondary hover:bg-secondary/90 text-white px-8 py-6"
+                className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
                 Solicitar Información
               </Button>

@@ -74,8 +74,8 @@ export default function Navigation() {
             
             <Button
               asChild
-              variant="ghost"
-              className="rounded-full px-5 text-primary hover:text-primary hover:bg-primary/10 font-medium"
+              variant="outline"
+              className="rounded-full px-5 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold transition-colors"
             >
               <Link href="/autoevaluacion">
                 Test Gratuito

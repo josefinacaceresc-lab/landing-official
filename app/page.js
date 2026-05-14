@@ -16,7 +16,7 @@ export default function Home() {
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Vertical Logo - white JPG bg neutralized via darken+multiply on tinted gradient */}
+            {/* Vertical Logo - white JPG bg neutralized via mix-blend-mode: multiply on tinted gradient */}
             <div className="flex justify-center mb-8">
               <img
                 src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg"
@@ -25,7 +25,7 @@ export default function Home() {
                 height="320"
                 draggable="false"
                 className="h-32 md:h-40 w-auto object-contain select-none"
-                style={{ mixBlendMode: 'darken' }}
+                style={{ mixBlendMode: 'multiply' }}
                 loading="eager"
               />
             </div>

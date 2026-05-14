@@ -64,8 +64,8 @@ export default function Footer() {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Ubicación Instituto DBT Chile — El Coihue 3776, Vitacura"
-                  className="block grayscale-[0.2] contrast-[0.95]"
-                  style={{ border: 0, filter: 'invert(0.92) hue-rotate(180deg)' }}
+                  className="block"
+                  style={{ border: 0 }}
                 />
               </div>
               <a

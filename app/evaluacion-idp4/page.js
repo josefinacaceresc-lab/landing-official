@@ -369,9 +369,17 @@ export default function IDP4Page() {
         >
           <Card className="w-full max-w-xl border-0 shadow-2xl rounded-t-2xl md:rounded-2xl max-h-[90vh] flex flex-col">
             <CardHeader className="bg-gradient-to-br from-primary to-primary/85 text-white rounded-t-2xl">
-              <div className="flex items-start gap-3">
-                <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-6 h-6" />
+              <div className="flex items-center gap-4">
+                <div className="bg-white rounded-lg p-2 flex-shrink-0 shadow-md">
+                  <img
+                    src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg"
+                    alt="Instituto DBT Chile"
+                    width="64"
+                    height="64"
+                    draggable="false"
+                    className="h-14 w-14 object-contain select-none"
+                    style={{ mixBlendMode: 'multiply' }}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <CardTitle id="consent-title" className="text-xl md:text-2xl font-semibold leading-tight">

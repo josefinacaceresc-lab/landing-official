@@ -12,17 +12,20 @@ export default function Home() {
     <div className="bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-primary/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-primary/4 to-primary/12" />
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Vertical Logo - transparent white background via mix-blend-multiply */}
+            {/* Vertical Logo - white JPG bg neutralized via darken+multiply on tinted gradient */}
             <div className="flex justify-center mb-8">
               <img
                 src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg"
                 alt="Instituto DBT Chile"
-                className="h-32 md:h-40 w-auto object-contain"
-                style={{ mixBlendMode: 'multiply' }}
+                width="320"
+                height="320"
+                draggable="false"
+                className="h-32 md:h-40 w-auto object-contain select-none"
+                style={{ mixBlendMode: 'darken' }}
                 loading="eager"
               />
             </div>

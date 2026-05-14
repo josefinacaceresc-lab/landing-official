@@ -34,7 +34,7 @@ const direccion = [
   },
   {
     initials: 'TV',
-    name: 'Trahice Véliz',
+    name: 'Thahice Véliz Pérez',
     role: 'Subdirectora Clínica · Psicóloga',
     description: 'Especialista en DBT, Género, Psicología Criminal y Forense. Cofundadora Unidad Transitando del Instituto Psiquiátrico Dr. José Horwitz Barak.',
     credentials: [
@@ -57,7 +57,7 @@ const teamMembers = [
   },
   {
     initials: 'FB',
-    name: 'Fernanda Bizama',
+    name: 'Fernanda Bizama Bustos',
     role: 'Psicóloga Clínica',
     description: 'Diplomado Clínico Adulto. Experiencia en adolescentes y adultos de alta complejidad. Atención en Hospital Militar de Santiago. Formación DBT-SUD para trastorno uso de sustancias.',
     tags: ['DBT', 'DBT-SUD']

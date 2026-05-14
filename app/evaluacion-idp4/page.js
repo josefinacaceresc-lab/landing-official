@@ -283,10 +283,15 @@ export default function IDP4Page() {
                   <li><strong>Conductas Autolesivas (CA)</strong> - 7 ítems</li>
                   <li><strong>Inestabilidad Interpersonal (II)</strong> - 7 ítems</li>
                 </ul>
-                <div className="bg-emerald-50 border-l-4 border-emerald-600 p-4 mb-6">
+                <div className="bg-emerald-50 border-l-4 border-emerald-600 p-4 mb-4">
                   <p className="text-sm"><strong>Innovación:</strong> Incluye <em>Digital Phenotyping</em> - medición de tiempos de respuesta para detectar impulsividad motora.</p>
                 </div>
-                <Button size="lg" onClick={() => setCurrentStep('assessment')} className="w-full bg-emerald-600 py-6 text-lg">Comenzar IDP-4 (28 preguntas)</Button>
+                <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6">
+                  <p className="text-sm text-gray-800">
+                    <strong className="text-amber-700">Estado del instrumento:</strong> Test en <strong>proceso de validación</strong> + Reporte personalizado inmediato. Los resultados son orientativos y deben ser interpretados por un profesional clínico entrenado.
+                  </p>
+                </div>
+                <Button size="lg" onClick={() => setCurrentStep('assessment')} className="w-full bg-primary hover:bg-primary/90 py-6 text-lg text-white font-semibold">Comenzar IDP-4 (28 preguntas)</Button>
               </div>
             </CardContent>
           </Card>

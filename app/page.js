@@ -561,7 +561,7 @@ export default function Home() {
                   </h2>
                   
                   <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-                    Test clínico validado + Reporte personalizado inmediato
+                    Test en proceso de validación + Reporte personalizado inmediato
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">

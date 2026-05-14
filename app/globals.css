@@ -4,40 +4,40 @@
 
 @layer base {
   :root {
-        /* Instituto DBT Official Colors - Teal from logos #00A3A3 and #007373 */
+        /* Instituto DBT Official Colors - LIGHT TEAL/CYAN (Vibrant from logos) */
         --background: 0 0% 100%;
-        --foreground: 180 100% 22.5%; /* #007373 - Dark Teal */
+        --foreground: 180 65% 25%; /* Darker teal for text */
         --card: 0 0% 100%;
-        --card-foreground: 180 100% 22.5%;
+        --card-foreground: 180 65% 25%;
         --popover: 0 0% 100%;
-        --popover-foreground: 180 100% 22.5%;
-        --primary: 180 100% 32%; /* #00A3A3 - Official Logo Teal */
+        --popover-foreground: 180 65% 25%;
+        --primary: 180 70% 48%; /* #1FB8AC - LIGHT VIBRANT TEAL */
         --primary-foreground: 0 0% 100%;
-        --secondary: 180 100% 29%; /* #009688 - Family Parents Teal */
+        --secondary: 174 72% 56%; /* #26D0CE - CYAN VIBRANT */
         --secondary-foreground: 0 0% 100%;
         --muted: 180 40% 96.1%;
         --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 180 100% 32%; /* Teal accent */
+        --accent: 180 70% 48%; /* Light teal accent */
         --accent-foreground: 0 0% 100%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
         --border: 214.3 31.8% 91.4%;
         --input: 214.3 31.8% 91.4%;
-        --ring: 180 100% 32%; /* Teal ring */
-        --chart-1: 180 100% 32%; /* #00A3A3 */
-        --chart-2: 180 100% 29%; /* #009688 */
-        --chart-3: 180 100% 22.5%; /* #007373 */
-        --chart-4: 180 60% 50%;
-        --chart-5: 180 40% 70%;
+        --ring: 180 70% 48%; /* Light teal ring */
+        --chart-1: 180 70% 48%; /* #1FB8AC */
+        --chart-2: 174 72% 56%; /* #26D0CE */
+        --chart-3: 180 65% 40%;
+        --chart-4: 180 60% 60%;
+        --chart-5: 180 50% 75%;
         --radius: 0.75rem;
         --sidebar-background: 0 0% 98%;
         --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 180 100% 32%;
+        --sidebar-primary: 180 70% 48%;
         --sidebar-primary-foreground: 0 0% 100%;
         --sidebar-accent: 180 40% 95.9%;
         --sidebar-accent-foreground: 240 5.9% 10%;
         --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 180 100% 32%;
+        --sidebar-ring: 180 70% 48%;
     }
   .dark {
         --background: 222.2 84% 4.9%;

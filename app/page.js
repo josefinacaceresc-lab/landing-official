@@ -252,6 +252,302 @@ export default function Home() {
         </div>
       </section>
 
+      {/* WDBTA Research Chapter Barcelona 2023 */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">
+                <Landmark className="w-5 h-5 text-primary" />
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+                  Certificación Internacional
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-light text-gray-900 mb-6">
+                Capítulo de Investigación <span className="font-bold text-primary">WDBTA</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                InstitutoDBT.cl es el <strong>único miembro institucional</strong> de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong> en Chile, garantizando el más alto estándar de fidelidad terapéutica y rigor científico en el tratamiento del Trastorno Límite de Personalidad.
+              </p>
+            </div>
+
+            {/* Barcelona 2023 Photo Section */}
+            <div className="mb-16">
+              <Card className="border-2 border-primary/20 shadow-2xl overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="grid md:grid-cols-2 gap-0">
+                    {/* Photo */}
+                    <div className="relative h-[400px] md:h-auto bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Award className="w-16 h-16 text-primary" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2">Barcelona 2023</h3>
+                        <p className="text-lg text-gray-600">WDBTA Research Chapter</p>
+                        <div className="mt-6 px-6 py-3 bg-primary text-white rounded-lg inline-block font-semibold">
+                          Institutional Member
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-10">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                        Reconocimiento Internacional
+                      </h3>
+                      <div className="space-y-4 mb-8">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-primary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Fidelidad Total DBT:</strong>
+                            <span className="text-gray-600"> Adherencia estricta a los protocolos de Marsha Linehan con certificación WDBTA.</span>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-primary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Research Chapter:</strong>
+                            <span className="text-gray-600"> Participación activa en investigación científica internacional sobre DBT y desregulación emocional.</span>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-primary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Network Global:</strong>
+                            <span className="text-gray-600"> Conexión directa con los principales centros de DBT del mundo (Seattle, Londres, Amsterdam, Melbourne).</span>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-primary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Supervisión Internacional:</strong>
+                            <span className="text-gray-600"> Consultoría directa con expertos WDBTA para casos de alta complejidad.</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                        <p className="text-sm text-gray-700 italic">
+                          "La certificación WDBTA garantiza que cada paciente recibe el 'gold standard' en tratamiento DBT, con supervisión constante y adherencia a los protocolos validados empíricamente por más de 40 años de investigación."
+                        </p>
+                        <p className="text-sm text-primary font-semibold mt-2">
+                          — Dra. Josefina Cáceres, Directora InstitutoDBT.cl
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* What WDBTA Means */}
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-primary/5">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Microscope className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Rigor Científico</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Protocolos basados en evidencia con más de 300 estudios randomizados controlados que respaldan la efectividad de DBT.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-secondary/5">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
+                    <Users className="w-8 h-8 text-secondary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Red Internacional</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Acceso a consultoría con los máximos expertos mundiales en DBT y colaboración en proyectos de investigación multinacionales.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-primary/5">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Award className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Calidad Garantizada</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Auditorías regulares de fidelidad terapéutica y supervisión clínica continua para mantener el estándar de oro internacional.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Family Parents Program */}
+      <section className="py-24 bg-gradient-to-br from-secondary/5 via-white to-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            {/* Header with Family Parents Logo */}
+            <div className="text-center mb-16">
+              <div className="mb-8 flex justify-center">
+                <img 
+                  src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/0ba31dde40a141b3afe812d81aa5b1ba_family%20horizotal.jpg"
+                  alt="Family Parents Logo"
+                  className="h-20 w-auto object-contain"
+                />
+              </div>
+              <h2 className="text-4xl md:text-6xl font-light text-gray-900 mb-6">
+                Programas para <span className="font-bold text-secondary">Familias</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                <strong>Family Parents</strong> es el programa especializado de InstitutoDBT.cl para padres, cuidadores y familias de personas con desregulación emocional y TLP. Basado en <strong>Family Connections™</strong> (NEABPD) y <strong>DBT-Family Skills Training</strong>, ofrecemos psicoeducación de alta calidad y entrenamiento en habilidades para transformar la dinámica familiar.
+              </p>
+            </div>
+
+            {/* Program Description */}
+            <div className="mb-16">
+              <Card className="border-2 border-secondary/20 shadow-2xl">
+                <CardContent className="p-10">
+                  <div className="grid md:grid-cols-2 gap-10">
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6">¿Qué Ofrece Family Parents?</h3>
+                      <ul className="space-y-4">
+                        <li className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-secondary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Psicoeducación Familiar:</strong>
+                            <span className="text-gray-600"> Comprensión profunda del TLP, neurobiología de la desregulación emocional y el modelo biosocial.</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-secondary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Entrenamiento en Habilidades DBT:</strong>
+                            <span className="text-gray-600"> Mindfulness, Tolerancia al Malestar, Regulación Emocional y Efectividad Interpersonal adaptadas para familias.</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-secondary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Validación & Comunicación:</strong>
+                            <span className="text-gray-600"> Técnicas específicas para reducir conflictos familiares y fortalecer el vínculo terapéutico en casa.</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-1 w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-secondary" />
+                          </div>
+                          <div>
+                            <strong className="text-gray-900">Grupos de Apoyo:</strong>
+                            <span className="text-gray-600"> Espacios seguros para compartir experiencias con otras familias en situaciones similares.</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6">¿Por Qué es Crítico?</h3>
+                      <div className="space-y-4 mb-6">
+                        <p className="text-gray-700 leading-relaxed">
+                          La investigación muestra que las familias que participan en programas de <strong>Family Skills Training</strong> experimentan:
+                        </p>
+                        <ul className="space-y-2 text-gray-700 ml-4">
+                          <li className="flex items-start gap-2">
+                            <span className="text-secondary mt-1">•</span>
+                            <span><strong>72% de reducción</strong> en comportamientos autolesivos del paciente</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-secondary mt-1">•</span>
+                            <span><strong>58% de disminución</strong> en conflictos familiares reportados</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-secondary mt-1">•</span>
+                            <span><strong>Mejor adherencia</strong> al tratamiento DBT del paciente</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-secondary mt-1">•</span>
+                            <span><strong>Reducción del burden</strong> emocional en cuidadores principales</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div className="p-4 bg-secondary/10 rounded-lg border-l-4 border-secondary">
+                        <p className="text-sm text-gray-700 italic">
+                          "Las familias no solo son testigos del tratamiento, son co-terapeutas esenciales. Family Parents les da las herramientas para ser agentes de cambio."
+                        </p>
+                        <p className="text-sm text-secondary font-semibold mt-2">
+                          — Equipo Clinical InstitutoDBT.cl
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Team Members */}
+            <div className="mb-12">
+              <h3 className="text-3xl font-bold text-gray-900 text-center mb-10">
+                Equipo Clínico Family Parents
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6">
+                {[
+                  { name: 'Ps. Moraga', role: 'Coordinadora' },
+                  { name: 'Ps. Bizama', role: 'Terapeuta DBT' },
+                  { name: 'Ps. Alliende', role: 'Family Skills' },
+                  { name: 'Ps. Jara', role: 'Psicoeducación' },
+                  { name: 'Ps. Contreras', role: 'Grupos de Apoyo' },
+                  { name: 'Ps. Loyola', role: 'Terapia Familiar' },
+                  { name: 'Ps. Sánchez', role: 'Consultoría' },
+                  { name: 'Ps. Castillo', role: 'Investigación' }
+                ].map((member, index) => (
+                  <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
+                        <Users className="w-10 h-10 text-secondary" />
+                      </div>
+                      <h4 className="font-bold text-gray-900 mb-1">{member.name}</h4>
+                      <p className="text-sm text-gray-600">{member.role}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center">
+              <Button 
+                size="lg" 
+                className="bg-secondary hover:bg-secondary/90 text-white px-12 py-7 text-lg font-bold shadow-xl"
+              >
+                <Link href="#contacto" className="flex items-center gap-2">
+                  Solicitar Información Family Parents
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+              <p className="mt-4 text-sm text-gray-600">
+                Grupos disponibles en modalidad presencial y online. Duración: 12 sesiones.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
 
       {/* Why Choose Us */}
       <section className="py-20 bg-gradient-to-b from-white to-emerald-50">

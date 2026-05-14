@@ -251,6 +251,141 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* WDBTA Research Chapter - Clean & Elegant */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="mb-4 text-sm font-semibold text-primary uppercase tracking-wider">Certificación Internacional</div>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
+                Capítulo de Investigación <span className="font-semibold text-primary">WDBTA</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Único miembro institucional de la <strong>World Dialectical Behavior Therapy Association</strong> en Chile
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Left: Barcelona 2023 */}
+              <div className="relative">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-primary/5">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="text-center p-8">
+                      <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Award className="w-12 h-12 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2">Barcelona 2023</h3>
+                      <p className="text-gray-600">WDBTA Research Chapter</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Description */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Fidelidad Total DBT</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Adherencia estricta a los protocolos de Marsha Linehan con certificación WDBTA, garantizando el estándar de oro internacional.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Red Global de Investigación</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Conexión directa con los principales centros de DBT del mundo: Seattle, Londres, Amsterdam y Melbourne.
+                  </p>
+                </div>
+                <div className="pt-4">
+                  <Button asChild className="bg-primary hover:bg-primary/90 text-white">
+                    <Link href="/investigacion/wdbta">
+                      Conocer más sobre WDBTA
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Family Parents Program - Clean & Elegant */}
+      <section className="py-20 bg-gradient-to-b from-white to-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            {/* Header with Logo */}
+            <div className="text-center mb-12">
+              <div className="mb-6 flex justify-center">
+                <img 
+                  src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/0ba31dde40a141b3afe812d81aa5b1ba_family%20horizotal.jpg"
+                  alt="Family Parents"
+                  className="h-16 w-auto object-contain"
+                />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
+                Programas para <span className="font-semibold text-secondary">Familias</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Entrenamiento especializado en habilidades DBT para padres y cuidadores. Basado en <strong>Family Connections™</strong> y <strong>DBT-Family Skills Training</strong>.
+              </p>
+            </div>
+
+            {/* Benefits Grid */}
+            <div className="grid sm:grid-cols-2 gap-6 mb-12">
+              <div className="p-6 bg-white rounded-xl shadow-lg">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Psicoeducación Familiar</h3>
+                <p className="text-gray-600">Comprensión profunda del TLP y neurobiología de la desregulación emocional.</p>
+              </div>
+              <div className="p-6 bg-white rounded-xl shadow-lg">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Habilidades DBT</h3>
+                <p className="text-gray-600">Mindfulness, Tolerancia al Malestar, Regulación Emocional adaptadas para familias.</p>
+              </div>
+              <div className="p-6 bg-white rounded-xl shadow-lg">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reducción de Conflictos</h3>
+                <p className="text-gray-600"><strong>72% de reducción</strong> en comportamientos autolesivos reportados.</p>
+              </div>
+              <div className="p-6 bg-white rounded-xl shadow-lg">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Grupos de Apoyo</h3>
+                <p className="text-gray-600">Espacios seguros para compartir experiencias con otras familias.</p>
+              </div>
+            </div>
+
+            {/* Team Gallery - Clean */}
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900 text-center mb-8">Equipo Clínico</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  'Ps. Moraga',
+                  'Ps. Bizama',
+                  'Ps. Alliende',
+                  'Ps. Jara',
+                  'Ps. Contreras',
+                  'Ps. Loyola',
+                  'Ps. Sánchez',
+                  'Ps. Castillo'
+                ].map((name, i) => (
+                  <div key={i} className="text-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
+                      <Users className="w-6 h-6 text-primary" />
+                    </div>
+                    <p className="text-sm font-semibold text-gray-900">{name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center mt-12">
+              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white px-8 py-6">
+                Solicitar Información
+              </Button>
+              <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 bg-gradient-to-b from-white to-emerald-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">

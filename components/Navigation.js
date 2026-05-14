@@ -24,8 +24,16 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Inicio
+            <Link href="/#por-que" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              ¿Por qué?
+            </Link>
+            
+            <Link href="/tratamiento" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Tratamiento
+            </Link>
+            
+            <Link href="/esquema" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Esquema
             </Link>
             
             {/* Research Dropdown */}
@@ -52,14 +60,12 @@ export default function Navigation() {
               </div>
             </div>
             
+            <Link href="/foro" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Foro
+            </Link>
+            
             <Link href="/equipo" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Equipo
-            </Link>
-            <Link href="/tratamientos/patologia-dual" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Patología Dual
-            </Link>
-            <Link href="/blog" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Blog
             </Link>
             
             <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">

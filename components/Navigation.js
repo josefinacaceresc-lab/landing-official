@@ -13,12 +13,12 @@ export default function Navigation() {
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Logo - Official Vertical DBT Chile */}
           <Link href="/" className="flex items-center gap-3 group">
             <img 
               src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/6cd050e7093b4cce801d2e4ad64e6605_logodbt_vertical%2050-50.jpg" 
               alt="Instituto DBT Chile"
-              className="h-16 w-auto object-contain"
+              className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
             />
           </Link>
 
@@ -62,12 +62,12 @@ export default function Navigation() {
               Blog
             </Link>
             
-            <Button asChild className="bg-primary hover:bg-primary/90 text-white">
+            <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">
               <Link href="/autoevaluacion">
                 Test Gratuito
               </Link>
             </Button>
-            <Button className="bg-secondary hover:bg-secondary/90 text-white">
+            <Button className="bg-primary hover:bg-primary/90 text-white">
               Agendar Consulta
             </Button>
           </div>

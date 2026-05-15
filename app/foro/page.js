@@ -120,7 +120,12 @@ export default function ForoPage() {
             Escríbenos y te avisaremos cuando se abran inscripciones para jornadas, seminarios y programas de formación.
           </p>
           <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white px-8">
-            <Link href="/equipo">Contactar al equipo <ArrowRight className="w-4 h-4 ml-2" /></Link>
+            <a
+              href="mailto:contacto@dbtchile.cl?subject=Pr%C3%B3ximas%20convocatorias%20-%20Foro%20Instituto%20DBT%20Chile&body=Hola%20equipo%2C%0A%0AQuisiera%20recibir%20avisos%20de%20pr%C3%B3ximas%20convocatorias%20para%20jornadas%2C%20seminarios%20y%20programas%20de%20formaci%C3%B3n.%0A%0ANombre%3A%20%0AProfesi%C3%B3n%20%2F%20Rol%3A%20%0AEmail%3A%20%0A%0AGracias."
+              className="flex items-center gap-2"
+            >
+              Contactar al equipo <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
           </Button>
         </div>
       </section>

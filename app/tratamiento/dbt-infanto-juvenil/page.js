@@ -170,12 +170,15 @@ export default function DBTAdolescentesPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               size="lg"
-              type="button"
+              asChild
               className="bg-primary hover:bg-primary/90 text-white px-8"
             >
-              <Link href="/equipo" className="flex items-center gap-2">
+              <a
+                href="mailto:contacto@dbtchile.cl?subject=Consulta%20sobre%20DBT-A%20%2F%20Programa%20Familia&body=Hola%20Instituto%20DBT%20Chile%2C%0A%0AQuisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Programa%20DBT-A%20para%20adolescentes%20y%20familias.%0A%0ANombre%20completo%3A%20%0ATel%C3%A9fono%3A%20%0AEdad%20del%20adolescente%3A%20%0ABreve%20descripci%C3%B3n%3A%20%0A%0AGracias."
+                className="flex items-center gap-2"
+              >
                 Contactar al equipo <ArrowRight className="w-4 h-4" />
-              </Link>
+              </a>
             </Button>
             <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary/10">
               <Link href="/tratamiento">Volver al programa clínico</Link>

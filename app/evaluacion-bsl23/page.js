@@ -489,8 +489,9 @@ export default function BSL23Page() {
     )
   }
 
-  // Assessment step (questions)
-  return (
+  // Assessment step (questions) — only shown after introduction screen
+  if (currentStep === 'assessment') {
+    return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-amber-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
@@ -556,6 +557,72 @@ export default function BSL23Page() {
               >
                 {allQuestionsAnswered ? 'Continuar a mis datos' : `Faltan ${bsl23Questions.length - Object.keys(responses).length} respuestas`}
               </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+    )
+  }
+
+  // ── Introduction screen (default) — credits + internal-use disclaimer ─────
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-amber-50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <Card className="border-0 shadow-2xl bg-white">
+            <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <CardTitle className="text-3xl font-serif">BSL-23 · Borderline Symptom List</CardTitle>
+              <p className="text-white/90 mt-2">23 ítems · Escala 0–4 · Última semana</p>
+            </CardHeader>
+            <CardContent className="p-8">
+              {/* ── Authorship & Validation ───────────────────────── */}
+              <div className="bg-emerald-50 border-l-4 border-emerald-600 rounded-r-lg p-5 mb-6">
+                <h3 className="text-base font-semibold text-emerald-900 mb-3">Acerca de este instrumento</h3>
+                <ul className="space-y-2 text-sm text-gray-800 leading-relaxed">
+                  <li className="flex gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                    <span>Test desarrollado por <strong>Dr. Martin Bohus</strong> (Central Institute of Mental Health, Mannheim).</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                    <span>Validado al español por <strong>Dr. Joaquín Soler</strong> (Hospital de la Santa Creu i Sant Pau, Barcelona).</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* ── Internal-use disclaimer ──────────────────────── */}
+              <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-lg p-5 mb-6">
+                <div className="flex gap-3">
+                  <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="text-base font-semibold text-amber-900 mb-1">Uso clínico restringido</h4>
+                    <p className="text-sm text-amber-900 leading-relaxed">
+                      Este instrumento es <strong>eminentemente para uso interno</strong> de consultantes de
+                      <strong> Instituto DBT Chile</strong>. Los resultados son orientativos y deben ser
+                      interpretados por un profesional clínico entrenado del equipo.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                A continuación responderás 23 preguntas sobre tu experiencia emocional durante la
+                <strong> última semana</strong>. Cada ítem se responde en una escala de
+                <strong> 0 (Nada)</strong> a <strong>4 (Muy fuerte)</strong>.
+              </p>
+
+              <Button
+                onClick={() => setCurrentStep('assessment')}
+                size="lg"
+                className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg font-semibold"
+              >
+                Comenzar evaluación BSL-23
+              </Button>
+
+              <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
+                Cáceres, J. & equipo Instituto DBT Chile · Aplicación clínica supervisada · Ley 19.628 / 21.331 / 20.584.
+              </p>
             </CardContent>
           </Card>
         </div>

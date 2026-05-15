@@ -42,8 +42,10 @@ const nextConfig = {
     return [
       // ── ALL test entry points go through IDP-4 (which has Informed Consent modal) ──
       // The Dra. requires every "Test" entry to trigger consent (Ley 19.628 / 21.331 / 20.584).
-      // Older test routes (autoevaluacion / evaluacion-bsl23) lack consent, so we redirect
-      // them to the canonical IDP-4 page until consent is added to them too.
+      // Older /autoevaluacion route lacks consent, so we redirect it to the canonical IDP-4
+      // page until consent is added to it too.
+      // Note: /evaluacion-bsl23 is NOT redirected — it has its own intro screen with
+      // Bohus/Soler attribution and "internal use only" disclaimer.
       // Using non-permanent (307) so we can reverse the routing later without browser cache issues.
       {
         source: '/autoevaluacion',
@@ -52,16 +54,6 @@ const nextConfig = {
       },
       {
         source: '/autoevaluacion/:path*',
-        destination: '/evaluacion-idp4',
-        permanent: false,
-      },
-      {
-        source: '/evaluacion-bsl23',
-        destination: '/evaluacion-idp4',
-        permanent: false,
-      },
-      {
-        source: '/evaluacion-bsl23/:path*',
         destination: '/evaluacion-idp4',
         permanent: false,
       },

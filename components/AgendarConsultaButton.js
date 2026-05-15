@@ -2,33 +2,33 @@
 
 import { Button } from '@/components/ui/button'
 import { MessageCircle } from 'lucide-react'
-import { openFastCapture } from '@/components/FastCaptureModal'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 
 /**
- * CTA button that triggers the FastCaptureModal with business-hours awareness.
- * - Inside business hours: opens WhatsApp directly with pre-written message
- * - Outside business hours: shows the after-hours form to capture name+phone+email
+ * Zero-friction CTA button — opens WhatsApp directly in a new tab
+ * with the pre-filled message. No modal, no name capture.
  *
- * Use this button anywhere we want a "Schedule consultation" CTA — never link
- * directly to wa.me, because that bypasses the after-hours capture flow.
+ * EMERGENCY FLOW (May 2026): one click = one WhatsApp message.
  */
 export default function AgendarConsultaButton({
   source = 'cta-equipo',
   label = 'Agendar consulta',
+  message,
   className = '',
   size = 'lg',
   variant = 'default',
 }) {
   return (
-    <Button
-      type="button"
-      onClick={() => openFastCapture(source)}
-      size={size}
-      variant={variant}
-      className={className}
-    >
-      <MessageCircle className="w-5 h-5 mr-2" />
-      {label}
+    <Button asChild size={size} variant={variant} className={className}>
+      <a
+        href={getWhatsAppUrl(message)}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cta-source={source}
+      >
+        <MessageCircle className="w-5 h-5 mr-2" />
+        {label}
+      </a>
     </Button>
   )
 }

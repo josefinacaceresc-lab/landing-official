@@ -2,7 +2,8 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import FastCaptureModal from '@/components/FastCaptureModal'
+// Emergency flow (May 2026): FastCaptureModal disabled — all WhatsApp buttons
+// now redirect directly to wa.me. No modal, no name capture, zero friction.
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -126,7 +127,6 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
-        <FastCaptureModal />
       </body>
     </html>
   )

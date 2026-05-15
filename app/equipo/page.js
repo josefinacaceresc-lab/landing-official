@@ -12,7 +12,7 @@ export const metadata = {
     description: 'Equipo de especialistas en DBT con certificación WDBTA e ISST.',
     url: 'https://institutodbt.cl/equipo',
     images: [{
-      url: 'https://institutodbt.cl/media/wdbta-barcelona-2023.jpeg',
+      url: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/aecd20208fec4060be44c1b61f5f61a0_1697991434321.jpeg',
       width: 1200,
       height: 630,
     }],

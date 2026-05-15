@@ -9,7 +9,10 @@ import { trackWhatsAppClick } from '@/lib/googleAdsTracking'
 const WHATSAPP_NUMBER = '56930550750' // +56 9 3055 0750 — Karina
 
 /**
- * Returns true when Santiago de Chile local time is Mon-Fri 10:00-19:00.
+ * Returns true when Santiago de Chile local time is within clinic hours:
+ *   - Monday to Thursday: 10:00–19:00
+ *   - Friday: 10:00–16:00
+ *   - Saturday & Sunday: closed
  * Uses Intl API which automatically handles DST (CLT/CLST).
  */
 function isBusinessHoursSantiago() {
@@ -25,9 +28,16 @@ function isBusinessHoursSantiago() {
     const hourStr = parts.find((p) => p.type === 'hour')?.value || '0'
     const hour = parseInt(hourStr, 10)
 
-    const isWeekday = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].includes(weekday)
-    const inWindow = hour >= 10 && hour < 19 // 10:00 inclusive, 19:00 exclusive
-    return isWeekday && inWindow
+    // Mon–Thu: 10:00 (incl.) – 19:00 (excl.)
+    if (['Mon', 'Tue', 'Wed', 'Thu'].includes(weekday)) {
+      return hour >= 10 && hour < 19
+    }
+    // Friday: 10:00 (incl.) – 16:00 (excl.)
+    if (weekday === 'Fri') {
+      return hour >= 10 && hour < 16
+    }
+    // Sat & Sun: closed
+    return false
   } catch (_) {
     return true // fail-open to keep conversion flow
   }
@@ -212,7 +222,7 @@ export default function FastCaptureModal() {
                 <p className="text-white/90 text-sm">
                   {businessHours
                     ? 'Te abrimos WhatsApp en un toque'
-                    : 'Lun a Vie · 10:00–19:00 hrs (Santiago)'}
+                    : 'Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)'}
                 </p>
               </div>
             </div>
@@ -405,7 +415,7 @@ export default function FastCaptureModal() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900">¡Recibimos tus datos!</h3>
               <p className="text-gray-600 leading-relaxed">
-                Karina te contactará el próximo día hábil (Lun a Vie · 10:00–19:00 hrs).
+                Karina te contactará el próximo día hábil (Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00).
               </p>
               <Button
                 type="button"

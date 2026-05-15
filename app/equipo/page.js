@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card'
+import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
   title: 'Equipo Clínico - InstitutoDBT.cl',
@@ -247,9 +248,15 @@ export default function EquipoPage() {
             <p className="text-xl mb-8 text-emerald-50">
               Agenda tu primera sesión con nuestro equipo especializado
             </p>
-            <a href="https://wa.me/56930550750?text=Hola,%20me%20gustaría%20solicitar%20una%20evaluación%20de%20alta%20complejidad%20en%20InstitutoDBT.cl.%20Mi%20nombre%20es..." target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-4 text-lg font-semibold rounded-lg transition-colors">
-              WhatsApp · +56 9 3055 0750
-            </a>
+            <AgendarConsultaButton
+              source="cta-equipo"
+              label="Agendar consulta · WhatsApp"
+              size="lg"
+              className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold rounded-lg shadow-lg"
+            />
+            <p className="text-sm text-emerald-100 mt-4">
+              Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)
+            </p>
           </div>
         </div>
       </section>

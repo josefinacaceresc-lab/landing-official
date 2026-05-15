@@ -89,6 +89,12 @@ export default function IDP4Page() {
     }
   }, [currentStep])
 
+  // Always show informed-consent modal on first mount of /evaluacion-idp4
+  // Legal requirement: every "Test" entry must trigger explicit consent (Ley 19.628 / 21.331 / 20.584)
+  useEffect(() => {
+    setShowConsent(true)
+  }, [])
+
   const handleResponseChange = (questionId, value) => {
     // Digital Phenotyping: Record response time
     const responseTime = Date.now() - (questionStartTime[questionId] || Date.now())

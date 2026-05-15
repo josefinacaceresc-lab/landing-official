@@ -156,12 +156,24 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-emerald-400 transition-colors"
                 >
-                  +56 9 3055 0750
+                  WhatsApp: +56 9 3055 0750
+                </a>
+              </li>
+              <li className="flex items-start gap-2 text-gray-400 text-sm">
+                <Phone className="w-4 h-4 mt-1 text-emerald-400 flex-shrink-0" />
+                <a
+                  href="tel:+56228480652"
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  Fijo: +56 2 2848 0652
                 </a>
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">
                 <span className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>Lun–Vie · 10:00–19:00 hrs</span>
+                <div className="leading-relaxed">
+                  <div>Lun–Jue · 10:00–19:00 hrs</div>
+                  <div>Vie · 10:00–16:00 hrs</div>
+                </div>
               </li>
             </ul>
           </div>

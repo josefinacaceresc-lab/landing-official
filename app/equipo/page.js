@@ -27,10 +27,11 @@ const direccion = [
     credentials: [
       'Ph.D.(c) — Formación doctoral en curso',
       'WDBTA Research Member — única en Chile',
+      'Miembro Sociedad Española de Estudios de los Trastornos Límite de la Personalidad',
       'Certificación ISST — Schema Therapy',
       'Fundadora NexariaLabs · LaKaira AI'
     ],
-    tags: ['WDBTA', 'ISST', 'APA', 'Ph.D.(c)'],
+    tags: ['WDBTA', 'ISST', 'APA', 'SEETLP', 'Ph.D.(c)'],
   },
   {
     initials: 'TV',

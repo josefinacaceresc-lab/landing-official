@@ -72,7 +72,10 @@ export default function IDP4Page() {
   const [showModal, setShowModal] = useState(false)
   const [showSafety, setShowSafety] = useState(false)
   const [formData, setFormData] = useState({ fullName: '', gender: '', age: '', comuna: '', rut: '' })
-  const [showConsent, setShowConsent] = useState(false)
+  // Consent modal: starts OPEN by default — every entry to /evaluacion-idp4 must
+  // trigger explicit consent (Ley 19.628 / 21.331 / 20.584). Initial state = true
+  // ensures it renders on the very first server paint, not after hydration.
+  const [showConsent, setShowConsent] = useState(true)
   const [consentTimestamp, setConsentTimestamp] = useState(null)
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)

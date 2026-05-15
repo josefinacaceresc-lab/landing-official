@@ -40,6 +40,32 @@ const nextConfig = {
   // CRITICAL: 301 Redirects to preserve 3 years of SEO authority from dbtchile.cl
   async redirects() {
     return [
+      // ── ALL test entry points go through IDP-4 (which has Informed Consent modal) ──
+      // The Dra. requires every "Test" entry to trigger consent (Ley 19.628 / 21.331 / 20.584).
+      // Older test routes (autoevaluacion / evaluacion-bsl23) lack consent, so we redirect
+      // them to the canonical IDP-4 page until consent is added to them too.
+      // Using non-permanent (307) so we can reverse the routing later without browser cache issues.
+      {
+        source: '/autoevaluacion',
+        destination: '/evaluacion-idp4',
+        permanent: false,
+      },
+      {
+        source: '/autoevaluacion/:path*',
+        destination: '/evaluacion-idp4',
+        permanent: false,
+      },
+      {
+        source: '/evaluacion-bsl23',
+        destination: '/evaluacion-idp4',
+        permanent: false,
+      },
+      {
+        source: '/evaluacion-bsl23/:path*',
+        destination: '/evaluacion-idp4',
+        permanent: false,
+      },
+
       // ── Legacy "ugly" WordPress URLs → clean SEO paths (301) ──────────
       // The Dra. reported seeing /tlp_-_dbt/alta-gama in the wild (likely a Google-cached
       // legacy URL from the old dbtchile.cl WordPress site). Catch all variants.

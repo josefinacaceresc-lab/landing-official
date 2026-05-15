@@ -569,7 +569,7 @@ export default function Home() {
                   
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                     <Button size="lg" asChild className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-6 text-lg font-semibold">
-                      <Link href="/autoevaluacion">
+                      <Link href="/evaluacion-idp4">
                         Comenzar Test Gratuito
                       </Link>
                     </Button>

@@ -642,23 +642,23 @@ export default function Home() {
               WhatsApp · +56 9 3055 0750
             </Button>
             <p className="mt-6 text-sm text-emerald-100">
-              Horario: Lunes a Viernes, 9:00 - 18:00 hrs (Chile)
+              Horario: Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)
             </p>
             <div className="mt-8 text-sm text-emerald-100 space-y-2">
-              <button 
+              <a
+                href="tel:+56228480652"
                 onClick={() => trackPhoneClick('contacto-section')}
-                className="hover:text-white transition-colors"
+                className="block hover:text-white transition-colors"
               >
-                <p>📞 22 848 0652</p>
-              </button>
-              <button 
+                📞 +56 2 2848 0652
+              </a>
+              <a
+                href="mailto:contacto@dbtchile.cl"
                 onClick={() => trackEmailClick('contacto-section')}
-                className="hover:text-white transition-colors"
+                className="block hover:text-white transition-colors"
               >
-                <a href="mailto:contacto@institutodbt.cl">
-                  <p>✉️ contacto@institutodbt.cl</p>
-                </a>
-              </button>
+                ✉️ contacto@dbtchile.cl
+              </a>
               <p>📍 El Coihue 3776, Vitacura, Santiago</p>
             </div>
           </div>

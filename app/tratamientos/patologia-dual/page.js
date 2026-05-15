@@ -394,7 +394,7 @@ export default function PatologiaDualPage() {
                 </a>
               </Button>
               <p className="mt-4 text-sm text-gray-600">
-                WhatsApp: +56 9 3055 0750 | Email: contacto@institutodbt.cl
+                WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl
               </p>
             </div>
           </div>

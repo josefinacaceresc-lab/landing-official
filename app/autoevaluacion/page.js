@@ -263,7 +263,7 @@ export default function AutoevaluacionPage() {
               Evalúa tu <span className="font-serif font-semibold text-emerald-700">Desregulación Emocional</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Cuestionario clínico validado para identificar patrones de desregulación emocional
+              Cuestionario clínico orientativo para identificar patrones de desregulación emocional. <strong>En proceso de validación.</strong>
             </p>
           </div>
 

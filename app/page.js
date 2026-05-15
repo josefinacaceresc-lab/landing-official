@@ -124,6 +124,7 @@ export default function Home() {
                       width={200}
                       height={80}
                       className="object-contain max-h-24"
+                      style={{ mixBlendMode: 'multiply' }}
                       unoptimized
                     />
                   </div>
@@ -142,6 +143,7 @@ export default function Home() {
                       width={200}
                       height={80}
                       className="object-contain max-h-24"
+                      style={{ mixBlendMode: 'multiply' }}
                       unoptimized
                     />
                   </div>

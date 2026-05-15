@@ -4,7 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle, Phone, CheckCircle, Loader2, Heart } from 'lucide-react'
+import { AlertTriangle, Phone, CheckCircle, Loader2, Heart, Lock, MessageCircle, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { openFastCapture } from '@/components/FastCaptureModal'
 
 // BSL-23 Questions - Dr. Martin Bohus
 // Borderline Symptom List - 23 items, 0-4 scale
@@ -612,13 +614,42 @@ export default function BSL23Page() {
                 <strong> 0 (Nada)</strong> a <strong>4 (Muy fuerte)</strong>.
               </p>
 
-              <Button
-                onClick={() => setCurrentStep('assessment')}
-                size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg font-semibold"
-              >
-                Comenzar evaluación BSL-23
-              </Button>
+              {/* ── Locked CTA ─ test cannot be initiated publicly ───────── */}
+              <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 mb-4">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Lock className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-semibold text-gray-900 mb-1">Acceso clínico</h4>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Este test está <strong>reservado para consultantes del Instituto DBT Chile</strong>.
+                      Tu psicólogo/a tratante te indicará cuándo realizarlo en el contexto del proceso terapéutico.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                  >
+                    <Link href="/">
+                      <ArrowLeft className="w-4 h-4 mr-2" /> Volver al inicio
+                    </Link>
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => openFastCapture('bsl23-locked')}
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-white font-semibold"
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" /> Agendar consulta
+                  </Button>
+                </div>
+              </div>
 
               <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
                 Cáceres, J. & equipo Instituto DBT Chile · Aplicación clínica supervisada · Ley 19.628 / 21.331 / 20.584.

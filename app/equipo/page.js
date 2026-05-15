@@ -36,7 +36,7 @@ const direccion = [
   },
   {
     initials: 'TV',
-    name: 'Thahice Véliz Pérez',
+    name: 'Trahice Véliz Pérez',
     role: 'Subdirectora Clínica · Psicóloga',
     description: 'Especialista en DBT, Género, Psicología Criminal y Forense. Cofundadora Unidad Transitando del Instituto Psiquiátrico Dr. José Horwitz Barak.',
     credentials: [

@@ -101,11 +101,12 @@ export default function Home() {
                 <CardContent className="p-8">
                   <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg">
                     <Image
-                      src="https://www.institutodbt.cl/logos/wdbta.png"
+                      src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/2zcxnp4t_-logo_dbt-1.png"
                       alt="WDBTA Logo"
                       width={200}
                       height={80}
-                      className="object-contain"
+                      className="object-contain max-h-24"
+                      unoptimized
                     />
                   </div>
                   <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">WDBTA</h3>
@@ -136,11 +137,12 @@ export default function Home() {
                 <CardContent className="p-8">
                   <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg">
                     <Image
-                      src="https://www.institutodbt.cl/logos/isst.jpg"
+                      src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/ekey2ops_isst-300x218.jpg"
                       alt="ISST Logo"
                       width={200}
                       height={80}
-                      className="object-contain"
+                      className="object-contain max-h-24"
+                      unoptimized
                     />
                   </div>
                   <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">ISST</h3>

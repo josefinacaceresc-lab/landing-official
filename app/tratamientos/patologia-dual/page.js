@@ -26,7 +26,7 @@ export const metadata = {
     url: 'https://institutodbt.cl/tratamientos/patologia-dual',
     type: 'article',
     images: [{
-      url: 'https://institutodbt.cl/logos/wdbta.png',
+      url: 'https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/2zcxnp4t_-logo_dbt-1.png',
       width: 1200,
       height: 630,
     }],

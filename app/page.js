@@ -101,7 +101,7 @@ export default function Home() {
               <Card className="group border border-emerald-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
                 <div className="h-1 bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-emerald-100/60 rounded-xl ring-1 ring-emerald-100">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl ring-1 ring-emerald-100">
                     <div className="absolute inset-0 rounded-xl shadow-inner pointer-events-none" />
                     <Image
                       src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/2zcxnp4t_-logo_dbt-1.png"
@@ -109,7 +109,7 @@ export default function Home() {
                       width={400}
                       height={400}
                       className="object-contain h-32 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                      style={{ imageRendering: '-webkit-optimize-contrast' }}
+                      style={{ mixBlendMode: 'multiply', imageRendering: '-webkit-optimize-contrast' }}
                       unoptimized
                     />
                   </div>
@@ -126,7 +126,7 @@ export default function Home() {
               <Card className="group border border-blue-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
                 <div className="h-1 bg-gradient-to-r from-blue-300 via-blue-500 to-blue-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100/60 rounded-xl ring-1 ring-blue-100">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl ring-1 ring-blue-100">
                     <Image
                       src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/ebe15d76640a47118ddc6ff68a1b73e6_LOGO%20APA.webp"
                       alt="American Psychological Association Logo"
@@ -150,7 +150,7 @@ export default function Home() {
               <Card className="group border border-amber-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
                 <div className="h-1 bg-gradient-to-r from-amber-300 via-amber-500 to-amber-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-100/60 rounded-xl ring-1 ring-amber-100">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl ring-1 ring-amber-100">
                     <Image
                       src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/ekey2ops_isst-300x218.jpg"
                       alt="ISST Logo"

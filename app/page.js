@@ -97,59 +97,76 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-shadow bg-white overflow-hidden">
+              {/* ── WDBTA ─────────────────────────────────────────── */}
+              <Card className="group border border-emerald-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
+                <div className="h-1 bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-emerald-100/60 rounded-xl ring-1 ring-emerald-100">
+                    <div className="absolute inset-0 rounded-xl shadow-inner pointer-events-none" />
                     <Image
                       src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/2zcxnp4t_-logo_dbt-1.png"
                       alt="WDBTA Logo"
-                      width={200}
-                      height={80}
-                      className="object-contain max-h-24"
+                      width={400}
+                      height={400}
+                      className="object-contain h-32 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                      style={{ imageRendering: '-webkit-optimize-contrast' }}
                       unoptimized
                     />
                   </div>
-                  <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">WDBTA</h3>
-                  <p className="text-sm text-gray-600 mb-4">World Dialectical Behavior Therapy Association</p>
-                  <p className="text-emerald-700 font-semibold">Miembro institucional</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-6 bg-emerald-600 rounded-full" />
+                    <h3 className="text-2xl font-serif font-semibold text-gray-900">WDBTA</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">World Dialectical Behavior Therapy Association</p>
+                  <p className="text-emerald-700 font-semibold tracking-wide">Miembro institucional</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-shadow bg-white overflow-hidden">
+              {/* ── APA ─────────────────────────────────────────────── */}
+              <Card className="group border border-blue-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
+                <div className="h-1 bg-gradient-to-r from-blue-300 via-blue-500 to-blue-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100/60 rounded-xl ring-1 ring-blue-100">
                     <Image
                       src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/ebe15d76640a47118ddc6ff68a1b73e6_LOGO%20APA.webp"
                       alt="American Psychological Association Logo"
-                      width={200}
-                      height={80}
-                      className="object-contain max-h-24"
-                      style={{ mixBlendMode: 'multiply' }}
+                      width={400}
+                      height={400}
+                      className="object-contain h-36 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                      style={{ mixBlendMode: 'multiply', imageRendering: '-webkit-optimize-contrast' }}
                       unoptimized
                     />
                   </div>
-                  <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">APA</h3>
-                  <p className="text-sm text-gray-600 mb-4">American Psychological Association</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-6 bg-blue-600 rounded-full" />
+                    <h3 className="text-2xl font-serif font-semibold text-gray-900">APA</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">American Psychological Association</p>
                   <p className="text-blue-700 font-semibold uppercase tracking-wider text-sm">Categoría Miembro</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-shadow bg-white overflow-hidden">
+              {/* ── ISST ────────────────────────────────────────────── */}
+              <Card className="group border border-amber-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
+                <div className="h-1 bg-gradient-to-r from-amber-300 via-amber-500 to-amber-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-32 flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-100/60 rounded-xl ring-1 ring-amber-100">
                     <Image
                       src="https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/ekey2ops_isst-300x218.jpg"
                       alt="ISST Logo"
-                      width={200}
-                      height={80}
-                      className="object-contain max-h-24"
-                      style={{ mixBlendMode: 'multiply' }}
+                      width={300}
+                      height={218}
+                      className="object-contain h-32 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                      style={{ mixBlendMode: 'multiply', imageRendering: 'auto' }}
                       unoptimized
                     />
                   </div>
-                  <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-2">ISST</h3>
-                  <p className="text-sm text-gray-600 mb-4">International Society of Schema Therapy</p>
-                  <p className="text-amber-600 font-semibold">Certificación</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-6 bg-amber-600 rounded-full" />
+                    <h3 className="text-2xl font-serif font-semibold text-gray-900">ISST</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">International Society of Schema Therapy</p>
+                  <p className="text-amber-700 font-semibold tracking-wide">Certificación</p>
                 </CardContent>
               </Card>
             </div>

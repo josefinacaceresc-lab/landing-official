@@ -181,7 +181,7 @@ export async function POST(request) {
         return Response.json({ error: 'RUT inválido' }, { status: 400 })
       }
       
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(email)) {
         return Response.json({ error: 'Email inválido' }, { status: 400 })
       }
@@ -235,7 +235,7 @@ export async function POST(request) {
       }
       
       // Validate email format
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(email)) {
         return Response.json(
           { error: 'Email inválido' },

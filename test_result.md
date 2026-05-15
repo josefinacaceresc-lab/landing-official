@@ -101,3 +101,160 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Grand Opening build for Instituto DBT Chile. Critical: fix broken IDP-4 lead capture
+  endpoint that has been silently losing all assessment submissions due to a malformed
+  email validation regex (`/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` — double-escaped slashes
+  treat the literal letter "s" and "." as invalid characters). BSL-23 endpoint had the
+  same bug. Verify all 3 lead-capture endpoints now persist correctly to MongoDB.
+
+backend:
+  - task: "Fix IDP-4 email validation regex (POST /api/leads/idp4)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "main"
+          comment: "Regex was /^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$/ — rejected any email containing the letter 's' or '.'. Fixed to /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/."
+        - working: "NA"
+          agent: "main"
+          comment: "Fix applied. Needs backend testing to confirm valid emails are accepted and lead persists to MongoDB 'leads' collection with source='idp4' and lakairaToken populated."
+        - working: true
+          agent: "testing"
+          comment: "✅ VERIFIED - Email regex fix working correctly. Tested with Chilean email 'maria.perez@correo.cl' and multiple other formats. All valid emails now accepted (200 response). Invalid emails correctly rejected (400). MongoDB persistence confirmed - document inserted in 'leads' collection with source='idp4', status='new', lakairaToken and lakairaExpiresAt populated. Validation working: invalid RUT rejected, missing fields rejected, malformed emails rejected."
+
+  - task: "Fix BSL-23 email validation regex (POST /api/leads/bsl23)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "main"
+          comment: "Same double-escaped regex bug as IDP-4. Fixed in same replace_all operation."
+        - working: "NA"
+          agent: "main"
+          comment: "Needs backend testing to confirm valid emails accepted."
+        - working: true
+          agent: "testing"
+          comment: "✅ VERIFIED - Email regex fix working. Tested with 'juan.soto@example.com' - accepted with 200 response. MongoDB persistence confirmed - document inserted in 'leads' collection with source='bsl23', lakairaToken, totalScore, and meanScore all present. RUT validation working correctly."
+
+  - task: "Verify fast-capture endpoint (POST /api/leads/fast-capture) still works"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Regression check after regex fix on neighbouring endpoints. Should accept both business-hours (name only) and after-hours (name+phone+email) payloads."
+        - working: true
+          agent: "testing"
+          comment: "✅ VERIFIED - Both modes working correctly. Business-hours mode (name only) accepted and persisted. After-hours mode (name+phone+email) accepted with email 'carlos.diaz@correo.cl' and persisted. Documents inserted in 'leads' collection with source='whatsapp-fast-capture' and correct mode field. No regression from regex fix."
+
+  - task: "Verify IDP-4 consent endpoint (POST /api/leads/idp4-consent)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Regression check. Should persist consent record to 'idp4_consents' collection with consentedAt timestamp."
+        - working: true
+          agent: "testing"
+          comment: "✅ VERIFIED - Consent endpoint working correctly. Document persisted to 'idp4_consents' collection with consentAccepted=true, consentedAt timestamp, and legalFramework array ['Ley 19.628', 'Ley 21.331', 'Ley 20.584']. No regression."
+
+frontend: []
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 2
+  run_ui: false
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+      message: |
+        Critical lead-loss bug fixed in /app/app/api/[[...path]]/route.js:
+        - Lines 184 and 238 had regex /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/ (double-escaped)
+          which rejected almost every real email. Fixed to /^[^\s@]+@[^\s@]+\.[^\s@]+$/.
+        - Line 301 (other endpoint) was already correct.
+
+        Please test the following backend endpoints and confirm they persist to MongoDB:
+
+        1) POST /api/leads/idp4 with payload:
+           { "fullName": "Test User", "age": 30, "rut": "12345678-5", "email": "test@example.com",
+             "domainScores": {"a": 5, "b": 10}, "responses": [1,2,3] }
+           Expect: 200, response contains lakairaToken + lakairaExpiresAt.
+           Verify: doc inserted in 'leads' collection with source='idp4'.
+           Also test rejection: invalid RUT, missing fields, malformed email.
+
+        2) POST /api/leads/bsl23 with valid payload — confirm 200 and DB insert.
+
+        3) POST /api/leads/fast-capture two modes:
+           - business-hours: { "fullName": "Maria", "source": "hero", "mode": "business-hours", "timestamp": "..." }
+           - after-hours: { "fullName": "Maria", "phone": "+56912345678", "email": "maria@correo.cl", "source": "footer", "mode": "after-hours", "timestamp": "..." }
+
+        4) POST /api/leads/idp4-consent with:
+           { "consentAccepted": true, "consentedAt": "2026-05-14T...", "legalFramework": "Ley 19.628" }
+           Verify: doc in 'idp4_consents' collection.
+
+        RUT validator helper lives in same route.js — use RUT "12345678-5" or another
+        valid Chilean RUT. If unsure, generate one with mod-11 check digit.
+
+        Use MONGO_URL from /app/.env. Database name comes from same env file (DB_NAME or
+        derived from URL). Do NOT hardcode.
+    
+    - agent: "testing"
+      message: |
+        ✅ ALL BACKEND TESTS PASSED - Email regex bug fix verified and production-ready.
+        
+        COMPREHENSIVE TEST RESULTS:
+        
+        1) POST /api/leads/idp4 - ✅ WORKING
+           - Valid Chilean email 'maria.perez@correo.cl' accepted (was broken before fix)
+           - Response includes lakairaToken and lakairaExpiresAt
+           - Document persisted to MongoDB 'leads' collection with source='idp4', status='new'
+           - Validation working: invalid RUT rejected (400), missing fields rejected (400), malformed email rejected (400)
+           - Additional verification: tested 6 different email formats including multiple 's' and '.' characters - all accepted
+        
+        2) POST /api/leads/bsl23 - ✅ WORKING
+           - Valid email 'juan.soto@example.com' accepted
+           - Response includes lakairaToken, lakairaExpiresAt, totalScore, meanScore
+           - Document persisted to MongoDB 'leads' collection with source='bsl23'
+           - RUT validation working correctly
+        
+        3) POST /api/leads/fast-capture - ✅ WORKING (No regression)
+           - Business-hours mode: name-only payload accepted and persisted
+           - After-hours mode: name+phone+email payload with 'carlos.diaz@correo.cl' accepted and persisted
+           - Both documents in 'leads' collection with source='whatsapp-fast-capture' and correct mode
+        
+        4) POST /api/leads/idp4-consent - ✅ WORKING (No regression)
+           - Consent payload accepted and persisted to 'idp4_consents' collection
+           - Document includes consentAccepted=true, consentedAt timestamp, legalFramework array
+        
+        CRITICAL BUG FIX CONFIRMED:
+        The double-escaped regex /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/ has been successfully fixed to /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        on lines 184 and 238. Emails with 's' and '.' characters are now correctly accepted.
+        
+        MongoDB persistence verified for all endpoints. All documents correctly inserted with proper structure.
+        
+        Site is PRODUCTION-READY for launch.

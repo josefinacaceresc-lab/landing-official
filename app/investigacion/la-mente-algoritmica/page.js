@@ -7,12 +7,12 @@ export const metadata = {
   title: 'La Mente Algorítmica - Programa de Investigación Doctoral',
   description: '8 artículos científicos sobre desregulación emocional, EMA y axiomas de la neurociencia. Incluye el Tratado Maestro con 6,454 palabras y 33 referencias APA 7.',
   alternates: {
-    canonical: 'https://institutodbt.cl/investigacion/la-mente-algoritmica',
+    canonical: 'https://institutodbtchile.cl/investigacion/la-mente-algoritmica',
   },
   openGraph: {
     title: 'La Mente Algorítmica | Instituto DBT Chile',
     description: '8 artículos científicos sobre desregulación emocional, EMA y axiomas de la neurociencia.',
-    url: 'https://institutodbt.cl/investigacion/la-mente-algoritmica',
+    url: 'https://institutodbtchile.cl/investigacion/la-mente-algoritmica',
     type: 'article',
     images: [{
       url: 'https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?fm=jpg&q=80&w=1200&h=630&fit=crop',
@@ -271,7 +271,7 @@ export default function LaMenteAlgoritmicaPage() {
           },
           datePublished: '2024',
           description: '8 artículos científicos sobre desregulación emocional, EMA y axiomas de la neurociencia.',
-          url: 'https://institutodbt.cl/investigacion/la-mente-algoritmica'
+          url: 'https://institutodbtchile.cl/investigacion/la-mente-algoritmica'
         })
       }} />
     </div>

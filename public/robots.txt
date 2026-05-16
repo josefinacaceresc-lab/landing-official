@@ -10,7 +10,7 @@ Allow: /
 Crawl-delay: 0
 
 # Host
-Host: https://institutodbt.cl
+Host: https://institutodbtchile.cl
 
 # Sitemap
-Sitemap: https://institutodbt.cl/sitemap.xml
+Sitemap: https://institutodbtchile.cl/sitemap.xml

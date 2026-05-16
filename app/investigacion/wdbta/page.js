@@ -7,12 +7,12 @@ export const metadata = {
   title: 'WDBTA Chile - World DBT Training Alliance',
   description: 'Único representante de WDBTA (World DBT Training Alliance) en Chile. Certificación internacional en Terapia Dialéctico Conductual.',
   alternates: {
-    canonical: 'https://institutodbt.cl/investigacion/wdbta',
+    canonical: 'https://institutodbtchile.cl/investigacion/wdbta',
   },
   openGraph: {
     title: 'WDBTA Chile | Instituto DBT Chile',
     description: 'Único representante de WDBTA en Chile. Certificación internacional en DBT.',
-    url: 'https://institutodbt.cl/investigacion/wdbta',
+    url: 'https://institutodbtchile.cl/investigacion/wdbta',
     images: [{
       url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?fm=jpg&q=80&w=1200&h=630&fit=crop',
       width: 1200,

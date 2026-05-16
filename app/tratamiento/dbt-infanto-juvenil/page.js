@@ -14,11 +14,11 @@ export const metadata = {
     'Camino del Medio',
     'Instituto DBT Chile infantojuvenil',
   ],
-  alternates: { canonical: 'https://institutodbt.cl/tratamiento/dbt-infanto-juvenil' },
+  alternates: { canonical: 'https://institutodbtchile.cl/tratamiento/dbt-infanto-juvenil' },
   openGraph: {
     title: 'DBT-A: Programa DBT para Adolescentes | Instituto DBT Chile',
     description: 'Programa DBT Infanto-Juvenil con Fidelidad Total al modelo Rathus & Miller.',
-    url: 'https://institutodbt.cl/tratamiento/dbt-infanto-juvenil',
+    url: 'https://institutodbtchile.cl/tratamiento/dbt-infanto-juvenil',
     type: 'article',
   },
 }

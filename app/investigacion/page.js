@@ -8,12 +8,12 @@ export const metadata = {
   title: 'Investigación Científica',
   description: 'Hub de investigación del Instituto DBT Chile: LaKaira AI, La Mente Algorítmica, NexariaLabs. Ciencia aplicada en neurociencia y salud mental.',
   alternates: {
-    canonical: 'https://institutodbt.cl/investigacion',
+    canonical: 'https://institutodbtchile.cl/investigacion',
   },
   openGraph: {
     title: 'Investigación Científica | Instituto DBT Chile',
     description: 'Hub de investigación: LaKaira AI, La Mente Algorítmica, NexariaLabs.',
-    url: 'https://institutodbt.cl/investigacion',
+    url: 'https://institutodbtchile.cl/investigacion',
     images: [{
       url: 'https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?fm=jpg&q=80&w=1200&h=630&fit=crop',
       width: 1200,

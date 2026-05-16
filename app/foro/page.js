@@ -6,7 +6,7 @@ import { Calendar, Users, Mic, MapPin, ArrowRight } from 'lucide-react'
 export const metadata = {
   title: 'Foro Clínico DBT Chile | Encuentros y Formación Continua',
   description: 'Foro Clínico del Instituto DBT Chile: encuentros académicos, jornadas WDBTA, formación continua para profesionales y espacios de divulgación científica en DBT y Schema Therapy.',
-  alternates: { canonical: 'https://institutodbt.cl/foro' },
+  alternates: { canonical: 'https://institutodbtchile.cl/foro' },
 }
 
 const eventos = [

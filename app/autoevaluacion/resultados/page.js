@@ -43,7 +43,7 @@ export default function ResultadosPage() {
   const [error, setError] = useState('')
 
   const interpretation = getScoreInterpretation(score)
-  const lakairaUrl = `https://lakaira.institutodbt.cl/trial?token=${token}`
+  const lakairaUrl = `https://lakaira.institutodbtchile.cl/trial?token=${token}`
 
   useEffect(() => {
     if (token) {

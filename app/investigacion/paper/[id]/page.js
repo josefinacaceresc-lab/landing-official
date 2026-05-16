@@ -110,7 +110,7 @@ export default function PaperDetailPage({ params }) {
         {/* Print-only header with brand */}
         <header className="hidden print:block mb-6 pb-4 border-b border-gray-300">
           <div className="text-xs uppercase tracking-wider text-gray-600 mb-1">
-            Instituto DBT Chile · institutodbt.cl
+            Instituto DBT Chile · institutodbtchile.cl
           </div>
           <div className="text-xs text-gray-500">
             La Mente Algorítmica · Programa de Investigación Doctoral
@@ -195,7 +195,7 @@ export default function PaperDetailPage({ params }) {
             <div className="mt-4 flex flex-wrap gap-2 print:hidden">
               <Button asChild className="bg-primary hover:bg-primary/90 text-white font-semibold">
                 <a
-                  href={`mailto:contacto@dbtchile.cl?subject=${encodeURIComponent('Solicitud de acceso a artículo: ' + paper.title)}&body=${encodeURIComponent('Hola Instituto DBT Chile,\n\nSolicito acceso a la versión completa del artículo doctoral:\n\n• Título: ' + paper.title + '\n• Autor: Dra. Josefina Cáceres, Ph.D.(c)\n• Referencia: https://institutodbt.cl/investigacion/paper/' + paper.id + '\n\nMis datos:\nNombre completo: \nProfesión / Institución: \nMotivo de la solicitud: \n\nGracias.')}`}
+                  href={`mailto:contacto@dbtchile.cl?subject=${encodeURIComponent('Solicitud de acceso a artículo: ' + paper.title)}&body=${encodeURIComponent('Hola Instituto DBT Chile,\n\nSolicito acceso a la versión completa del artículo doctoral:\n\n• Título: ' + paper.title + '\n• Autor: Dra. Josefina Cáceres, Ph.D.(c)\n• Referencia: https://institutodbtchile.cl/investigacion/paper/' + paper.id + '\n\nMis datos:\nNombre completo: \nProfesión / Institución: \nMotivo de la solicitud: \n\nGracias.')}`}
                 >
                   Solicitar acceso
                 </a>
@@ -209,14 +209,14 @@ export default function PaperDetailPage({ params }) {
           <h2 className="text-xl font-semibold text-gray-900 mb-3 print:text-lg">Cómo citar</h2>
           <div className="bg-gray-50 border-l-4 border-primary p-4 rounded text-sm text-gray-700 leading-relaxed print:bg-white print:border print:border-gray-300">
             Cáceres, J. ({paper.date}). <em>{paper.title}</em>. Instituto DBT Chile — La Mente Algorítmica.
-            Recuperado de https://institutodbt.cl/investigacion/paper/{paper.id}
+            Recuperado de https://institutodbtchile.cl/investigacion/paper/{paper.id}
           </div>
         </section>
 
         {/* Print footer */}
         <footer className="hidden print:block mt-12 pt-4 border-t border-gray-300 text-xs text-gray-500">
           © {new Date().getFullYear()} Instituto DBT Chile · Todos los derechos reservados ·
-          Documento generado desde institutodbt.cl/investigacion/paper/{paper.id}
+          Documento generado desde institutodbtchile.cl/investigacion/paper/{paper.id}
         </footer>
       </div>
     </article>

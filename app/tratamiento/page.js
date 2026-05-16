@@ -15,7 +15,7 @@ export const metadata = {
     'Instituto DBT Chile',
     'WDBTA Chile'
   ],
-  alternates: { canonical: 'https://institutodbt.cl/tratamiento' },
+  alternates: { canonical: 'https://institutodbtchile.cl/tratamiento' },
 }
 
 const pilares = [

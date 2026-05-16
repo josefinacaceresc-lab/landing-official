@@ -7,12 +7,12 @@ export const metadata = {
   title: 'Blog - Artículos sobre DBT y Salud Mental',
   description: 'Artículos científicos y educativos sobre Terapia Dialéctico Conductual, neurociencia, regulación emocional y salud mental.',
   alternates: {
-    canonical: 'https://institutodbt.cl/blog',
+    canonical: 'https://institutodbtchile.cl/blog',
   },
   openGraph: {
     title: 'Blog | Instituto DBT Chile',
     description: 'Artículos científicos sobre DBT, neurociencia y salud mental.',
-    url: 'https://institutodbt.cl/blog',
+    url: 'https://institutodbtchile.cl/blog',
     images: [{
       url: 'https://images.unsplash.com/photo-1471520201477-47a62a269a87?fm=jpg&q=80&w=1200&h=630&fit=crop',
       width: 1200,

@@ -18,12 +18,12 @@ export const metadata = {
     'LaKaira AI impulsividad'
   ],
   alternates: {
-    canonical: 'https://institutodbt.cl/tratamientos/patologia-dual',
+    canonical: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
   },
   openGraph: {
     title: 'Patología Dual: DBT-SUD de Fidelidad Total | InstitutoDBT.cl',
     description: 'Centro de Alta Complejidad en Patología Dual. Protocolo DBT-SUD + monitoreo LaKaira AI para TLP + Trastorno por Uso de Sustancias.',
-    url: 'https://institutodbt.cl/tratamientos/patologia-dual',
+    url: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
     type: 'article',
     images: [{
       url: 'https://customer-assets.emergentagent.com/job_nextjs-dbt-cl/artifacts/2zcxnp4t_-logo_dbt-1.png',

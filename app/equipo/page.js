@@ -5,12 +5,12 @@ export const metadata = {
   title: 'Equipo Clínico - InstitutoDBT.cl',
   description: 'Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Liderado por la única Ph.D.(c) con afiliación WDBTA activa en Chile.',
   alternates: {
-    canonical: 'https://institutodbt.cl/equipo',
+    canonical: 'https://institutodbtchile.cl/equipo',
   },
   openGraph: {
     title: 'Equipo Clínico | InstitutoDBT.cl',
     description: 'Equipo de especialistas en DBT con certificación WDBTA e ISST.',
-    url: 'https://institutodbt.cl/equipo',
+    url: 'https://institutodbtchile.cl/equipo',
     images: [{
       url: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/aecd20208fec4060be44c1b61f5f61a0_1697991434321.jpeg',
       width: 1200,

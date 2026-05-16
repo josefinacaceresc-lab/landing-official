@@ -6,7 +6,7 @@ import { ArrowRight, Layers, Heart, Shield, Sparkles, Microscope } from 'lucide-
 export const metadata = {
   title: 'Schema Therapy (Terapia de Esquemas) | Instituto DBT Chile',
   description: 'Schema Therapy integrada con DBT en el único centro WDBTA de Chile. Tratamiento de Esquemas Maladaptativos Tempranos (EMT) y Modos Disfuncionales basado en la obra de Jeffrey Young.',
-  alternates: { canonical: 'https://institutodbt.cl/esquema' },
+  alternates: { canonical: 'https://institutodbtchile.cl/esquema' },
 }
 
 const dominios = [

@@ -14,11 +14,11 @@ export const metadata = {
     'Instituto DBT Chile',
     'borderline Chile',
   ],
-  alternates: { canonical: 'https://institutodbt.cl/tratamiento/tlp-alta-gama' },
+  alternates: { canonical: 'https://institutodbtchile.cl/tratamiento/tlp-alta-gama' },
   openGraph: {
     title: 'TLP: Tratamiento DBT de Fidelidad Total | Instituto DBT Chile',
     description: 'Referente nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA.',
-    url: 'https://institutodbt.cl/tratamiento/tlp-alta-gama',
+    url: 'https://institutodbtchile.cl/tratamiento/tlp-alta-gama',
     type: 'article',
   },
 }

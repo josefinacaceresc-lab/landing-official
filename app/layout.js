@@ -13,7 +13,7 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://institutodbt.cl'),
+  metadataBase: new URL('https://institutodbtchile.cl'),
   title: {
     default: 'Instituto DBT Chile | Terapia Dialéctico Conductual',
     template: '%s | Instituto DBT Chile'
@@ -29,15 +29,15 @@ export const metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: 'https://institutodbt.cl',
+    canonical: 'https://institutodbtchile.cl',
     languages: {
-      'es-CL': 'https://institutodbt.cl',
+      'es-CL': 'https://institutodbtchile.cl',
     },
   },
   openGraph: {
     type: 'website',
     locale: 'es_CL',
-    url: 'https://institutodbt.cl',
+    url: 'https://institutodbtchile.cl',
     title: 'Instituto DBT Chile | Terapia Dialéctico Conductual',
     description: 'Instituto líder en Terapia Dialéctico Conductual (DBT) en Chile. Único representante de WDBTA.',
     siteName: 'Instituto DBT Chile',
@@ -83,7 +83,7 @@ export default function RootLayout({ children }) {
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#00A3A3" />
         
-        <link rel="canonical" href="https://institutodbt.cl" />
+        <link rel="canonical" href="https://institutodbtchile.cl" />
         <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
         {/* Google Tag Manager */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18117776220"></script>
@@ -100,10 +100,10 @@ export default function RootLayout({ children }) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'MedicalBusiness',
-            '@id': 'https://institutodbt.cl',
+            '@id': 'https://institutodbtchile.cl',
             name: 'Instituto DBT Chile',
-            url: 'https://institutodbt.cl',
-            logo: 'https://institutodbt.cl/logo-enso.png',
+            url: 'https://institutodbtchile.cl',
+            logo: 'https://institutodbtchile.cl/logo-enso.png',
             description: 'Instituto líder en Terapia Dialéctico Conductual (DBT) en Chile. Único representante de WDBTA.',
             address: {
               '@type': 'PostalAddress',

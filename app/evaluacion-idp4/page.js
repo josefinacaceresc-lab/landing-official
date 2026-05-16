@@ -459,8 +459,22 @@ export default function IDP4Page() {
         {currentStep === 'introduction' && (
           <Card className="border-0 shadow-2xl">
             <CardHeader className="bg-gradient-to-r from-emerald-50 to-amber-50">
+              {/* ── Authority badges — Única en Chile ──────────────── */}
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider shadow-md">
+                  <CheckCircle className="w-3.5 h-3.5" /> Única en Chile
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-md">
+                  Investigación Transversal
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 border-primary text-primary text-xs font-bold uppercase tracking-wider">
+                  Población Chilena
+                </span>
+              </div>
               <CardTitle className="text-3xl font-serif text-gray-900">IDP-4: Inventario Dimensional de Personalidad</CardTitle>
-              <p className="text-gray-600 mt-2">Evaluación con Digital Phenotyping · Dra. Josefina Cáceres, 2026</p>
+              <p className="text-gray-700 mt-2 leading-relaxed">
+                <strong>Primer instrumento de evaluación dimensional transversal</strong> desarrollado para la <strong>población chilena</strong> — Dra. Josefina Cáceres · 2026 · Digital Phenotyping integrado.
+              </p>
             </CardHeader>
             <CardContent className="p-8">
               <div className="prose max-w-none">

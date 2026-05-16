@@ -45,6 +45,58 @@ export default function PaperDetailPage({ params }) {
 
   return (
     <article className="bg-white print:bg-white">
+      {/* JSON-LD — ScholarlyArticle schema for Google Scholar + E-E-A-T */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ScholarlyArticle',
+          '@id': `https://institutodbtchile.cl/investigacion/paper/${paper.id}`,
+          headline: paper.title,
+          alternativeHeadline: paper.subtitle,
+          abstract: paper.abstract,
+          articleBody: paper.abstract,
+          inLanguage: 'es-CL',
+          datePublished: `${paper.date}-01-01`,
+          dateModified: `${paper.date}-12-31`,
+          wordCount: paper.words,
+          keywords: paper.keywords || [],
+          author: {
+            '@type': 'Person',
+            '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
+            name: 'Josefina Cáceres Cortés',
+            honorificPrefix: 'Dra.',
+            honorificSuffix: 'Ph.D.(c)',
+            jobTitle: 'Directora Científica · Instituto DBT Chile',
+            affiliation: {
+              '@type': 'Organization',
+              '@id': 'https://institutodbtchile.cl/#clinic',
+              name: 'Instituto DBT Chile',
+              url: 'https://institutodbtchile.cl',
+            },
+          },
+          publisher: {
+            '@type': 'Organization',
+            '@id': 'https://institutodbtchile.cl/#org',
+            name: 'Instituto DBT Chile',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
+            },
+          },
+          isAccessibleForFree: true,
+          license: 'https://creativecommons.org/licenses/by-nc/4.0/',
+          citation: paper.references ? `${paper.references} referencias académicas indexadas` : undefined,
+          about: [
+            { '@type': 'Thing', name: 'Dialectical Behavior Therapy' },
+            { '@type': 'Thing', name: 'Borderline Personality Disorder' },
+            { '@type': 'Thing', name: 'Emotion Regulation' },
+          ],
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `https://institutodbtchile.cl/investigacion/paper/${paper.id}`,
+          },
+        }, null, 0)
+      }} />
       {/* Print help banner — only shown when ?print=1, before the dialog opens */}
       {showPrintHelp && (
         <div className="print:hidden fixed top-0 left-0 right-0 z-50 bg-primary text-white shadow-lg">

@@ -597,7 +597,20 @@ export default function Home() {
                     Evalúa tu <span className="font-serif font-semibold">Desregulación Emocional</span>
                   </h2>
                   
-                  <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
+                  {/* ── Unique-in-Chile badges ──────────── */}
+                  <div className="flex flex-wrap justify-center gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 text-emerald-700 text-xs font-bold uppercase tracking-wider shadow-md">
+                      <CheckCircle className="w-3.5 h-3.5" /> Única en Chile
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-amber-950 text-xs font-bold uppercase tracking-wider shadow-md">
+                      Investigación Transversal
+                    </span>
+                  </div>
+
+                  <p className="text-xl text-emerald-100 mb-2 max-w-2xl mx-auto">
+                    Primer instrumento de evaluación dimensional transversal desarrollado para la <strong className="text-white">población chilena</strong>
+                  </p>
+                  <p className="text-sm text-emerald-200/90 mb-8 max-w-2xl mx-auto">
                     Test en proceso de validación + Reporte personalizado inmediato
                   </p>
                   

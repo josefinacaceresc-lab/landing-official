@@ -102,8 +102,84 @@ const teamMembers = [
 ]
 
 export default function EquipoPage() {
+  // JSON-LD Physician + MedicalOrganization schema for E-E-A-T authority
+  const physicianSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Physician',
+        '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
+        name: 'Josefina Cáceres Cortés',
+        honorificPrefix: 'Dra.',
+        honorificSuffix: 'Ph.D.(c)',
+        jobTitle: 'Directora Científica & Fundadora · Instituto DBT Chile',
+        description:
+          'Psicóloga clínica, doctoranda en Psicología. Única representante institucional en Chile dentro del capítulo de investigación de la WDBTA (World Dialectical Behavior Therapy Association). Especialista en Terapia Dialéctico Conductual (DBT), Schema Therapy y Psiquiatría Computacional.',
+        url: 'https://institutodbtchile.cl/equipo',
+        worksFor: {
+          '@id': 'https://institutodbtchile.cl/#clinic',
+        },
+        medicalSpecialty: ['Psychology', 'Psychiatry', 'Mental Health'],
+        knowsAbout: [
+          'Dialectical Behavior Therapy (DBT)',
+          'Borderline Personality Disorder (BPD/TLP)',
+          'Schema Therapy',
+          'Patología Dual',
+          'Psiquiatría Computacional',
+          'DBT-A (Adolescentes y Familia)',
+          'DBT-SUD (Trastornos por uso de sustancias)',
+        ],
+        hasCredential: [
+          {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'doctoral degree',
+            name: 'Ph.D.(c) en Psicología',
+          },
+          {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'professional certification',
+            name: 'Schema Therapy Certification — ISST',
+          },
+          {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'professional certification',
+            name: 'WDBTA Research Member — Única en Chile',
+          },
+        ],
+        memberOf: [
+          { '@type': 'Organization', name: 'World Dialectical Behavior Therapy Association', alternateName: 'WDBTA', url: 'https://wdbta.com' },
+          { '@type': 'Organization', name: 'American Psychological Association', alternateName: 'APA', url: 'https://www.apa.org' },
+          { '@type': 'Organization', name: 'International Society of Schema Therapy', alternateName: 'ISST', url: 'https://schematherapysociety.org' },
+          { '@type': 'Organization', name: 'Sociedad Española de Estudios de los Trastornos Límite de la Personalidad', alternateName: 'SEETLP' },
+        ],
+        affiliation: [
+          { '@type': 'Organization', name: 'American Psychological Association', url: 'https://www.apa.org' },
+          { '@type': 'Organization', name: 'NexariaLabs · LaKaira AI' },
+        ],
+        nationality: 'CL',
+        availableService: [
+          { '@type': 'MedicalTherapy', name: 'Terapia Dialéctico Conductual (DBT)' },
+          { '@type': 'MedicalTherapy', name: 'Schema Therapy' },
+        ],
+      },
+      {
+        '@type': 'Physician',
+        '@id': 'https://institutodbtchile.cl/equipo#trahice-veliz',
+        name: 'Trahice Véliz Pérez',
+        jobTitle: 'Subdirectora Clínica · Psicóloga',
+        worksFor: { '@id': 'https://institutodbtchile.cl/#clinic' },
+        medicalSpecialty: 'Psychology',
+        knowsAbout: ['DBT', 'Schema Therapy Grupal', 'DBT-SUD', 'Psicología Forense'],
+        memberOf: [
+          { '@type': 'Organization', name: 'Sociedad Española de DBT' },
+        ],
+      },
+    ],
+  }
+
   return (
     <div className="bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(physicianSchema, null, 0) }} />
       {/* Hero */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />

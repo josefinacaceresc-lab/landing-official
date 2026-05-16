@@ -95,30 +95,138 @@ export default function RootLayout({ children }) {
             gtag('config', 'AW-18117776220');
           `
         }} />
-        {/* JSON-LD Schema */}
+        {/* JSON-LD — MedicalClinic Schema (E-E-A-T) */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'MedicalBusiness',
-            '@id': 'https://institutodbtchile.cl',
+            '@type': 'MedicalClinic',
+            '@id': 'https://institutodbtchile.cl/#clinic',
             name: 'Instituto DBT Chile',
+            alternateName: ['Instituto DBT', 'DBT Chile'],
             url: 'https://institutodbtchile.cl',
-            logo: 'https://institutodbtchile.cl/logo-enso.png',
-            description: 'Instituto líder en Terapia Dialéctico Conductual (DBT) en Chile. Único representante de WDBTA.',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
+            },
+            image: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
+            description: 'Instituto líder en Terapia Dialéctico Conductual (DBT) en Chile. Único representante institucional WDBTA. Atención especializada en Trastorno Límite de la Personalidad, Patología Dual y Psiquiatría Computacional.',
+            slogan: 'Terapia Dialéctico Conductual de excelencia internacional',
+            telephone: '+56-2-28480652',
+            email: 'contacto@dbtchile.cl',
+            priceRange: '$$$',
             address: {
               '@type': 'PostalAddress',
+              streetAddress: 'El Coihue 3776',
+              addressLocality: 'Vitacura',
+              addressRegion: 'Región Metropolitana',
               addressCountry: 'CL',
-              addressLocality: 'Chile'
+              postalCode: '7630000',
             },
             geo: {
               '@type': 'GeoCoordinates',
-              addressCountry: 'CL'
+              latitude: -33.3870,
+              longitude: -70.5811,
             },
-            areaServed: 'CL',
-            medicalSpecialty: 'Psychology',
-            availableLanguage: ['es-CL'],
-            sameAs: []
-          })
+            areaServed: {
+              '@type': 'Country',
+              name: 'Chile',
+            },
+            founder: {
+              '@type': 'Physician',
+              '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
+              name: 'Josefina Cáceres',
+              honorificPrefix: 'Dra.',
+              jobTitle: 'Directora Clínica · Ph.D.(c) en Psicología',
+              description: 'Directora clínica del Instituto DBT Chile. Única representante institucional WDBTA en Chile. Doctoranda con especialización en DBT, Schema Therapy y Psiquiatría Computacional.',
+            },
+            medicalSpecialty: [
+              'Psychology',
+              'Psychiatry',
+              'Mental Health',
+            ],
+            availableService: [
+              { '@type': 'MedicalTherapy', name: 'Terapia Dialéctico Conductual (DBT) Estándar' },
+              { '@type': 'MedicalTherapy', name: 'DBT para Trastorno Límite de la Personalidad (TLP)' },
+              { '@type': 'MedicalTherapy', name: 'DBT Infanto-Juvenil (DBT-A)' },
+              { '@type': 'MedicalTherapy', name: 'Tratamiento de Patología Dual (DBT-SUD)' },
+              { '@type': 'MedicalTherapy', name: 'Schema Therapy' },
+              { '@type': 'MedicalTherapy', name: 'Programa Familia · Apoyo a padres' },
+            ],
+            memberOf: [
+              {
+                '@type': 'Organization',
+                name: 'World Dialectical Behavior Therapy Association',
+                alternateName: 'WDBTA',
+                url: 'https://wdbta.com',
+              },
+              {
+                '@type': 'Organization',
+                name: 'American Psychological Association',
+                alternateName: 'APA',
+                url: 'https://www.apa.org',
+              },
+              {
+                '@type': 'Organization',
+                name: 'International Society of Schema Therapy',
+                alternateName: 'ISST',
+                url: 'https://schematherapysociety.org',
+              },
+              {
+                '@type': 'Organization',
+                name: 'Sociedad Española de Estudios de los Trastornos Límite de la Personalidad',
+                alternateName: 'SEETLP',
+              },
+            ],
+            availableLanguage: ['es-CL', 'en'],
+            openingHoursSpecification: [
+              {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+                opens: '10:00',
+                closes: '19:00',
+              },
+              {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: 'Friday',
+                opens: '10:00',
+                closes: '16:00',
+              },
+            ],
+            sameAs: [
+              'https://wdbta.com',
+              'https://www.apa.org',
+            ],
+          }, null, 0)
+        }} />
+
+        {/* JSON-LD — Organization (parent entity) */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            '@id': 'https://institutodbtchile.cl/#org',
+            name: 'Instituto DBT Chile',
+            url: 'https://institutodbtchile.cl',
+            logo: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
+            contactPoint: [
+              {
+                '@type': 'ContactPoint',
+                contactType: 'customer service',
+                telephone: '+56-2-28480652',
+                email: 'contacto@dbtchile.cl',
+                areaServed: 'CL',
+                availableLanguage: ['Spanish'],
+              },
+              {
+                '@type': 'ContactPoint',
+                contactType: 'appointment',
+                telephone: '+56-9-30550750',
+                contactOption: 'WhatsApp',
+                areaServed: 'CL',
+                availableLanguage: ['Spanish'],
+              },
+            ],
+          }, null, 0)
         }} />
       </head>
       <body className={`${poppins.className} prevent-horizontal-scroll font-smooth`}>

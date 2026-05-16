@@ -20,6 +20,37 @@ async function connectToDatabase() {
 const ADMIN_SESSION_COOKIE = 'admin_session'
 const ADMIN_SESSION_TTL_HOURS = 24
 
+/**
+ * Normalises Chilean phone numbers into a canonical E.164-without-plus form:
+ * `569XXXXXXXX` (11 digits total: country 56 + mobile prefix 9 + 8 digits).
+ *
+ * Handles common operator-error cases:
+ *  - "+56 9 1234 5678"      → 56912345678
+ *  - "56569 1234 5678"      → 56912345678   (duplicate country code)
+ *  - "5656569 1234 5678"    → 56912345678   (triple country code)
+ *  - "9 1234 5678"          → 56912345678   (9-digit local Chilean mobile)
+ *  - "1234 5678"            → 1234 5678     (under 9 digits — left as-is, caller decides)
+ *  - "9123 4567"            → 56991234567   (typo: 8-digit prefixed with 9 → still treat as mobile)
+ *
+ * Returns the cleaned digit string. Never throws.
+ */
+function normalizeChileanPhone(raw) {
+  if (raw == null) return ''
+  let digits = String(raw).replace(/\D/g, '')
+  if (!digits) return ''
+  // Remove ANY '5656' duplicated country-code prefix, unconditionally.
+  // A real Chilean mobile cannot start with '5656' because the mobile prefix
+  // after country code 56 must be '9'.
+  while (digits.startsWith('5656')) {
+    digits = digits.slice(2)
+  }
+  // 9-digit local Chilean mobile starting with '9' → prepend country code
+  if (digits.length === 9 && digits.startsWith('9')) {
+    digits = '56' + digits
+  }
+  return digits
+}
+
 function parseCookie(request, name) {
   const cookieHeader = request.headers.get('cookie') || ''
   const cookies = Object.fromEntries(
@@ -275,6 +306,33 @@ export async function POST(request) {
       })
     }
 
+    // ─── Admin: backfill phone normalization on existing leads ───────────
+    if (pathname === '/api/admin/normalize-phones') {
+      const session = await getAdminSession(request)
+      if (!session) return unauthorized()
+      const db = await connectToDatabase()
+      const cursor = db.collection('leads').find({ phone: { $ne: null } })
+      let scanned = 0
+      let updated = 0
+      const samples = []
+      while (await cursor.hasNext()) {
+        const lead = await cursor.next()
+        scanned++
+        const cleaned = normalizeChileanPhone(lead.phone)
+        if (cleaned && cleaned !== String(lead.phone || '')) {
+          await db.collection('leads').updateOne(
+            { _id: lead._id },
+            { $set: { phone: cleaned, phoneDigits: cleaned } }
+          )
+          updated++
+          if (samples.length < 10) {
+            samples.push({ before: lead.phone, after: cleaned })
+          }
+        }
+      }
+      return Response.json({ success: true, scanned, updated, samples })
+    }
+
     // ─── Admin: logout ────────────────────────────────────────────────────
     if (pathname === '/api/admin/logout') {
       const token = parseCookie(request, ADMIN_SESSION_COOKIE)
@@ -357,7 +415,7 @@ export async function POST(request) {
       }
 
       const cleanPhone = phone ? String(phone).trim() : ''
-      const phoneDigits = cleanPhone.replace(/\D/g, '')
+      const phoneDigits = normalizeChileanPhone(cleanPhone)
       const cleanEmail = email ? String(email).trim() : ''
 
       // After-hours mode requires phone + email
@@ -376,7 +434,7 @@ export async function POST(request) {
       const lead = {
         id: uuidv4(),
         fullName: cleanName,
-        phone: cleanPhone || null,
+        phone: phoneDigits || null,
         phoneDigits: phoneDigits || null,
         email: cleanEmail || null,
         source: 'whatsapp-fast-capture',
@@ -399,7 +457,7 @@ export async function POST(request) {
             `${tag} · Lead WhatsApp`,
             `Nombre: ${cleanName}`,
           ]
-          if (cleanPhone) lines.push(`Teléfono: ${cleanPhone}`)
+          if (phoneDigits) lines.push(`Teléfono: +${phoneDigits}`)
           if (cleanEmail) lines.push(`Email: ${cleanEmail}`)
           lines.push(`Origen: ${source || 'general'}`)
           fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
@@ -498,10 +556,11 @@ export async function POST(request) {
       const leadsCollection = db.collection('leads')
       
       const lead = {
+        id: uuidv4(),
         fullName,
         rut,
         email,
-        phone,
+        phone: normalizeChileanPhone(phone) || null,
         totalScore,
         meanScore,
         subscaleScores: subscaleScores || {},
@@ -561,10 +620,11 @@ export async function POST(request) {
       const leadsCollection = db.collection('leads')
       
       const lead = {
+        id: uuidv4(),
         fullName,
         rut,
         email,
-        phone,
+        phone: normalizeChileanPhone(phone) || null,
         assessmentScore,
         responses: responses || [],
         lakairaToken: token,

@@ -32,6 +32,18 @@ function formatDate(iso) {
   } catch (_) { return '—' }
 }
 
+function formatPhoneDisplay(raw) {
+  let digits = String(raw || '').replace(/\D/g, '')
+  if (!digits) return '—'
+  while (digits.startsWith('5656')) digits = digits.slice(2)
+  if (digits.length === 9 && digits.startsWith('9')) digits = '56' + digits
+  // Pretty print "+56 9 1234 5678"
+  if (digits.length === 11 && digits.startsWith('569')) {
+    return `+56 9 ${digits.slice(3, 7)} ${digits.slice(7)}`
+  }
+  return `+${digits}`
+}
+
 function StatCard({ label, value, icon: Icon, color = 'emerald' }) {
   const colorMap = {
     emerald: 'bg-emerald-50 text-emerald-700 border-emerald-100',
@@ -147,8 +159,13 @@ export default function AdminPage() {
   }
 
   const openWhatsApp = (phone, name) => {
-    const digits = String(phone || '').replace(/\D/g, '')
+    let digits = String(phone || '').replace(/\D/g, '')
     if (!digits) return
+    // Defense-in-depth: clean duplicate country codes that legacy leads may have
+    while (digits.startsWith('5656')) digits = digits.slice(2)
+    // Local 9-digit mobile (starts with 9) → prepend 56
+    if (digits.length === 9 && digits.startsWith('9')) digits = '56' + digits
+    // Make sure it starts with 56
     const intl = digits.startsWith('56') ? digits : `56${digits}`
     const firstName = name?.split(' ')[0] || ''
     const text = encodeURIComponent(`Hola ${firstName}, te contacto desde Instituto DBT Chile. ¿Cómo estás?`)
@@ -338,7 +355,7 @@ export default function AdminPage() {
                           <TableCell className="text-sm space-y-0.5">
                             {lead.phone && (
                               <div className="flex items-center gap-1.5 text-slate-700">
-                                <Phone className="w-3 h-3 text-slate-400" />{lead.phone}
+                                <Phone className="w-3 h-3 text-slate-400" />{formatPhoneDisplay(lead.phone)}
                               </div>
                             )}
                             {lead.email && (

@@ -68,7 +68,7 @@ yarn postbuild
 - ✅ Metadata única por página con title templates
 - ✅ Open Graph images 1200x630px
 - ✅ Twitter Cards configuradas
-- ✅ Canonical tags apuntando a institutodbt.cl
+- ✅ Canonical tags apuntando a institutodbtchile.cl
 - ✅ hreflang es-CL para geolocalización Chile
 - ✅ robots.txt con indexación completa (bloqueo /api/)
 - ✅ Sitemap.xml con prioridades y changefreq
@@ -120,7 +120,7 @@ Para completar la funcionalidad completa del sitio, se requiere:
 ```env
 MONGO_URL=mongodb://localhost:27017
 DB_NAME=instituto_dbt
-NEXT_PUBLIC_BASE_URL=https://institutodbt.cl
+NEXT_PUBLIC_BASE_URL=https://institutodbtchile.cl
 CORS_ORIGINS=*
 ```
 

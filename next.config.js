@@ -37,7 +37,7 @@ const nextConfig = {
     ];
   },
   
-  // CRITICAL: 301 Redirects to preserve 3 years of SEO authority from dbtchile.cl
+  // 301/307 Redirects — preserves legacy URLs and routes all test entries through IDP-4 consent.
   async redirects() {
     return [
       // ── ALL test entry points go through IDP-4 (which has Informed Consent modal) ──
@@ -60,7 +60,7 @@ const nextConfig = {
 
       // ── Legacy "ugly" WordPress URLs → clean SEO paths (301) ──────────
       // The Dra. reported seeing /tlp_-_dbt/alta-gama in the wild (likely a Google-cached
-      // legacy URL from the old dbtchile.cl WordPress site). Catch all variants.
+      // legacy URL). Catch all variants.
       {
         source: '/tlp_-_dbt/alta-gama',
         destination: '/tratamiento/tlp-alta-gama',

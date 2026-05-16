@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
 
 const client = new MongoClient(process.env.MONGO_URL || 'mongodb://localhost:27017')
@@ -14,6 +14,56 @@ async function connectToDatabase() {
   const db = client.db(dbName)
   cachedDb = db
   return db
+}
+
+// ─── Admin auth helpers ─────────────────────────────────────────────────────
+const ADMIN_SESSION_COOKIE = 'admin_session'
+const ADMIN_SESSION_TTL_HOURS = 24
+
+function parseCookie(request, name) {
+  const cookieHeader = request.headers.get('cookie') || ''
+  const cookies = Object.fromEntries(
+    cookieHeader.split(';').map((c) => {
+      const [k, ...v] = c.trim().split('=')
+      return [k, v.join('=')]
+    })
+  )
+  return cookies[name] || null
+}
+
+async function getAdminSession(request) {
+  const token = parseCookie(request, ADMIN_SESSION_COOKIE)
+  if (!token) return null
+  const db = await connectToDatabase()
+  const session = await db.collection('admin_sessions').findOne({ token })
+  if (!session) return null
+  if (new Date(session.expiresAt).getTime() < Date.now()) {
+    await db.collection('admin_sessions').deleteOne({ token })
+    return null
+  }
+  return session
+}
+
+function unauthorized() {
+  return Response.json({ error: 'No autorizado' }, { status: 401 })
+}
+
+function buildSessionCookie(token, maxAgeSeconds) {
+  // HttpOnly, Secure (in prod), SameSite=Lax, Path=/, valid 24h
+  const isProd = process.env.NODE_ENV === 'production'
+  const parts = [
+    `${ADMIN_SESSION_COOKIE}=${token}`,
+    'HttpOnly',
+    'Path=/',
+    'SameSite=Lax',
+    `Max-Age=${maxAgeSeconds}`,
+  ]
+  if (isProd) parts.push('Secure')
+  return parts.join('; ')
+}
+
+function buildClearCookie() {
+  return `${ADMIN_SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`
 }
 
 // RUT Validation for Chile
@@ -53,13 +103,132 @@ function generateAccessToken() {
 }
 
 export async function GET(request) {
-  const { pathname } = new URL(request.url)
+  const { pathname, searchParams } = new URL(request.url)
   
   if (pathname === '/api/' || pathname === '/api') {
     return Response.json({ 
       message: 'Instituto DBT Chile API - Centro de Alta Complejidad',
       status: 'operational',
-      services: ['leads', 'lakaira-tokens', 'assessments']
+      services: ['leads', 'lakaira-tokens', 'assessments', 'admin']
+    })
+  }
+
+  // ─── Admin: who am I? ───────────────────────────────────────────────────
+  if (pathname === '/api/admin/me') {
+    const session = await getAdminSession(request)
+    if (!session) return unauthorized()
+    return Response.json({
+      authenticated: true,
+      expiresAt: session.expiresAt,
+    })
+  }
+
+  // ─── Admin: list leads ──────────────────────────────────────────────────
+  if (pathname === '/api/admin/leads') {
+    const session = await getAdminSession(request)
+    if (!session) return unauthorized()
+    const db = await connectToDatabase()
+    const mode = searchParams.get('mode') || ''
+    const status = searchParams.get('status') || ''
+    const since = searchParams.get('since') || ''
+    const query = {}
+    if (mode) query.mode = mode
+    if (status) query.status = status
+    if (since) {
+      const sinceDate = new Date(since)
+      if (!Number.isNaN(sinceDate.getTime())) query.createdAt = { $gte: sinceDate }
+    }
+    const leads = await db
+      .collection('leads')
+      .find(query)
+      .sort({ createdAt: -1 })
+      .limit(500)
+      .toArray()
+
+    // Normalise: ensure every lead has a stable `id` (uuid for new, _id for legacy)
+    for (const l of leads) {
+      if (!l.id && l._id) l.id = l._id.toString()
+      delete l._id
+    }
+
+    // Compute quick stats (always over full collection so the dashboard cards
+    // are not affected by the active filter).
+    const now = new Date()
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const startOfWeek = new Date(startOfDay)
+    startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay())
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    const [total, today, week, month, afterHours, contacted] = await Promise.all([
+      db.collection('leads').countDocuments({}),
+      db.collection('leads').countDocuments({ createdAt: { $gte: startOfDay } }),
+      db.collection('leads').countDocuments({ createdAt: { $gte: startOfWeek } }),
+      db.collection('leads').countDocuments({ createdAt: { $gte: startOfMonth } }),
+      db.collection('leads').countDocuments({ mode: 'after-hours' }),
+      db.collection('leads').countDocuments({ status: 'contacted' }),
+    ])
+
+    return Response.json({
+      leads,
+      stats: { total, today, week, month, afterHours, contacted, count: leads.length },
+    })
+  }
+
+  // ─── Admin: list whatsapp clicks ────────────────────────────────────────
+  if (pathname === '/api/admin/whatsapp-clicks') {
+    const session = await getAdminSession(request)
+    if (!session) return unauthorized()
+    const db = await connectToDatabase()
+    const clicks = await db
+      .collection('whatsapp_clicks')
+      .find({}, { projection: { _id: 0 } })
+      .sort({ createdAt: -1 })
+      .limit(500)
+      .toArray()
+
+    const now = new Date()
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const startOfWeek = new Date(startOfDay)
+    startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay())
+    const [total, today, week, direct, afterHours] = await Promise.all([
+      db.collection('whatsapp_clicks').countDocuments({}),
+      db.collection('whatsapp_clicks').countDocuments({ createdAt: { $gte: startOfDay } }),
+      db.collection('whatsapp_clicks').countDocuments({ createdAt: { $gte: startOfWeek } }),
+      db.collection('whatsapp_clicks').countDocuments({ mode: 'direct' }),
+      db.collection('whatsapp_clicks').countDocuments({ mode: 'after-hours' }),
+    ])
+
+    return Response.json({ clicks, stats: { total, today, week, direct, afterHours } })
+  }
+
+  // ─── Admin: CSV export ──────────────────────────────────────────────────
+  if (pathname === '/api/admin/export-csv') {
+    const session = await getAdminSession(request)
+    if (!session) return unauthorized()
+    const db = await connectToDatabase()
+    const leads = await db
+      .collection('leads')
+      .find({}, { projection: { _id: 0 } })
+      .sort({ createdAt: -1 })
+      .toArray()
+    const escape = (v) => {
+      if (v == null) return ''
+      const s = String(v).replace(/"/g, '""')
+      return /[",\n]/.test(s) ? `"${s}"` : s
+    }
+    const headers = [
+      'createdAt', 'fullName', 'phone', 'email', 'mode',
+      'source', 'sourceContext', 'status', 'contactedAt', 'age', 'rut',
+    ]
+    const lines = [headers.join(',')]
+    for (const lead of leads) {
+      lines.push(headers.map((h) => escape(lead[h])).join(','))
+    }
+    return new Response(lines.join('\n'), {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="leads-dbtchile-${Date.now()}.csv"`,
+      },
     })
   }
   
@@ -70,6 +239,60 @@ export async function POST(request) {
   const { pathname } = new URL(request.url)
   
   try {
+    // ─── Admin: login ─────────────────────────────────────────────────────
+    if (pathname === '/api/admin/login') {
+      const body = await request.json().catch(() => ({}))
+      const { password } = body || {}
+      const expected = process.env.ADMIN_PASSWORD
+      if (!expected) {
+        return Response.json({ error: 'Admin no configurado' }, { status: 500 })
+      }
+      if (typeof password !== 'string' || password.length < 4) {
+        return Response.json({ error: 'Contraseña requerida' }, { status: 400 })
+      }
+      // Simple constant-time-ish compare (string length differs leak is acceptable here)
+      if (password !== expected) {
+        // Small delay to slow down brute force
+        await new Promise((r) => setTimeout(r, 600))
+        return Response.json({ error: 'Contraseña incorrecta' }, { status: 401 })
+      }
+      const db = await connectToDatabase()
+      const token = uuidv4()
+      const expiresAt = new Date(Date.now() + ADMIN_SESSION_TTL_HOURS * 60 * 60 * 1000)
+      await db.collection('admin_sessions').insertOne({
+        token,
+        expiresAt,
+        createdAt: new Date(),
+        ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || null,
+        userAgent: (request.headers.get('user-agent') || '').slice(0, 500),
+      })
+      return new Response(JSON.stringify({ success: true, expiresAt }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Set-Cookie': buildSessionCookie(token, ADMIN_SESSION_TTL_HOURS * 3600),
+        },
+      })
+    }
+
+    // ─── Admin: logout ────────────────────────────────────────────────────
+    if (pathname === '/api/admin/logout') {
+      const token = parseCookie(request, ADMIN_SESSION_COOKIE)
+      if (token) {
+        try {
+          const db = await connectToDatabase()
+          await db.collection('admin_sessions').deleteOne({ token })
+        } catch (_) {}
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Set-Cookie': buildClearCookie(),
+        },
+      })
+    }
+
     const body = await request.json()
     
     // Register IDP-4 informed consent (Chilean Law 19.628 / 21.331 / 20.584)
@@ -151,6 +374,7 @@ export async function POST(request) {
       const leadsCollection = db.collection('leads')
 
       const lead = {
+        id: uuidv4(),
         fullName: cleanName,
         phone: cleanPhone || null,
         phoneDigits: phoneDigits || null,
@@ -414,12 +638,66 @@ export async function POST(request) {
   }
 }
 
+export async function PATCH(request) {
+  const { pathname } = new URL(request.url)
+  try {
+    // ─── Admin: mark a lead as contacted / un-contacted ───────────────────
+    // PATCH /api/admin/leads/:id  body: { status: 'contacted' | 'new', notes? }
+    const leadPatchMatch = pathname.match(/^\/api\/admin\/leads\/([^/]+)$/)
+    if (leadPatchMatch) {
+      const session = await getAdminSession(request)
+      if (!session) return unauthorized()
+      const leadId = leadPatchMatch[1]
+      const body = await request.json().catch(() => ({}))
+      const newStatus = body.status === 'contacted' ? 'contacted' : 'new'
+      const notes = typeof body.notes === 'string' ? body.notes.slice(0, 1000) : undefined
+      const db = await connectToDatabase()
+      const update = {
+        status: newStatus,
+        contactedAt: newStatus === 'contacted' ? new Date() : null,
+      }
+      if (notes !== undefined) update.adminNotes = notes
+      const result = await db.collection('leads').findOneAndUpdate(
+        { id: leadId },
+        { $set: update },
+        { returnDocument: 'after' }
+      )
+      if (!result?.value) {
+        // try matching by leadId field (IDP-4) or by Mongo _id (legacy)
+        let r2 = await db.collection('leads').findOneAndUpdate(
+          { leadId },
+          { $set: update },
+          { returnDocument: 'after' }
+        )
+        if (!r2?.value) {
+          try {
+            const oid = new ObjectId(leadId)
+            r2 = await db.collection('leads').findOneAndUpdate(
+              { _id: oid },
+              { $set: update },
+              { returnDocument: 'after' }
+            )
+          } catch (_) { /* not a valid ObjectId */ }
+        }
+        if (!r2?.value) {
+          return Response.json({ error: 'Lead no encontrado' }, { status: 404 })
+        }
+      }
+      return Response.json({ success: true, status: newStatus })
+    }
+    return Response.json({ error: 'Endpoint not found' }, { status: 404 })
+  } catch (error) {
+    console.error('PATCH Error:', error)
+    return Response.json({ error: 'Error interno', details: error.message }, { status: 500 })
+  }
+}
+
 export async function OPTIONS(request) {
   return new Response(null, {
     status: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   })

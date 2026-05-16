@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://www.institutodbt.cl',
+  siteUrl: process.env.SITE_URL || 'https://institutodbtchile.cl',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/api/*', '/admin/*', '/evaluacion-idp4/resultados', '/evaluacion-bsl23/resultados'],
@@ -18,7 +18,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      'https://www.institutodbt.cl/sitemap.xml',
+      'https://institutodbtchile.cl/sitemap.xml',
     ],
   },
   transform: async (config, path) => {
@@ -61,7 +61,7 @@ module.exports = {
       lastmod: new Date().toISOString(),
       alternateRefs: [
         {
-          href: `https://www.institutodbt.cl${path}`,
+          href: `https://institutodbtchile.cl${path}`,
           hreflang: 'es-CL',
         },
       ],

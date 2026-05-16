@@ -62,6 +62,10 @@ export default function FastCaptureModal() {
   }
 
   // ── BUSINESS HOURS FLOW ─────────────────────────────────────────────────
+  // ATOMIC PERSISTENCE: save lead to MongoDB FIRST, then redirect to WhatsApp.
+  // This guarantees that even if the user closes the tab during the redirect,
+  // the lead is already persisted. Uses `keepalive: true` so the request
+  // survives any page navigation. Source is tagged 'serena_modal' for clarity.
   const handleSubmitBusinessHours = async (e) => {
     e.preventDefault()
     const name = formData.fullName.trim()
@@ -73,42 +77,71 @@ export default function FastCaptureModal() {
     setIsSubmitting(true)
     setSubmitError('')
 
-    // Open WhatsApp synchronously to bypass mobile popup blockers
     const waUrl = buildWhatsAppUrl(name)
-    let waWindow = null
-    try {
-      waWindow = window.open(waUrl, '_blank', 'noopener,noreferrer')
-    } catch (_) { /* ignore */ }
 
-    try { trackWhatsAppClick(`fast-capture-${source}`) } catch (_) { /* ignore */ }
-
+    // 1️⃣ SAVE LEAD FIRST — atomic persistence (with keepalive safety net)
+    let saved = false
     try {
       const res = await fetch('/api/leads/fast-capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           fullName: name,
-          source,
+          source: 'serena_modal',
+          sourceContext: source,
           mode: 'business-hours',
           timestamp: new Date().toISOString(),
         }),
+        keepalive: true, // request survives even if user navigates away
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setSubmitError(data?.error || 'No pudimos guardar tus datos, pero te redirigimos a WhatsApp.')
+      if (res.ok) {
+        saved = true
+      } else {
+        setSubmitError(data?.error || 'No pudimos guardar tus datos. Igualmente te conectamos con Karina.')
       }
     } catch (_) {
-      setSubmitError('Conexión inestable. Igualmente te llevamos a WhatsApp.')
-    } finally {
-      setIsSubmitting(false)
-      setStep('success')
-      if (!waWindow) {
-        setTimeout(() => { window.location.href = waUrl }, 600)
-      }
+      setSubmitError('Conexión inestable. Igualmente te conectamos con Karina.')
+    }
+
+    // 2️⃣ Track conversion (Google Ads)
+    try { trackWhatsAppClick(`serena-modal-${source}`) } catch (_) { /* ignore */ }
+
+    // 3️⃣ THEN open WhatsApp (after the save resolved)
+    let waWindow = null
+    try {
+      waWindow = window.open(waUrl, '_blank', 'noopener,noreferrer')
+    } catch (_) { /* ignore */ }
+
+    setIsSubmitting(false)
+    setStep('success')
+
+    // Fallback: if popup blocked, redirect current tab after short delay
+    if (!waWindow) {
+      setTimeout(() => { window.location.href = waUrl }, 600)
+    }
+
+    // Final defensive save via sendBeacon — fires even if the page is unloading.
+    // Idempotent: backend deduplicates by name + same-minute timestamp if needed.
+    if (!saved && typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+      try {
+        const payload = JSON.stringify({
+          fullName: name,
+          source: 'serena_modal',
+          sourceContext: source,
+          mode: 'business-hours',
+          timestamp: new Date().toISOString(),
+          beacon: true,
+        })
+        navigator.sendBeacon('/api/leads/fast-capture', new Blob([payload], { type: 'application/json' }))
+      } catch (_) { /* ignore */ }
     }
   }
 
   // ── AFTER-HOURS FLOW ────────────────────────────────────────────────────
+  // ATOMIC PERSISTENCE: save lead with full data (name + phone + email).
+  // No redirect to WhatsApp — Karina contacts the user on next business day.
+  // Source tagged 'serena_modal' for traceability.
   const validateAfterHours = () => {
     const e = {}
     if (!formData.fullName.trim() || formData.fullName.trim().length < 2) e.fullName = 'Ingresa tu nombre completo'
@@ -132,10 +165,12 @@ export default function FastCaptureModal() {
           fullName: formData.fullName.trim(),
           phone: formData.phone.trim(),
           email: formData.email.trim(),
-          source,
+          source: 'serena_modal',
+          sourceContext: source,
           mode: 'after-hours',
           timestamp: new Date().toISOString(),
         }),
+        keepalive: true,
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {

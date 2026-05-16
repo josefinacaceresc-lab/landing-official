@@ -403,7 +403,7 @@ export async function POST(request) {
 
     // Store Fast WhatsApp Capture Lead (Name + optional Phone/Email)
     if (pathname === '/api/leads/fast-capture') {
-      const { fullName, phone, email, source, mode, timestamp } = body || {}
+      const { fullName, phone, email, source, sourceContext, mode, timestamp, beacon } = body || {}
 
       if (!fullName) {
         return Response.json({ error: 'Nombre es obligatorio' }, { status: 400 })
@@ -431,16 +431,36 @@ export async function POST(request) {
       const db = await connectToDatabase()
       const leadsCollection = db.collection('leads')
 
+      // Idempotency: avoid duplicating leads when both fetch and sendBeacon fire
+      // for the same submission within a short window.
+      if (cleanName) {
+        const sixtySecondsAgo = new Date(Date.now() - 60 * 1000)
+        const existing = await leadsCollection.findOne({
+          fullName: cleanName,
+          mode: mode || 'business-hours',
+          createdAt: { $gte: sixtySecondsAgo },
+        })
+        if (existing) {
+          return Response.json({
+            success: true,
+            leadId: existing.id || existing._id?.toString?.() || null,
+            deduplicated: true,
+          })
+        }
+      }
+
       const lead = {
         id: uuidv4(),
         fullName: cleanName,
         phone: phoneDigits || null,
         phoneDigits: phoneDigits || null,
         email: cleanEmail || null,
-        source: 'whatsapp-fast-capture',
-        sourceContext: source || 'general',
+        // Preserve the original source ('serena_modal') or fall back to legacy label
+        source: source === 'serena_modal' ? 'serena_modal' : 'whatsapp-fast-capture',
+        sourceContext: (typeof sourceContext === 'string' && sourceContext.trim()) || source || 'general',
         mode: mode || 'business-hours',
         clientTimestamp: timestamp || null,
+        deliveredVia: beacon ? 'sendBeacon' : 'fetch',
         createdAt: new Date(),
         status: 'new',
       }

@@ -2,6 +2,8 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import FastCaptureModal from '@/components/FastCaptureModal'
+import FloatingWhatsAppButton from '@/components/FloatingWhatsAppButton'
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -233,6 +235,8 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+        <FastCaptureModal />
+        <FloatingWhatsAppButton />
       </body>
     </html>
   )

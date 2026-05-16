@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp'
 
 // Single source of truth — physical address & directions
 const ADDRESS_LINE_1 = 'El Coihue 3776'
@@ -150,14 +153,13 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">
                 <Phone className="w-4 h-4 mt-1 text-emerald-400 flex-shrink-0" />
-                <a
-                  href="https://wa.me/56930550750"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-emerald-400 transition-colors"
+                <button
+                  type="button"
+                  onClick={() => openWhatsAppOrCapture('footer-whatsapp')}
+                  className="hover:text-emerald-400 transition-colors text-left"
                 >
                   WhatsApp: +56 9 3055 0750
-                </a>
+                </button>
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">
                 <Phone className="w-4 h-4 mt-1 text-emerald-400 flex-shrink-0" />

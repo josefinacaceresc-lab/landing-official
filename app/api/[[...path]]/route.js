@@ -96,6 +96,30 @@ export async function POST(request) {
       })
     }
 
+    // Silent WhatsApp click tracking (ads conversion visibility)
+    if (pathname === '/api/whatsapp-click') {
+      try {
+        const { source, mode, clientTimestamp, userAgent, page } = body || {}
+        const db = await connectToDatabase()
+        const clicks = db.collection('whatsapp_clicks')
+        await clicks.insertOne({
+          id: uuidv4(),
+          source: typeof source === 'string' ? source.slice(0, 80) : 'unknown',
+          mode: mode === 'direct' || mode === 'after-hours' ? mode : 'unknown',
+          page: typeof page === 'string' ? page.slice(0, 200) : '',
+          userAgent: typeof userAgent === 'string' ? userAgent.slice(0, 500) : '',
+          ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || null,
+          referer: request.headers.get('referer') || null,
+          clientTimestamp: clientTimestamp || null,
+          createdAt: new Date(),
+        })
+        return Response.json({ success: true })
+      } catch (e) {
+        // Never break user flow — return success even on failure
+        return Response.json({ success: false }, { status: 200 })
+      }
+    }
+
     // Store Fast WhatsApp Capture Lead (Name + optional Phone/Email)
     if (pathname === '/api/leads/fast-capture') {
       const { fullName, phone, email, source, mode, timestamp } = body || {}

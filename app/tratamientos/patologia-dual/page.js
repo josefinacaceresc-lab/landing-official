@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Brain, Activity, Shield, Cpu, AlertTriangle, TrendingDown, CheckCircle } from 'lucide-react'
+import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
   title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD de Fidelidad Total',
@@ -156,11 +157,13 @@ export default function PatologiaDualPage() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-8">
-                <a href="https://wa.me/56930550750?text=Hola,%20requiero%20información%20sobre%20el%20programa%20de%20Patología%20Dual%20(DBT-SUD)%20en%20Instituto DBT Chile" target="_blank" rel="noopener noreferrer">
-                  Solicitar Evaluación Especializada
-                </a>
-              </Button>
+              <AgendarConsultaButton
+                source="patologia-dual-hero"
+                label="Solicitar Evaluación Especializada"
+                message="Hola, requiero información sobre el programa de Patología Dual (DBT-SUD) en Instituto DBT Chile"
+                size="lg"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
+              />
               <Button size="lg" variant="outline" className="border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 px-8">
                 <Link href="#evidencia">
                   Ver Evidencia Científica
@@ -388,11 +391,13 @@ export default function PatologiaDualPage() {
               <p className="text-gray-700 mb-6">
                 <strong>Requisitos de ingreso:</strong> Diagnóstico confirmado de TLP (DSM-5) + Trastorno por Uso de Sustancias (moderado-severo). Compromiso con protocolo de 18 meses. Disponibilidad para sesiones individuales semanales + grupo de habilidades + coaching telefónico.
               </p>
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold">
-                <a href="https://wa.me/56930550750?text=Solicito%20evaluación%20para%20programa%20Patología%20Dual%20(DBT-SUD)%20-%20Instituto DBT Chile" target="_blank" rel="noopener noreferrer">
-                  Solicitar Evaluación de Admisión
-                </a>
-              </Button>
+              <AgendarConsultaButton
+                source="patologia-dual-admision"
+                label="Solicitar Evaluación de Admisión"
+                message="Solicito evaluación para programa Patología Dual (DBT-SUD) - Instituto DBT Chile"
+                size="lg"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold"
+              />
               <p className="mt-4 text-sm text-gray-600">
                 WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl
               </p>

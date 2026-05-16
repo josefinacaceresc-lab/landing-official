@@ -1,11 +1,12 @@
 'use client'
 
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, AlertTriangle, Clock, Copy, Check, ExternalLink } from 'lucide-react'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp'
 
 function getScoreInterpretation(score) {
   if (score <= 10) {
@@ -33,6 +34,14 @@ function getScoreInterpretation(score) {
 }
 
 export default function ResultadosPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Cargando…</div>}>
+      <ResultadosContent />
+    </Suspense>
+  )
+}
+
+function ResultadosContent() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const score = parseInt(searchParams.get('score') || '0')
@@ -297,10 +306,18 @@ export default function ResultadosPage() {
               </div>
 
               <div className="pt-4 text-center">
-                <Button size="lg" asChild className="bg-emerald-600 hover:bg-emerald-700 text-white px-8">
-                  <a href="https://wa.me/56930550750?text=Hola,%20completé%20el%20test%20de%20autoevaluación%20y%20me%20gustaría%20agendar%20una%20evaluación%20clínica%20especializada." target="_blank" rel="noopener noreferrer">
-                    Agendar Evaluación Clínica
-                  </a>
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={() =>
+                    openWhatsAppOrCapture(
+                      'autoevaluacion-resultados',
+                      'Hola, completé el test de autoevaluación y me gustaría agendar una evaluación clínica especializada.'
+                    )
+                  }
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
+                >
+                  Agendar Evaluación Clínica
                 </Button>
                 <p className="mt-4 text-sm text-gray-600">
                   WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl

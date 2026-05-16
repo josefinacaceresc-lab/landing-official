@@ -660,14 +660,14 @@ export async function PATCH(request) {
       const result = await db.collection('leads').findOneAndUpdate(
         { id: leadId },
         { $set: update },
-        { returnDocument: 'after' }
+        { returnDocument: 'after', includeResultMetadata: true }
       )
       if (!result?.value) {
         // try matching by leadId field (IDP-4) or by Mongo _id (legacy)
         let r2 = await db.collection('leads').findOneAndUpdate(
           { leadId },
           { $set: update },
-          { returnDocument: 'after' }
+          { returnDocument: 'after', includeResultMetadata: true }
         )
         if (!r2?.value) {
           try {
@@ -675,7 +675,7 @@ export async function PATCH(request) {
             r2 = await db.collection('leads').findOneAndUpdate(
               { _id: oid },
               { $set: update },
-              { returnDocument: 'after' }
+              { returnDocument: 'after', includeResultMetadata: true }
             )
           } catch (_) { /* not a valid ObjectId */ }
         }

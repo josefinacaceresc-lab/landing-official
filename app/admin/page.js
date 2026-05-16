@@ -1,14 +1,11 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import {
-  Tabs, TabsContent, TabsList, TabsTrigger,
-} from '@/components/ui/tabs'
+import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from '@/components/ui/select'
@@ -16,10 +13,14 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
 import {
-  LogOut, Download, RefreshCw, CheckCircle2, Clock, Phone, Mail,
-  MessageCircle, TrendingUp, Users, Moon, Sun, Search,
+  Tabs, TabsContent, TabsList, TabsTrigger,
+} from '@/components/ui/tabs'
+import {
+  Lock, AlertCircle, LogOut, Download, RefreshCw, CheckCircle2,
+  Clock, Phone, Mail, MessageCircle, TrendingUp, Users, Moon, Sun, Search,
 } from 'lucide-react'
 
+// ─── Helpers ──────────────────────────────────────────────────────────────
 function formatDate(iso) {
   if (!iso) return '—'
   try {
@@ -50,29 +51,30 @@ function StatCard({ label, value, icon: Icon, color = 'emerald' }) {
   )
 }
 
-export default function AdminLeadsPage() {
-  const router = useRouter()
-  const [authChecked, setAuthChecked] = useState(false)
+// ─── Main page (single-file, gated render) ───────────────────────────────
+export default function AdminPage() {
+  const [view, setView] = useState('loading') // loading | login | dashboard
+  const [password, setPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
   const [leads, setLeads] = useState([])
   const [clicks, setClicks] = useState([])
-  const [leadStats, setLeadStats] = useState({ total: 0, today: 0, week: 0, month: 0, afterHours: 0, contacted: 0 })
-  const [clickStats, setClickStats] = useState({ total: 0, today: 0, week: 0, direct: 0, afterHours: 0 })
-  const [loading, setLoading] = useState(true)
+  const [leadStats, setLeadStats] = useState({})
+  const [clickStats, setClickStats] = useState({})
   const [refreshing, setRefreshing] = useState(false)
   const [filterMode, setFilterMode] = useState('all')
   const [filterStatus, setFilterStatus] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
 
-  const checkAuth = useCallback(async () => {
-    const res = await fetch('/api/admin/me', { credentials: 'include' })
-    if (!res.ok) {
-      router.replace('/admin/login')
-      return false
-    }
-    setAuthChecked(true)
-    return true
-  }, [router])
+  // ─── Auth check on mount ──
+  useEffect(() => {
+    fetch('/api/admin/me', { credentials: 'include' })
+      .then((r) => setView(r.ok ? 'dashboard' : 'login'))
+      .catch(() => setView('login'))
+  }, [])
 
+  // ─── Load data when authenticated ──
   const loadData = useCallback(async () => {
     setRefreshing(true)
     try {
@@ -84,7 +86,7 @@ export default function AdminLeadsPage() {
         fetch('/api/admin/whatsapp-clicks', { credentials: 'include' }),
       ])
       if (leadsRes.status === 401) {
-        router.replace('/admin/login')
+        setView('login')
         return
       }
       const leadsData = await leadsRes.json()
@@ -94,29 +96,43 @@ export default function AdminLeadsPage() {
       setClicks(clicksData.clicks || [])
       setClickStats(clicksData.stats || {})
     } finally {
-      setLoading(false)
       setRefreshing(false)
     }
-  }, [filterMode, filterStatus, router])
-
-  useEffect(() => {
-    let active = true
-    ;(async () => {
-      const ok = await checkAuth()
-      if (ok && active) loadData()
-    })()
-    return () => { active = false }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    if (authChecked) loadData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterMode, filterStatus])
+
+  useEffect(() => {
+    if (view === 'dashboard') loadData()
+  }, [view, filterMode, filterStatus, loadData])
+
+  // ─── Actions ──
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    setLoginError('')
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+        credentials: 'include',
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setLoginError(data?.error || 'Contraseña incorrecta')
+        setSubmitting(false)
+        return
+      }
+      setPassword('')
+      setView('dashboard')
+    } catch (err) {
+      setLoginError('No se pudo conectar. Intenta de nuevo.')
+      setSubmitting(false)
+    }
+  }
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' })
-    router.replace('/admin/login')
+    setView('login')
   }
 
   const toggleContacted = async (lead) => {
@@ -134,13 +150,12 @@ export default function AdminLeadsPage() {
     const digits = String(phone || '').replace(/\D/g, '')
     if (!digits) return
     const intl = digits.startsWith('56') ? digits : `56${digits}`
-    const text = encodeURIComponent(`Hola ${name?.split(' ')[0] || ''}, te contacto desde Instituto DBT Chile. ¿Cómo estás?`)
+    const firstName = name?.split(' ')[0] || ''
+    const text = encodeURIComponent(`Hola ${firstName}, te contacto desde Instituto DBT Chile. ¿Cómo estás?`)
     window.open(`https://wa.me/${intl}?text=${text}`, '_blank', 'noopener,noreferrer')
   }
 
-  const exportCsv = () => {
-    window.location.href = '/api/admin/export-csv'
-  }
+  const exportCsv = () => { window.location.href = '/api/admin/export-csv' }
 
   const filteredLeads = leads.filter((l) => {
     if (!searchTerm) return true
@@ -150,17 +165,72 @@ export default function AdminLeadsPage() {
     )
   })
 
-  if (!authChecked || loading) {
+  // ─── Render: LOADING ──
+  if (view === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500">
-        <RefreshCw className="w-5 h-5 animate-spin mr-2" /> Cargando panel…
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
+        <RefreshCw className="w-5 h-5 animate-spin mr-2" /> Cargando…
       </div>
     )
   }
 
+  // ─── Render: LOGIN ──
+  if (view === 'login') {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-emerald-50 via-white to-slate-100">
+        <Card className="w-full max-w-md shadow-xl border-0">
+          <CardHeader className="text-center pb-2">
+            <div className="mx-auto w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-3">
+              <Lock className="w-6 h-6 text-white" />
+            </div>
+            <CardTitle className="text-2xl font-light text-slate-900">
+              Panel Instituto DBT Chile
+            </CardTitle>
+            <p className="text-sm text-slate-500 mt-1">
+              Acceso privado · Solo personal autorizado
+            </p>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Contraseña</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Tu clave de acceso"
+                  autoFocus
+                  required
+                  className="h-11"
+                />
+              </div>
+              {loginError && (
+                <div className="flex items-start gap-2 p-3 rounded-md bg-red-50 border border-red-200 text-red-700 text-sm">
+                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+              <Button
+                type="submit"
+                disabled={submitting || password.length < 4}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 h-11"
+              >
+                {submitting ? 'Verificando…' : 'Entrar al panel'}
+              </Button>
+            </form>
+            <p className="mt-6 text-xs text-center text-slate-400">
+              Sesión válida por 24 horas · Datos cifrados
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  // ─── Render: DASHBOARD ──
   return (
-    <div className="min-h-screen">
-      {/* Header */}
+    <div className="min-h-screen bg-slate-50">
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div>
@@ -197,7 +267,7 @@ export default function AdminLeadsPage() {
             </TabsTrigger>
           </TabsList>
 
-          {/* LEADS TAB */}
+          {/* LEADS */}
           <TabsContent value="leads" className="space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
               <StatCard label="Hoy" value={leadStats.today || 0} icon={TrendingUp} color="emerald" />
@@ -221,9 +291,7 @@ export default function AdminLeadsPage() {
                     />
                   </div>
                   <Select value={filterMode} onValueChange={setFilterMode}>
-                    <SelectTrigger className="w-full sm:w-48">
-                      <SelectValue placeholder="Modo" />
-                    </SelectTrigger>
+                    <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Modo" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">Todos los modos</SelectItem>
                       <SelectItem value="business-hours">En horario</SelectItem>
@@ -231,9 +299,7 @@ export default function AdminLeadsPage() {
                     </SelectContent>
                   </Select>
                   <Select value={filterStatus} onValueChange={setFilterStatus}>
-                    <SelectTrigger className="w-full sm:w-48">
-                      <SelectValue placeholder="Estado" />
-                    </SelectTrigger>
+                    <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Estado" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">Todos los estados</SelectItem>
                       <SelectItem value="new">Nuevos</SelectItem>
@@ -272,8 +338,7 @@ export default function AdminLeadsPage() {
                           <TableCell className="text-sm space-y-0.5">
                             {lead.phone && (
                               <div className="flex items-center gap-1.5 text-slate-700">
-                                <Phone className="w-3 h-3 text-slate-400" />
-                                {lead.phone}
+                                <Phone className="w-3 h-3 text-slate-400" />{lead.phone}
                               </div>
                             )}
                             {lead.email && (
@@ -342,7 +407,7 @@ export default function AdminLeadsPage() {
             </Card>
           </TabsContent>
 
-          {/* CLICKS TAB */}
+          {/* CLICKS */}
           <TabsContent value="clicks" className="space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               <StatCard label="Hoy" value={clickStats.today || 0} icon={TrendingUp} color="emerald" />
@@ -381,7 +446,9 @@ export default function AdminLeadsPage() {
                           <TableCell>
                             <Badge variant="secondary" className="text-xs">{c.source || '—'}</Badge>
                           </TableCell>
-                          <TableCell className="text-xs text-slate-600 max-w-[200px] truncate">{c.page || '—'}</TableCell>
+                          <TableCell className="text-xs text-slate-600 max-w-[200px] truncate">
+                            {c.page || '—'}
+                          </TableCell>
                           <TableCell>
                             {c.mode === 'after-hours' ? (
                               <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">
@@ -400,7 +467,7 @@ export default function AdminLeadsPage() {
                   </Table>
                 </div>
                 <p className="text-xs text-slate-400 mt-3">
-                  Tracking silencioso: cada clic a WhatsApp se registra automáticamente para auditar conversiones de Google Ads.
+                  Tracking silencioso: cada clic a WhatsApp se registra automáticamente para auditar conversiones de ads.
                 </p>
               </CardContent>
             </Card>

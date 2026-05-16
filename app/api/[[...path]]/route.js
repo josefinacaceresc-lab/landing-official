@@ -57,7 +57,7 @@ export async function GET(request) {
   
   if (pathname === '/api/' || pathname === '/api') {
     return Response.json({ 
-      message: 'InstitutoDBT.cl API - Centro de Alta Complejidad',
+      message: 'Instituto DBT Chile API - Centro de Alta Complejidad',
       status: 'operational',
       services: ['leads', 'lakaira-tokens', 'assessments']
     })

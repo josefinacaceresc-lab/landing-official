@@ -21,7 +21,7 @@ export const metadata = {
     canonical: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
   },
   openGraph: {
-    title: 'Patología Dual: DBT-SUD de Fidelidad Total | InstitutoDBT.cl',
+    title: 'Patología Dual: DBT-SUD de Fidelidad Total | Instituto DBT Chile',
     description: 'Centro de Alta Complejidad en Patología Dual. Protocolo DBT-SUD + monitoreo LaKaira AI para TLP + Trastorno por Uso de Sustancias.',
     url: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
     type: 'article',
@@ -157,7 +157,7 @@ export default function PatologiaDualPage() {
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
               <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-8">
-                <a href="https://wa.me/56930550750?text=Hola,%20requiero%20información%20sobre%20el%20programa%20de%20Patología%20Dual%20(DBT-SUD)%20en%20InstitutoDBT.cl" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/56930550750?text=Hola,%20requiero%20información%20sobre%20el%20programa%20de%20Patología%20Dual%20(DBT-SUD)%20en%20Instituto DBT Chile" target="_blank" rel="noopener noreferrer">
                   Solicitar Evaluación Especializada
                 </a>
               </Button>
@@ -389,7 +389,7 @@ export default function PatologiaDualPage() {
                 <strong>Requisitos de ingreso:</strong> Diagnóstico confirmado de TLP (DSM-5) + Trastorno por Uso de Sustancias (moderado-severo). Compromiso con protocolo de 18 meses. Disponibilidad para sesiones individuales semanales + grupo de habilidades + coaching telefónico.
               </p>
               <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold">
-                <a href="https://wa.me/56930550750?text=Solicito%20evaluación%20para%20programa%20Patología%20Dual%20(DBT-SUD)%20-%20InstitutoDBT.cl" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/56930550750?text=Solicito%20evaluación%20para%20programa%20Patología%20Dual%20(DBT-SUD)%20-%20Instituto DBT Chile" target="_blank" rel="noopener noreferrer">
                   Solicitar Evaluación de Admisión
                 </a>
               </Button>

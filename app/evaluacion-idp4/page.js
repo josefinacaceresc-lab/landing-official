@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { AlertTriangle, CheckCircle, Loader2, Brain, Clock, Shield, Lock, Phone, X } from 'lucide-react'
 
 // IDP-4: Inventario Dimensional de Personalidad (4 dominios)
-// Dra. Josefina Cáceres, 2026 - InstitutoDBT.cl
+// Dra. Josefina Cáceres, 2026 - Instituto DBT Chile
 const idp4Questions = [
   // DOMAIN 1: Desregulación Emocional (DE) - 8 items
   { id: 1, domain: 'DE', text: 'Mis emociones cambian rápida e intensamente sin razón aparente', reverse: false },
@@ -480,7 +480,7 @@ export default function IDP4Page() {
               <div className="prose max-w-none">
                 <p className="text-gray-700 leading-relaxed mb-4">
                   El <strong>IDP-4</strong> es un instrumento desarrollado por la <strong>Dra. Josefina Cáceres</strong> 
-                  (InstitutoDBT.cl, 2026) bajo estándares APA y WDBTA. Mide 4 dimensiones de personalidad:
+                  (Instituto DBT Chile, 2026) bajo estándares APA y WDBTA. Mide 4 dimensiones de personalidad:
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li><strong>Desregulación Emocional (DE)</strong> - 8 ítems</li>
@@ -655,7 +655,7 @@ export default function IDP4Page() {
 
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded">
                   <p className="text-xs text-gray-800 leading-relaxed">
-                    <strong className="text-amber-700">Test en proceso de validación.</strong> Los resultados son orientativos y deben ser interpretados por un profesional clínico entrenado. Datos protegidos · uso exclusivo InstitutoDBT.cl
+                    <strong className="text-amber-700">Test en proceso de validación.</strong> Los resultados son orientativos y deben ser interpretados por un profesional clínico entrenado. Datos protegidos · uso exclusivo Instituto DBT Chile
                   </p>
                 </div>
 
@@ -751,7 +751,7 @@ export default function IDP4Page() {
                     {errors.age && <p className="text-xs text-red-600 mt-1">{errors.age}</p>}
                   </div>
                   <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-200">
-                    <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5" /><p className="text-xs text-gray-700">Datos protegidos. Uso exclusivo para tu evaluación clínica en InstitutoDBT.cl</p></div>
+                    <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5" /><p className="text-xs text-gray-700">Datos protegidos. Uso exclusivo para tu evaluación clínica en Instituto DBT Chile</p></div>
                   </div>
                   <div className="flex gap-3">
                     <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="flex-1">Cancelar</Button>

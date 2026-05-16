@@ -310,7 +310,7 @@ export default function Home() {
             {/* Bottom Badge */}
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500">
-                <strong className="text-primary">Lakaira AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para InstitutoDBT.cl
+                <strong className="text-primary">Lakaira AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para Instituto DBT Chile
               </p>
             </div>
           </div>

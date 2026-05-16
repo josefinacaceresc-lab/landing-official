@@ -2,13 +2,13 @@ import { Card, CardContent } from '@/components/ui/card'
 import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
-  title: 'Equipo Clínico - InstitutoDBT.cl',
+  title: 'Equipo Clínico - Instituto DBT Chile',
   description: 'Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Liderado por la única Ph.D.(c) con afiliación WDBTA activa en Chile.',
   alternates: {
     canonical: 'https://institutodbtchile.cl/equipo',
   },
   openGraph: {
-    title: 'Equipo Clínico | InstitutoDBT.cl',
+    title: 'Equipo Clínico | Instituto DBT Chile',
     description: 'Equipo de especialistas en DBT con certificación WDBTA e ISST.',
     url: 'https://institutodbtchile.cl/equipo',
     images: [{
@@ -24,7 +24,7 @@ const direccion = [
     initials: 'JCC',
     name: 'Josefina Cáceres Cortés, Ph.D.(c)',
     role: 'Directora Científica & Fundadora',
-    description: 'Psicóloga clínica y directora de InstitutoDBT.cl. Única representante en Chile dentro del capítulo de investigación de la WDBTA. Formada y afiliada en terapia de esquemas, ISST. Su enfoque integra los aportes de Linehan, Bohus, Damasio, Porges, Siegel y Yi-Yuan Tang.',
+    description: 'Psicóloga clínica y directora de Instituto DBT Chile. Única representante en Chile dentro del capítulo de investigación de la WDBTA. Formada y afiliada en terapia de esquemas, ISST. Su enfoque integra los aportes de Linehan, Bohus, Damasio, Porges, Siegel y Yi-Yuan Tang.',
     credentials: [
       'Ph.D.(c) — Formación doctoral en curso',
       'WDBTA Research Member — única en Chile',

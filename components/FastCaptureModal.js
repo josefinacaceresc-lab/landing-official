@@ -5,48 +5,15 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { X, MessageCircle, Loader2, CheckCircle, Phone, Clock, Mail } from 'lucide-react'
 import { trackWhatsAppClick } from '@/lib/googleAdsTracking'
+import { isBusinessHoursSantiago, getChileanHolidayToday } from '@/lib/whatsapp'
 
 const WHATSAPP_NUMBER = '56930550750' // +56 9 3055 0750 — Karina
-
-/**
- * Returns true when Santiago de Chile local time is within clinic hours:
- *   - Monday to Thursday: 10:00–19:00
- *   - Friday: 10:00–16:00
- *   - Saturday & Sunday: closed
- * Uses Intl API which automatically handles DST (CLT/CLST).
- */
-function isBusinessHoursSantiago() {
-  try {
-    const fmt = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Santiago',
-      weekday: 'short',
-      hour: 'numeric',
-      hour12: false,
-    })
-    const parts = fmt.formatToParts(new Date())
-    const weekday = parts.find((p) => p.type === 'weekday')?.value || ''
-    const hourStr = parts.find((p) => p.type === 'hour')?.value || '0'
-    const hour = parseInt(hourStr, 10)
-
-    // Mon–Thu: 10:00 (incl.) – 19:00 (excl.)
-    if (['Mon', 'Tue', 'Wed', 'Thu'].includes(weekday)) {
-      return hour >= 10 && hour < 19
-    }
-    // Friday: 10:00 (incl.) – 16:00 (excl.)
-    if (weekday === 'Fri') {
-      return hour >= 10 && hour < 16
-    }
-    // Sat & Sun: closed
-    return false
-  } catch (_) {
-    return true // fail-open to keep conversion flow
-  }
-}
 
 export default function FastCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [source, setSource] = useState('general')
   const [businessHours, setBusinessHours] = useState(true)
+  const [holiday, setHoliday] = useState(null) // {month, day, label} | null
   const [step, setStep] = useState('form') // form | success | afterhours-success
   const [formData, setFormData] = useState({ fullName: '', phone: '', email: '' })
   const [errors, setErrors] = useState({})
@@ -59,6 +26,7 @@ export default function FastCaptureModal() {
       const src = (e && e.detail && e.detail.source) || 'general'
       setSource(src)
       setBusinessHours(isBusinessHoursSantiago())
+      setHoliday(getChileanHolidayToday())
       setStep('form')
       setFormData({ fullName: '', phone: '', email: '' })
       setErrors({})
@@ -217,12 +185,18 @@ export default function FastCaptureModal() {
               </div>
               <div>
                 <h2 id="fast-capture-title" className="text-xl font-semibold">
-                  {businessHours ? 'Conectar con Karina' : 'Fuera de horario clínico'}
+                  {businessHours
+                    ? 'Conectar con Karina'
+                    : holiday
+                      ? `Feriado · ${holiday.label}`
+                      : 'Fuera de horario clínico'}
                 </h2>
                 <p className="text-white/90 text-sm">
                   {businessHours
                     ? 'Te abrimos WhatsApp en un toque'
-                    : 'Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)'}
+                    : holiday
+                      ? 'Hoy la clínica está cerrada por feriado. Te contactamos al volver.'
+                      : 'Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)'}
                 </p>
               </div>
             </div>
@@ -315,7 +289,17 @@ export default function FastCaptureModal() {
           {!businessHours && step === 'form' && (
             <form onSubmit={handleSubmitAfterHours} className="p-6 space-y-4">
               <div className="text-sm text-gray-700 bg-amber-50 border-l-4 border-amber-400 rounded-md p-4 leading-relaxed">
-                Karina está fuera de su horario clínico. <strong>Déjanos tus datos y te contactaremos mañana.</strong>
+                {holiday ? (
+                  <>
+                    Hoy es <strong>{holiday.label}</strong> y la clínica está cerrada.{' '}
+                    <strong>Déjanos tus datos y Karina te contactará el próximo día hábil.</strong>
+                  </>
+                ) : (
+                  <>
+                    Karina está fuera de su horario clínico.{' '}
+                    <strong>Déjanos tus datos y te contactaremos mañana.</strong>
+                  </>
+                )}
               </div>
 
               <div>

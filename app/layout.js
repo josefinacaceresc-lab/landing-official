@@ -65,9 +65,13 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'AW-18117776220',
-  },
+  // NOTE: Google Site Verification meta tag intentionally NOT set here.
+  // The previous value (AW-18117776220) was incorrect — that's the Google Ads
+  // Conversion ID, NOT the Site Verification token. Adding a wrong verification
+  // token causes Google Ads to flag the domain as "unverified" and stop tracking.
+  // To re-add it later: get the real token from Google Search Console
+  // (https://search.google.com/search-console → Add Property → HTML tag method)
+  // and set: verification: { google: '<real-token-here>' }
 }
 
 export default function RootLayout({ children }) {

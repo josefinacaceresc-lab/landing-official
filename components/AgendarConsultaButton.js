@@ -2,13 +2,11 @@
 
 import { Button } from '@/components/ui/button'
 import { MessageCircle } from 'lucide-react'
-import { getWhatsAppUrl } from '@/lib/whatsapp'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp'
 
 /**
- * Zero-friction CTA button — opens WhatsApp directly in a new tab
- * with the pre-filled message. No modal, no name capture.
- *
- * EMERGENCY FLOW (May 2026): one click = one WhatsApp message.
+ * Hybrid CTA — opens WhatsApp directly during business hours,
+ * shows the Serena off-hours intake modal outside business hours.
  */
 export default function AgendarConsultaButton({
   source = 'cta-equipo',
@@ -19,16 +17,15 @@ export default function AgendarConsultaButton({
   variant = 'default',
 }) {
   return (
-    <Button asChild size={size} variant={variant} className={className}>
-      <a
-        href={getWhatsAppUrl(message)}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cta-source={source}
-      >
-        <MessageCircle className="w-5 h-5 mr-2" />
-        {label}
-      </a>
+    <Button
+      type="button"
+      onClick={() => openWhatsAppOrCapture(source, message)}
+      size={size}
+      variant={variant}
+      className={className}
+    >
+      <MessageCircle className="w-5 h-5 mr-2" />
+      {label}
     </Button>
   )
 }

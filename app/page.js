@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
 import { trackWhatsAppClick, trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
-import { getWhatsAppUrl } from '@/lib/whatsapp'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp'
 
 export default function Home() {
   return (
@@ -45,20 +45,14 @@ export default function Home() {
             
             <Button
               size="lg"
-              asChild
+              type="button"
+              onClick={() => { trackWhatsAppClick('hero'); openWhatsAppOrCapture('hero') }}
               className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12"
             >
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackWhatsAppClick('hero')}
-              >
-                <span className="flex items-center gap-2">
-                  Solicitar hora
-                  <ArrowRight className="w-5 h-5" />
-                </span>
-              </a>
+              <span className="flex items-center gap-2">
+                Solicitar hora
+                <ArrowRight className="w-5 h-5" />
+              </span>
             </Button>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
@@ -438,17 +432,11 @@ export default function Home() {
             <div className="text-center mt-4">
               <Button
                 size="lg"
-                asChild
+                type="button"
+                onClick={() => { trackWhatsAppClick('family-cta'); openWhatsAppOrCapture('family-cta', 'Hola Karina, me interesa el Programa Familia (DBT-A) en Instituto DBT Chile.') }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
-                <a
-                  href={getWhatsAppUrl('Hola Karina, me interesa el Programa Familia (DBT-A) en Instituto DBT Chile.')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick('family-cta')}
-                >
-                  Solicitar Información
-                </a>
+                Solicitar Información
               </Button>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones</p>
             </div>
@@ -658,17 +646,11 @@ export default function Home() {
             </p>
             <Button
               size="lg"
-              asChild
+              type="button"
+              onClick={() => { trackWhatsAppClick('home-contacto'); openWhatsAppOrCapture('home-contacto') }}
               className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
             >
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackWhatsAppClick('home-contacto')}
-              >
-                WhatsApp · +56 9 3055 0750
-              </a>
+              WhatsApp · +56 9 3055 0750
             </Button>
             <p className="mt-6 text-sm text-emerald-100">
               Horario: Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)

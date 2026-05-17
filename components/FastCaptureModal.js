@@ -24,8 +24,33 @@ export default function FastCaptureModal() {
   useEffect(() => {
     const handleOpen = (e) => {
       const src = (e && e.detail && e.detail.source) || 'general'
+      // ⚡ HARDENED RULE: during business hours (Mon-Thu 10-19, Fri 10-16, Santiago)
+      // we NEVER show the modal — direct redirect to WhatsApp with zero friction.
+      // The modal is reserved EXCLUSIVELY for off-hours / weekends / Chilean holidays.
+      if (isBusinessHoursSantiago()) {
+        try {
+          // Fire-and-forget click tracking before the redirect
+          fetch('/api/whatsapp-click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              source: src,
+              mode: 'direct',
+              clientTimestamp: new Date().toISOString(),
+              userAgent: navigator.userAgent || '',
+              page: location.pathname || '',
+              via: 'modal-redirect-fallback',
+            }),
+            keepalive: true,
+          }).catch(() => {})
+        } catch (_) {}
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola Karina, me interesa agendar una consulta en Instituto DBT Chile.')}`
+        const win = window.open(url, '_blank', 'noopener,noreferrer')
+        if (!win) window.location.href = url
+        return
+      }
       setSource(src)
-      setBusinessHours(isBusinessHoursSantiago())
+      setBusinessHours(false) // modal only opens in off-hours from this point forward
       setHoliday(getChileanHolidayToday())
       setStep('form')
       setFormData({ fullName: '', phone: '', email: '' })

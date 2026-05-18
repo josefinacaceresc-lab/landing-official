@@ -82,7 +82,7 @@ const teamMembers = [
     initials: 'CS',
     name: 'Carolina Sánchez Ramírez',
     role: 'Trabajadora Social',
-    description: 'Apoyo social y acompañamiento psicosocial a pacientes y familias. Coordinación de recursos comunitarios y trabajo interdisciplinario.',
+    description: 'Apoyo social y acompañamiento psicosocial a consultantes y familias. Coordinación de recursos comunitarios y trabajo interdisciplinario.',
     tags: ['Social']
   },
   {

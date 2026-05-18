@@ -55,7 +55,7 @@ const ejes = [
   {
     n: '02',
     titulo: 'Modelo computacional',
-    text: 'Analizamos los sistemas de respuesta emocional y los déficits en la capacidad predictiva del paciente. Integración con el principio de Energía Libre (Friston) vía LaKaira AI.',
+    text: 'Analizamos los sistemas de respuesta emocional y los déficits en la capacidad predictiva del consultante. Integración con el principio de Energía Libre (Friston) vía LaKaira AI.',
   },
   {
     n: '03',
@@ -91,7 +91,7 @@ export default function TLPPage() {
               Trastorno Límite de <em className="font-serif italic text-primary">Personalidad</em>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              El <strong>Instituto DBT Chile</strong> es el referente nacional en el tratamiento del TLP bajo el estándar <strong>WDBTA</strong>. Abordamos el trastorno desde una perspectiva <strong>dimensional y computacional</strong>, analizando los sistemas de respuesta emocional y los déficits en la capacidad predictiva del paciente. Nuestro enfoque no es solo la reducción de síntomas, sino la construcción de <em>una vida que merezca ser vivida</em> mediante la síntesis dialéctica y el entrenamiento riguroso en los cuatro pilares de habilidades DBT.
+              El <strong>Instituto DBT Chile</strong> es el referente nacional en el tratamiento del TLP bajo el estándar <strong>WDBTA</strong>. Abordamos el trastorno desde una perspectiva <strong>dimensional y computacional</strong>, analizando los sistemas de respuesta emocional y los déficits en la capacidad predictiva del consultante. Nuestro enfoque no es solo la reducción de síntomas, sino la construcción de <em>una vida que merezca ser vivida</em> mediante la síntesis dialéctica y el entrenamiento riguroso en los cuatro pilares de habilidades DBT.
             </p>
           </div>
         </div>

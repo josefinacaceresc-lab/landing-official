@@ -134,7 +134,7 @@ export default function InvestigacionPage() {
                     <div>
                       <p className="text-gray-600 mb-4 leading-relaxed">
                         Laboratorio de innovación en tecnologías aplicadas a la salud mental. 
-                        Desarrollamos herramientas digitales para terapeutas y pacientes.
+                        Desarrollamos herramientas digitales para terapeutas y consultantes.
                       </p>
                       <ul className="space-y-2 text-gray-700">
                         <li className="flex items-start gap-2">
@@ -191,7 +191,7 @@ export default function InvestigacionPage() {
               </h2>
               
               <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
-                Invitamos a <strong>profesionales de la salud mental</strong>, <strong>investigadores</strong> y <strong>pacientes con diagnóstico de TLP o desregulación emocional</strong> a participar en nuestros estudios científicos de alta complejidad.
+                Invitamos a <strong>profesionales de la salud mental</strong>, <strong>investigadores</strong> y <strong>consultantes con diagnóstico de TLP o desregulación emocional</strong> a participar en nuestros estudios científicos de alta complejidad.
               </p>
               
               <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto text-left">

@@ -44,7 +44,7 @@ export default function FastCaptureModal() {
             keepalive: true,
           }).catch(() => {})
         } catch (_) {}
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola Karina, me interesa agendar una consulta en Instituto DBT Chile.')}`
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT. ¿Me podrían ayudar a agendar una hora? Gracias.')}`
         const win = window.open(url, '_blank', 'noopener,noreferrer')
         if (!win) window.location.href = url
         return
@@ -82,7 +82,7 @@ export default function FastCaptureModal() {
 
   const buildWhatsAppUrl = (name) => {
     const fullName = (name || '').trim()
-    const message = `Hola Karina, soy ${fullName}. Te escribo porque me interesa agendar una consulta en Instituto DBT Chile. ¿Cómo podría coordinar eso contigo?`
+    const message = `¡Hola! 👋 Soy ${fullName}. Vi su página web y me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT. ¿Me podrían ayudar a agendar una hora? Gracias.`
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
   }
 

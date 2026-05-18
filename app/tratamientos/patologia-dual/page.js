@@ -160,7 +160,7 @@ export default function PatologiaDualPage() {
               <AgendarConsultaButton
                 source="patologia-dual-hero"
                 label="Solicitar Evaluación Especializada"
-                message="Hola, requiero información sobre el programa de Patología Dual (DBT-SUD) en Instituto DBT Chile"
+                message="¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa de Patología Dual (DBT-SUD). ¿Me podrían ayudar a agendar una hora? Gracias."
                 size="lg"
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
               />
@@ -394,7 +394,7 @@ export default function PatologiaDualPage() {
               <AgendarConsultaButton
                 source="patologia-dual-admision"
                 label="Solicitar Evaluación de Admisión"
-                message="Solicito evaluación para programa Patología Dual (DBT-SUD) - Instituto DBT Chile"
+                message="¡Hola! 👋 Me gustaría solicitar una evaluación de admisión para su Programa de Patología Dual (DBT-SUD). ¿Me podrían ayudar a coordinar una hora? Gracias."
                 size="lg"
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold"
               />

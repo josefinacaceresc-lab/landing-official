@@ -312,7 +312,7 @@ function ResultadosContent() {
                   onClick={() =>
                     openWhatsAppOrCapture(
                       'autoevaluacion-resultados',
-                      'Hola, completé el test de autoevaluación y me gustaría agendar una evaluación clínica especializada.'
+                      '¡Hola! 👋 Acabo de terminar mi autoevaluación IDP-4 en su sitio web y me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.'
                     )
                   }
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"

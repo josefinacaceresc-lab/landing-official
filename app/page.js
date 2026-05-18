@@ -433,7 +433,7 @@ export default function Home() {
               <Button
                 size="lg"
                 type="button"
-                onClick={() => { trackWhatsAppClick('family-cta'); openWhatsAppOrCapture('family-cta', 'Hola Karina, me interesa el Programa Familia (DBT-A) en Instituto DBT Chile.') }}
+                onClick={() => { trackWhatsAppClick('family-cta'); openWhatsAppOrCapture('family-cta', '¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa Familia (DBT-A). ¿Me podrían ayudar a agendar una hora? Gracias.') }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
                 Solicitar Información

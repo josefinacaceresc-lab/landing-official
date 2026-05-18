@@ -312,7 +312,7 @@ function ResultadosContent() {
                   onClick={() =>
                     openWhatsAppOrCapture(
                       'autoevaluacion-resultados',
-                      '¡Hola! 👋 Acabo de terminar mi autoevaluación IDP-4 en su sitio web y me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.'
+                      '¡Hola! 👋 Soy el consultante que acaba de completar el IDP-4 con ayuda de Serena. Me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.'
                     )
                   }
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"

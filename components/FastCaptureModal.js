@@ -44,7 +44,7 @@ export default function FastCaptureModal() {
             keepalive: true,
           }).catch(() => {})
         } catch (_) {}
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT. ¿Me podrían ayudar a agendar una hora? Gracias.')}`
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Serena me orientó en su sitio web. Me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT y agendar una hora. ¿Me podrían ayudar? Muchas gracias.')}`
         const win = window.open(url, '_blank', 'noopener,noreferrer')
         if (!win) window.location.href = url
         return
@@ -82,7 +82,7 @@ export default function FastCaptureModal() {
 
   const buildWhatsAppUrl = (name) => {
     const fullName = (name || '').trim()
-    const message = `¡Hola! 👋 Soy ${fullName}. Vi su página web y me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT. ¿Me podrían ayudar a agendar una hora? Gracias.`
+    const message = `¡Hola! 👋 Soy ${fullName}, consultante que vi su sitio web con ayuda de Serena. Me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT y agendar una hora. ¿Me podrían ayudar? Muchas gracias.`
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
   }
 

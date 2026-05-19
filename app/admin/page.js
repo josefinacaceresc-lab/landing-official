@@ -332,8 +332,9 @@ export default function AdminPage() {
                         <TableHead className="w-32">Fecha</TableHead>
                         <TableHead>Nombre</TableHead>
                         <TableHead>Contacto</TableHead>
+                        <TableHead>📍 Ubicación</TableHead>
+                        <TableHead>Canal</TableHead>
                         <TableHead>Origen</TableHead>
-                        <TableHead>Modo</TableHead>
                         <TableHead>Estado</TableHead>
                         <TableHead className="text-right">Acciones</TableHead>
                       </TableRow>
@@ -341,7 +342,7 @@ export default function AdminPage() {
                     <TableBody>
                       {filteredLeads.length === 0 && (
                         <TableRow>
-                          <TableCell colSpan={7} className="text-center text-slate-400 py-8">
+                          <TableCell colSpan={8} className="text-center text-slate-400 py-8">
                             No hay leads con esos filtros.
                           </TableCell>
                         </TableRow>
@@ -364,22 +365,48 @@ export default function AdminPage() {
                                 <span className="truncate max-w-[180px]">{lead.email}</span>
                               </div>
                             )}
+                            {lead.message && (
+                              <details className="mt-1">
+                                <summary className="cursor-pointer text-xs text-sky-600 hover:text-sky-700 select-none">
+                                  Ver mensaje ▾
+                                </summary>
+                                <div className="mt-1 text-xs text-slate-600 bg-slate-50 border-l-2 border-sky-400 rounded p-2 whitespace-pre-wrap max-w-[260px]">
+                                  {lead.message}
+                                </div>
+                              </details>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {lead.location ? (
+                              <div className="flex flex-col">
+                                <span className="font-medium text-slate-800">
+                                  {lead.geo?.city || lead.location.split(',')[0]}
+                                </span>
+                                <span className="text-[10px] text-slate-500">
+                                  {[lead.geo?.region, lead.geo?.countryCode].filter(Boolean).join(' · ') || lead.location.split(',').slice(1).join(',').trim()}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-slate-400">—</span>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {lead.channel === 'email' ? (
+                              <Badge className="bg-sky-100 text-sky-800 hover:bg-sky-100">
+                                <Mail className="w-3 h-3 mr-1" /> Correo
+                              </Badge>
+                            ) : lead.channel === 'whatsapp' ? (
+                              <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100">
+                                <MessageCircle className="w-3 h-3 mr-1" /> WhatsApp
+                              </Badge>
+                            ) : (
+                              <Badge variant="outline" className="text-slate-500">—</Badge>
+                            )}
                           </TableCell>
                           <TableCell>
                             <Badge variant="secondary" className="text-xs">
                               {lead.sourceContext || lead.source || '—'}
                             </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {lead.mode === 'after-hours' ? (
-                              <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">
-                                <Moon className="w-3 h-3 mr-1" /> Off-hours
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100">
-                                <Sun className="w-3 h-3 mr-1" /> En horario
-                              </Badge>
-                            )}
                           </TableCell>
                           <TableCell>
                             {lead.status === 'contacted' ? (

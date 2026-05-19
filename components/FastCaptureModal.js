@@ -1,59 +1,45 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { X, MessageCircle, Loader2, CheckCircle, Phone, Clock, Mail } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { X, Loader2, CheckCircle2, Sparkles, Mail, ArrowRight, Send } from 'lucide-react'
 import { trackWhatsAppClick } from '@/lib/googleAdsTracking'
-import { isBusinessHoursSantiago, getChileanHolidayToday } from '@/lib/whatsapp'
 
 const WHATSAPP_NUMBER = '56930550750' // +56 9 3055 0750 — Karina
 
+/**
+ * Serena Dual Modal v2 — "Choice-Driven Capture"
+ * ──────────────────────────────────────────────────────────────────────
+ * Dra. Cáceres mandate (June 2026):
+ *  1. ALWAYS active — every WhatsApp/contact trigger on the site opens this.
+ *  2. CAPTURE FIRST — Nombre + WhatsApp are MANDATORY (CRM sovereignty).
+ *  3. DUAL CHOICE — equal-priority buttons: "Continuar por WhatsApp"
+ *     and "Enviar por Correo".
+ *  4. ATOMIC SAVE — POST /api/leads/fast-capture with keepalive BEFORE
+ *     any redirect, plus a sendBeacon defensive fallback.
+ *  5. OLED LUXURY AESTHETIC — pure black, emerald accents, Poppins.
+ *
+ * The previous "business-hours vs after-hours" branching was REMOVED on the
+ * Dra.'s explicit order: 100% data capture, no exceptions, any hour.
+ */
 export default function FastCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [source, setSource] = useState('general')
-  const [businessHours, setBusinessHours] = useState(true)
-  const [holiday, setHoliday] = useState(null) // {month, day, label} | null
-  const [step, setStep] = useState('form') // form | success | afterhours-success
-  const [formData, setFormData] = useState({ fullName: '', phone: '', email: '' })
+  const [customMessage, setCustomMessage] = useState(null) // optional WA pre-filled
+  const [view, setView] = useState('form') // form | email | success-wa | success-email
+  const [formData, setFormData] = useState({ fullName: '', phone: '', message: '' })
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const dialogRef = useRef(null)
 
-  // Listen for global open events from anywhere in the app
+  // ── Listen for global open events ──────────────────────────────────────
   useEffect(() => {
     const handleOpen = (e) => {
-      const src = (e && e.detail && e.detail.source) || 'general'
-      // ⚡ HARDENED RULE: during business hours (Mon-Thu 10-19, Fri 10-16, Santiago)
-      // we NEVER show the modal — direct redirect to WhatsApp with zero friction.
-      // The modal is reserved EXCLUSIVELY for off-hours / weekends / Chilean holidays.
-      if (isBusinessHoursSantiago()) {
-        try {
-          // Fire-and-forget click tracking before the redirect
-          fetch('/api/whatsapp-click', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              source: src,
-              mode: 'direct',
-              clientTimestamp: new Date().toISOString(),
-              userAgent: navigator.userAgent || '',
-              page: location.pathname || '',
-              via: 'modal-redirect-fallback',
-            }),
-            keepalive: true,
-          }).catch(() => {})
-        } catch (_) {}
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Serena me orientó en su sitio web. Me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT y agendar una hora. ¿Me podrían ayudar? Muchas gracias.')}`
-        const win = window.open(url, '_blank', 'noopener,noreferrer')
-        if (!win) window.location.href = url
-        return
-      }
-      setSource(src)
-      setBusinessHours(false) // modal only opens in off-hours from this point forward
-      setHoliday(getChileanHolidayToday())
-      setStep('form')
-      setFormData({ fullName: '', phone: '', email: '' })
+      const detail = (e && e.detail) || {}
+      setSource(detail.source || 'general')
+      setCustomMessage(typeof detail.message === 'string' ? detail.message : null)
+      setView('form')
+      setFormData({ fullName: '', phone: '', message: '' })
       setErrors({})
       setSubmitError('')
       setIsOpen(true)
@@ -62,215 +48,200 @@ export default function FastCaptureModal() {
     return () => window.removeEventListener('open-fast-capture', handleOpen)
   }, [])
 
-  // Lock body scroll while modal is open
+  // Lock body scroll while open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    if (isOpen) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
+  // ESC to close
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e) => { if (e.key === 'Escape') setIsOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [isOpen])
 
   const close = () => setIsOpen(false)
 
-  const formatPhone = (value) => {
-    let v = value.replace(/[^\d+]/g, '')
-    if (v.length > 18) v = v.slice(0, 18)
-    return v
+  const formatPhone = (v) => v.replace(/[^\d+\s]/g, '').slice(0, 20)
+
+  // ── Validation ─────────────────────────────────────────────────────────
+  const validateNameAndPhone = () => {
+    const e = {}
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      e.fullName = 'Ingresa tu nombre'
+    }
+    const digits = formData.phone.replace(/\D/g, '')
+    if (digits.length < 8) e.phone = 'Ingresa un WhatsApp válido (+56...)'
+    setErrors(e)
+    return Object.keys(e).length === 0
   }
 
-  const buildWhatsAppUrl = (name) => {
-    const fullName = (name || '').trim()
-    const message = `¡Hola! 👋 Soy ${fullName}, consultante que vi su sitio web con ayuda de Serena. Me gustaría recibir información sobre su Programa de Alta Fidelidad en DBT y agendar una hora. ¿Me podrían ayudar? Muchas gracias.`
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+  // ── Friendly sales WA message (used unless caller passed custom) ──────
+  const buildWAUrl = (name) => {
+    const n = (name || '').trim()
+    const msg = customMessage
+      || `¡Hola! 👋 Soy ${n}. Vi su sitio web y me gustaría recibir información sobre el Programa de Alta Fidelidad en DBT del Instituto. ¿Me podrían ayudar a agendar una hora? Muchas gracias.`
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
   }
 
-  // ── BUSINESS HOURS FLOW ─────────────────────────────────────────────────
-  // ATOMIC PERSISTENCE: save lead to MongoDB FIRST, then redirect to WhatsApp.
-  // This guarantees that even if the user closes the tab during the redirect,
-  // the lead is already persisted. Uses `keepalive: true` so the request
-  // survives any page navigation. Source is tagged 'serena_modal' for clarity.
-  const handleSubmitBusinessHours = async (e) => {
-    e.preventDefault()
+  // ── Atomic save helper (used for both channels) ───────────────────────
+  const saveLead = async ({ channel, message }) => {
     const name = formData.fullName.trim()
-    if (name.length < 2) {
-      setErrors({ fullName: 'Ingresa tu nombre' })
+    const phone = formData.phone.trim()
+    const payload = {
+      fullName: name,
+      phone,
+      channel,
+      message: message || null,
+      source: 'serena_modal',
+      sourceContext: source,
+      mode: 'serena-v2',
+      timestamp: new Date().toISOString(),
+    }
+    try {
+      const res = await fetch('/api/leads/fast-capture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true,
+      })
+      const data = await res.json().catch(() => ({}))
+      return { ok: res.ok, data }
+    } catch (_) {
+      // Defensive sendBeacon — fires even if the tab is closing
+      try {
+        if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+          navigator.sendBeacon(
+            '/api/leads/fast-capture',
+            new Blob([JSON.stringify({ ...payload, beacon: true })], { type: 'application/json' })
+          )
+        }
+      } catch (_) { /* ignore */ }
+      return { ok: false, data: { error: 'Conexión inestable' } }
+    }
+  }
+
+  // ── Handler: WhatsApp choice ──────────────────────────────────────────
+  const handleWhatsApp = async (e) => {
+    e?.preventDefault?.()
+    if (!validateNameAndPhone()) return
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    const name = formData.fullName.trim()
+    const waUrl = buildWAUrl(name)
+
+    // 1️⃣ Atomic save BEFORE redirect
+    const { ok, data } = await saveLead({ channel: 'whatsapp' })
+    if (!ok) setSubmitError(data?.error || 'Conexión inestable — igualmente te conectamos con Karina.')
+
+    // 2️⃣ Track Google Ads
+    try { trackWhatsAppClick(`serena-modal-${source}`) } catch (_) { /* ignore */ }
+
+    // 3️⃣ Open WhatsApp
+    let win = null
+    try { win = window.open(waUrl, '_blank', 'noopener,noreferrer') } catch (_) { /* ignore */ }
+
+    setIsSubmitting(false)
+    setView('success-wa')
+
+    if (!win) setTimeout(() => { window.location.href = waUrl }, 600)
+  }
+
+  // ── Handler: switch to email view ─────────────────────────────────────
+  const handleChooseEmail = () => {
+    if (!validateNameAndPhone()) return
+    setSubmitError('')
+    setView('email')
+  }
+
+  // ── Handler: submit email message ─────────────────────────────────────
+  const handleSubmitEmail = async (e) => {
+    e?.preventDefault?.()
+    const msg = formData.message.trim()
+    if (msg.length < 10) {
+      setErrors((p) => ({ ...p, message: 'Cuéntanos brevemente tu motivo (mín. 10 caracteres)' }))
       return
     }
     setErrors({})
     setIsSubmitting(true)
     setSubmitError('')
 
-    const waUrl = buildWhatsAppUrl(name)
-
-    // 1️⃣ SAVE LEAD FIRST — atomic persistence (with keepalive safety net)
-    let saved = false
-    try {
-      const res = await fetch('/api/leads/fast-capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: name,
-          source: 'serena_modal',
-          sourceContext: source,
-          mode: 'business-hours',
-          timestamp: new Date().toISOString(),
-        }),
-        keepalive: true, // request survives even if user navigates away
-      })
-      const data = await res.json().catch(() => ({}))
-      if (res.ok) {
-        saved = true
-      } else {
-        setSubmitError(data?.error || 'No pudimos guardar tus datos. Igualmente te conectamos con Karina.')
-      }
-    } catch (_) {
-      setSubmitError('Conexión inestable. Igualmente te conectamos con Karina.')
-    }
-
-    // 2️⃣ Track conversion (Google Ads)
-    try { trackWhatsAppClick(`serena-modal-${source}`) } catch (_) { /* ignore */ }
-
-    // 3️⃣ THEN open WhatsApp (after the save resolved)
-    let waWindow = null
-    try {
-      waWindow = window.open(waUrl, '_blank', 'noopener,noreferrer')
-    } catch (_) { /* ignore */ }
-
+    const { ok, data } = await saveLead({ channel: 'email', message: msg })
     setIsSubmitting(false)
-    setStep('success')
 
-    // Fallback: if popup blocked, redirect current tab after short delay
-    if (!waWindow) {
-      setTimeout(() => { window.location.href = waUrl }, 600)
+    if (!ok) {
+      setSubmitError(data?.error || 'No pudimos guardar tu mensaje. Intenta nuevamente.')
+      return
     }
-
-    // Final defensive save via sendBeacon — fires even if the page is unloading.
-    // Idempotent: backend deduplicates by name + same-minute timestamp if needed.
-    if (!saved && typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-      try {
-        const payload = JSON.stringify({
-          fullName: name,
-          source: 'serena_modal',
-          sourceContext: source,
-          mode: 'business-hours',
-          timestamp: new Date().toISOString(),
-          beacon: true,
-        })
-        navigator.sendBeacon('/api/leads/fast-capture', new Blob([payload], { type: 'application/json' }))
-      } catch (_) { /* ignore */ }
-    }
-  }
-
-  // ── AFTER-HOURS FLOW ────────────────────────────────────────────────────
-  // ATOMIC PERSISTENCE: save lead with full data (name + phone + email).
-  // No redirect to WhatsApp — Karina contacts the user on next business day.
-  // Source tagged 'serena_modal' for traceability.
-  const validateAfterHours = () => {
-    const e = {}
-    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) e.fullName = 'Ingresa tu nombre completo'
-    const digits = formData.phone.replace(/\D/g, '')
-    if (digits.length < 8) e.phone = 'Ingresa un teléfono válido'
-    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Ingresa un email válido'
-    setErrors(e)
-    return Object.keys(e).length === 0
-  }
-
-  const handleSubmitAfterHours = async (e) => {
-    e.preventDefault()
-    if (!validateAfterHours()) return
-    setIsSubmitting(true)
-    setSubmitError('')
-    try {
-      const res = await fetch('/api/leads/fast-capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: formData.fullName.trim(),
-          phone: formData.phone.trim(),
-          email: formData.email.trim(),
-          source: 'serena_modal',
-          sourceContext: source,
-          mode: 'after-hours',
-          timestamp: new Date().toISOString(),
-        }),
-        keepalive: true,
-      })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setSubmitError(data?.error || 'No pudimos guardar tus datos. Intenta nuevamente.')
-        return
-      }
-      setStep('afterhours-success')
-    } catch (_) {
-      setSubmitError('Conexión inestable. Intenta nuevamente.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    setView('success-email')
   }
 
   if (!isOpen) return null
 
+  // ─────────────────────────────────────────────────────────────────────
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-labelledby="fast-capture-title"
-      className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/60 backdrop-blur-sm p-0 md:p-4"
+      aria-labelledby="serena-title"
+      className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/80 backdrop-blur-md p-0 md:p-4 animate-in fade-in duration-200"
       onClick={close}
     >
-      <Card
-        className="w-full max-w-lg border-0 shadow-2xl rounded-t-2xl md:rounded-2xl"
+      <div
+        ref={dialogRef}
         onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-md md:max-w-lg bg-gradient-to-b from-black via-zinc-950 to-black border border-emerald-500/20 rounded-t-3xl md:rounded-3xl shadow-[0_0_80px_-15px_rgba(16,185,129,0.45)] overflow-hidden text-white animate-in slide-in-from-bottom-8 duration-300"
       >
-        <CardContent className="p-0">
-          {/* Header */}
-          <div className={`relative text-white p-6 rounded-t-2xl ${
-            businessHours
-              ? 'bg-gradient-to-br from-primary to-primary/80'
-              : 'bg-gradient-to-br from-gray-800 to-gray-700'
-          }`}>
-            <button
-              type="button"
-              onClick={close}
-              aria-label="Cerrar"
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center">
-                {businessHours ? <MessageCircle className="w-6 h-6" /> : <Clock className="w-6 h-6" />}
-              </div>
-              <div>
-                <h2 id="fast-capture-title" className="text-xl font-semibold">
-                  {businessHours
-                    ? 'Conectar con Karina'
-                    : holiday
-                      ? `Feriado · ${holiday.label}`
-                      : 'Fuera de horario clínico'}
-                </h2>
-                <p className="text-white/90 text-sm">
-                  {businessHours
-                    ? 'Te abrimos WhatsApp en un toque'
-                    : holiday
-                      ? 'Hoy la clínica está cerrada por feriado. Te contactamos al volver.'
-                      : 'Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)'}
-                </p>
-              </div>
+        {/* Emerald glow accents */}
+        <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 bg-emerald-700/15 rounded-full blur-3xl" />
+
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={close}
+          aria-label="Cerrar"
+          className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Header */}
+        <div className="relative px-6 pt-7 pb-4 md:px-8 md:pt-8">
+          <div className="flex items-center gap-3">
+            <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+              <Sparkles className="w-6 h-6 text-white" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-black animate-pulse" />
+            </div>
+            <div>
+              <h2 id="serena-title" className="text-lg md:text-xl font-semibold tracking-tight">
+                Serena · Asistente del Instituto
+              </h2>
+              <p className="text-xs text-emerald-400/80">En línea · Te respondemos al instante</p>
             </div>
           </div>
+        </div>
 
-          {/* ──────────── BUSINESS HOURS: 1 field + Conectar con Karina ──────────── */}
-          {businessHours && step === 'form' && (
-            <form onSubmit={handleSubmitBusinessHours} className="p-6 space-y-4">
+        {/* ─── FORM: name + phone + dual choice ─────────────────────────── */}
+        {view === 'form' && (
+          <div className="relative px-6 pb-6 md:px-8 md:pb-8 space-y-5">
+            {/* Greeting bubble */}
+            <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-200">
+              ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>. Para conectarte con la <span className="text-emerald-400 font-medium">Dra. Cáceres</span> y su equipo, cuéntame:
+            </div>
+
+            <form onSubmit={handleWhatsApp} className="space-y-4" noValidate>
+              {/* Nombre */}
               <div>
-                <label htmlFor="fc-name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre
+                <label htmlFor="sd-name" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
+                  Tu nombre
                 </label>
                 <input
-                  id="fc-name"
+                  id="sd-name"
                   type="text"
                   autoComplete="name"
                   autoFocus
@@ -279,209 +250,213 @@ export default function FastCaptureModal() {
                     setFormData((p) => ({ ...p, fullName: e.target.value }))
                     if (errors.fullName) setErrors((p) => ({ ...p, fullName: '' }))
                   }}
-                  placeholder="Tu nombre"
-                  className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${
-                    errors.fullName ? 'border-red-400' : 'border-gray-200 focus:border-primary'
+                  placeholder="María Fernanda"
+                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors ${
+                    errors.fullName
+                      ? 'border-red-500/60 focus:border-red-400'
+                      : 'border-zinc-800 focus:border-emerald-500/70'
                   }`}
-                  inputMode="text"
                 />
-                {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
+                {errors.fullName && <p className="text-xs text-red-400 mt-1.5">{errors.fullName}</p>}
               </div>
 
-              {submitError && (
-                <div className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-md p-3">
-                  {submitError}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                size="lg"
-                className="w-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold min-h-[52px]"
-              >
-                {isSubmitting ? (
-                  <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Conectando…</>
-                ) : (
-                  <><MessageCircle className="w-5 h-5 mr-2" /> Conectar con Karina</>
-                )}
-              </Button>
-
-              <p className="text-xs text-gray-500 text-center leading-relaxed">
-                Abriremos WhatsApp con un mensaje pre‑escrito. Datos confidenciales — Instituto DBT Chile.
-              </p>
-            </form>
-          )}
-
-          {businessHours && step === 'success' && (
-            <div className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center">
-                <CheckCircle className="w-9 h-9 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">¡Listo! Te llevamos a WhatsApp</h3>
-              <p className="text-gray-600">Si no se abrió automáticamente, toca el botón:</p>
-              <Button
-                asChild
-                size="lg"
-                className="w-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold min-h-[52px]"
-              >
-                <a
-                  href={buildWhatsAppUrl(formData.fullName)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick(`fast-capture-success-${source}`)}
-                >
-                  <MessageCircle className="w-5 h-5 mr-2" /> Abrir WhatsApp
-                </a>
-              </Button>
-              {submitError && <p className="text-xs text-amber-700">{submitError}</p>}
-              <button
-                type="button"
-                onClick={close}
-                className="text-sm text-gray-500 hover:text-gray-700 underline"
-              >
-                Cerrar
-              </button>
-            </div>
-          )}
-
-          {/* ──────────── AFTER HOURS: Name + Phone + Email ──────────── */}
-          {!businessHours && step === 'form' && (
-            <form onSubmit={handleSubmitAfterHours} className="p-6 space-y-4">
-              <div className="text-sm text-gray-700 bg-amber-50 border-l-4 border-amber-400 rounded-md p-4 leading-relaxed">
-                {holiday ? (
-                  <>
-                    Hoy es <strong>{holiday.label}</strong> y la clínica está cerrada.{' '}
-                    <strong>Déjanos tus datos y Karina te contactará el próximo día hábil.</strong>
-                  </>
-                ) : (
-                  <>
-                    Karina está fuera de su horario clínico.{' '}
-                    <strong>Déjanos tus datos y te contactaremos mañana.</strong>
-                  </>
-                )}
-              </div>
-
+              {/* WhatsApp */}
               <div>
-                <label htmlFor="ah-name" className="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
+                <label htmlFor="sd-phone" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
+                  Tu WhatsApp
+                </label>
                 <input
-                  id="ah-name"
-                  type="text"
-                  autoComplete="name"
-                  value={formData.fullName}
+                  id="sd-phone"
+                  type="tel"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  value={formData.phone}
                   onChange={(e) => {
-                    setFormData((p) => ({ ...p, fullName: e.target.value }))
-                    if (errors.fullName) setErrors((p) => ({ ...p, fullName: '' }))
+                    setFormData((p) => ({ ...p, phone: formatPhone(e.target.value) }))
+                    if (errors.phone) setErrors((p) => ({ ...p, phone: '' }))
                   }}
-                  placeholder="Tu nombre"
-                  className={`w-full px-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${
-                    errors.fullName ? 'border-red-400' : 'border-gray-200 focus:border-primary'
+                  placeholder="+56 9 1234 5678"
+                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors ${
+                    errors.phone
+                      ? 'border-red-500/60 focus:border-red-400'
+                      : 'border-zinc-800 focus:border-emerald-500/70'
                   }`}
                 />
-                {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="ah-phone" className="block text-sm font-medium text-gray-700 mb-2">Teléfono / WhatsApp</label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    id="ah-phone"
-                    type="tel"
-                    autoComplete="tel"
-                    inputMode="tel"
-                    value={formData.phone}
-                    onChange={(e) => {
-                      setFormData((p) => ({ ...p, phone: formatPhone(e.target.value) }))
-                      if (errors.phone) setErrors((p) => ({ ...p, phone: '' }))
-                    }}
-                    placeholder="+56 9 1234 5678"
-                    className={`w-full pl-10 pr-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${
-                      errors.phone ? 'border-red-400' : 'border-gray-200 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="ah-email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    id="ah-email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    value={formData.email}
-                    onChange={(e) => {
-                      setFormData((p) => ({ ...p, email: e.target.value }))
-                      if (errors.email) setErrors((p) => ({ ...p, email: '' }))
-                    }}
-                    placeholder="tu@correo.cl"
-                    className={`w-full pl-10 pr-4 py-3 text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 ${
-                      errors.email ? 'border-red-400' : 'border-gray-200 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
+                {errors.phone && <p className="text-xs text-red-400 mt-1.5">{errors.phone}</p>}
               </div>
 
               {submitError && (
-                <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-md p-3">
+                <div className="text-sm text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   {submitError}
                 </div>
               )}
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold min-h-[52px]"
-              >
-                {isSubmitting ? (
-                  <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Enviando…</>
-                ) : (
-                  'Enviar mis datos'
-                )}
-              </Button>
+              {/* Channel choice */}
+              <div className="pt-1">
+                <p className="text-xs text-zinc-500 mb-3 text-center uppercase tracking-wider">
+                  ¿Cómo prefieres continuar?
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* WhatsApp */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group relative flex items-center justify-center gap-2 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all active:scale-[0.98] disabled:opacity-60"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                          <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+                        </svg>
+                        <span>WhatsApp</span>
+                      </>
+                    )}
+                  </button>
 
-              <p className="text-xs text-gray-500 text-center leading-relaxed">
-                Karina te contactará el próximo día hábil. Datos confidenciales — Instituto DBT Chile.
+                  {/* Email */}
+                  <button
+                    type="button"
+                    onClick={handleChooseEmail}
+                    disabled={isSubmitting}
+                    className="group relative flex items-center justify-center gap-2 h-14 rounded-xl bg-zinc-900 hover:bg-zinc-800 border-2 border-emerald-500/30 hover:border-emerald-400/60 text-white font-semibold transition-all active:scale-[0.98] disabled:opacity-60"
+                  >
+                    <Mail className="w-5 h-5 text-emerald-400" />
+                    <span>Correo</span>
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-zinc-500 text-center leading-relaxed pt-1">
+                🔒 Datos confidenciales · Instituto DBT Chile · Vitacura
               </p>
             </form>
-          )}
+          </div>
+        )}
 
-          {!businessHours && step === 'afterhours-success' && (
-            <div className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center">
-                <CheckCircle className="w-9 h-9 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">¡Recibimos tus datos!</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Karina te contactará el próximo día hábil (Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00).
-              </p>
-              <Button
-                type="button"
-                onClick={close}
-                size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold min-h-[52px]"
-              >
-                Cerrar
-              </Button>
+        {/* ─── EMAIL: textarea for message ──────────────────────────────── */}
+        {view === 'email' && (
+          <div className="relative px-6 pb-6 md:px-8 md:pb-8 space-y-4">
+            <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-200">
+              Perfecto, <span className="text-emerald-400 font-medium">{formData.fullName.trim() || 'consultante'}</span>. Cuéntame brevemente cómo podemos ayudarte y enviaremos tu mensaje al equipo de la Dra. Cáceres ✨
             </div>
-          )}
-        </CardContent>
-      </Card>
+
+            <form onSubmit={handleSubmitEmail} className="space-y-4" noValidate>
+              <div>
+                <label htmlFor="sd-msg" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
+                  Tu mensaje
+                </label>
+                <textarea
+                  id="sd-msg"
+                  rows={5}
+                  autoFocus
+                  value={formData.message}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, message: e.target.value }))
+                    if (errors.message) setErrors((p) => ({ ...p, message: '' }))
+                  }}
+                  placeholder="Ej: Hola, me interesa información sobre el programa DBT estándar. ¿Cuáles son los próximos cupos?"
+                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors resize-none ${
+                    errors.message
+                      ? 'border-red-500/60 focus:border-red-400'
+                      : 'border-zinc-800 focus:border-emerald-500/70'
+                  }`}
+                />
+                {errors.message && <p className="text-xs text-red-400 mt-1.5">{errors.message}</p>}
+                <p className="text-[11px] text-zinc-500 mt-1.5">
+                  Se enviará a <span className="text-emerald-400/80">contacto@dbtchile.cl</span>
+                </p>
+              </div>
+
+              {submitError && (
+                <div className="text-sm text-red-300 bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                  {submitError}
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => { setView('form'); setSubmitError('') }}
+                  className="px-4 h-12 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-sm transition-colors"
+                >
+                  Volver
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all active:scale-[0.98] disabled:opacity-60"
+                >
+                  {isSubmitting ? (
+                    <><Loader2 className="w-5 h-5 animate-spin" /> Enviando…</>
+                  ) : (
+                    <><Send className="w-4 h-4" /> Enviar mensaje</>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* ─── SUCCESS WHATSAPP ─────────────────────────────────────────── */}
+        {view === 'success-wa' && (
+          <div className="relative px-6 pb-7 md:px-8 md:pb-8 text-center space-y-4 pt-2">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 flex items-center justify-center">
+              <CheckCircle2 className="w-9 h-9 text-emerald-400" />
+            </div>
+            <h3 className="text-xl font-semibold">Te llevamos a WhatsApp</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed">
+              Si no se abrió automáticamente, toca el botón:
+            </p>
+            <a
+              href={buildWAUrl(formData.fullName)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick(`serena-success-${source}`)}
+              className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+              </svg>
+              Abrir WhatsApp
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <button onClick={close} className="text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline">
+              Cerrar
+            </button>
+          </div>
+        )}
+
+        {/* ─── SUCCESS EMAIL ────────────────────────────────────────────── */}
+        {view === 'success-email' && (
+          <div className="relative px-6 pb-7 md:px-8 md:pb-8 text-center space-y-4 pt-2">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 flex items-center justify-center">
+              <CheckCircle2 className="w-9 h-9 text-emerald-400" />
+            </div>
+            <h3 className="text-xl font-semibold">¡Mensaje recibido!</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed">
+              Gracias, <span className="text-emerald-400 font-medium">{formData.fullName.trim()}</span>. El equipo de la Dra. Cáceres recibió tu mensaje y te contactará a la brevedad.
+            </p>
+            <button
+              onClick={close}
+              className="w-full h-12 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-emerald-500/30 hover:border-emerald-400/60 text-white font-medium transition-all"
+            >
+              Cerrar
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
 /**
  * Helper: open the modal from anywhere on the client.
- *   onClick={() => openFastCapture('hero')}
+ *   openFastCapture('hero')
+ *   openFastCapture('family-cta', '¡Hola! 👋 Quiero info del Programa Familia...')
  */
-export function openFastCapture(source = 'general') {
+export function openFastCapture(source = 'general', message = null) {
   if (typeof window === 'undefined') return
-  window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source } }))
+  window.dispatchEvent(new CustomEvent('open-fast-capture', { detail: { source, message } }))
 }

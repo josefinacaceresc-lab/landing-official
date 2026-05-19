@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
+import { sendSerenaEmail } from '@/lib/sendEmail'
 
 const client = new MongoClient(process.env.MONGO_URL || 'mongodb://localhost:27017')
 const dbName = process.env.DB_NAME || 'institutodbt'
@@ -60,6 +61,63 @@ function parseCookie(request, name) {
     })
   )
   return cookies[name] || null
+}
+
+// ─── Client IP extraction ─────────────────────────────────────────────────
+function getClientIP(request) {
+  const xff = request.headers.get('x-forwarded-for') || ''
+  if (xff) return xff.split(',')[0].trim()
+  return (
+    request.headers.get('x-real-ip') ||
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('true-client-ip') ||
+    null
+  )
+}
+
+// ─── IP → Geolocation (city, region, country) ────────────────────────────
+// Uses ip-api.com (free tier, 45 req/min, no API key required).
+// Hard timeout 1.5s → never blocks lead saving. Returns null on private/local
+// IPs or any failure. Fail-soft: lead is still saved without geo metadata.
+async function lookupLocationFromIP(ip) {
+  if (!ip || typeof ip !== 'string') return null
+  // Skip private/loopback/IPv6-loopback addresses
+  if (
+    ip === '127.0.0.1' ||
+    ip === '::1' ||
+    ip.startsWith('192.168.') ||
+    ip.startsWith('10.') ||
+    ip.startsWith('172.16.') || ip.startsWith('172.17.') || ip.startsWith('172.18.') ||
+    ip.startsWith('172.19.') || ip.startsWith('172.2') || ip.startsWith('172.30.') ||
+    ip.startsWith('172.31.') ||
+    ip.startsWith('fc') || ip.startsWith('fd') || ip.startsWith('fe80')
+  ) {
+    return null
+  }
+  try {
+    const ctrl = new AbortController()
+    const timer = setTimeout(() => ctrl.abort(), 1500)
+    const url = `http://ip-api.com/json/${encodeURIComponent(ip)}?fields=status,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,query`
+    const res = await fetch(url, { signal: ctrl.signal, cache: 'no-store' })
+    clearTimeout(timer)
+    if (!res.ok) return null
+    const data = await res.json().catch(() => null)
+    if (!data || data.status !== 'success') return null
+    return {
+      city: data.city || null,
+      region: data.regionName || null,
+      country: data.country || null,
+      countryCode: data.countryCode || null,
+      lat: typeof data.lat === 'number' ? data.lat : null,
+      lon: typeof data.lon === 'number' ? data.lon : null,
+      timezone: data.timezone || null,
+      isp: data.isp || null,
+      ip: data.query || ip,
+      lookedUpAt: new Date(),
+    }
+  } catch (_) {
+    return null
+  }
 }
 
 async function getAdminSession(request) {
@@ -401,9 +459,12 @@ export async function POST(request) {
       }
     }
 
-    // Store Fast WhatsApp Capture Lead (Name + optional Phone/Email)
+    // Store Fast WhatsApp Capture Lead — Serena Dual Modal v2
+    // Accepts: fullName (req), phone (req), channel ('whatsapp'|'email'),
+    //          message (optional, for email channel), source, sourceContext, mode
+    // Side-effects: silent IP geolocation, optional email dispatch, Telegram notify.
     if (pathname === '/api/leads/fast-capture') {
-      const { fullName, phone, email, source, sourceContext, mode, timestamp, beacon } = body || {}
+      const { fullName, phone, email, channel, message, source, sourceContext, mode, timestamp, beacon } = body || {}
 
       if (!fullName) {
         return Response.json({ error: 'Nombre es obligatorio' }, { status: 400 })
@@ -417,8 +478,21 @@ export async function POST(request) {
       const cleanPhone = phone ? String(phone).trim() : ''
       const phoneDigits = normalizeChileanPhone(cleanPhone)
       const cleanEmail = email ? String(email).trim() : ''
+      const cleanChannel = channel === 'email' ? 'email' : (channel === 'whatsapp' ? 'whatsapp' : null)
+      const cleanMessage = typeof message === 'string' ? message.trim().slice(0, 2000) : null
 
-      // After-hours mode requires phone + email
+      // Serena v2 → phone mandatory
+      const isSerenaV2 = mode === 'serena-v2' || !!cleanChannel
+      if (isSerenaV2) {
+        if (phoneDigits.length < 8) {
+          return Response.json({ error: 'WhatsApp inválido' }, { status: 400 })
+        }
+        if (cleanChannel === 'email' && (!cleanMessage || cleanMessage.length < 10)) {
+          return Response.json({ error: 'Mensaje muy corto' }, { status: 400 })
+        }
+      }
+
+      // Legacy after-hours mode requires phone + email
       if (mode === 'after-hours') {
         if (phoneDigits.length < 8) {
           return Response.json({ error: 'Teléfono inválido' }, { status: 400 })
@@ -432,12 +506,11 @@ export async function POST(request) {
       const leadsCollection = db.collection('leads')
 
       // Idempotency: avoid duplicating leads when both fetch and sendBeacon fire
-      // for the same submission within a short window.
       if (cleanName) {
         const sixtySecondsAgo = new Date(Date.now() - 60 * 1000)
         const existing = await leadsCollection.findOne({
           fullName: cleanName,
-          mode: mode || 'business-hours',
+          phone: phoneDigits || null,
           createdAt: { $gte: sixtySecondsAgo },
         })
         if (existing) {
@@ -449,37 +522,74 @@ export async function POST(request) {
         }
       }
 
+      // 🌍 Silent IP geolocation (bounded 1.5s)
+      const clientIP = getClientIP(request)
+      const geo = await lookupLocationFromIP(clientIP)
+
       const lead = {
         id: uuidv4(),
         fullName: cleanName,
         phone: phoneDigits || null,
         phoneDigits: phoneDigits || null,
         email: cleanEmail || null,
-        // Preserve the original source ('serena_modal') or fall back to legacy label
+        channel: cleanChannel,
+        message: cleanMessage,
+        // Source flags
         source: source === 'serena_modal' ? 'serena_modal' : 'whatsapp-fast-capture',
         sourceContext: (typeof sourceContext === 'string' && sourceContext.trim()) || source || 'general',
         mode: mode || 'business-hours',
         clientTimestamp: timestamp || null,
         deliveredVia: beacon ? 'sendBeacon' : 'fetch',
+        // 🌍 Automated location capture (silent, IP-based)
+        ip: clientIP,
+        geo: geo, // { city, region, country, countryCode, lat, lon, timezone, isp, ip } | null
+        location: geo ? [geo.city, geo.region, geo.country].filter(Boolean).join(', ') : null,
+        // Status
         createdAt: new Date(),
         status: 'new',
       }
 
       const result = await leadsCollection.insertOne(lead)
 
-      // Fire-and-forget Telegram notification (only if env token is configured)
+      // 📧 Email dispatch — only when channel is 'email'
+      let emailResult = null
+      if (cleanChannel === 'email') {
+        try {
+          emailResult = await sendSerenaEmail({
+            name: cleanName,
+            phone: phoneDigits,
+            message: cleanMessage,
+            sourceContext: lead.sourceContext,
+            mode: lead.mode,
+          })
+          await leadsCollection.updateOne(
+            { id: lead.id },
+            { $set: { emailSent: !!emailResult?.sent, emailProvider: emailResult?.provider || null, emailError: emailResult?.error || null } }
+          )
+        } catch (e) {
+          console.error('[Serena] email dispatch failed:', e?.message)
+        }
+      }
+
+      // 🚨 Telegram notification (only if token configured)
       try {
         const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN
         const TG_CHAT = process.env.TELEGRAM_CHAT_ID || '533798039'
         if (TG_TOKEN) {
-          const tag = mode === 'after-hours' ? '🌙 FUERA DE HORARIO' : '🟢 EN HORARIO'
+          const tag = cleanChannel === 'email'
+            ? '📧 LEAD POR CORREO'
+            : cleanChannel === 'whatsapp'
+              ? '🟢 LEAD POR WHATSAPP'
+              : (mode === 'after-hours' ? '🌙 FUERA DE HORARIO' : '🟢 EN HORARIO')
           const lines = [
-            `${tag} · Lead WhatsApp`,
+            `${tag} · Serena v2`,
             `Nombre: ${cleanName}`,
           ]
           if (phoneDigits) lines.push(`Teléfono: +${phoneDigits}`)
           if (cleanEmail) lines.push(`Email: ${cleanEmail}`)
+          if (lead.location) lines.push(`📍 ${lead.location}`)
           lines.push(`Origen: ${source || 'general'}`)
+          if (cleanMessage) lines.push(`\nMensaje:\n${cleanMessage.slice(0, 500)}`)
           fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -492,6 +602,10 @@ export async function POST(request) {
         success: true,
         leadId: result.insertedId?.toString?.() || null,
         mode: mode || 'business-hours',
+        channel: cleanChannel,
+        location: lead.location,
+        emailQueued: cleanChannel === 'email' && !(emailResult?.sent),
+        emailSent: !!emailResult?.sent,
       })
     }
 

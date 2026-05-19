@@ -239,7 +239,7 @@ export default function FastCaptureModal() {
             }`}>
               {businessHours ? (
                 <>
-                  ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>. Para conectarte por WhatsApp con la <span className="text-emerald-400 font-medium">Dra. Cáceres</span> y su equipo, cuéntame:
+                  ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>. Para conectarte por WhatsApp con <span className="text-emerald-400 font-medium">Karina</span> y el equipo de admisión, cuéntame:
                 </>
               ) : (
                 <>

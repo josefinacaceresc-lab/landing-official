@@ -600,7 +600,7 @@ export async function POST(request) {
 
       return Response.json({
         success: true,
-        leadId: result.insertedId?.toString?.() || null,
+        leadId: lead.id,
         mode: mode || 'business-hours',
         channel: cleanChannel,
         location: lead.location,

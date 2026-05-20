@@ -77,6 +77,7 @@ export default function AdminPage() {
   const [refreshing, setRefreshing] = useState(false)
   const [filterMode, setFilterMode] = useState('all')
   const [filterStatus, setFilterStatus] = useState('all')
+  const [filterDateRange, setFilterDateRange] = useState('all') // all|today|yesterday|7d|30d
   const [searchTerm, setSearchTerm] = useState('')
 
   // ─── Auth check on mount ──
@@ -175,12 +176,59 @@ export default function AdminPage() {
   const exportCsv = () => { window.location.href = '/api/admin/export-csv' }
 
   const filteredLeads = leads.filter((l) => {
-    if (!searchTerm) return true
-    const s = searchTerm.toLowerCase()
-    return [l.fullName, l.email, l.phone, l.sourceContext].some(
-      (v) => v && String(v).toLowerCase().includes(s)
-    )
+    // Search filter
+    if (searchTerm) {
+      const s = searchTerm.toLowerCase()
+      const match = [l.fullName, l.email, l.phone, l.sourceContext].some(
+        (v) => v && String(v).toLowerCase().includes(s)
+      )
+      if (!match) return false
+    }
+    // Status filter
+    if (filterStatus !== 'all' && l.status !== filterStatus) return false
+    // Date range filter (Santiago timezone)
+    if (filterDateRange !== 'all' && l.createdAt) {
+      const created = new Date(l.createdAt)
+      const now = new Date()
+      const startToday = new Date(now); startToday.setHours(0, 0, 0, 0)
+      const startYesterday = new Date(startToday); startYesterday.setDate(startYesterday.getDate() - 1)
+      const start7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+      const start30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+      if (filterDateRange === 'today' && created < startToday) return false
+      if (filterDateRange === 'yesterday' && (created < startYesterday || created >= startToday)) return false
+      if (filterDateRange === '7d' && created < start7d) return false
+      if (filterDateRange === '30d' && created < start30d) return false
+    }
+    return true
   })
+
+  // Hourly breakdown of filtered leads (24 bins)
+  const hourlyBuckets = (() => {
+    const buckets = Array(24).fill(0)
+    let max = 0
+    for (const l of filteredLeads) {
+      if (!l.createdAt) continue
+      try {
+        const d = new Date(l.createdAt)
+        // Santiago timezone bucket
+        const santiagoStr = d.toLocaleString('en-US', { timeZone: 'America/Santiago', hour12: false, hour: '2-digit' })
+        const h = parseInt(santiagoStr, 10)
+        if (!Number.isNaN(h) && h >= 0 && h < 24) {
+          buckets[h] += 1
+          if (buckets[h] > max) max = buckets[h]
+        }
+      } catch (_) { /* skip */ }
+    }
+    return { buckets, max }
+  })()
+
+  const dateRangeLabel = {
+    all: 'Todo el histórico',
+    today: 'Hoy',
+    yesterday: 'Ayer',
+    '7d': 'Últimos 7 días',
+    '30d': 'Últimos 30 días',
+  }[filterDateRange]
 
   // ─── Render: LOADING ──
   if (view === 'loading') {
@@ -297,6 +345,80 @@ export default function AdminPage() {
 
             <Card>
               <CardContent className="pt-6">
+                {/* ── Date Range Filter (PRIMARY) ── */}
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-medium text-slate-600 uppercase tracking-wider mr-1">
+                    Período:
+                  </span>
+                  {[
+                    ['today', 'Hoy'],
+                    ['yesterday', 'Ayer'],
+                    ['7d', 'Últimos 7 días'],
+                    ['30d', 'Últimos 30 días'],
+                    ['all', 'Todo'],
+                  ].map(([key, label]) => (
+                    <Button
+                      key={key}
+                      size="sm"
+                      variant={filterDateRange === key ? 'default' : 'outline'}
+                      onClick={() => setFilterDateRange(key)}
+                      className={filterDateRange === key
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                        : ''}
+                    >
+                      {label}
+                    </Button>
+                  ))}
+                  <span className="ml-auto text-xs text-slate-500">
+                    Mostrando <strong className="text-emerald-700">{filteredLeads.length}</strong> {filteredLeads.length === 1 ? 'lead' : 'leads'} de <strong>{dateRangeLabel}</strong>
+                  </span>
+                </div>
+
+                {/* ── Hourly Breakdown ── */}
+                {filteredLeads.length > 0 && (
+                  <div className="mb-5 bg-slate-50 border border-slate-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                        📊 Distribución por hora (Santiago)
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        Pico: {hourlyBuckets.max} {hourlyBuckets.max === 1 ? 'lead' : 'leads'} a las {hourlyBuckets.buckets.indexOf(hourlyBuckets.max).toString().padStart(2, '0')}:00
+                      </span>
+                    </div>
+                    <div className="flex items-end gap-0.5 h-20">
+                      {hourlyBuckets.buckets.map((count, h) => {
+                        const height = hourlyBuckets.max > 0 ? (count / hourlyBuckets.max) * 100 : 0
+                        const isPeak = count === hourlyBuckets.max && count > 0
+                        return (
+                          <div key={h} className="flex-1 flex flex-col items-center group relative">
+                            <div
+                              className={`w-full rounded-t transition-all ${
+                                count === 0
+                                  ? 'bg-slate-200 h-[2px]'
+                                  : isPeak
+                                    ? 'bg-emerald-600 hover:bg-emerald-700'
+                                    : 'bg-emerald-400/70 hover:bg-emerald-500'
+                              }`}
+                              style={count > 0 ? { height: `${Math.max(8, height)}%` } : {}}
+                              title={`${h.toString().padStart(2, '0')}:00 → ${count} leads`}
+                            />
+                            {/* Tooltip on hover */}
+                            {count > 0 && (
+                              <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-[10px] font-medium text-emerald-700 bg-white border border-emerald-200 rounded px-1 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                                {h.toString().padStart(2, '0')}:00 · {count}
+                              </span>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <div className="flex justify-between text-[9px] text-slate-400 mt-1 font-mono">
+                      <span>00h</span><span>06h</span><span>12h</span><span>18h</span><span>23h</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Secondary filters: search + status ── */}
                 <div className="flex flex-col sm:flex-row gap-3 mb-4">
                   <div className="relative flex-1">
                     <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -311,8 +433,10 @@ export default function AdminPage() {
                     <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Modo" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">Todos los modos</SelectItem>
-                      <SelectItem value="business-hours">En horario</SelectItem>
-                      <SelectItem value="after-hours">Fuera de horario</SelectItem>
+                      <SelectItem value="karina-capture">Captura Karina</SelectItem>
+                      <SelectItem value="skip-capture">Saltó captura</SelectItem>
+                      <SelectItem value="business-hours">En horario (legacy)</SelectItem>
+                      <SelectItem value="after-hours">Fuera de horario (legacy)</SelectItem>
                     </SelectContent>
                   </Select>
                   <Select value={filterStatus} onValueChange={setFilterStatus}>

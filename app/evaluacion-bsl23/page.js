@@ -6,7 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AlertTriangle, Phone, CheckCircle, Loader2, Heart, Lock, MessageCircle, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp' // eslint-disable-line no-unused-vars
+
+const WA_HREF = 'https://wa.me/56930550750?text=' + encodeURIComponent('¡Hola! 👋 Vi su sitio web y me gustaría agendar una consulta. Muchas gracias.')
 
 // BSL-23 Questions - Dr. Martin Bohus
 // Borderline Symptom List - 23 items, 0-4 scale
@@ -641,12 +643,13 @@ export default function BSL23Page() {
                     </Link>
                   </Button>
                   <Button
-                    type="button"
-                    onClick={() => openWhatsAppOrCapture('bsl23-locked')}
+                    asChild
                     size="lg"
                     className="bg-primary hover:bg-primary/90 text-white font-semibold"
                   >
-                    <MessageCircle className="w-4 h-4 mr-2" /> Agendar consulta
+                    <a href={WA_HREF} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="w-4 h-4 mr-2" /> Agendar consulta
+                    </a>
                   </Button>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, AlertTriangle, Clock, Copy, Check, ExternalLink } from 'lucide-react'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp'
+import { openWhatsAppOrCapture } from '@/lib/whatsapp' // eslint-disable-line no-unused-vars
 
 function getScoreInterpretation(score) {
   if (score <= 10) {
@@ -307,17 +307,17 @@ function ResultadosContent() {
 
               <div className="pt-4 text-center">
                 <Button
-                  type="button"
+                  asChild
                   size="lg"
-                  onClick={() =>
-                    openWhatsAppOrCapture(
-                      'autoevaluacion-resultados',
-                      '¡Hola! 👋 Soy el consultante que acaba de completar el IDP-4 con ayuda de Serena. Me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.'
-                    )
-                  }
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
                 >
-                  Agendar Evaluación Clínica
+                  <a
+                    href={'https://wa.me/56930550750?text=' + encodeURIComponent('¡Hola! 👋 Soy el consultante que acaba de completar el IDP-4 con ayuda de Serena. Me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Agendar Evaluación Clínica
+                  </a>
                 </Button>
                 <p className="mt-4 text-sm text-gray-600">
                   WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl

@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
 import { trackWhatsAppClick, trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp'
+import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
+
+const WA_HREF_DEFAULT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
+const WA_HREF_FAMILY = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa Familia (DBT-A). ¿Me podrían ayudar a agendar una hora? Gracias.')}`
 
 export default function Home() {
   return (
@@ -44,15 +47,17 @@ export default function Home() {
             </p>
             
             <Button
+              asChild
               size="lg"
-              type="button"
-              onClick={() => { trackWhatsAppClick('hero'); openWhatsAppOrCapture('hero') }}
+              onClick={() => trackWhatsAppClick('hero')}
               className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12"
             >
-              <span className="flex items-center gap-2">
-                Solicitar hora
-                <ArrowRight className="w-5 h-5" />
-              </span>
+              <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
+                <span className="flex items-center gap-2">
+                  Solicitar hora
+                  <ArrowRight className="w-5 h-5" />
+                </span>
+              </a>
             </Button>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
@@ -431,12 +436,14 @@ export default function Home() {
             {/* CTA */}
             <div className="text-center mt-4">
               <Button
+                asChild
                 size="lg"
-                type="button"
-                onClick={() => { trackWhatsAppClick('family-cta'); openWhatsAppOrCapture('family-cta', '¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa Familia (DBT-A). ¿Me podrían ayudar a agendar una hora? Gracias.') }}
+                onClick={() => trackWhatsAppClick('family-cta')}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
-                Solicitar Información
+                <a href={WA_HREF_FAMILY} target="_blank" rel="noopener noreferrer">
+                  Solicitar Información
+                </a>
               </Button>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones</p>
             </div>
@@ -645,12 +652,14 @@ export default function Home() {
               Da el primer paso. Nuestro equipo responde en menos de 24 horas hábiles.
             </p>
             <Button
+              asChild
               size="lg"
-              type="button"
-              onClick={() => { trackWhatsAppClick('home-contacto'); openWhatsAppOrCapture('home-contacto') }}
+              onClick={() => trackWhatsAppClick('home-contacto')}
               className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
             >
-              WhatsApp · +56 9 3055 0750
+              <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
+                WhatsApp · +56 9 3055 0750
+              </a>
             </Button>
             <p className="mt-6 text-sm text-emerald-100">
               Horario: Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)

@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp'
+import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
+
+const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -83,11 +85,12 @@ export default function Navigation() {
               </Link>
             </Button>
             <Button
-              type="button"
-              onClick={() => openWhatsAppOrCapture('nav-desktop')}
+              asChild
               className="rounded-full px-6 bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
             >
-              Agendar Consulta
+              <a href={WA_HREF} target="_blank" rel="noopener noreferrer">
+                Agendar Consulta
+              </a>
             </Button>
           </div>
 
@@ -139,14 +142,13 @@ export default function Navigation() {
               </Link>
               
               <Button
-                type="button"
-                onClick={() => {
-                  setIsOpen(false)
-                  openWhatsAppOrCapture('nav-mobile')
-                }}
+                asChild
+                onClick={() => setIsOpen(false)}
                 className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20"
               >
-                Agendar Consulta
+                <a href={WA_HREF} target="_blank" rel="noopener noreferrer">
+                  Agendar Consulta
+                </a>
               </Button>
             </div>
           </div>

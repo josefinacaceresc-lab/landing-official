@@ -202,7 +202,7 @@ export default function FastCaptureModal() {
         {view === 'form' && (
           <div className="relative px-6 pb-6 md:px-8 md:pb-8 space-y-5">
             <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-200">
-              Hola, soy <span className="text-emerald-400 font-medium">Karina</span>. Déjanos tus datos y te contactaremos lo más pronto posible o si prefiere llámenos directo por favor.
+              Hola, soy <span className="text-emerald-400 font-medium">Karina</span> Déjanos tus datos y te contactaremos lo mas pronto posible o si prefiere llamenos directo por favor
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>

@@ -1,5 +1,18 @@
+// ─── Cache-bust marker ────────────────────────────────────────────────────
+// Unique per deploy: forces all JS bundles, HTML, and chunks to receive a
+// brand-new hash on every build. Without this, the platform may serve stale
+// /admin bundles after a deploy and leave the page blank (recurring issue).
+const BUILD_ID = (typeof process !== 'undefined' && process.env.BUILD_ID)
+  || Date.now().toString()
+
 const nextConfig = {
   output: 'standalone',
+  // Force fresh bundles each deploy (cache-busting at the framework level)
+  generateBuildId: async () => BUILD_ID,
+  // Make BUILD_ID readable from the client (used to display version in /admin)
+  env: {
+    NEXT_PUBLIC_BUILD_ID: BUILD_ID,
+  },
   images: {
     unoptimized: true,
   },
@@ -24,6 +37,36 @@ const nextConfig = {
   },
   async headers() {
     return [
+      // ── No-cache for admin panel (prevents stale bundles after deploys) ──
+      // This was the root cause of the "blank /admin after deploy" bug.
+      // Forces browsers + CDN to always fetch fresh HTML/JS for admin routes.
+      {
+        source: "/admin",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" },
+          { key: "Surrogate-Control", value: "no-store" },
+        ],
+      },
+      {
+        source: "/admin/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" },
+          { key: "Surrogate-Control", value: "no-store" },
+        ],
+      },
+      {
+        source: "/api/admin/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" },
+        ],
+      },
+      // ── Global headers (existing) ──
       {
         source: "/(.*)",
         headers: [

@@ -21,7 +21,23 @@ import {
 } from 'lucide-react'
 
 // ─── Build version (cache-busting marker) ─────────────────────────────────
-const BUILD_VERSION = 'v2.1.0-2026.05.20'
+// Injected at build time by next.config.js (BUILD_ID = Date.now() of deploy).
+// This text visually confirms a fresh build reached production.
+const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID || 'dev'
+const BUILD_VERSION = (() => {
+  const n = Number(BUILD_ID)
+  if (!Number.isFinite(n) || n < 1e12) return BUILD_ID // dev or fallback
+  try {
+    const d = new Date(n)
+    // e.g. "20-05-2026 18:42"
+    return d.toLocaleString('es-CL', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZone: 'America/Santiago',
+    })
+  } catch (_) {
+    return BUILD_ID
+  }
+})()
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 function formatDate(iso) {

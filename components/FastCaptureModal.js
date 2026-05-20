@@ -133,12 +133,54 @@ export default function FastCaptureModal() {
 
     setIsSubmitting(false)
 
-    // 2️⃣ Open WhatsApp (always, regardless of save outcome)
-    let win = null
-    try { win = window.open(originalHref, '_blank', 'noopener,noreferrer') } catch (_) { /* ignore */ }
+    // 2️⃣ Open WhatsApp — robust multi-strategy redirect.
+    // ─── Why so many strategies? ───────────────────────────────────────
+    //   When this site is loaded inside an iframe (e.g. the Emergent
+    //   preview dashboard, or any embedding context), api.whatsapp.com
+    //   refuses to load because it sends X-Frame-Options: DENY. We try:
+    //     a) Programmatic <a> click — most reliable, uses browser's
+    //        native navigation handler.
+    //     b) window.open fallback if (a) is blocked.
+    //     c) window.top.location to break out of any iframe.
+    //     d) Direct location.href as last resort.
+    let opened = false
+    try {
+      const a = document.createElement('a')
+      a.href = originalHref
+      a.target = '_blank'
+      a.rel = 'noopener noreferrer'
+      a.style.display = 'none'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      opened = true
+    } catch (_) { /* fall through */ }
+
+    if (!opened) {
+      try {
+        const win = window.open(originalHref, '_blank', 'noopener')
+        if (win) opened = true
+      } catch (_) { /* fall through */ }
+    }
 
     setView('success')
-    if (!win) setTimeout(() => { window.location.href = originalHref }, 600)
+
+    if (!opened) {
+      // Last-resort fallback after a short delay so the user sees the
+      // success view briefly before being navigated away.
+      setTimeout(() => {
+        try {
+          // Break out of any iframe if possible
+          if (window.top && window.top !== window.self) {
+            window.top.location.href = originalHref
+          } else {
+            window.location.href = originalHref
+          }
+        } catch (_) {
+          window.location.href = originalHref
+        }
+      }, 600)
+    }
   }
 
   if (!isOpen) return null

@@ -1,40 +1,37 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { X, Loader2, CheckCircle2, Sparkles, ArrowRight, Moon, Sun } from 'lucide-react'
+import { X, Loader2, CheckCircle2, Sparkles, ArrowRight } from 'lucide-react'
 import { trackWhatsAppClick } from '@/lib/googleAdsTracking'
-import { isBusinessHoursSantiago, getChileanHolidayToday } from '@/lib/whatsapp'
 
 const WHATSAPP_NUMBER = '56930550750' // +56 9 3055 0750 — Karina
 
 /**
- * Serena WhatsApp Modal — "Hybrid Guard" (The Karina Rule)
+ * Serena Permanent Capture Modal — "Cliengo-Style 24/7"
  * ─────────────────────────────────────────────────────────────────────────
- * Dra. Cáceres mandate (June 2026):
+ * Dra. Cáceres FINAL mandate (June 2026):
  *
- *   IN BUSINESS HOURS (Mon–Thu 10–19 · Fri 10–16, Santiago):
- *     - Greeting: friendly, immediate ("conectarte con Karina")
- *     - Inputs: Nombre + WhatsApp (mandatory)
- *     - Action: atomic save → redirect to wa.me/56930550750
+ *   ZERO business-hours branching. ZERO "Karina is online/offline" copy.
+ *   100% data capture every click, every hour, every day.
  *
- *   OUT OF HOURS / WEEKENDS / CHILEAN HOLIDAYS:
- *     - Serena takes full command: explains Karina is not at her post.
- *     - Copy: "Karina no se encuentra en este momento, pero yo (Serena)
- *              tomaré sus datos para que el equipo lo contacte a primera hora."
- *     - Inputs: Nombre + WhatsApp (mandatory)
- *     - Action: atomic save → success screen "te contactaremos al primer
- *               horario hábil" — NO WhatsApp redirect (Karina is unavailable).
+ *   Flow (single, immutable):
+ *     1. Any WhatsApp CTA on the site dispatches `open-fast-capture`.
+ *     2. Modal opens — OLED luxury (black + emerald, Poppins).
+ *     3. Two mandatory fields: Nombre + WhatsApp.
+ *     4. On submit:
+ *          a. Atomic save → POST /api/leads/fast-capture (keepalive + beacon
+ *             fallback) — CRM sovereignty.
+ *          b. Google Ads conversion track.
+ *          c. Open wa.me/56930550750 with friendly pre-filled message.
+ *     5. Success view → fallback button + close.
  *
- *   The site is 100% WhatsApp-focused — there is no email channel.
- *   Every CTA on the site flows through this modal for guaranteed CRM capture.
+ *   IP-based geolocation is added silently by the backend on every lead.
  */
 export default function FastCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [source, setSource] = useState('general')
   const [customMessage, setCustomMessage] = useState(null)
-  const [businessHours, setBusinessHours] = useState(true)
-  const [holiday, setHoliday] = useState(null) // { month, day, label } | null
-  const [view, setView] = useState('form') // form | success-wa | success-offhours
+  const [view, setView] = useState('form') // form | success
   const [formData, setFormData] = useState({ fullName: '', phone: '' })
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -47,9 +44,6 @@ export default function FastCaptureModal() {
       const detail = (e && e.detail) || {}
       setSource(detail.source || 'general')
       setCustomMessage(typeof detail.message === 'string' ? detail.message : null)
-      // 🕒 Detect business-hours state at the moment the modal opens
-      setBusinessHours(isBusinessHoursSantiago())
-      setHoliday(getChileanHolidayToday())
       setView('form')
       setFormData({ fullName: '', phone: '' })
       setErrors({})
@@ -113,11 +107,11 @@ export default function FastCaptureModal() {
       channel: 'whatsapp',
       source: 'serena_modal',
       sourceContext: source,
-      mode: businessHours ? 'business-hours' : 'after-hours',
+      mode: 'permanent-capture',
       timestamp: new Date().toISOString(),
     }
 
-    // 1️⃣ Atomic save BEFORE any redirect
+    // 1️⃣ Atomic save BEFORE any redirect — CRM sovereignty
     let saved = false
     try {
       const res = await fetch('/api/leads/fast-capture', {
@@ -128,12 +122,12 @@ export default function FastCaptureModal() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) saved = true
-      else setSubmitError(data?.error || 'Conexión inestable — tus datos se reintentarán automáticamente.')
+      else setSubmitError(data?.error || 'Conexión inestable — igualmente te conectamos con Karina.')
     } catch (_) {
-      setSubmitError('Conexión inestable — tus datos se reintentarán automáticamente.')
+      setSubmitError('Conexión inestable — igualmente te conectamos con Karina.')
     }
 
-    // Defensive sendBeacon if fetch failed
+    // Defensive sendBeacon if fetch failed (tab navigating / poor mobile network)
     if (!saved && typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
       try {
         navigator.sendBeacon(
@@ -143,40 +137,21 @@ export default function FastCaptureModal() {
       } catch (_) { /* ignore */ }
     }
 
-    // 2️⃣ Track Google Ads
-    try { trackWhatsAppClick(`serena-modal-${source}-${businessHours ? 'bh' : 'oh'}`) } catch (_) { /* ignore */ }
+    // 2️⃣ Google Ads conversion tracking
+    try { trackWhatsAppClick(`serena-modal-${source}`) } catch (_) { /* ignore */ }
 
-    setIsSubmitting(false)
-
-    // 3️⃣ Open WhatsApp in BOTH flows (Karina Rule + redirect)
+    // 3️⃣ Open WhatsApp (24/7, no conditional)
     let win = null
     try { win = window.open(waUrl, '_blank', 'noopener,noreferrer') } catch (_) { /* ignore */ }
 
-    if (businessHours) {
-      // Business hours → instant redirect feedback
-      setView('success-wa')
-      if (!win) setTimeout(() => { window.location.href = waUrl }, 600)
-    } else {
-      // Off-hours → show Serena's "Karina no está" message, then auto-redirect
-      setView('success-offhours')
-      // Auto-redirect after 4s so the consultante reads Serena's message first
-      setTimeout(() => {
-        try {
-          if (win && !win.closed) win.focus()
-          else window.location.href = waUrl
-        } catch (_) {
-          window.location.href = waUrl
-        }
-      }, 4000)
-    }
+    setIsSubmitting(false)
+    setView('success')
+
+    // If popup blocked, fall back to top-level redirect after a brief delay
+    if (!win) setTimeout(() => { window.location.href = waUrl }, 600)
   }
 
   if (!isOpen) return null
-
-  // Off-hours subtitle copy
-  const offHoursContext = holiday
-    ? `Hoy es feriado (${holiday.label}). La clínica está cerrada.`
-    : 'Karina no se encuentra en este momento (lun–jue 10–19 · vie 10–16, Santiago).'
 
   return (
     <div
@@ -210,19 +185,14 @@ export default function FastCaptureModal() {
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
               <Sparkles className="w-6 h-6 text-white" />
-              <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full ring-2 ring-black ${
-                businessHours ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
-              }`} />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-black animate-pulse" />
             </div>
             <div>
               <h2 id="serena-title" className="text-lg md:text-xl font-semibold tracking-tight">
                 Serena · Asistente del Instituto
               </h2>
-              <p className={`text-xs ${businessHours ? 'text-emerald-400/80' : 'text-amber-300/90'} flex items-center gap-1`}>
-                {businessHours ? <Sun className="w-3 h-3" /> : <Moon className="w-3 h-3" />}
-                {businessHours
-                  ? 'En línea · Karina disponible'
-                  : holiday ? `Feriado · ${holiday.label}` : 'Fuera de horario clínico'}
+              <p className="text-xs text-emerald-400/80">
+                Atención inmediata por WhatsApp
               </p>
             </div>
           </div>
@@ -231,23 +201,8 @@ export default function FastCaptureModal() {
         {/* ─── FORM ────────────────────────────────────────────────────── */}
         {view === 'form' && (
           <div className="relative px-6 pb-6 md:px-8 md:pb-8 space-y-5">
-            {/* Greeting bubble — adapts to business hours */}
-            <div className={`border rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed ${
-              businessHours
-                ? 'bg-zinc-900/70 border-zinc-800/80 text-zinc-200'
-                : 'bg-amber-500/5 border-amber-500/25 text-zinc-200'
-            }`}>
-              {businessHours ? (
-                <>
-                  ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>. Para conectarte por WhatsApp con <span className="text-emerald-400 font-medium">Karina</span> y el equipo de admisión, cuéntame:
-                </>
-              ) : (
-                <>
-                  ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>.{' '}
-                  <span className="text-amber-300">{offHoursContext}</span>{' '}
-                  <strong className="text-white">Tomaré tus datos personalmente</strong> para que el equipo te contacte a primera hora hábil. Solo necesito:
-                </>
-              )}
+            <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-200">
+              ¡Hola! 👋 Soy <span className="text-emerald-400 font-medium">Serena</span>. Para conectarte por WhatsApp con <span className="text-emerald-400 font-medium">Karina</span> y el equipo de admisión, cuéntame:
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
@@ -310,18 +265,13 @@ export default function FastCaptureModal() {
               >
                 {isSubmitting ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
-                ) : businessHours ? (
+                ) : (
                   <>
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
                       <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
                     </svg>
                     <span>Continuar por WhatsApp</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="w-5 h-5" />
-                    <span>Dejar mis datos a Serena</span>
                   </>
                 )}
               </button>
@@ -333,8 +283,8 @@ export default function FastCaptureModal() {
           </div>
         )}
 
-        {/* ─── SUCCESS · BUSINESS HOURS (WhatsApp redirect) ────────────── */}
-        {view === 'success-wa' && (
+        {/* ─── SUCCESS ─────────────────────────────────────────────────── */}
+        {view === 'success' && (
           <div className="relative px-6 pb-7 md:px-8 md:pb-8 text-center space-y-4 pt-2">
             <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 flex items-center justify-center">
               <CheckCircle2 className="w-9 h-9 text-emerald-400" />
@@ -356,41 +306,6 @@ export default function FastCaptureModal() {
               Abrir WhatsApp
               <ArrowRight className="w-4 h-4" />
             </a>
-            <button onClick={close} className="text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline">
-              Cerrar
-            </button>
-          </div>
-        )}
-
-        {/* ─── SUCCESS · OFF-HOURS (Serena message + redirect) ──────── */}
-        {view === 'success-offhours' && (
-          <div className="relative px-6 pb-7 md:px-8 md:pb-8 text-center space-y-4 pt-2">
-            <div className="w-16 h-16 mx-auto rounded-full bg-amber-500/15 ring-1 ring-amber-400/40 flex items-center justify-center">
-              <Moon className="w-8 h-8 text-amber-300" />
-            </div>
-            <h3 className="text-xl font-semibold">¡Datos recibidos, {formData.fullName.trim().split(' ')[0]}!</h3>
-            <p className="text-sm text-zinc-400 leading-relaxed">
-              Yo (<span className="text-emerald-400 font-medium">Serena</span>) ya entregué tus datos al equipo. Karina te escribirá al WhatsApp <span className="text-emerald-300">{formData.phone.trim()}</span> a <strong className="text-white">primera hora hábil</strong>.
-            </p>
-            <p className="text-xs text-zinc-500 leading-relaxed">
-              Te llevamos a WhatsApp para que dejes también tu mensaje 👇
-            </p>
-            <a
-              href={buildWAUrl(formData.fullName)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick(`serena-offhours-${source}`)}
-              className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
-                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-              </svg>
-              Abrir WhatsApp ahora
-              <ArrowRight className="w-4 h-4" />
-            </a>
-            <p className="text-[11px] text-zinc-600 leading-relaxed">
-              Horario hábil: Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)
-            </p>
             <button onClick={close} className="text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline">
               Cerrar
             </button>

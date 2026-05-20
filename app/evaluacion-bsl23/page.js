@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AlertTriangle, Phone, CheckCircle, Loader2, Heart, Lock, MessageCircle, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp' // eslint-disable-line no-unused-vars
+// WhatsApp now uses direct <a href> tags — no JS handler needed
 
 const WA_HREF = 'https://wa.me/56930550750?text=' + encodeURIComponent('¡Hola! 👋 Vi su sitio web y me gustaría agendar una consulta. Muchas gracias.')
 

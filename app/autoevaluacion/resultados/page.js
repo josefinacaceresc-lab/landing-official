@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, AlertTriangle, Clock, Copy, Check, ExternalLink } from 'lucide-react'
-import { openWhatsAppOrCapture } from '@/lib/whatsapp' // eslint-disable-line no-unused-vars
+// WhatsApp now uses direct <a href> tags — no JS handler needed
 
 function getScoreInterpretation(score) {
   if (score <= 10) {

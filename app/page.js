@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
-import { trackWhatsAppClick, trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
+import { trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
 import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
 
 const WA_HREF_DEFAULT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
@@ -49,7 +49,6 @@ export default function Home() {
             <Button
               asChild
               size="lg"
-              onClick={() => trackWhatsAppClick('hero')}
               className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12"
             >
               <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
@@ -438,7 +437,6 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                onClick={() => trackWhatsAppClick('family-cta')}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
                 <a href={WA_HREF_FAMILY} target="_blank" rel="noopener noreferrer">
@@ -654,7 +652,6 @@ export default function Home() {
             <Button
               asChild
               size="lg"
-              onClick={() => trackWhatsAppClick('home-contacto')}
               className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
             >
               <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">

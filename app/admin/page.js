@@ -20,6 +20,9 @@ import {
   Clock, Phone, Mail, MessageCircle, TrendingUp, Users, Moon, Sun, Search,
 } from 'lucide-react'
 
+// ─── Build version (cache-busting marker) ─────────────────────────────────
+const BUILD_VERSION = 'v2.1.0-2026.05.20'
+
 // ─── Helpers ──────────────────────────────────────────────────────────────
 function formatDate(iso) {
   if (!iso) return '—'
@@ -286,6 +289,9 @@ export default function AdminPage() {
             </form>
             <p className="mt-6 text-xs text-center text-slate-400">
               Sesión válida por 24 horas · Datos cifrados
+            </p>
+            <p className="mt-2 text-[10px] text-center text-slate-300 font-mono">
+              Build {BUILD_VERSION}
             </p>
           </CardContent>
         </Card>

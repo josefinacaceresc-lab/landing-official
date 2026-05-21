@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Calendar, Users, Mic, MapPin, ArrowRight } from 'lucide-react'
+import { Calendar, Users, Mic, MapPin, ArrowRight, FileText, Download, BookOpen } from 'lucide-react'
 
 export const metadata = {
-  title: 'Foro Clínico DBT Chile | Encuentros y Formación Continua',
-  description: 'Foro Clínico del Instituto DBT Chile: encuentros académicos, jornadas WDBTA, formación continua para profesionales y espacios de divulgación científica en DBT y Schema Therapy.',
+  title: 'Foro Clínico DBT Chile | Encuentros, Artículos y Formación Continua',
+  description: 'Foro Clínico del Instituto DBT Chile: artículos científicos, encuentros académicos, jornadas WDBTA, formación continua para profesionales y espacios de divulgación en DBT y Schema Therapy.',
   alternates: { canonical: 'https://institutodbtchile.cl/foro' },
 }
 
@@ -28,6 +28,23 @@ const espacios = [
   { icon: Mic, titulo: 'Divulgación científica', text: 'Conferencias abiertas, charlas con expertos internacionales y publicaciones de divulgación basada en evidencia.' },
   { icon: Users, titulo: 'Comunidad clínica', text: 'Red de profesionales formados o en formación en DBT y Schema Therapy en Chile y Latinoamérica.' },
   { icon: Calendar, titulo: 'Formación continua', text: 'Programas estructurados para psicólogos, psiquiatras y profesionales de salud mental con interés en DBT/ST.' },
+]
+
+// ─── Artículos del Foro Clínico ──────────────────────────────────────────
+// Los PDFs viven en /public/articulos/. Para agregar uno nuevo:
+//   1) subir el PDF a /public/articulos/
+//   2) agregar un objeto aquí con su metadata
+const articulos = [
+  {
+    titulo: 'Desregulación emocional en el TLP: por qué sientes todo tan intenso',
+    autor: 'Dra. Josefina Cáceres Cortés, Ph.D.',
+    categoria: 'Divulgación clínica',
+    resumen:
+      'Una mirada a la ciencia detrás de la hipersensibilidad emocional en el Trastorno Límite de la Personalidad. Modelo biosocial de Linehan y cómo la Terapia Dialéctico-Conductual (DBT) ofrece un camino hacia la regulación.',
+    keywords: ['Desregulación emocional', 'TLP', 'Modelo biosocial', 'DBT'],
+    paginas: 4,
+    pdfUrl: '/articulos/desregulacion-emocional-tlp.pdf',
+  },
 ]
 
 export default function ForoPage() {
@@ -74,6 +91,99 @@ export default function ForoPage() {
                 </Card>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Artículos del Foro Clínico */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4 text-sm font-semibold text-primary uppercase tracking-wider">
+                Biblioteca · Lectura abierta
+              </div>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900">
+                Artículos del <em className="font-serif italic text-primary">Foro Clínico</em>
+              </h2>
+              <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Divulgación científica basada en evidencia. Lectura breve, rigor académico. Escritos por nuestro equipo clínico para profesionales, consultantes y familiares.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {articulos.map((art, i) => (
+                <Card
+                  key={i}
+                  className="group border-gray-200 hover:border-primary/40 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                >
+                  <CardContent className="p-8">
+                    {/* Header con categoría */}
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider">
+                        <BookOpen className="w-3.5 h-3.5" />
+                        {art.categoria}
+                      </span>
+                      <span className="text-xs text-gray-500 font-medium">
+                        {art.paginas} {art.paginas === 1 ? 'página' : 'páginas'}
+                      </span>
+                    </div>
+
+                    {/* Título */}
+                    <h3 className="text-2xl font-light text-gray-900 leading-snug mb-3 group-hover:text-primary transition-colors">
+                      {art.titulo}
+                    </h3>
+
+                    {/* Autor */}
+                    <p className="text-sm text-gray-500 mb-4 italic">{art.autor}</p>
+
+                    {/* Resumen */}
+                    <p className="text-gray-600 leading-relaxed mb-6">{art.resumen}</p>
+
+                    {/* Keywords */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {art.keywords.map((kw) => (
+                        <span
+                          key={kw}
+                          className="text-[11px] px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 font-medium"
+                        >
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Acciones */}
+                    <div className="flex flex-col sm:flex-row gap-3 pt-2 border-t border-gray-100">
+                      <Button asChild className="flex-1 bg-primary hover:bg-primary/90 text-white">
+                        <a
+                          href={art.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FileText className="w-4 h-4 mr-2" />
+                          Leer artículo
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" className="flex-1 border-primary/30 text-primary hover:bg-primary/5">
+                        <a
+                          href={art.pdfUrl}
+                          download
+                        >
+                          <Download className="w-4 h-4 mr-2" />
+                          Descargar PDF
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Nota al pie */}
+            <p className="text-center text-sm text-gray-400 mt-12 max-w-2xl mx-auto">
+              Estos artículos son material de divulgación con fines educativos.
+              No reemplazan evaluación clínica ni constituyen diagnóstico individual.
+            </p>
           </div>
         </div>
       </section>

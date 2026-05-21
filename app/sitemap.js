@@ -4,6 +4,7 @@
  */
 
 import { papers } from '@/lib/papers'
+import { articulos } from '@/lib/articulos'
 
 const BASE = 'https://institutodbtchile.cl'
 
@@ -21,7 +22,7 @@ export default function sitemap() {
     { url: `${BASE}/investigacion/la-mente-algoritmica`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/investigacion/wdbta`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/esquema`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/foro`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/foro`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${BASE}/evaluacion-idp4`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
   ]
@@ -33,5 +34,13 @@ export default function sitemap() {
     priority: 0.85,
   }))
 
-  return [...staticRoutes, ...paperRoutes]
+  // Artículos del Foro Clínico (URLs HTML individuales, alto valor SEO)
+  const articuloRoutes = (articulos || []).map((a) => ({
+    url: `${BASE}/foro/articulos/${a.slug}`,
+    lastModified: a.fecha ? new Date(a.fecha).toISOString() : now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  return [...staticRoutes, ...paperRoutes, ...articuloRoutes]
 }

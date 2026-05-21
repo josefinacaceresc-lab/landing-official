@@ -1,12 +1,21 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Calendar, Users, Mic, MapPin, ArrowRight, FileText, Download, BookOpen } from 'lucide-react'
+import { Calendar, Users, Mic, MapPin, ArrowRight, FileText, Download, BookOpen, Clock } from 'lucide-react'
+import { articulos } from '@/lib/articulos'
 
 export const metadata = {
-  title: 'Foro Clínico DBT Chile | Encuentros, Artículos y Formación Continua',
-  description: 'Foro Clínico del Instituto DBT Chile: artículos científicos, encuentros académicos, jornadas WDBTA, formación continua para profesionales y espacios de divulgación en DBT y Schema Therapy.',
+  title: 'Foro Clínico DBT Chile | Artículos, Encuentros y Formación Continua',
+  description: 'Foro Clínico del Instituto DBT Chile: artículos basados en evidencia sobre TLP, DBT, autolesiones y desregulación emocional. Encuentros académicos, jornadas WDBTA y formación continua.',
   alternates: { canonical: 'https://institutodbtchile.cl/foro' },
+  openGraph: {
+    title: 'Foro Clínico DBT Chile · Biblioteca de artículos',
+    description: 'Artículos del equipo clínico DBT Chile sobre TLP, autolesiones en adolescentes, desregulación emocional y splitting. Lectura abierta basada en evidencia.',
+    url: 'https://institutodbtchile.cl/foro',
+    siteName: 'Instituto DBT Chile',
+    locale: 'es_CL',
+    type: 'website',
+  },
 }
 
 const eventos = [
@@ -31,52 +40,8 @@ const espacios = [
 ]
 
 // ─── Artículos del Foro Clínico ──────────────────────────────────────────
-// Los PDFs viven en /public/articulos/. Para agregar uno nuevo:
-//   1) subir el PDF a /public/articulos/
-//   2) agregar un objeto aquí con su metadata
-// Orden: los de mayor conversión primero (padres > divulgación clínica)
-const articulos = [
-  {
-    titulo: '¿Mi hijo tiene TLP? Lo que los padres necesitan saber sobre desregulación emocional en adolescentes',
-    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
-    categoria: 'Para padres',
-    resumen:
-      'Cómo se manifiesta el TLP en adolescentes y qué señales tempranas pueden identificar los padres. Desmitifica creencias erróneas y explica la importancia de la intervención oportuna con DBT-A.',
-    keywords: ['TLP en adolescentes', 'Padres', 'Desregulación emocional', 'DBT-A'],
-    paginas: 5,
-    pdfUrl: '/articulos/tlp-adolescentes-padres.pdf',
-  },
-  {
-    titulo: 'Autolesiones en adolescentes: señales de alerta, qué no decir y cuándo buscar ayuda especializada',
-    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
-    categoria: 'Para padres',
-    resumen:
-      'Guía clara y sin alarmismos para padres sobre autolesiones en adolescentes: qué son, por qué ocurren, qué decir y qué no decir, y cuándo es momento de buscar ayuda profesional especializada.',
-    keywords: ['Autolesiones', 'Adolescentes', 'Señales de alerta', 'Ayuda especializada'],
-    paginas: 5,
-    pdfUrl: '/articulos/autolesiones-adolescentes.pdf',
-  },
-  {
-    titulo: 'Desregulación emocional en el TLP: por qué sientes todo tan intenso',
-    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
-    categoria: 'Divulgación clínica',
-    resumen:
-      'Una mirada a la ciencia detrás de la hipersensibilidad emocional en el Trastorno Límite de la Personalidad. Modelo biosocial de Linehan y cómo la Terapia Dialéctico-Conductual (DBT) ofrece un camino hacia la regulación.',
-    keywords: ['Desregulación emocional', 'TLP', 'Modelo biosocial', 'DBT'],
-    paginas: 4,
-    pdfUrl: '/articulos/desregulacion-emocional-tlp.pdf',
-  },
-  {
-    titulo: 'Relaciones que destruyen: el patrón de idealización y devaluación en el TLP',
-    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
-    categoria: 'Divulgación clínica',
-    resumen:
-      'El ciclo de idealización y devaluación en personas con TLP: sus orígenes, cómo impacta en las relaciones y la lógica interna de este patrón. Herramientas DBT para abordarlo, tanto en la persona como en su entorno cercano.',
-    keywords: ['TLP', 'Idealización', 'Devaluación', 'Relaciones'],
-    paginas: 4,
-    pdfUrl: '/articulos/idealizacion-devaluacion-tlp.pdf',
-  },
-]
+// La fuente de verdad está en /lib/articulos.js (importado arriba).
+// Para agregar uno nuevo: editar /lib/articulos.js + subir PDF a /public/articulos/
 
 export default function ForoPage() {
   return (
@@ -200,14 +165,10 @@ export default function ForoPage() {
                       <Button asChild className={`flex-1 text-white ${
                         isPadres ? 'bg-amber-600 hover:bg-amber-700' : 'bg-primary hover:bg-primary/90'
                       }`}>
-                        <a
-                          href={art.pdfUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <Link href={`/foro/articulos/${art.slug}`}>
                           <FileText className="w-4 h-4 mr-2" />
                           Leer artículo
-                        </a>
+                        </Link>
                       </Button>
                       <Button asChild variant="outline" className={`flex-1 ${
                         isPadres

@@ -34,16 +34,47 @@ const espacios = [
 // Los PDFs viven en /public/articulos/. Para agregar uno nuevo:
 //   1) subir el PDF a /public/articulos/
 //   2) agregar un objeto aquí con su metadata
+// Orden: los de mayor conversión primero (padres > divulgación clínica)
 const articulos = [
   {
+    titulo: '¿Mi hijo tiene TLP? Lo que los padres necesitan saber sobre desregulación emocional en adolescentes',
+    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
+    categoria: 'Para padres',
+    resumen:
+      'Cómo se manifiesta el TLP en adolescentes y qué señales tempranas pueden identificar los padres. Desmitifica creencias erróneas y explica la importancia de la intervención oportuna con DBT-A.',
+    keywords: ['TLP en adolescentes', 'Padres', 'Desregulación emocional', 'DBT-A'],
+    paginas: 5,
+    pdfUrl: '/articulos/tlp-adolescentes-padres.pdf',
+  },
+  {
+    titulo: 'Autolesiones en adolescentes: señales de alerta, qué no decir y cuándo buscar ayuda especializada',
+    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
+    categoria: 'Para padres',
+    resumen:
+      'Guía clara y sin alarmismos para padres sobre autolesiones en adolescentes: qué son, por qué ocurren, qué decir y qué no decir, y cuándo es momento de buscar ayuda profesional especializada.',
+    keywords: ['Autolesiones', 'Adolescentes', 'Señales de alerta', 'Ayuda especializada'],
+    paginas: 5,
+    pdfUrl: '/articulos/autolesiones-adolescentes.pdf',
+  },
+  {
     titulo: 'Desregulación emocional en el TLP: por qué sientes todo tan intenso',
-    autor: 'Dra. Josefina Cáceres Cortés, Ph.D.',
+    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
     categoria: 'Divulgación clínica',
     resumen:
       'Una mirada a la ciencia detrás de la hipersensibilidad emocional en el Trastorno Límite de la Personalidad. Modelo biosocial de Linehan y cómo la Terapia Dialéctico-Conductual (DBT) ofrece un camino hacia la regulación.',
     keywords: ['Desregulación emocional', 'TLP', 'Modelo biosocial', 'DBT'],
     paginas: 4,
     pdfUrl: '/articulos/desregulacion-emocional-tlp.pdf',
+  },
+  {
+    titulo: 'Relaciones que destruyen: el patrón de idealización y devaluación en el TLP',
+    autor: 'Dra. Josefina Cáceres Cortés, Ph.D. · Directora Científica',
+    categoria: 'Divulgación clínica',
+    resumen:
+      'El ciclo de idealización y devaluación en personas con TLP: sus orígenes, cómo impacta en las relaciones y la lógica interna de este patrón. Herramientas DBT para abordarlo, tanto en la persona como en su entorno cercano.',
+    keywords: ['TLP', 'Idealización', 'Devaluación', 'Relaciones'],
+    paginas: 4,
+    pdfUrl: '/articulos/idealizacion-devaluacion-tlp.pdf',
   },
 ]
 
@@ -112,15 +143,25 @@ export default function ForoPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {articulos.map((art, i) => (
+              {articulos.map((art, i) => {
+                const isPadres = art.categoria === 'Para padres'
+                return (
                 <Card
                   key={i}
-                  className="group border-gray-200 hover:border-primary/40 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                  className={`group border-gray-200 hover:shadow-2xl transition-all duration-300 overflow-hidden ${
+                    isPadres ? 'hover:border-amber-300/60' : 'hover:border-primary/40'
+                  }`}
                 >
                   <CardContent className="p-8">
                     {/* Header con categoría */}
                     <div className="flex items-center justify-between mb-5">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider">
+                      <span
+                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${
+                          isPadres
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-primary/10 text-primary'
+                        }`}
+                      >
                         <BookOpen className="w-3.5 h-3.5" />
                         {art.categoria}
                       </span>
@@ -130,7 +171,9 @@ export default function ForoPage() {
                     </div>
 
                     {/* Título */}
-                    <h3 className="text-2xl font-light text-gray-900 leading-snug mb-3 group-hover:text-primary transition-colors">
+                    <h3 className={`text-2xl font-light text-gray-900 leading-snug mb-3 transition-colors ${
+                      isPadres ? 'group-hover:text-amber-700' : 'group-hover:text-primary'
+                    }`}>
                       {art.titulo}
                     </h3>
 
@@ -154,7 +197,9 @@ export default function ForoPage() {
 
                     {/* Acciones */}
                     <div className="flex flex-col sm:flex-row gap-3 pt-2 border-t border-gray-100">
-                      <Button asChild className="flex-1 bg-primary hover:bg-primary/90 text-white">
+                      <Button asChild className={`flex-1 text-white ${
+                        isPadres ? 'bg-amber-600 hover:bg-amber-700' : 'bg-primary hover:bg-primary/90'
+                      }`}>
                         <a
                           href={art.pdfUrl}
                           target="_blank"
@@ -164,7 +209,11 @@ export default function ForoPage() {
                           Leer artículo
                         </a>
                       </Button>
-                      <Button asChild variant="outline" className="flex-1 border-primary/30 text-primary hover:bg-primary/5">
+                      <Button asChild variant="outline" className={`flex-1 ${
+                        isPadres
+                          ? 'border-amber-300 text-amber-700 hover:bg-amber-50'
+                          : 'border-primary/30 text-primary hover:bg-primary/5'
+                      }`}>
                         <a
                           href={art.pdfUrl}
                           download
@@ -176,7 +225,8 @@ export default function ForoPage() {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+                )
+              })}
             </div>
 
             {/* Nota al pie */}

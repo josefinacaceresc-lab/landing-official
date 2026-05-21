@@ -156,6 +156,39 @@ export default function IDP4Page() {
     return profiles
   }
 
+  // ───────────────────────────────────────────────────────────────────────
+  // Suppressive adjustment (asymmetric): when TLP > 60% it absorbs part of
+  // the panic-domain variance (CA + DE overlap), inflating TPAN artificially.
+  // Clinically: high TLP "drives" panic-like states, so the standalone TPAN
+  // probability is over-estimated when comorbidity is suspected.
+  //
+  // Formula (asymmetric, one-way):
+  //   if TLP_raw > 60%  →  TPAN_adjusted = TPAN_raw × 0.6   (40% reduction)
+  //   else              →  TPAN_adjusted = TPAN_raw
+  //
+  // TPAN does NOT suppress TLP (TLP is the dominant pathology).
+  // Reference: prompt-engineered IDP-4 spec (session ce719432) — Bayesian
+  // suppression for comorbid TLP+TPAN over-estimation.
+  // ───────────────────────────────────────────────────────────────────────
+  const applySuppressiveAdjustment = (rawProfiles) => {
+    const SUPPRESSION_THRESHOLD = 60        // % TLP above which to suppress
+    const SUPPRESSION_COEFFICIENT = 0.6     // TPAN multiplier (0.6 = 40% reduction)
+    const adjusted = { ...rawProfiles }
+    const applied = rawProfiles.TLP > SUPPRESSION_THRESHOLD
+    if (applied) {
+      adjusted.TPAN = rawProfiles.TPAN * SUPPRESSION_COEFFICIENT
+    }
+    return {
+      adjusted,
+      applied,
+      threshold: SUPPRESSION_THRESHOLD,
+      coefficient: SUPPRESSION_COEFFICIENT,
+      note: applied
+        ? `TLP=${rawProfiles.TLP.toFixed(1)}% > 60% → TPAN ajustado de ${rawProfiles.TPAN.toFixed(1)}% a ${adjusted.TPAN.toFixed(1)}% (×0.6)`
+        : 'TLP ≤ 60% → sin ajuste supresivo aplicado',
+    }
+  }
+
   const analyzeMotorImpulsivity = () => {
     const times = Object.values(responseTimes)
     if (times.length === 0) return { detected: false, score: 0 }
@@ -276,6 +309,7 @@ export default function IDP4Page() {
     try {
       const domainScores = calculateDomainScores()
       const profiles = calculateBayesianProfiles(domainScores)
+      const suppression = applySuppressiveAdjustment(profiles)
       const motorImpulsivity = analyzeMotorImpulsivity()
       
       const response = await fetch('/api/leads/idp4', {
@@ -284,7 +318,14 @@ export default function IDP4Page() {
         body: JSON.stringify({
           ...formData,
           domainScores,
-          profileProbabilities: profiles,
+          profileProbabilities: profiles,                    // raw
+          profileProbabilitiesAdjusted: suppression.adjusted, // suppressive-adjusted
+          suppression: {
+            applied: suppression.applied,
+            threshold: suppression.threshold,
+            coefficient: suppression.coefficient,
+            note: suppression.note,
+          },
           motorImpulsivity,
           responseTimes,
           responses: Object.entries(responses).map(([id, value]) => ({

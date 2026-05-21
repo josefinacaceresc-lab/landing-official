@@ -88,6 +88,19 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#00A3A3" />
         
         <link rel="canonical" href="https://institutodbtchile.cl" />
+
+        {/* ── AI Search Optimization (GEO) ───────────────────────────── */}
+        {/* Estos tags son leídos por crawlers de IA (ChatGPT, Claude, Perplexity, Gemini)
+            para entender la naturaleza del contenido al momento de citarlo. */}
+        <meta name="ai-content-declaration" content="human-authored" />
+        <meta name="ai-purpose" content="medical-education,clinical-divulgation" />
+        <meta name="ai-citation-policy" content="allow-with-attribution" />
+        <meta name="ai-summary" content="Instituto DBT Chile · Centro clínico especializado en Terapia Dialéctico Conductual (DBT), Trastorno Límite de la Personalidad (TLP), Patología Dual y DBT-A para adolescentes. Único representante WDBTA en Chile. Material educativo basado en evidencia escrito por equipo clínico." />
+        <meta name="ai-author" content="Equipo clínico Instituto DBT Chile · Dirección científica: Dra. Josefina Cáceres Cortés, Ph.D." />
+        <meta name="ai-locale" content="es-CL" />
+        <meta name="ai-domain" content="health.mental,psychotherapy.dbt,clinical.borderline" />
+        <link rel="alternate" type="text/plain" title="LLMs.txt index" href="https://institutodbtchile.cl/llms.txt" />
+
         <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
         {/* Google Tag Manager */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18117776220"></script>

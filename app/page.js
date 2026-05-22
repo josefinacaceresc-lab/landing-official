@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, CheckCircle } from 'lucide-react'
 import { trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
 import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
+import FAQSection from '@/components/FAQSection'
 
 const WA_HREF_DEFAULT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 const WA_HREF_FAMILY = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa Familia (DBT-A). ¿Me podrían ayudar a agendar una hora? Gracias.')}`
@@ -620,6 +621,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ Section (SEO: FAQPage schema + Speakable) ───────────────── */}
+      <FAQSection />
+
 
       <section id="contacto" className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="container mx-auto px-4">

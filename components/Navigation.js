@@ -75,21 +75,18 @@ export default function Navigation() {
               Equipo
             </Link>
             
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-full px-5 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold transition-colors"
+            <Link
+              href="/evaluacion-idp4"
+              className="text-sm text-gray-600 hover:text-primary transition-colors font-medium"
             >
-              <Link href="/evaluacion-idp4">
-                Test Gratuito
-              </Link>
-            </Button>
+              IDP-4
+            </Link>
             <Button
               asChild
-              className="rounded-full px-6 bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
+              className="rounded-none px-6 bg-primary hover:bg-primary/90 text-white text-sm font-medium tracking-wide transition-colors"
             >
               <a href={WA_HREF} target="_blank" rel="noopener noreferrer">
-                Agendar Consulta
+                Valoración inicial
               </a>
             </Button>
           </div>

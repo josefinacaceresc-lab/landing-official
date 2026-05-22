@@ -49,29 +49,25 @@ export default function Home() {
               Terapia Dialéctico Conductual de alta complejidad, basada en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+            <div className="flex flex-col items-center mb-14">
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide"
               >
                 <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
                   <span className="flex items-center gap-2">
-                    Conversemos
-                    <ArrowRight className="w-5 h-5" />
+                    Solicitar valoración inicial
+                    <ArrowRight className="w-4 h-4" />
                   </span>
                 </a>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary/30 text-primary hover:bg-primary/5 px-8 py-6 text-lg"
+              <Link
+                href="/tratamiento"
+                className="mt-5 text-sm text-gray-500 hover:text-gray-800 border-b border-gray-300 hover:border-gray-700 pb-0.5 transition-colors"
               >
-                <a href="/tratamiento">
-                  Conocer el modelo clínico
-                </a>
-              </Button>
+                Conocer el modelo clínico
+              </Link>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
@@ -421,7 +417,7 @@ export default function Home() {
               </div>
               <div className="p-6 bg-white rounded-xl shadow-lg">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Reducción medida de las crisis</h3>
-                <p className="text-gray-600">La evidencia internacional muestra hasta un <strong>72% de reducción</strong> en conductas autolesivas cuando la familia participa activamente en el modelo.</p>
+                <p className="text-gray-600">La evidencia internacional documenta una disminución significativa de conductas autolesivas cuando la familia se integra activamente al modelo terapéutico. Hoffman, Fruzzetti y colaboradores (2007), entre otros, han mostrado mejoras sostenidas tanto en el consultante como en la calidad de los vínculos familiares.</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-lg">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No estar solos en esto</h3>
@@ -589,113 +585,95 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-
-      {/* Self-Assessment CTA */}
-      <section className="py-20 bg-gradient-to-br from-amber-50 via-emerald-50 to-white">
+      {/* IDP-4 — Acceso al instrumento clínico (estética editorial premium) */}
+      <section className="py-24 bg-white border-y border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <Card className="border-0 shadow-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 text-white overflow-hidden">
-              <CardContent className="p-12">
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                  </div>
-                  
-                  <h2 className="text-4xl font-light mb-4">
-                    Una evaluación clínica seria <span className="font-serif font-semibold">de tu regulación emocional</span>
-                  </h2>
-                  
-                  {/* ── Unique-in-Chile badges ──────────── */}
-                  <div className="flex flex-wrap justify-center gap-2 mb-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 text-emerald-700 text-xs font-bold uppercase tracking-wider shadow-md">
-                      <CheckCircle className="w-3.5 h-3.5" /> Desarrollada en Chile
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-amber-950 text-xs font-bold uppercase tracking-wider shadow-md">
-                      Cálculo bayesiano
-                    </span>
-                  </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center">
+              <div className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
+                Instrumento clínico interno
+              </div>
 
-                  <p className="text-xl text-emerald-100 mb-2 max-w-2xl mx-auto">
-                    El IDP-4 es un instrumento de evaluación dimensional construido para la <strong className="text-white">población chilena</strong>. Detecta patrones de desregulación emocional con la precisión que distingue un perfil clínico real de una intensidad pasajera.
-                  </p>
-                  <p className="text-sm text-emerald-200/90 mb-8 max-w-2xl mx-auto">
-                    No es un test de personalidad popular. Es un instrumento clínico en proceso de validación que entrega un reporte estructurado en pocos minutos.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                    <Button size="lg" asChild className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-6 text-lg font-semibold">
-                      <Link href="/evaluacion-idp4">
-                        Realizar el test
-                      </Link>
-                    </Button>
-                  </div>
-                  
-                  <div className="flex flex-wrap justify-center gap-6 text-sm text-emerald-100">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>10 minutos</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Reporte clínico inmediato</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Diseñado por equipo clínico</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Confidencial</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6 leading-tight">
+                IDP-4 · Evaluación dimensional <em className="font-serif italic text-primary">de la regulación emocional</em>
+              </h2>
+
+              <p className="text-base text-gray-600 leading-relaxed max-w-2xl mx-auto mb-3">
+                El IDP-4 es un instrumento de evaluación dimensional desarrollado por nuestro equipo clínico para la población chilena. Trabaja sobre cuatro dominios — desregulación emocional, sensación de vacío, conducta autolesiva e inestabilidad interpersonal — y entrega un reporte estructurado.
+              </p>
+              <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
+                No es un test de personalidad popular. Es un instrumento clínico, actualmente en proceso de validación, disponible como antesala a una valoración formal con nuestro equipo.
+              </p>
+
+              <Link
+                href="/evaluacion-idp4"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-base border-b border-primary/40 hover:border-primary pb-0.5 transition-all"
+              >
+                Acceder al instrumento
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <p className="mt-8 text-xs text-gray-400 italic">
+                Aproximadamente 10 minutos · Reporte clínico inmediato · Información confidencial
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="contacto" className="py-20 bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
+      <section id="contacto" className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-light mb-6">
-              ¿<span className="font-semibold">Conversamos</span>?
-            </h2>
-            <p className="text-xl mb-12 text-emerald-50 max-w-2xl mx-auto leading-relaxed">
-              Si llegaste hasta acá, probablemente hay algo que vienes pensando hace tiempo. No tienes que tener todo claro para hacer el primer contacto. Nuestro equipo responde en menos de 24 horas hábiles.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 py-6 text-lg font-semibold"
-            >
-              <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
-                WhatsApp · +56 9 3055 0750
-              </a>
-            </Button>
-            <p className="mt-6 text-sm text-emerald-100">
-              Horario: Lun–Jue · 10:00–19:00 · Vie · 10:00–16:00 (Santiago)
-            </p>
-            <div className="mt-8 text-sm text-emerald-100 space-y-2">
-              <a
-                href="tel:+56228480652"
-                onClick={() => trackPhoneClick('contacto-section')}
-                className="block hover:text-white transition-colors"
-              >
-                📞 +56 2 2848 0652
-              </a>
-              <a
-                href="mailto:contacto@dbtchile.cl"
-                onClick={() => trackEmailClick('contacto-section')}
-                className="block hover:text-white transition-colors"
-              >
-                ✉️ contacto@dbtchile.cl
-              </a>
-              <p>📍 El Coihue 3776, Vitacura, Santiago</p>
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
+              Valoración clínica inicial
             </div>
+            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6 leading-tight">
+              ¿<em className="font-serif italic text-primary">Conversamos</em>?
+            </h2>
+            <p className="text-base text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+              Si llegaste hasta acá, probablemente hay algo que vienes pensando hace tiempo. No es necesario tener todo claro para un primer contacto. Nuestro equipo recibe cada solicitud personalmente y responde dentro de las 24 horas hábiles.
+            </p>
+
+            <a
+              href={WA_HREF_DEFAULT}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-base border-b border-primary/40 hover:border-primary pb-0.5 transition-all"
+            >
+              Iniciar conversación por WhatsApp
+              <ArrowRight className="w-4 h-4" />
+            </a>
+
+            <div className="mt-16 pt-10 border-t border-gray-200 grid sm:grid-cols-3 gap-8 text-sm text-gray-600">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Teléfono</p>
+                <a
+                  href="tel:+56228480652"
+                  onClick={() => trackPhoneClick('contacto-section')}
+                  className="hover:text-primary transition-colors"
+                >
+                  +56 2 2848 0652
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Correo</p>
+                <a
+                  href="mailto:contacto@dbtchile.cl"
+                  onClick={() => trackEmailClick('contacto-section')}
+                  className="hover:text-primary transition-colors"
+                >
+                  contacto@dbtchile.cl
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Sede</p>
+                <p>El Coihue 3776, Vitacura, Santiago</p>
+              </div>
+            </div>
+
+            <p className="mt-10 text-xs text-gray-400">
+              Lunes a jueves · 10:00 – 19:00 hrs · Viernes · 10:00 – 16:00 hrs (hora Chile)
+            </p>
           </div>
         </div>
       </section>

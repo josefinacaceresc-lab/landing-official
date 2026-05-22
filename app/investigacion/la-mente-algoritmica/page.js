@@ -201,9 +201,15 @@ export default function LaMenteAlgoritmicaPage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-light text-gray-900 mb-12 text-center">
-              Artículos del <span className="font-semibold text-amber-600">Programa</span>
-            </h2>
+            {/* Title + editorial subtitle (premium European clinical aesthetic) */}
+            <div className="text-center mb-14">
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-3 tracking-tight">
+                Artículos del <span className="font-semibold text-amber-600">Programa</span>
+              </h2>
+              <p className="font-serif italic text-gray-500 text-lg md:text-xl tracking-[0.04em]">
+                la mente algorítmica
+              </p>
+            </div>
             
             <div className="grid md:grid-cols-2 gap-6">
               {papers.map((paper) => (

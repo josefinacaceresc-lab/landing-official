@@ -112,7 +112,12 @@ export default function RootLayout({ children }) {
             gtag('js', new Date());
             // Google Ads — Institutodbt account (CRITICAL — never remove)
             gtag('config', 'AW-18117776220');
-            // GA4 — dbtchile.cl property (added 2026 for conversion import to Ads)
+            // GA4 — dbtchile.cl property (primary, used for Ads conversion import)
+            gtag('config', 'G-B208DBF9TM', {
+              'send_page_view': true,
+              'anonymize_ip': true
+            });
+            // GA4 — dbtchile.cl (secondary property, kept as backup)
             gtag('config', 'G-M0GEPLK4VF', {
               'send_page_view': true,
               'anonymize_ip': true

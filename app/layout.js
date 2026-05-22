@@ -103,14 +103,20 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="text/plain" title="LLMs.txt index" href="https://institutodbtchile.cl/llms.txt" />
 
         <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
-        {/* Google Tag Manager */}
+        {/* Google Tag — Ads + GA4 unified (additive, never disconnects existing destinations) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18117776220"></script>
         <script dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            // Google Ads — Institutodbt account (CRITICAL — never remove)
             gtag('config', 'AW-18117776220');
+            // GA4 — dbtchile.cl property (added 2026 for conversion import to Ads)
+            gtag('config', 'G-M0GEPLK4VF', {
+              'send_page_view': true,
+              'anonymize_ip': true
+            });
           `
         }} />
         {/* JSON-LD — MedicalClinic Schema (E-E-A-T) */}

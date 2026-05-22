@@ -31,12 +31,25 @@ export default function FloatingWhatsAppButton() {
 
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 
+  // Defensive analytics ping — fires immediately on tap, regardless of
+  // whether the global FastCaptureModal interceptor catches the click.
+  // The modal will *also* fire its own conversion event after lead capture;
+  // duplicate `whatsapp_click` events are harmless and de-duplicated by GA4.
+  const handleClick = async () => {
+    try {
+      const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
+      trackWhatsAppClick('floating_button')
+    } catch (_) { /* never block the WA link */ }
+  }
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Conversar por WhatsApp con Instituto DBT Chile"
+      data-source="floating_button"
+      onClick={handleClick}
       className="fixed z-40 bottom-6 right-6 group"
       style={{ WebkitTapHighlightColor: 'transparent' }}
     >

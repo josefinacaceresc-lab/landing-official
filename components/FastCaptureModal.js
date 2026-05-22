@@ -145,7 +145,21 @@ export default function FastCaptureModal() {
 
     setIsSubmitting(false)
 
-    // 2️⃣ Open WhatsApp — robust multi-strategy redirect.
+    // 2️⃣ Fire Google Ads / GA4 conversion event — must happen BEFORE the
+    //     redirect so the browser has time to flush the gtag beacon while
+    //     this page is still alive. Wrapped in try/catch: tracking must
+    //     never block the WA redirect.
+    try {
+      const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
+      trackWhatsAppClick(source || 'karina_modal', {
+        has_lead: !skip,
+        gclid: attribution?.gclid || undefined,
+        utm_source: attribution?.utm_source || undefined,
+        utm_campaign: attribution?.utm_campaign || undefined,
+      })
+    } catch (_) { /* tracking is best-effort */ }
+
+    // 3️⃣ Open WhatsApp — robust multi-strategy redirect.
     // ─── Why so many strategies? ───────────────────────────────────────
     //   When this site is loaded inside an iframe (e.g. the Emergent
     //   preview dashboard, or any embedding context), api.whatsapp.com

@@ -35,46 +35,61 @@ export default function Home() {
             </div>
 
             <div className="mb-6 text-sm font-semibold text-primary uppercase tracking-wider">
-              Único Miembro Institucional WDBTA en Chile
+              Miembro Institucional WDBTA · Programa La Mente Algorítmica
             </div>
             
             <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 tracking-tight">
               Instituto <em className="font-serif italic text-primary">DBT Chile</em>
             </h1>
             
-            <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Terapia Dialéctico Conductual de excelencia internacional. <strong>Único representante WDBTA en Chile.</strong>
+            <p className="text-xl text-gray-600 mb-4 leading-relaxed max-w-3xl mx-auto">
+              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa.
+            </p>
+            <p className="text-base text-gray-500 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Terapia Dialéctico Conductual de alta complejidad, basada en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
             </p>
             
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-12"
-            >
-              <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
-                <span className="flex items-center gap-2">
-                  Solicitar hora
-                  <ArrowRight className="w-5 h-5" />
-                </span>
-              </a>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
+              >
+                <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
+                  <span className="flex items-center gap-2">
+                    Conversemos
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-primary/30 text-primary hover:bg-primary/5 px-8 py-6 text-lg"
+              >
+                <a href="/tratamiento">
+                  Conocer el modelo clínico
+                </a>
+              </Button>
+            </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">15+</div>
-                <div className="text-sm text-gray-600">Años en DBT</div>
+                <div className="text-sm text-gray-600">Años de práctica clínica especializada</div>
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">WDBTA</div>
-                <div className="text-sm text-gray-600">Miembro institucional</div>
+                <div className="text-sm text-gray-600">Miembro institucional en Chile</div>
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">2</div>
-                <div className="text-sm text-gray-600">Terapias integradas</div>
+                <div className="text-sm text-gray-600">Modelos integrados: DBT y Schema Therapy</div>
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">AI</div>
-                <div className="text-sm text-gray-600">LaKaira · Tecnología clínica</div>
+                <div className="text-sm text-gray-600">LaKaira · Sistema clínico propio</div>
               </div>
             </div>
           </div>
@@ -86,18 +101,18 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="mb-12 text-center">
-              <div className="inline-block mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Acreditaciones globales</div>
+              <div className="inline-block mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Estándar clínico internacional</div>
               <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
-                La máxima distinción <em className="font-serif italic text-emerald-700">clínica</em> en Chile.
+                Lo que hay <em className="font-serif italic text-emerald-700">detrás</em> de un tratamiento serio.
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-                Somos la única institución del país acreditada como <strong>miembro institucional de la WDBTA</strong>, <strong>miembro categoría APA</strong> y <strong>certificada por la ISST</strong>. Tres sellos internacionales que garantizan un estándar científico y ético sin precedentes en salud mental.
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Hay una distancia importante entre un tratamiento improvisado y uno que se sostiene sobre estructura clínica verificable. Somos la única institución chilena que reúne tres acreditaciones internacionales que normalmente se ven separadas: <strong>WDBTA</strong> (Terapia Dialéctico Conductual), <strong>APA</strong> (Psicología Norteamericana) e <strong>ISST</strong> (Schema Therapy). No es un detalle: son los marcos que garantizan que lo que se ofrece tiene método, evidencia y rigor.
               </p>
               
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">
-                <div><strong className="text-emerald-700">País:</strong> Único en Chile</div>
+                <div><strong className="text-emerald-700">Cobertura:</strong> Única institución chilena con las tres</div>
                 <div><strong className="text-emerald-700">Acreditaciones:</strong> WDBTA · APA · ISST</div>
-                <div><strong className="text-emerald-700">Dirección:</strong> Ph.D.(c) clínica</div>
+                <div><strong className="text-emerald-700">Dirección clínica:</strong> Ph.D. con formación internacional</div>
               </div>
             </div>
 
@@ -320,12 +335,12 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
-              <div className="mb-4 text-sm font-semibold text-primary uppercase tracking-wider">Certificación Internacional</div>
+              <div className="mb-4 text-sm font-semibold text-primary uppercase tracking-wider">Vinculación internacional verificable</div>
               <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
                 Capítulo de Investigación <span className="font-semibold text-primary">WDBTA</span>
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Único miembro institucional de la <strong>World Dialectical Behavior Therapy Association</strong> en Chile
+                Pertenecer formalmente a la <strong>World Dialectical Behavior Therapy Association</strong> implica acceso continuo a los marcos clínicos que se discuten internacionalmente en Seattle, Londres, Amsterdam y Melbourne. No es un sello decorativo: es la garantía de que nuestro modelo se actualiza con la evidencia que se produce afuera.
               </p>
             </div>
 
@@ -348,15 +363,15 @@ export default function Home() {
               {/* Right: Description */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Fidelidad Total DBT</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Fidelidad clínica al protocolo original</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Adherencia estricta a los protocolos de Marsha Linehan con certificación WDBTA, garantizando el estándar de oro internacional.
+                    Adherencia estricta a los manuales de Marsha Linehan. Significa que cada componente del tratamiento — individual, grupo de habilidades, coaching, consultoría de equipo — se sostiene como fue investigado, sin atajos.
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Red Global de Investigación</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Diálogo continuo con centros internacionales</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Conexión directa con los principales centros de DBT del mundo: Seattle, Londres, Amsterdam y Melbourne.
+                    Acceso a la red de investigación de DBT en Seattle, Londres, Amsterdam y Melbourne. Lo que se discute allá llega acá, sin la latencia que normalmente existe entre la evidencia y la práctica clínica chilena.
                   </p>
                 </div>
                 <div className="pt-4">
@@ -390,27 +405,27 @@ export default function Home() {
                 Programas para <span className="font-semibold text-secondary">Familias</span>
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Entrenamiento especializado en habilidades DBT para padres y cuidadores. Basado en <strong>Family Connections™</strong> y <strong>DBT-Family Skills Training</strong>.
+                Convivir con una persona en crisis emocional crónica desgasta de un modo específico que rara vez se nombra. Las familias también necesitan herramientas, un lenguaje común con su ser querido y un espacio donde su propio agotamiento sea reconocido. Trabajamos con los modelos <strong>Family Connections™</strong> y <strong>DBT-Family Skills Training</strong>, los dos programas con mayor evidencia internacional para acompañar a quienes están del otro lado del cuadro.
               </p>
             </div>
 
             {/* Benefits Grid */}
             <div className="grid sm:grid-cols-2 gap-6 mb-12">
               <div className="p-6 bg-white rounded-xl shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Psicoeducación Familiar</h3>
-                <p className="text-gray-600">Comprensión profunda del TLP y neurobiología de la desregulación emocional.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Comprender lo que ocurre</h3>
+                <p className="text-gray-600">Psicoeducación clínica sobre TLP, modelo biosocial de Linehan y neurobiología de la desregulación emocional. Información que devuelve sentido al caos.</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Habilidades DBT</h3>
-                <p className="text-gray-600">Mindfulness, Tolerancia al Malestar, Regulación Emocional adaptadas para familias.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Aprender el mismo lenguaje DBT</h3>
+                <p className="text-gray-600">Mindfulness, tolerancia al malestar y regulación emocional adaptados para el contexto familiar. Las habilidades se practican en casa con el lenguaje que también aprende su hijo o pareja.</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reducción de Conflictos</h3>
-                <p className="text-gray-600"><strong>72% de reducción</strong> en comportamientos autolesivos reportados.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reducción medida de las crisis</h3>
+                <p className="text-gray-600">La evidencia internacional muestra hasta un <strong>72% de reducción</strong> en conductas autolesivas cuando la familia participa activamente en el modelo.</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Grupos de Apoyo</h3>
-                <p className="text-gray-600">Espacios seguros para compartir experiencias con otras familias.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No estar solos en esto</h3>
+                <p className="text-gray-600">Grupos cerrados de familias que atraviesan procesos similares. Espacios contenidos donde el agotamiento, la culpa y el cansancio pueden hablarse sin pudor.</p>
               </div>
             </div>
 
@@ -440,10 +455,10 @@ export default function Home() {
                 className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
               >
                 <a href={WA_HREF_FAMILY} target="_blank" rel="noopener noreferrer">
-                  Solicitar Información
+                  Conversemos sobre el programa
                 </a>
               </Button>
-              <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones</p>
+              <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones · Grupos cerrados</p>
             </div>
           </div>
         </div>
@@ -453,10 +468,13 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <div className="mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Por qué elegirnos</div>
+              <div className="mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">El cuidado clínico que ofrecemos</div>
               <h2 className="text-4xl md:text-5xl font-light text-gray-900">
-                Un estándar científico sin precedentes en Chile
+                Trabajamos los <em className="font-serif italic text-emerald-700">cuadros que otros lugares evitan</em>.
               </h2>
+              <p className="mt-5 text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                TLP severo, comorbilidades complejas, adolescentes en crisis, adicciones combinadas con trastornos de personalidad. Casos donde la terapia tradicional ha quedado corta y se necesita una estructura clínica específica.
+              </p>
             </div>
 
             {/* Programas Clínicos — Patient-facing landing cards */}
@@ -475,10 +493,10 @@ export default function Home() {
                       <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>
                       <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">TLP</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Tratamiento de primera línea con la mayor evidencia científica. Reducción de conductas suicidas, autolesivas y hospitalizaciones bajo estándar WDBTA.
+                        El tratamiento con la mayor evidencia científica acumulada para el TLP. Reducción consistente de crisis, conductas autolesivas y hospitalizaciones, bajo estándar WDBTA y con todos los componentes que el protocolo exige.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer más <ArrowRight className="w-4 h-4" />
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
                   </Card>
@@ -488,13 +506,13 @@ export default function Home() {
                 <Link href="/tratamientos/patologia-dual" className="group">
                   <Card className="border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-primary/5 to-white h-full">
                     <CardContent className="p-7">
-                      <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + TUS)</span></h4>
-                      <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Desregulación con adicciones</p>
+                      <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + adicciones)</span></h4>
+                      <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Cuando hay desregulación y consumo</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Único Centro de Alta Complejidad en Chile para TLP + Trastorno por Uso de Sustancias. Protocolo DBT-SUD de Fidelidad Total con monitoreo LaKaira AI.
+                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico LaKaira AI.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer más <ArrowRight className="w-4 h-4" />
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
                   </Card>
@@ -507,10 +525,10 @@ export default function Home() {
                       <h4 className="text-xl font-bold text-primary mb-2">DBT Infanto-Juvenil</h4>
                       <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">DBT-A</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Programa para Adolescentes con Fidelidad Total al modelo Rathus & Miller. Integración mandatoria del sistema familiar vía Camino del Medio.
+                        Para adolescentes con desregulación emocional severa, autolesiones o riesgo suicida. Protocolo Rathus & Miller con trabajo multifamiliar obligatorio: los padres no son espectadores, son parte activa del proceso.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer más <ArrowRight className="w-4 h-4" />
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
                   </Card>
@@ -587,30 +605,30 @@ export default function Home() {
                   </div>
                   
                   <h2 className="text-4xl font-light mb-4">
-                    Evalúa tu <span className="font-serif font-semibold">Desregulación Emocional</span>
+                    Una evaluación clínica seria <span className="font-serif font-semibold">de tu regulación emocional</span>
                   </h2>
                   
                   {/* ── Unique-in-Chile badges ──────────── */}
                   <div className="flex flex-wrap justify-center gap-2 mb-4">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 text-emerald-700 text-xs font-bold uppercase tracking-wider shadow-md">
-                      <CheckCircle className="w-3.5 h-3.5" /> Única en Chile
+                      <CheckCircle className="w-3.5 h-3.5" /> Desarrollada en Chile
                     </span>
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-amber-950 text-xs font-bold uppercase tracking-wider shadow-md">
-                      Investigación Transversal
+                      Cálculo bayesiano
                     </span>
                   </div>
 
                   <p className="text-xl text-emerald-100 mb-2 max-w-2xl mx-auto">
-                    Primer instrumento de evaluación dimensional transversal desarrollado para la <strong className="text-white">población chilena</strong>
+                    El IDP-4 es un instrumento de evaluación dimensional construido para la <strong className="text-white">población chilena</strong>. Detecta patrones de desregulación emocional con la precisión que distingue un perfil clínico real de una intensidad pasajera.
                   </p>
                   <p className="text-sm text-emerald-200/90 mb-8 max-w-2xl mx-auto">
-                    Test en proceso de validación + Reporte personalizado inmediato
+                    No es un test de personalidad popular. Es un instrumento clínico en proceso de validación que entrega un reporte estructurado en pocos minutos.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                     <Button size="lg" asChild className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-6 text-lg font-semibold">
                       <Link href="/evaluacion-idp4">
-                        Comenzar Test Gratuito
+                        Realizar el test
                       </Link>
                     </Button>
                   </div>
@@ -622,15 +640,15 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      <span>Resultados inmediatos</span>
+                      <span>Reporte clínico inmediato</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      <span>Reporte clínico</span>
+                      <span>Diseñado por equipo clínico</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      <span>100% confidencial</span>
+                      <span>Confidencial</span>
                     </div>
                   </div>
                 </div>
@@ -644,10 +662,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-light mb-6">
-              Solicita tu <span className="font-semibold">Consulta</span>
+              ¿<span className="font-semibold">Conversamos</span>?
             </h2>
-            <p className="text-xl mb-12 text-emerald-50">
-              Da el primer paso. Nuestro equipo responde en menos de 24 horas hábiles.
+            <p className="text-xl mb-12 text-emerald-50 max-w-2xl mx-auto leading-relaxed">
+              Si llegaste hasta acá, probablemente hay algo que vienes pensando hace tiempo. No tienes que tener todo claro para hacer el primer contacto. Nuestro equipo responde en menos de 24 horas hábiles.
             </p>
             <Button
               asChild

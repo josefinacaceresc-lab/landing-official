@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import FastCaptureModal from '@/components/FastCaptureModal'
 import FloatingWhatsAppButton from '@/components/FloatingWhatsAppButton'
+import GclidCapture from '@/components/GclidCapture'
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -247,6 +248,7 @@ export default function RootLayout({ children }) {
         }} />
       </head>
       <body className={`${poppins.className} prevent-horizontal-scroll font-smooth`}>
+        <GclidCapture />
         <Navigation />
         <main className="min-h-screen">
           {children}

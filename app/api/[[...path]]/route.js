@@ -424,10 +424,21 @@ export async function GET(request) {
     const headers = [
       'createdAt', 'fullName', 'phone', 'email', 'mode',
       'source', 'sourceContext', 'status', 'contactedAt', 'age', 'rut',
+      // ── Google Ads / Attribution columns (for offline conversion upload) ──
+      'gclid', 'gbraid', 'wbraid',
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+      'fbclid', 'msclkid', 'adsReferrer',
     ]
     const lines = [headers.join(',')]
     for (const lead of leads) {
-      lines.push(headers.map((h) => escape(lead[h])).join(','))
+      lines.push(headers.map((h) => {
+        if (h === 'createdAt' && lead.createdAt) {
+          // Google Ads upload requires "Conversion Time" in format: YYYY-MM-DD HH:MM:SS+ZONE
+          // We emit ISO 8601 which Google Ads accepts directly
+          return escape(new Date(lead.createdAt).toISOString())
+        }
+        return escape(lead[h])
+      }).join(','))
     }
     return new Response(lines.join('\n'), {
       status: 200,
@@ -581,7 +592,7 @@ export async function POST(request) {
     //          message (optional, for email channel), source, sourceContext, mode
     // Side-effects: silent IP geolocation, optional email dispatch, Telegram notify.
     if (pathname === '/api/leads/fast-capture') {
-      const { fullName, phone, email, channel, message, source, sourceContext, mode, timestamp, beacon } = body || {}
+      const { fullName, phone, email, channel, message, source, sourceContext, mode, timestamp, beacon, attribution, gclid, utm_source, utm_campaign } = body || {}
 
       if (!fullName) {
         return Response.json({ error: 'Nombre es obligatorio' }, { status: 400 })
@@ -661,6 +672,19 @@ export async function POST(request) {
         ip: clientIP,
         geo: geo, // { city, region, country, countryCode, lat, lon, timezone, isp, ip } | null
         location: geo ? [geo.city, geo.region, geo.country].filter(Boolean).join(', ') : null,
+        // 📈 Google Ads attribution (for offline conversion upload)
+        gclid: gclid || attribution?.gclid || null,
+        gbraid: attribution?.gbraid || null,
+        wbraid: attribution?.wbraid || null,
+        utm_source: utm_source || attribution?.utm_source || null,
+        utm_medium: attribution?.utm_medium || null,
+        utm_campaign: utm_campaign || attribution?.utm_campaign || null,
+        utm_content: attribution?.utm_content || null,
+        utm_term: attribution?.utm_term || null,
+        fbclid: attribution?.fbclid || null,
+        msclkid: attribution?.msclkid || null,
+        adsReferrer: attribution?._referrer || null,
+        adsFirstCaptureAt: attribution?._first_capture_at || null,
         // Status
         createdAt: new Date(),
         status: 'new',

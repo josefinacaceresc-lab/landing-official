@@ -101,6 +101,14 @@ export default function FastCaptureModal() {
     setIsSubmitting(true)
     setSubmitError('')
 
+    // Read Google Ads attribution (gclid, utm_*, etc.) captured on landing.
+    // Best-effort: must NEVER block the lead save or WA redirect.
+    let attribution = {}
+    try {
+      const mod = await import('@/components/GclidCapture')
+      attribution = mod.getAdsAttribution?.() || {}
+    } catch (_) { /* ignore */ }
+
     const payload = {
       fullName: skip ? 'Anónimo (saltó captura)' : formData.fullName.trim(),
       phone: skip ? '' : formData.phone.trim(),
@@ -109,6 +117,10 @@ export default function FastCaptureModal() {
       sourceContext: source,
       mode: skip ? 'skip-capture' : 'karina-capture',
       timestamp: new Date().toISOString(),
+      attribution,                              // Google Ads / UTM data
+      gclid: attribution?.gclid || null,         // duplicate at top level for easy CSV export
+      utm_source: attribution?.utm_source || null,
+      utm_campaign: attribution?.utm_campaign || null,
     }
 
     // 1️⃣ Atomic save (non-blocking — failure does NOT prevent WA redirect)

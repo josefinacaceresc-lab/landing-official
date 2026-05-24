@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Brain, Sparkles, Database, ArrowRight } from 'lucide-react'
+import { Brain, Sparkles, Database, ArrowRight, FileText } from 'lucide-react'
 
 export const metadata = {
   title: 'Investigación Científica',
@@ -45,6 +45,64 @@ export default function InvestigacionPage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+            {/* ─── FEATURED PREPRINT (Top, full-width, ultra-premium) ─── */}
+            <Link
+              href="/investigacion/preprint-inferencia-activa"
+              className="block mb-12 group"
+            >
+              <Card className="border border-amber-200/60 bg-gradient-to-br from-amber-50/40 via-white to-amber-50/20 shadow-md hover:shadow-2xl transition-all overflow-hidden">
+                <div className="grid md:grid-cols-5 gap-0">
+                  {/* Left accent bar */}
+                  <div className="bg-gradient-to-b from-gray-900 to-gray-800 p-8 md:p-10 md:col-span-2 flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-200 text-xs font-medium tracking-wider uppercase mb-6">
+                        <FileText className="w-3 h-3" />
+                        Nuevo Preprint · Mayo 2026
+                      </div>
+                      <div className="text-xs text-white/50 uppercase tracking-[0.2em] mb-2">
+                        La Mente Algorítmica
+                      </div>
+                      <h3 className="font-serif text-2xl md:text-3xl leading-tight mb-4 text-white">
+                        Procesamiento psicológico como sistema de <em className="text-amber-300 not-italic font-normal">inferencia activa</em>
+                      </h3>
+                    </div>
+                    <div className="mt-6">
+                      <div className="text-xs text-white/40 uppercase tracking-wider mb-1">Autora</div>
+                      <div className="text-sm font-medium text-white/90">Dra. Josefina Cáceres, Ph.D.</div>
+                    </div>
+                  </div>
+
+                  {/* Right content */}
+                  <CardContent className="md:col-span-3 p-8 md:p-10">
+                    <p className="text-gray-700 leading-relaxed mb-6 text-[15px]">
+                      Marco computacional que formaliza el sufrimiento psicológico como un sistema de inferencia activa, donde la coherencia interna se modela como minimización de energía libre variacional y la <em className="text-amber-700 not-italic">Disonancia Lógica Absoluta</em> emerge como atractor patológico irreductible.
+                    </p>
+                    <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-gray-200">
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">22</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Nodos bayesianos</div>
+                      </div>
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">4</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Teoremas</div>
+                      </div>
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">15</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Ecuaciones</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500 font-serif italic">Preprint v1.0 · 7 páginas · 20 referencias</span>
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 group-hover:text-amber-700 transition-colors">
+                        Leer manuscrito
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+            </Link>
+
             <div className="grid md:grid-cols-2 gap-8">
               {/* LaKaira AI */}
               <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-primary/5">

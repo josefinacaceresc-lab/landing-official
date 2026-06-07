@@ -25,13 +25,15 @@ import { X, Loader2, CheckCircle2, ArrowRight } from 'lucide-react'
 export default function FastCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [originalHref, setOriginalHref] = useState('')
+  const [finalHref, setFinalHref] = useState('') // URL with personalized pre-filled message
   const [source, setSource] = useState('site')
   const [view, setView] = useState('form') // form | success
-  const [formData, setFormData] = useState({ fullName: '', phone: '' })
+  const [formData, setFormData] = useState({ fullName: '', phone: '', intent: '' })
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const dialogRef = useRef(null)
+  const INTENT_MAX = 140
 
   // ── Global click interceptor ──────────────────────────────────────────
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function FastCaptureModal() {
         || 'site'
       setSource(ds)
       setView('form')
-      setFormData({ fullName: '', phone: '' })
+      setFormData({ fullName: '', phone: '', intent: '' })
       setErrors({})
       setSubmitError('')
       setIsOpen(true)
@@ -109,10 +111,14 @@ export default function FastCaptureModal() {
       attribution = mod.getAdsAttribution?.() || {}
     } catch (_) { /* ignore */ }
 
+    const cleanIntent = (formData.intent || '').trim().slice(0, INTENT_MAX)
+    const cleanName = formData.fullName.trim()
+
     const payload = {
-      fullName: skip ? 'Anónimo (saltó captura)' : formData.fullName.trim(),
+      fullName: skip ? 'Anónimo (saltó captura)' : cleanName,
       phone: skip ? '' : formData.phone.trim(),
       channel: 'whatsapp',
+      intent: skip ? null : (cleanIntent || null),
       source: 'karina_modal',
       sourceContext: source,
       mode: skip ? 'skip-capture' : 'karina-capture',
@@ -123,14 +129,20 @@ export default function FastCaptureModal() {
       utm_campaign: attribution?.utm_campaign || null,
     }
 
-    // 1️⃣ Atomic save (non-blocking — failure does NOT prevent WA redirect)
+    // 1️⃣ Atomic save — we DO await this so we can read the response
+    //     (deduplicated/isRepeat flag) and decide whether to fire GTM.
+    //     Falls back to sendBeacon if fetch fails.
+    let serverResponse = null
     try {
-      await fetch('/api/leads/fast-capture', {
+      const res = await fetch('/api/leads/fast-capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
         keepalive: true,
       })
+      if (res.ok) {
+        serverResponse = await res.json().catch(() => null)
+      }
     } catch (_) {
       // Defensive sendBeacon for poor mobile connections
       try {
@@ -149,17 +161,45 @@ export default function FastCaptureModal() {
     //     redirect so the browser has time to flush the gtag beacon while
     //     this page is still alive. Wrapped in try/catch: tracking must
     //     never block the WA redirect.
-    try {
-      const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
-      trackWhatsAppClick(source || 'karina_modal', {
-        has_lead: !skip,
-        gclid: attribution?.gclid || undefined,
-        utm_source: attribution?.utm_source || undefined,
-        utm_campaign: attribution?.utm_campaign || undefined,
-      })
-    } catch (_) { /* tracking is best-effort */ }
+    //     🆕 Skip GTM event if server flagged this as a duplicate / repeat
+    //         lead so we don't inflate Google Ads conversion count.
+    const shouldFireConversion = !skip && !(serverResponse?.suppressConversion)
+    if (shouldFireConversion) {
+      try {
+        const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
+        trackWhatsAppClick(source || 'karina_modal', {
+          has_lead: !skip,
+          gclid: attribution?.gclid || undefined,
+          utm_source: attribution?.utm_source || undefined,
+          utm_campaign: attribution?.utm_campaign || undefined,
+        })
+      } catch (_) { /* tracking is best-effort */ }
+    }
 
-    // 3️⃣ Open WhatsApp — robust multi-strategy redirect.
+    // 3️⃣ Build the FINAL WhatsApp URL with a personalized pre-filled
+    //     message. This is the single most important "ghost-lead" fix:
+    //     the consultante now lands on WhatsApp with the message already
+    //     typed, only needing to press Send. Closes the intent → action loop.
+    let computedHref = originalHref
+    try {
+      if (!skip && cleanName) {
+        const preMsg = cleanIntent
+          ? `Hola, soy ${cleanName}. ${cleanIntent}`
+          : `Hola, soy ${cleanName}. Me gustaría agendar una consulta inicial en el Instituto DBT Chile.`
+        // Replace any existing ?text=... param with our personalized one
+        const url = new URL(originalHref)
+        url.searchParams.set('text', preMsg)
+        computedHref = url.toString()
+      }
+    } catch (_) {
+      // If URL parsing fails for any reason, fall back to originalHref
+      computedHref = originalHref
+    }
+    // Expose to success view via state
+    setFinalHref(computedHref)
+    const finalHref = computedHref
+
+    // 4️⃣ Open WhatsApp — robust multi-strategy redirect.
     // ─── Why so many strategies? ───────────────────────────────────────
     //   When this site is loaded inside an iframe (e.g. the Emergent
     //   preview dashboard, or any embedding context), api.whatsapp.com
@@ -172,7 +212,7 @@ export default function FastCaptureModal() {
     let opened = false
     try {
       const a = document.createElement('a')
-      a.href = originalHref
+      a.href = finalHref
       a.target = '_blank'
       a.rel = 'noopener noreferrer'
       a.style.display = 'none'
@@ -184,7 +224,7 @@ export default function FastCaptureModal() {
 
     if (!opened) {
       try {
-        const win = window.open(originalHref, '_blank', 'noopener')
+        const win = window.open(finalHref, '_blank', 'noopener')
         if (win) opened = true
       } catch (_) { /* fall through */ }
     }
@@ -198,12 +238,12 @@ export default function FastCaptureModal() {
         try {
           // Break out of any iframe if possible
           if (window.top && window.top !== window.self) {
-            window.top.location.href = originalHref
+            window.top.location.href = finalHref
           } else {
-            window.location.href = originalHref
+            window.location.href = finalHref
           }
         } catch (_) {
-          window.location.href = originalHref
+          window.location.href = finalHref
         }
       }, 600)
     }
@@ -314,6 +354,30 @@ export default function FastCaptureModal() {
                 {errors.phone && <p className="text-xs text-red-400 mt-1.5">{errors.phone}</p>}
               </div>
 
+              {/* Intent — optional, drives WhatsApp pre-fill quality */}
+              <div>
+                <div className="flex items-baseline justify-between mb-1.5">
+                  <label htmlFor="kr-intent" className="block text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    ¿En qué podemos acompañarle? <span className="text-zinc-600 normal-case tracking-normal">(opcional)</span>
+                  </label>
+                  <span className={`text-[10px] tabular-nums ${formData.intent.length > INTENT_MAX - 20 ? 'text-amber-400' : 'text-zinc-600'}`}>
+                    {formData.intent.length}/{INTENT_MAX}
+                  </span>
+                </div>
+                <textarea
+                  id="kr-intent"
+                  rows={2}
+                  maxLength={INTENT_MAX}
+                  value={formData.intent}
+                  onChange={(e) => setFormData((p) => ({ ...p, intent: e.target.value.slice(0, INTENT_MAX) }))}
+                  placeholder="Ej.: Consulta por tratamiento DBT para mi hija adolescente"
+                  className="w-full px-4 py-3 text-base bg-zinc-900/60 border-2 border-zinc-800 focus:border-emerald-500/70 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors resize-none leading-snug"
+                />
+                <p className="text-[11px] text-zinc-500 mt-1 leading-relaxed">
+                  Si lo prefiere, déjelo en blanco; preparamos un mensaje breve por usted.
+                </p>
+              </div>
+
               {submitError && (
                 <div className="text-sm text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   {submitError}
@@ -366,7 +430,7 @@ export default function FastCaptureModal() {
               Si no se abrió automáticamente, toca el botón:
             </p>
             <a
-              href={originalHref}
+              href={finalHref || originalHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"

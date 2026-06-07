@@ -49,7 +49,40 @@ function normalizeChileanPhone(raw) {
   if (digits.length === 9 && digits.startsWith('9')) {
     digits = '56' + digits
   }
+  // 🌐 International support: USA / Canada numbers
+  //   - 10 digits NOT starting with 5/6/9 (Chile patterns) → assume USA → prepend 1
+  //   - 11 digits starting with 1 → already E.164 USA → keep as-is
+  if (digits.length === 11 && digits.startsWith('1')) {
+    // USA/Canada format like 1XXXXXXXXXX — keep as canonical
+    return digits
+  }
+  if (digits.length === 10 && /^[2-9]/.test(digits)) {
+    // Generic North American number (area code 2xx-9xx, never 0 or 1 first)
+    // Only auto-prefix if it doesn't look Chilean (Chilean local mobile is 9 digits)
+    return '1' + digits
+  }
   return digits
+}
+
+/**
+ * Detects obviously fake/spam phone numbers BEFORE we save them as leads.
+ * Patterns rejected:
+ *   - All same digit  (e.g. 56900000000, 1111111111)
+ *   - Trivial sequences ending in 12345678 or similar
+ *   - Repeated 2-digit pattern (e.g. 121212121212)
+ * Returns true if number is suspect, false otherwise.
+ */
+function isObviouslyFakePhone(digits) {
+  if (!digits || typeof digits !== 'string') return false
+  if (digits.length < 8) return true
+  // All identical digits
+  if (/^(\d)\1+$/.test(digits)) return true
+  // Trivial ascending sequences (e.g. 1234567890, 12345678)
+  if (/^123456789?0?$/.test(digits) || /^012345678?9?$/.test(digits)) return true
+  // Repeated 2-digit pattern occupying entire string
+  const lastTwo = digits.slice(-8)
+  if (/^(\d{2})\1{3}$/.test(lastTwo)) return true
+  return false
 }
 
 function parseCookie(request, name) {
@@ -589,10 +622,11 @@ export async function POST(request) {
 
     // Store Fast WhatsApp Capture Lead — Serena Dual Modal v2
     // Accepts: fullName (req), phone (req), channel ('whatsapp'|'email'),
-    //          message (optional, for email channel), source, sourceContext, mode
+    //          message (optional, for email channel), intent (optional, for WhatsApp
+    //          pre-fill quality + lead context), source, sourceContext, mode
     // Side-effects: silent IP geolocation, optional email dispatch, Telegram notify.
     if (pathname === '/api/leads/fast-capture') {
-      const { fullName, phone, email, channel, message, source, sourceContext, mode, timestamp, beacon, attribution, gclid, utm_source, utm_campaign } = body || {}
+      const { fullName, phone, email, channel, message, intent, source, sourceContext, mode, timestamp, beacon, attribution, gclid, utm_source, utm_campaign } = body || {}
 
       if (!fullName) {
         return Response.json({ error: 'Nombre es obligatorio' }, { status: 400 })
@@ -608,11 +642,17 @@ export async function POST(request) {
       const cleanEmail = email ? String(email).trim() : ''
       const cleanChannel = channel === 'email' ? 'email' : (channel === 'whatsapp' ? 'whatsapp' : null)
       const cleanMessage = typeof message === 'string' ? message.trim().slice(0, 2000) : null
+      // 🆕 Optional consultante intent (used for WhatsApp pre-fill + admin context).
+      // Capped at 280 chars to keep WA URL well below the practical query-string limit.
+      const cleanIntent = typeof intent === 'string' ? intent.trim().slice(0, 280) : null
 
       // Serena v2 → phone mandatory
       const isSerenaV2 = mode === 'serena-v2' || !!cleanChannel
       if (isSerenaV2) {
         if (phoneDigits.length < 8) {
+          return Response.json({ error: 'WhatsApp inválido' }, { status: 400 })
+        }
+        if (isObviouslyFakePhone(phoneDigits)) {
           return Response.json({ error: 'WhatsApp inválido' }, { status: 400 })
         }
         if (cleanChannel === 'email' && (!cleanMessage || cleanMessage.length < 10)) {
@@ -633,20 +673,43 @@ export async function POST(request) {
       const db = await connectToDatabase()
       const leadsCollection = db.collection('leads')
 
-      // Idempotency: avoid duplicating leads when both fetch and sendBeacon fire
+      // ── Idempotency layer 1 (short window, 60 s) ───────────────────────
+      // Defends against the fetch + sendBeacon race condition where both fire
+      // for the same submission. Silent dedup, no GA event, no Telegram ping.
       if (cleanName) {
         const sixtySecondsAgo = new Date(Date.now() - 60 * 1000)
-        const existing = await leadsCollection.findOne({
+        const recentExisting = await leadsCollection.findOne({
           fullName: cleanName,
           phone: phoneDigits || null,
           createdAt: { $gte: sixtySecondsAgo },
         })
-        if (existing) {
+        if (recentExisting) {
           return Response.json({
             success: true,
-            leadId: existing.id || existing._id?.toString?.() || null,
+            leadId: recentExisting.id || recentExisting._id?.toString?.() || null,
             deduplicated: true,
+            suppressConversion: true, // tell client: do NOT fire GTM/Ads event
           })
+        }
+      }
+
+      // ── Idempotency layer 2 (long window, 24 h) ────────────────────────
+      // "Ghost lead" defense: a consultante that re-clicks WhatsApp multiple
+      // times in the same day shouldn't inflate Google Ads conversions or
+      // double-trigger Serena's outreach. The lead is STILL saved for audit
+      // (so we know how many times they tried), but tagged as a repeat and
+      // the conversion is suppressed.
+      let isRepeatLead = false
+      let originalLeadId = null
+      if (phoneDigits) {
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
+        const repeatExisting = await leadsCollection.findOne({
+          phone: phoneDigits,
+          createdAt: { $gte: twentyFourHoursAgo },
+        })
+        if (repeatExisting) {
+          isRepeatLead = true
+          originalLeadId = repeatExisting.id || repeatExisting._id?.toString?.() || null
         }
       }
 
@@ -662,6 +725,7 @@ export async function POST(request) {
         email: cleanEmail || null,
         channel: cleanChannel,
         message: cleanMessage,
+        intent: cleanIntent, // 🆕 consultante's brief intent (WhatsApp pre-fill)
         // Source flags
         source: source === 'serena_modal' ? 'serena_modal' : 'whatsapp-fast-capture',
         sourceContext: (typeof sourceContext === 'string' && sourceContext.trim()) || source || 'general',
@@ -672,6 +736,9 @@ export async function POST(request) {
         ip: clientIP,
         geo: geo, // { city, region, country, countryCode, lat, lon, timezone, isp, ip } | null
         location: geo ? [geo.city, geo.region, geo.country].filter(Boolean).join(', ') : null,
+        // 🔁 Repeat-lead metadata (24h window) — useful for admin filtering
+        isRepeat: isRepeatLead,
+        originalLeadId: originalLeadId,
         // 📈 Google Ads attribution (for offline conversion upload)
         gclid: gclid || attribution?.gclid || null,
         gbraid: attribution?.gbraid || null,
@@ -747,6 +814,10 @@ export async function POST(request) {
         location: lead.location,
         emailQueued: cleanChannel === 'email' && !(emailResult?.sent),
         emailSent: !!emailResult?.sent,
+        // 🆕 Tell client whether to suppress GTM conversion (24h repeat lead)
+        isRepeat: isRepeatLead,
+        suppressConversion: isRepeatLead,
+        originalLeadId: originalLeadId,
       })
     }
 

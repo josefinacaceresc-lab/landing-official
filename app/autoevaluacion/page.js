@@ -462,7 +462,7 @@ export default function AutoevaluacionPage() {
                           Procesando...
                         </>
                       ) : (
-                        'Ver Resultados y Acceder a LaKaira AI'
+                        'Ver Resultados y Acceder a ApoFix AI'
                       )}
                     </Button>
                   </div>

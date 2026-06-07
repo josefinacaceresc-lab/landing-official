@@ -7,7 +7,7 @@ import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
   title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD de Fidelidad Total',
-  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD de Fidelidad Total + monitoreo LaKaira AI. Único en Chile con certificación WDBTA.',
+  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD de Fidelidad Total + monitoreo ApoFix AI. Único en Chile con certificación WDBTA.',
   keywords: [
     'Patología Dual Chile',
     'DBT-SUD de Fidelidad Total',
@@ -16,14 +16,14 @@ export const metadata = {
     'Centro Alta Complejidad Chile',
     'DBT-SUD Santiago',
     'Tratamiento dual diagnóstico',
-    'LaKaira AI impulsividad'
+    'ApoFix AI impulsividad'
   ],
   alternates: {
     canonical: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
   },
   openGraph: {
     title: 'Patología Dual: DBT-SUD de Fidelidad Total | Instituto DBT Chile',
-    description: 'Centro de Alta Complejidad en Patología Dual. Protocolo DBT-SUD + monitoreo LaKaira AI para TLP + Trastorno por Uso de Sustancias.',
+    description: 'Centro de Alta Complejidad en Patología Dual. Protocolo DBT-SUD + monitoreo ApoFix AI para TLP + Trastorno por Uso de Sustancias.',
     url: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
     type: 'article',
     images: [{
@@ -47,7 +47,7 @@ const clinicalFramework = [
   },
   {
     icon: Cpu,
-    title: 'Monitoreo LaKaira AI',
+    title: 'Monitoreo ApoFix AI',
     description: 'Sistema de inteligencia artificial basado en Principio de Energía Libre (Friston) para detección temprana de estados de alta impulsividad, predicción de crisis y ajuste dinámico de intervenciones preventivas.'
   },
   {
@@ -153,7 +153,7 @@ export default function PatologiaDualPage() {
             </p>
             
             <p className="text-lg text-gray-600 leading-relaxed mb-12 text-center max-w-3xl mx-auto">
-              Único programa en Chile con <strong>certificación WDBTA</strong>, integración de <strong>monitoreo LaKaira AI</strong> y adherencia estricta a protocolos de fidelidad internacional.
+              Único programa en Chile con <strong>certificación WDBTA</strong>, integración de <strong>monitoreo ApoFix AI</strong> y adherencia estricta a protocolos de fidelidad internacional.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -186,7 +186,7 @@ export default function PatologiaDualPage() {
               </div>
               <div className="p-4 bg-white rounded-lg border border-emerald-100 shadow-sm">
                 <div className="text-3xl font-serif font-light text-emerald-700 mb-1">AI</div>
-                <div className="text-sm text-gray-600">Monitoreo LaKaira</div>
+                <div className="text-sm text-gray-600">Monitoreo ApoFix AI</div>
               </div>
             </div>
           </div>
@@ -263,7 +263,7 @@ export default function PatologiaDualPage() {
         </div>
       </section>
 
-      {/* LaKaira AI Section */}
+      {/* ApoFix AI Section */}
       <section className="py-20 bg-gradient-to-br from-gray-900 to-emerald-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -273,7 +273,7 @@ export default function PatologiaDualPage() {
               </div>
               <span className="inline-block mb-4 text-sm font-semibold text-emerald-300 uppercase tracking-wider">NexariaLabs · IA Clínica</span>
               <h2 className="text-4xl font-light mb-4">
-                Monitoreo <span className="font-serif font-semibold text-emerald-400">LaKaira AI</span>
+                Monitoreo <span className="font-serif font-semibold text-emerald-400">ApoFix AI</span>
               </h2>
               <p className="text-xl text-emerald-50 max-w-3xl mx-auto">
                 Sistema de inteligencia artificial para detección temprana de estados de alta impulsividad y predicción de crisis en patología dual
@@ -299,10 +299,10 @@ export default function PatologiaDualPage() {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
               <h3 className="text-2xl font-serif font-semibold text-white mb-4">Fundamentos Teóricos</h3>
               <p className="text-emerald-100 leading-relaxed mb-4">
-                LaKaira AI integra el <strong>Principio de Energía Libre</strong> (Friston, 2010) con modelos computacionales de regulación emocional y toma de decisiones bajo incertidumbre. El sistema construye modelos generativos del estado emocional del paciente, detecta desviaciones de la homeostasis predictiva y activa protocolos de intervención preventiva cuando el <em>prediction error</em> supera umbrales críticos.
+                ApoFix AI integra el <strong>Principio de Energía Libre</strong> (Friston, 2010) con modelos computacionales de regulación emocional y toma de decisiones bajo incertidumbre. El sistema construye modelos generativos del estado emocional del paciente, detecta desviaciones de la homeostasis predictiva y activa protocolos de intervención preventiva cuando el <em>prediction error</em> supera umbrales críticos.
               </p>
               <p className="text-emerald-100 leading-relaxed">
-                En patología dual, LaKaira AI monitoriza específicamente: (1) marcadores de disregulación afectiva, (2) patrones lingüísticos asociados a craving, (3) fluctuaciones de impulsividad y (4) indicadores de ruptura de abstinencia. Primer sistema de este tipo aplicado a DBT-SUD en América Latina.
+                En patología dual, ApoFix AI monitoriza específicamente: (1) marcadores de disregulación afectiva, (2) patrones lingüísticos asociados a craving, (3) fluctuaciones de impulsividad y (4) indicadores de ruptura de abstinencia. Primer sistema de este tipo aplicado a DBT-SUD en América Latina.
               </p>
             </div>
           </div>
@@ -373,7 +373,7 @@ export default function PatologiaDualPage() {
                 { step: 1, title: 'Evaluación Diagnóstica', description: 'Entrevista clínica estructurada (SCID-5-PD), evaluación de severidad de consumo (AUDIT/DAST) y análisis de cadenas funcionales.' },
                 { step: 2, title: 'Valoración de Riesgo', description: 'Protocolo de suicidabilidad, impulsividad conductual y predictores de dropout. Evaluación de red de apoyo y factores protectores.' },
                 { step: 3, title: 'Diseño de Tratamiento', description: 'Plan individualizado DBT-SUD con objetivos jerarquizados: (1) Conductas amenazantes de vida, (2) Conductas interferentes con terapia, (3) Abstinencia sostenida, (4) Calidad de vida.' },
-                { step: 4, title: 'Integración LaKaira AI', description: 'Onboarding al sistema de monitoreo, entrenamiento en autorregistro y calibración de algoritmos predictivos personalizados.' }
+                { step: 4, title: 'Integración ApoFix AI', description: 'Onboarding al sistema de monitoreo, entrenamiento en autorregistro y calibración de algoritmos predictivos personalizados.' }
               ].map((item) => (
                 <div key={item.step} className="flex gap-4 p-6 bg-white rounded-lg shadow-md border-l-4 border-emerald-600">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">

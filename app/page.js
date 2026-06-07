@@ -86,7 +86,7 @@ export default function Home() {
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">AI</div>
-                <div className="text-sm text-gray-600">LaKaira · Sistema clínico propio</div>
+                <div className="text-sm text-gray-600">ApoFix AI · Sistema clínico propio</div>
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Lakaira AI & NexariaLabs Section - PROMINENT */}
+      {/* ApoFix AI & NexariaLabs Section - PROMINENT */}
       <section className="py-24 bg-gradient-to-br from-primary/10 via-white to-primary/5 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
@@ -210,12 +210,12 @@ export default function Home() {
                 </span>
               </div>
               <h2 className="text-4xl md:text-6xl font-light text-gray-900 mb-6">
-                <span className="font-bold text-primary">Lakaira AI</span>
+                <span className="font-bold text-primary">ApoFix AI</span>
                 <br />
                 <span className="text-3xl md:text-4xl">El Puente entre DBT Clínico y Ciencia de Datos</span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Desarrollado por <strong>NexariaLabs</strong>, Lakaira AI es nuestra extensión de inteligencia artificial que integra análisis de lenguaje natural, modelos predictivos y psicometría computacional para potenciar la precisión diagnóstica y el monitoreo terapéutico en tiempo real.
+                Desarrollado por <strong>NexariaLabs</strong>, ApoFix AI es nuestra extensión de inteligencia artificial que integra análisis de lenguaje natural, modelos predictivos y psicometría computacional para potenciar la precisión diagnóstica y el monitoreo terapéutico en tiempo real.
               </p>
             </div>
 
@@ -226,7 +226,7 @@ export default function Home() {
                   {/* Left: Content */}
                   <div className="p-10">
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                      ¿Qué hace Lakaira AI?
+                      ¿Qué hace ApoFix AI?
                     </h3>
                     <ul className="space-y-4 mb-8">
                       <li className="flex items-start gap-3">
@@ -320,7 +320,7 @@ export default function Home() {
             {/* Bottom Badge */}
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500">
-                <strong className="text-primary">Lakaira AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para Instituto DBT Chile
+                <strong className="text-primary">ApoFix AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para Instituto DBT Chile
               </p>
             </div>
           </div>
@@ -506,7 +506,7 @@ export default function Home() {
                       <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + adicciones)</span></h4>
                       <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Cuando hay desregulación y consumo</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico LaKaira AI.
+                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico ApoFix AI.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
                         Conocer el programa <ArrowRight className="w-4 h-4" />
@@ -575,7 +575,7 @@ export default function Home() {
                   <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
                     <Cpu className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">LaKaira AI</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">ApoFix AI</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     Plataforma clínica de inteligencia artificial para apoyo en regulación emocional. Proyecto NexariaLabs.
                   </p>

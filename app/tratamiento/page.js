@@ -5,7 +5,7 @@ import { ArrowRight, Brain, Activity, Shield, Cpu, Layers, CheckCircle, Microsco
 
 export const metadata = {
   title: 'Tratamiento DBT de Fidelidad Total | Instituto DBT Chile',
-  description: 'Programa clínico integrado DBT + Schema Therapy de máxima evidencia. Único centro WDBTA en Chile con monitoreo LaKaira AI. Tratamiento ambulatorio intensivo para TLP, patología dual y desregulación emocional severa.',
+  description: 'Programa clínico integrado DBT + Schema Therapy de máxima evidencia. Único centro WDBTA en Chile con monitoreo ApoFix AI. Tratamiento ambulatorio intensivo para TLP, patología dual y desregulación emocional severa.',
   keywords: [
     'Tratamiento DBT Chile',
     'DBT de Fidelidad Total',
@@ -31,7 +31,7 @@ const pilares = [
   },
   {
     icon: Cpu,
-    title: 'Monitoreo LaKaira AI',
+    title: 'Monitoreo ApoFix AI',
     text: 'Sistema clínico propio basado en el Principio de Energía Libre (Friston). Detecta tempranamente estados de alta impulsividad, predice crisis y ajusta dinámicamente las intervenciones preventivas entre sesiones.',
   },
   {
@@ -108,7 +108,7 @@ export default function TratamientoPage() {
               Tratamiento <em className="font-serif italic text-primary">DBT</em> de Fidelidad Total
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Programa integrado de Terapia Dialéctico-Conductual y Schema Therapy con monitoreo clínico mediante <strong>LaKaira AI</strong>. Único centro en Chile con membresía institucional <strong>WDBTA</strong>, garantizando adherencia estricta a los estándares internacionales del modelo.
+              Programa integrado de Terapia Dialéctico-Conductual y Schema Therapy con monitoreo clínico mediante <strong>ApoFix AI</strong>. Único centro en Chile con membresía institucional <strong>WDBTA</strong>, garantizando adherencia estricta a los estándares internacionales del modelo.
             </p>
           </div>
         </div>

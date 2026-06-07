@@ -168,7 +168,7 @@ function ResultadosContent() {
             </CardContent>
           </Card>
 
-          {/* LaKaira AI Access */}
+          {/* ApoFix AI Access */}
           <Card className="border-0 shadow-2xl mb-8 bg-gradient-to-br from-gray-900 to-emerald-900 text-white">
             <CardHeader>
               <CardTitle className="text-2xl font-serif flex items-center gap-3">
@@ -177,12 +177,12 @@ function ResultadosContent() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                Acceso a LaKaira AI - 24 Horas
+                Acceso a ApoFix AI - 24 Horas
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <p className="text-emerald-100 leading-relaxed">
-                Has desbloqueado acceso de prueba a <strong>LaKaira AI</strong>, nuestra plataforma de inteligencia artificial clínica para monitoreo de regulación emocional basada en el Principio de Energía Libre.
+                Has desbloqueado acceso de prueba a <strong>ApoFix AI</strong>, nuestra plataforma de inteligencia artificial clínica para monitoreo de regulación emocional basada en el Principio de Energía Libre.
               </p>
 
               {tokenData && (
@@ -226,7 +226,7 @@ function ResultadosContent() {
                 >
                   <Button size="lg" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">
                     <ExternalLink className="w-5 h-5 mr-2" />
-                    Acceder a LaKaira AI Ahora
+                    Acceder a ApoFix AI Ahora
                   </Button>
                 </a>
 
@@ -238,7 +238,7 @@ function ResultadosContent() {
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">¿Qué puedes hacer en LaKaira AI?</h4>
+                <h4 className="font-semibold text-white mb-3">¿Qué puedes hacer en ApoFix AI?</h4>
                 <ul className="space-y-2 text-sm text-emerald-100">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -300,7 +300,7 @@ function ResultadosContent() {
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">Inicio de Tratamiento</h4>
                   <p className="text-gray-600 text-sm">
-                    Integración al programa con monitoreo continuo LaKaira AI y acceso completo a todos los módulos de habilidades.
+                    Integración al programa con monitoreo continuo ApoFix AI y acceso completo a todos los módulos de habilidades.
                   </p>
                 </div>
               </div>

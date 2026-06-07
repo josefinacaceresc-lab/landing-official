@@ -30,7 +30,7 @@ const direccion = [
       'WDBTA Research Member — única en Chile',
       'Miembro Sociedad Española de Estudios de los Trastornos Límite de la Personalidad',
       'Certificación ISST — Schema Therapy',
-      'Fundadora NexariaLabs · LaKaira AI'
+      'Fundadora NexariaLabs · ApoFix AI'
     ],
     tags: ['WDBTA', 'ISST', 'APA', 'SEETLP', 'Ph.D.(c)'],
   },
@@ -154,7 +154,7 @@ export default function EquipoPage() {
         ],
         affiliation: [
           { '@type': 'Organization', name: 'American Psychological Association', url: 'https://www.apa.org' },
-          { '@type': 'Organization', name: 'NexariaLabs · LaKaira AI' },
+          { '@type': 'Organization', name: 'NexariaLabs · ApoFix AI' },
         ],
         nationality: 'CL',
         availableService: [

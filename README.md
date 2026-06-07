@@ -86,7 +86,7 @@ El sitio incluye:
 
 ### 📊 Proyectos de Investigación
 
-1. **LaKaira AI**: Sistema de IA para evaluación momentánea ecológica (EMA)
+1. **ApoFix AI**: Sistema de IA para evaluación momentánea ecológica (EMA)
 2. **La Mente Algorítmica**: 8 artículos científicos sobre desregulación emocional
    - Artículo destacado: Tratado Maestro (6,454 palabras, 33 referencias APA 7)
 3. **NexariaLabs**: Laboratorio de innovación en tecnologías de salud mental

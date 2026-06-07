@@ -947,7 +947,7 @@ export async function POST(request) {
         )
       }
       
-      // Generate LaKaira AI access token
+      // Generate ApoFix AI access token
       const { token, expiresAt } = generateAccessToken()
       
       const db = await connectToDatabase()
@@ -1011,7 +1011,7 @@ export async function POST(request) {
         )
       }
       
-      // Generate LaKaira AI access token
+      // Generate ApoFix AI access token
       const { token, expiresAt } = generateAccessToken()
       
       const db = await connectToDatabase()
@@ -1043,7 +1043,7 @@ export async function POST(request) {
       })
     }
     
-    // Verify LaKaira Token
+    // Verify ApoFix AI Token
     if (pathname === '/api/lakaira/verify-token') {
       const { token } = body
       

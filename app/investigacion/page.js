@@ -6,13 +6,13 @@ import { Brain, Sparkles, Database, ArrowRight, FileText } from 'lucide-react'
 
 export const metadata = {
   title: 'Investigación Científica',
-  description: 'Hub de investigación del Instituto DBT Chile: LaKaira AI, La Mente Algorítmica, NexariaLabs. Ciencia aplicada en neurociencia y salud mental.',
+  description: 'Hub de investigación del Instituto DBT Chile: ApoFix AI, La Mente Algorítmica, NexariaLabs. Ciencia aplicada en neurociencia y salud mental.',
   alternates: {
     canonical: 'https://institutodbtchile.cl/investigacion',
   },
   openGraph: {
     title: 'Investigación Científica | Instituto DBT Chile',
-    description: 'Hub de investigación: LaKaira AI, La Mente Algorítmica, NexariaLabs.',
+    description: 'Hub de investigación: ApoFix AI, La Mente Algorítmica, NexariaLabs.',
     url: 'https://institutodbtchile.cl/investigacion',
     images: [{
       url: 'https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?fm=jpg&q=80&w=1200&h=630&fit=crop',
@@ -104,13 +104,13 @@ export default function InvestigacionPage() {
             </Link>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {/* LaKaira AI */}
+              {/* ApoFix AI */}
               <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-primary/5">
                 <CardHeader>
                   <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-3xl font-semibold text-gray-900">LaKaira AI</CardTitle>
+                  <CardTitle className="text-3xl font-semibold text-gray-900">ApoFix AI</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 mb-6 leading-relaxed">
@@ -133,7 +133,7 @@ export default function InvestigacionPage() {
                   </ul>
                   <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white font-semibold">
                     <a
-                      href="mailto:contacto@dbtchile.cl?subject=Consulta%20sobre%20LaKaira%20AI&body=Hola%2C%20quisiera%20más%20información%20sobre%20el%20proyecto%20LaKaira%20AI.%0A%0AMi%20nombre%3A%20%0ATeléfono%3A%20%0AContexto%3A%20"
+                      href="mailto:contacto@dbtchile.cl?subject=Consulta%20sobre%20ApoFix%20AI&body=Hola%2C%20quisiera%20más%20información%20sobre%20el%20proyecto%20ApoFix%20AI.%0A%0AMi%20nombre%3A%20%0ATeléfono%3A%20%0AContexto%3A%20"
                       className="flex items-center gap-2"
                     >
                       Ver Proyecto

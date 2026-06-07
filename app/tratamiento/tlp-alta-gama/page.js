@@ -5,7 +5,7 @@ import { ArrowRight, Brain, Heart, Layers, Shield, Microscope, Activity, CheckCi
 
 export const metadata = {
   title: 'Trastorno Límite de Personalidad (TLP) | Instituto DBT Chile',
-  description: 'Centro de referencia nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA. Enfoque dimensional y computacional con DBT de Fidelidad Total + Schema Therapy + monitoreo LaKaira AI.',
+  description: 'Centro de referencia nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA. Enfoque dimensional y computacional con DBT de Fidelidad Total + Schema Therapy + monitoreo ApoFix AI.',
   keywords: [
     'TLP Chile',
     'Trastorno Límite de Personalidad',
@@ -55,7 +55,7 @@ const ejes = [
   {
     n: '02',
     titulo: 'Modelo computacional',
-    text: 'Analizamos los sistemas de respuesta emocional y los déficits en la capacidad predictiva del consultante. Integración con el principio de Energía Libre (Friston) vía LaKaira AI.',
+    text: 'Analizamos los sistemas de respuesta emocional y los déficits en la capacidad predictiva del consultante. Integración con el principio de Energía Libre (Friston) vía ApoFix AI.',
   },
   {
     n: '03',

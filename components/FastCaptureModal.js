@@ -115,14 +115,16 @@ export default function FastCaptureModal() {
     return Object.keys(e).length === 0
   }
 
-  // ── Save lead and redirect ────────────────────────────────────────────
-  const saveAndRedirect = async ({ skip = false } = {}) => {
-    if (!skip && !validate()) return
+  // ── Save lead and show callback confirmation ──────────────────────────
+  // Single path: name + phone are mandatory. No "skip" branch — that was
+  // the source of the anonymous ghost leads we are explicitly eliminating.
+  const saveAndRedirect = async () => {
+    if (!validate()) return
     setIsSubmitting(true)
     setSubmitError('')
 
     // Read Google Ads attribution (gclid, utm_*, etc.) captured on landing.
-    // Best-effort: must NEVER block the lead save or WA redirect.
+    // Best-effort: must NEVER block the lead save.
     let attribution = {}
     try {
       const mod = await import('@/components/GclidCapture')
@@ -133,13 +135,13 @@ export default function FastCaptureModal() {
     const cleanName = formData.fullName.trim()
 
     const payload = {
-      fullName: skip ? 'Anónimo (saltó captura)' : cleanName,
-      phone: skip ? '' : formData.phone.trim(),
+      fullName: cleanName,
+      phone: formData.phone.trim(),
       channel: 'whatsapp',
-      intent: skip ? null : (cleanIntent || null),
+      intent: cleanIntent || null,
       source: 'karina_modal',
       sourceContext: source,
-      mode: skip ? 'skip-capture' : 'karina-capture',
+      mode: 'karina-capture',
       timestamp: new Date().toISOString(),
       attribution,                              // Google Ads / UTM data
       gclid: attribution?.gclid || null,         // duplicate at top level for easy CSV export
@@ -175,18 +177,18 @@ export default function FastCaptureModal() {
 
     setIsSubmitting(false)
 
-    // 2️⃣ Fire Google Ads / GA4 conversion event — must happen BEFORE the
-    //     redirect so the browser has time to flush the gtag beacon while
+    // 2️⃣ Fire Google Ads / GA4 conversion event — must happen BEFORE any
+    //     navigation so the browser has time to flush the gtag beacon while
     //     this page is still alive. Wrapped in try/catch: tracking must
-    //     never block the WA redirect.
+    //     never block the lead save flow.
     //     🆕 Skip GTM event if server flagged this as a duplicate / repeat
     //         lead so we don't inflate Google Ads conversion count.
-    const shouldFireConversion = !skip && !(serverResponse?.suppressConversion)
+    const shouldFireConversion = !(serverResponse?.suppressConversion)
     if (shouldFireConversion) {
       try {
         const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
         trackWhatsAppClick(source || 'karina_modal', {
-          has_lead: !skip,
+          has_lead: true,
           gclid: attribution?.gclid || undefined,
           utm_source: attribution?.utm_source || undefined,
           utm_campaign: attribution?.utm_campaign || undefined,
@@ -194,27 +196,22 @@ export default function FastCaptureModal() {
       } catch (_) { /* tracking is best-effort */ }
     }
 
-    // 3️⃣ Build the FINAL WhatsApp URL with a personalized pre-filled
-    //     message. This is the single most important "ghost-lead" fix:
-    //     the consultante now lands on WhatsApp with the message already
-    //     typed, only needing to press Send. Closes the intent → action loop.
+    // 3️⃣ Build a personalized WhatsApp URL — kept ONLY as a backup link
+    //     (we no longer auto-open WhatsApp; this href is reserved for any
+    //     future "Continuar por WhatsApp" button if reintroduced).
     let computedHref = originalHref
     try {
-      if (!skip && cleanName) {
+      if (cleanName) {
         const preMsg = cleanIntent
           ? `Hola, soy ${cleanName}. ${cleanIntent}`
           : `Hola, soy ${cleanName}. Me gustaría agendar una consulta inicial en el Instituto DBT Chile.`
-        // Replace any existing ?text=... param with our personalized one
         const url = new URL(originalHref)
         url.searchParams.set('text', preMsg)
         computedHref = url.toString()
       }
     } catch (_) {
-      // If URL parsing fails for any reason, fall back to originalHref
       computedHref = originalHref
     }
-    // Expose to success view via state (kept for compatibility with
-    // optional "Continuar por WhatsApp" fallback link if ever needed).
     setFinalHref(computedHref)
 
     // 4️⃣ Open WhatsApp?  ────────────────────────────────────────────────
@@ -395,23 +392,10 @@ export default function FastCaptureModal() {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
-                      <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-                    </svg>
-                    <span>Enviar a WhatsApp</span>
+                    <span>Enviar mensaje</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                   </>
                 )}
-              </button>
-
-              {/* Skip option */}
-              <button
-                type="button"
-                onClick={() => saveAndRedirect({ skip: true })}
-                disabled={isSubmitting}
-                className="block w-full text-center text-xs text-zinc-300 hover:text-white underline-offset-4 hover:underline transition-colors"
-              >
-                Saltar y abrir WhatsApp directo
               </button>
 
               <p className="text-[11px] text-zinc-300 text-center leading-relaxed pt-1">

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { X, Loader2, CheckCircle2, ArrowRight } from 'lucide-react'
+import { X, Loader2, CheckCircle2, ArrowRight, Copy, ExternalLink } from 'lucide-react'
 
 /**
  * Karina WhatsApp Capture Modal — OLED Ultra-Luxury
@@ -27,6 +27,8 @@ export default function FastCaptureModal() {
   const [originalHref, setOriginalHref] = useState('')
   const [finalHref, setFinalHref] = useState('') // URL with personalized pre-filled message
   const [source, setSource] = useState('site')
+  const [isInIframe, setIsInIframe] = useState(false) // detects Emergent preview
+  const [copied, setCopied] = useState(false)
   const [view, setView] = useState('form') // form | success
   const [formData, setFormData] = useState({ fullName: '', phone: '', intent: '' })
   const [errors, setErrors] = useState({})
@@ -34,6 +36,22 @@ export default function FastCaptureModal() {
   const [submitError, setSubmitError] = useState('')
   const dialogRef = useRef(null)
   const INTENT_MAX = 140
+
+  // ── Detect iframe context (e.g. Emergent preview dashboard) ───────────
+  // In iframed contexts, WhatsApp Web refuses to load (X-Frame-Options: DENY),
+  // which produces a visual "loop" when the user clicks the open-WA button.
+  // We detect this once on mount and show a preview-friendly UI instead.
+  useEffect(() => {
+    let inIframe = false
+    try {
+      inIframe = window.self !== window.top
+    } catch (_) {
+      // Cross-origin parent access throws → that itself means we ARE iframed
+      inIframe = true
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsInIframe(inIframe)
+  }, [])
 
   // ── Global click interceptor ──────────────────────────────────────────
   useEffect(() => {
@@ -202,31 +220,53 @@ export default function FastCaptureModal() {
     // 4️⃣ Open WhatsApp — robust multi-strategy redirect.
     // ─── Why so many strategies? ───────────────────────────────────────
     //   When this site is loaded inside an iframe (e.g. the Emergent
-    //   preview dashboard, or any embedding context), api.whatsapp.com
-    //   refuses to load because it sends X-Frame-Options: DENY. We try:
-    //     a) Programmatic <a> click — most reliable, uses browser's
-    //        native navigation handler.
-    //     b) window.open fallback if (a) is blocked.
-    //   NO setTimeout fallback: in iframed previews, navigating
-    //   window.top.location.href creates a visual "loop" where the
-    //   modal reappears repeatedly. We trust the success view's
-    //   manual button to recover any blocked redirect.
-    try {
-      const a = document.createElement('a')
-      a.href = finalHref
-      a.target = '_blank'
-      a.rel = 'noopener noreferrer'
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-    } catch (_) {
+    //   preview dashboard), api.whatsapp.com refuses to load because of
+    //   X-Frame-Options: DENY. In that case we DO NOT auto-open WA at all
+    //   (that's what creates the dreaded preview-loop). Instead, the
+    //   success view shows preview-friendly buttons (open in new tab,
+    //   copy link). In production (no iframe) we use the standard
+    //   programmatic-anchor click which works on every modern browser.
+    if (!isInIframe) {
       try {
-        window.open(finalHref, '_blank', 'noopener')
-      } catch (_) { /* user can still click the success-view button */ }
+        const a = document.createElement('a')
+        a.href = finalHref
+        a.target = '_blank'
+        a.rel = 'noopener noreferrer'
+        a.style.display = 'none'
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      } catch (_) {
+        try {
+          window.open(finalHref, '_blank', 'noopener')
+        } catch (_) { /* user can still click the success-view button */ }
+      }
     }
 
     setView('success')
+  }
+
+  // Copy the WhatsApp URL to clipboard (used in iframe/preview context)
+  const copyWhatsAppLink = async () => {
+    try {
+      await navigator.clipboard.writeText(finalHref || originalHref)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2200)
+    } catch (_) {
+      // Fallback: temporary textarea
+      try {
+        const ta = document.createElement('textarea')
+        ta.value = finalHref || originalHref
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2200)
+      } catch (_) { /* give up silently */ }
+    }
   }
 
   if (!isOpen) return null
@@ -408,25 +448,77 @@ export default function FastCaptureModal() {
             <h3 className="text-xl font-semibold text-white">
               Su solicitud fue enviada correctamente
             </h3>
-            <p className="text-sm text-zinc-200 leading-relaxed">
-              Recibimos sus datos. Le hemos abierto WhatsApp con un mensaje listo;
-              solo presione <span className="text-emerald-300 font-medium">Enviar</span> en la conversación.
-            </p>
-            <p className="text-xs text-zinc-400 leading-relaxed pt-1">
-              Si WhatsApp no se abrió en su dispositivo, toque el siguiente botón:
-            </p>
-            <a
-              href={finalHref || originalHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
-                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-              </svg>
-              Abrir WhatsApp
-              <ArrowRight className="w-4 h-4" />
-            </a>
+
+            {/* ─── PRODUCTION VIEW (real site, no iframe) ──────────────── */}
+            {!isInIframe && (
+              <>
+                <p className="text-sm text-zinc-200 leading-relaxed">
+                  Recibimos sus datos. Le hemos abierto WhatsApp con un mensaje listo;
+                  solo presione <span className="text-emerald-300 font-medium">Enviar</span> en la conversación.
+                </p>
+                <p className="text-xs text-zinc-400 leading-relaxed pt-1">
+                  Si WhatsApp no se abrió en su dispositivo, toque el siguiente botón:
+                </p>
+                <a
+                  href={finalHref || originalHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                    <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+                  </svg>
+                  Abrir WhatsApp
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </>
+            )}
+
+            {/* ─── PREVIEW / IFRAME VIEW (Emergent dashboard) ──────────── */}
+            {isInIframe && (
+              <>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-left">
+                  <p className="text-xs font-semibold text-amber-200 uppercase tracking-wider mb-1">
+                    Vista previa detectada
+                  </p>
+                  <p className="text-xs text-amber-100/90 leading-relaxed">
+                    WhatsApp no puede abrirse dentro del panel de vista previa por restricciones de seguridad.
+                    En producción (institutodbtchile.cl) este botón funciona automáticamente.
+                  </p>
+                </div>
+
+                <p className="text-sm text-zinc-200 leading-relaxed">
+                  Para probar el flujo completo, abra el enlace en una pestaña real:
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    try {
+                      if (window.top && window.top !== window.self) {
+                        window.top.open(finalHref || originalHref, '_blank', 'noopener')
+                      } else {
+                        window.open(finalHref || originalHref, '_blank', 'noopener')
+                      }
+                    } catch (_) { /* ignore */ }
+                  }}
+                  className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Abrir WhatsApp en pestaña nueva
+                </button>
+
+                <button
+                  type="button"
+                  onClick={copyWhatsAppLink}
+                  className="flex items-center justify-center gap-2 h-11 w-full rounded-xl bg-zinc-800/80 hover:bg-zinc-700/80 text-white font-medium text-sm border border-zinc-600 transition-all"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? 'Enlace copiado' : 'Copiar enlace de WhatsApp'}
+                </button>
+              </>
+            )}
+
             <button onClick={close} className="text-xs text-zinc-300 hover:text-white underline-offset-4 hover:underline transition-colors">
               Cerrar
             </button>

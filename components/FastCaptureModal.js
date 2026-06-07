@@ -207,9 +207,10 @@ export default function FastCaptureModal() {
     //     a) Programmatic <a> click — most reliable, uses browser's
     //        native navigation handler.
     //     b) window.open fallback if (a) is blocked.
-    //     c) window.top.location to break out of any iframe.
-    //     d) Direct location.href as last resort.
-    let opened = false
+    //   NO setTimeout fallback: in iframed previews, navigating
+    //   window.top.location.href creates a visual "loop" where the
+    //   modal reappears repeatedly. We trust the success view's
+    //   manual button to recover any blocked redirect.
     try {
       const a = document.createElement('a')
       a.href = finalHref
@@ -219,34 +220,13 @@ export default function FastCaptureModal() {
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-      opened = true
-    } catch (_) { /* fall through */ }
-
-    if (!opened) {
+    } catch (_) {
       try {
-        const win = window.open(finalHref, '_blank', 'noopener')
-        if (win) opened = true
-      } catch (_) { /* fall through */ }
+        window.open(finalHref, '_blank', 'noopener')
+      } catch (_) { /* user can still click the success-view button */ }
     }
 
     setView('success')
-
-    if (!opened) {
-      // Last-resort fallback after a short delay so the user sees the
-      // success view briefly before being navigated away.
-      setTimeout(() => {
-        try {
-          // Break out of any iframe if possible
-          if (window.top && window.top !== window.self) {
-            window.top.location.href = finalHref
-          } else {
-            window.location.href = finalHref
-          }
-        } catch (_) {
-          window.location.href = finalHref
-        }
-      }, 600)
-    }
   }
 
   if (!isOpen) return null
@@ -299,8 +279,8 @@ export default function FastCaptureModal() {
         {/* ─── FORM ────────────────────────────────────────────────────── */}
         {view === 'form' && (
           <div className="relative px-6 pb-6 md:px-8 md:pb-8 space-y-5">
-            <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-200">
-              Deja tu <span className="text-emerald-400 font-medium">nombre</span> y <span className="text-emerald-400 font-medium">WhatsApp</span> y te responderé lo más pronto posible.
+            <div className="bg-zinc-900/70 border border-zinc-800/80 rounded-2xl rounded-tl-md p-4 text-sm leading-relaxed text-zinc-100">
+              Deje su <span className="text-emerald-300 font-medium">nombre</span> y <span className="text-emerald-300 font-medium">WhatsApp</span> y le responderemos a la brevedad.
             </div>
 
             <form
@@ -310,7 +290,7 @@ export default function FastCaptureModal() {
             >
               {/* Nombre */}
               <div>
-                <label htmlFor="kr-name" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="kr-name" className="block text-xs font-semibold text-zinc-200 mb-1.5 uppercase tracking-wider">
                   Tu nombre
                 </label>
                 <input
@@ -324,16 +304,16 @@ export default function FastCaptureModal() {
                     if (errors.fullName) setErrors((p) => ({ ...p, fullName: '' }))
                   }}
                   placeholder="María Fernanda"
-                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors ${
-                    errors.fullName ? 'border-red-500/60 focus:border-red-400' : 'border-zinc-800 focus:border-emerald-500/70'
+                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none transition-colors ${
+                    errors.fullName ? 'border-red-500/60 focus:border-red-400' : 'border-zinc-700 focus:border-emerald-500/70'
                   }`}
                 />
-                {errors.fullName && <p className="text-xs text-red-400 mt-1.5">{errors.fullName}</p>}
+                {errors.fullName && <p className="text-xs text-red-300 mt-1.5">{errors.fullName}</p>}
               </div>
 
               {/* WhatsApp */}
               <div>
-                <label htmlFor="kr-phone" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="kr-phone" className="block text-xs font-semibold text-zinc-200 mb-1.5 uppercase tracking-wider">
                   Tu WhatsApp
                 </label>
                 <input
@@ -347,20 +327,20 @@ export default function FastCaptureModal() {
                     if (errors.phone) setErrors((p) => ({ ...p, phone: '' }))
                   }}
                   placeholder="+56 9 1234 5678"
-                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors ${
-                    errors.phone ? 'border-red-500/60 focus:border-red-400' : 'border-zinc-800 focus:border-emerald-500/70'
+                  className={`w-full px-4 py-3 text-base bg-zinc-900/60 border-2 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none transition-colors ${
+                    errors.phone ? 'border-red-500/60 focus:border-red-400' : 'border-zinc-700 focus:border-emerald-500/70'
                   }`}
                 />
-                {errors.phone && <p className="text-xs text-red-400 mt-1.5">{errors.phone}</p>}
+                {errors.phone && <p className="text-xs text-red-300 mt-1.5">{errors.phone}</p>}
               </div>
 
               {/* Intent — optional, drives WhatsApp pre-fill quality */}
               <div>
                 <div className="flex items-baseline justify-between mb-1.5">
-                  <label htmlFor="kr-intent" className="block text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                    ¿En qué podemos acompañarle? <span className="text-zinc-600 normal-case tracking-normal">(opcional)</span>
+                  <label htmlFor="kr-intent" className="block text-xs font-semibold text-zinc-200 uppercase tracking-wider">
+                    ¿En qué podemos acompañarle? <span className="text-zinc-400 font-normal normal-case tracking-normal">(opcional)</span>
                   </label>
-                  <span className={`text-[10px] tabular-nums ${formData.intent.length > INTENT_MAX - 20 ? 'text-amber-400' : 'text-zinc-600'}`}>
+                  <span className={`text-[10px] tabular-nums ${formData.intent.length > INTENT_MAX - 20 ? 'text-amber-300' : 'text-zinc-400'}`}>
                     {formData.intent.length}/{INTENT_MAX}
                   </span>
                 </div>
@@ -371,15 +351,15 @@ export default function FastCaptureModal() {
                   value={formData.intent}
                   onChange={(e) => setFormData((p) => ({ ...p, intent: e.target.value.slice(0, INTENT_MAX) }))}
                   placeholder="Ej.: Consulta por tratamiento DBT para mi hija adolescente"
-                  className="w-full px-4 py-3 text-base bg-zinc-900/60 border-2 border-zinc-800 focus:border-emerald-500/70 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none transition-colors resize-none leading-snug"
+                  className="w-full px-4 py-3 text-base bg-zinc-900/60 border-2 border-zinc-700 focus:border-emerald-500/70 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none transition-colors resize-none leading-snug"
                 />
-                <p className="text-[11px] text-zinc-500 mt-1 leading-relaxed">
-                  Si lo prefiere, déjelo en blanco; preparamos un mensaje breve por usted.
+                <p className="text-[11px] text-zinc-300 mt-1 leading-relaxed">
+                  Este texto es solo un ejemplo. Si lo deja en blanco, preparamos un mensaje breve por usted.
                 </p>
               </div>
 
               {submitError && (
-                <div className="text-sm text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                <div className="text-sm text-amber-200 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   {submitError}
                 </div>
               )}
@@ -407,12 +387,12 @@ export default function FastCaptureModal() {
                 type="button"
                 onClick={() => saveAndRedirect({ skip: true })}
                 disabled={isSubmitting}
-                className="block w-full text-center text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline transition-colors"
+                className="block w-full text-center text-xs text-zinc-300 hover:text-white underline-offset-4 hover:underline transition-colors"
               >
                 Saltar y abrir WhatsApp directo
               </button>
 
-              <p className="text-[11px] text-zinc-600 text-center leading-relaxed pt-1">
+              <p className="text-[11px] text-zinc-300 text-center leading-relaxed pt-1">
                 🔒 Datos confidenciales · Instituto DBT Chile · Vitacura
               </p>
             </form>
@@ -425,9 +405,15 @@ export default function FastCaptureModal() {
             <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 flex items-center justify-center">
               <CheckCircle2 className="w-9 h-9 text-emerald-400" />
             </div>
-            <h3 className="text-xl font-semibold">Te llevamos a WhatsApp</h3>
-            <p className="text-sm text-zinc-400 leading-relaxed">
-              Si no se abrió automáticamente, toca el botón:
+            <h3 className="text-xl font-semibold text-white">
+              Su solicitud fue enviada correctamente
+            </h3>
+            <p className="text-sm text-zinc-200 leading-relaxed">
+              Recibimos sus datos. Le hemos abierto WhatsApp con un mensaje listo;
+              solo presione <span className="text-emerald-300 font-medium">Enviar</span> en la conversación.
+            </p>
+            <p className="text-xs text-zinc-400 leading-relaxed pt-1">
+              Si WhatsApp no se abrió en su dispositivo, toque el siguiente botón:
             </p>
             <a
               href={finalHref || originalHref}
@@ -441,7 +427,7 @@ export default function FastCaptureModal() {
               Abrir WhatsApp
               <ArrowRight className="w-4 h-4" />
             </a>
-            <button onClick={close} className="text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline">
+            <button onClick={close} className="text-xs text-zinc-300 hover:text-white underline-offset-4 hover:underline transition-colors">
               Cerrar
             </button>
           </div>

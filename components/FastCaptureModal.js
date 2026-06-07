@@ -443,22 +443,28 @@ export default function FastCaptureModal() {
         {view === 'success' && (
           <div className="relative px-6 pb-7 md:px-8 md:pb-8 text-center space-y-4 pt-2">
             <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 flex items-center justify-center">
-              <CheckCircle2 className="w-9 h-9 text-emerald-400" />
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-emerald-400" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62z"/>
+              </svg>
             </div>
             <h3 className="text-xl font-semibold text-white">
-              Su solicitud fue enviada correctamente
+              Su mensaje está listo en WhatsApp
             </h3>
 
             {/* ─── PRODUCTION VIEW (real site, no iframe) ──────────────── */}
             {!isInIframe && (
               <>
-                <p className="text-sm text-zinc-200 leading-relaxed">
-                  Recibimos sus datos. Le hemos abierto WhatsApp con un mensaje listo;
-                  solo presione <span className="text-emerald-300 font-medium">Enviar</span> en la conversación.
+                <p className="text-sm text-zinc-100 leading-relaxed">
+                  Para <span className="text-emerald-300 font-semibold">completar</span> su consulta,
+                  presione el botón <span className="text-emerald-300 font-semibold">Enviar</span> en
+                  la conversación que se abrió.
                 </p>
-                <p className="text-xs text-zinc-400 leading-relaxed pt-1">
-                  Si WhatsApp no se abrió en su dispositivo, toque el siguiente botón:
-                </p>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-left">
+                  <p className="text-xs text-amber-100/95 leading-relaxed">
+                    <strong className="text-amber-200">Importante:</strong> sin ese paso,
+                    no recibiremos su mensaje y no podremos contactarle.
+                  </p>
+                </div>
                 <a
                   href={finalHref || originalHref}
                   target="_blank"
@@ -468,7 +474,7 @@ export default function FastCaptureModal() {
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
                     <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
                   </svg>
-                  Abrir WhatsApp
+                  Ir a WhatsApp y enviar
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </>
@@ -483,7 +489,7 @@ export default function FastCaptureModal() {
                   </p>
                   <p className="text-xs text-amber-100/90 leading-relaxed">
                     WhatsApp no puede abrirse dentro del panel de vista previa por restricciones de seguridad.
-                    En producción (institutodbtchile.cl) este botón funciona automáticamente.
+                    En producción (institutodbtchile.cl) este flujo funciona automáticamente.
                   </p>
                 </div>
 
@@ -519,8 +525,13 @@ export default function FastCaptureModal() {
               </>
             )}
 
-            <button onClick={close} className="text-xs text-zinc-300 hover:text-white underline-offset-4 hover:underline transition-colors">
-              Cerrar
+            {/* Discreet close — intentionally NOT prominent so the consultante
+                does not abandon the flow without sending the message. */}
+            <button
+              onClick={close}
+              className="text-[10px] text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline transition-colors mt-2"
+            >
+              Cerrar sin enviar
             </button>
           </div>
         )}

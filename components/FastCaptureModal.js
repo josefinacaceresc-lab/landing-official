@@ -435,49 +435,29 @@ export default function FastCaptureModal() {
               <CheckCircle2 className="w-9 h-9 text-emerald-400" />
             </div>
             <h3 className="text-xl font-semibold text-white">
-              {isInIframe ? 'Mensaje recibido' : 'Le llevamos a WhatsApp'}
+              Mensaje recibido
             </h3>
 
-            {/* ─── PRODUCTION VIEW (real site, no iframe) ──────────────── */}
-            {!isInIframe && (
-              <>
-                <p className="text-sm text-zinc-100 leading-relaxed">
-                  Hemos recibido sus datos y se ha abierto WhatsApp con su mensaje listo.
-                  Solo presione <span className="text-emerald-300 font-semibold">Enviar</span> en
-                  la conversación para iniciar el chat.
-                </p>
-                <p className="text-xs text-zinc-300 leading-relaxed">
-                  Karina, del equipo del Instituto DBT Chile, le contactará personalmente.
-                </p>
-                <a
-                  href={finalHref || originalHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
-                    <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62z"/>
-                  </svg>
-                  Abrir WhatsApp
-                </a>
-              </>
-            )}
+            <p className="text-sm text-zinc-100 leading-relaxed">
+              Sus datos están con nosotros. Para iniciar el chat, presione el botón
+              y pulse <span className="text-emerald-300 font-semibold">Enviar</span> en WhatsApp.
+            </p>
 
-            {/* ─── PREVIEW / IFRAME VIEW (Emergent dashboard) ──────────── */}
-            {isInIframe && (
-              <>
-                <p className="text-sm text-zinc-100 leading-relaxed">
-                  Sus datos están con nosotros. Karina, del equipo del
-                  <span className="text-emerald-300 font-medium"> Instituto DBT Chile</span>,
-                  le contactará personalmente.
-                </p>
-                <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-left">
-                  <p className="text-xs text-amber-100/95 leading-relaxed">
-                    <strong className="text-amber-200">Vista previa:</strong> en producción, WhatsApp se abre automáticamente al enviar.
-                  </p>
-                </div>
-              </>
-            )}
+            <a
+              href={finalHref || originalHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62z"/>
+              </svg>
+              Abrir WhatsApp
+            </a>
+
+            <p className="text-xs text-zinc-300 leading-relaxed">
+              Karina, del equipo del <span className="text-emerald-300 font-medium">Instituto DBT Chile</span>, le contactará personalmente.
+            </p>
 
             <div className="pt-2 border-t border-zinc-800/60">
               <p className="text-[11px] text-zinc-400 leading-relaxed">

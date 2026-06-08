@@ -62,6 +62,11 @@ export default function FastCaptureModal() {
       const a = e.target.closest && e.target.closest('a[href*="wa.me"]')
       if (!a) return
 
+      // 🚫 Skip links explicitly marked as already-captured (e.g. the modal's
+      //     own "Abrir WhatsApp" button inside the success view). Without this
+      //     guard, clicking that button re-opens the modal → infinite loop.
+      if (a.dataset?.fcSkip === '1' || a.closest('[data-fc-modal-root]')) return
+
       // Don't intercept inside /admin (Dra. opening WA with a lead)
       const path = window.location.pathname || ''
       if (path.startsWith('/admin') || path.startsWith('/lakaira-ai')) return
@@ -280,6 +285,7 @@ export default function FastCaptureModal() {
     >
       <div
         ref={dialogRef}
+        data-fc-modal-root
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-md md:max-w-lg bg-gradient-to-b from-black via-zinc-950 to-black border border-emerald-500/20 rounded-t-3xl md:rounded-3xl shadow-[0_0_80px_-15px_rgba(16,185,129,0.45)] overflow-hidden text-white animate-in slide-in-from-bottom-8 duration-300"
       >

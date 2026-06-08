@@ -196,9 +196,10 @@ export default function FastCaptureModal() {
       } catch (_) { /* tracking is best-effort */ }
     }
 
-    // 3️⃣ Build a personalized WhatsApp URL — kept ONLY as a backup link
-    //     (we no longer auto-open WhatsApp; this href is reserved for any
-    //     future "Continuar por WhatsApp" button if reintroduced).
+    // 3️⃣ Build the FINAL WhatsApp URL with a personalized pre-filled
+    //     message. This is the "memory anchor" — the consultante lands on
+    //     WhatsApp with their message already typed, so they remember
+    //     contacting us when Karina calls later.
     let computedHref = originalHref
     try {
       if (cleanName) {
@@ -214,13 +215,32 @@ export default function FastCaptureModal() {
     }
     setFinalHref(computedHref)
 
-    // 4️⃣ Open WhatsApp?  ────────────────────────────────────────────────
-    //   Decision (June 2026, Dra. Cáceres business-model clarification):
-    //   The real conversion is the lead capture itself — Karina then calls
-    //   back. Redirecting to WhatsApp was an artefact that produced ghost
-    //   leads (people who never wrote anything). We now DO NOT auto-redirect.
-    //   The success view confirms the callback promise. Users who insist on
-    //   contacting by another channel are offered an email link discreetly.
+    // 4️⃣ Open WhatsApp — Cliengo-style redirect.
+    // ─── Why redirect to WhatsApp ──────────────────────────────────────
+    //   The consultante CLICKED a WhatsApp button — they expect to land
+    //   on WhatsApp. Failing to redirect:
+    //     • Confuses them (where's WhatsApp?)
+    //     • Breaks memory anchoring → when Karina calls later, they don't
+    //       remember contacting us
+    //     • Drops conversion volume drastically
+    //   In production this opens a new tab cleanly. In iframe previews
+    //   (Emergent dashboard) we skip it to avoid X-Frame-Options loops.
+    if (!isInIframe) {
+      try {
+        const a = document.createElement('a')
+        a.href = computedHref
+        a.target = '_blank'
+        a.rel = 'noopener noreferrer'
+        a.style.display = 'none'
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      } catch (_) {
+        try {
+          window.open(computedHref, '_blank', 'noopener')
+        } catch (_) { /* user can still tap the button in success view */ }
+      }
+    }
 
     setView('success')
   }
@@ -392,7 +412,10 @@ export default function FastCaptureModal() {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    <span>Enviar mensaje</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                      <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01a1.093 1.093 0 0 0-.793.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+                    </svg>
+                    <span>Iniciar Chat</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                   </>
                 )}
@@ -412,42 +435,68 @@ export default function FastCaptureModal() {
               <CheckCircle2 className="w-9 h-9 text-emerald-400" />
             </div>
             <h3 className="text-xl font-semibold text-white">
-              Su mensaje fue recibido
+              {isInIframe ? 'Mensaje recibido' : 'Le llevamos a WhatsApp'}
             </h3>
 
-            <p className="text-sm text-zinc-100 leading-relaxed">
-              Sus datos están con nosotros. Karina, del equipo del
-              <span className="text-emerald-300 font-medium"> Instituto DBT Chile</span>,
-              le contactará personalmente en las próximas horas para coordinar su consulta.
-            </p>
+            {/* ─── PRODUCTION VIEW (real site, no iframe) ──────────────── */}
+            {!isInIframe && (
+              <>
+                <p className="text-sm text-zinc-100 leading-relaxed">
+                  Hemos recibido sus datos y se ha abierto WhatsApp con su mensaje listo.
+                  Solo presione <span className="text-emerald-300 font-semibold">Enviar</span> en
+                  la conversación para iniciar el chat.
+                </p>
+                <p className="text-xs text-zinc-300 leading-relaxed">
+                  Karina, del equipo del Instituto DBT Chile, le contactará personalmente.
+                </p>
+                <a
+                  href={finalHref || originalHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 h-12 w-full rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true">
+                    <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.823 11.823 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.687-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.518 5.273l-.999 3.648 3.97-.62z"/>
+                  </svg>
+                  Abrir WhatsApp
+                </a>
+              </>
+            )}
 
-            <div className="flex items-center justify-center gap-2 pt-1">
-              <div className="relative w-2 h-2 rounded-full bg-emerald-400">
-                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
-              </div>
-              <p className="text-xs text-zinc-300 tracking-wide uppercase">
-                Karina · Instituto DBT Chile
-              </p>
-            </div>
-
-            <button
-              onClick={close}
-              className="w-full h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30 transition-all"
-            >
-              Cerrar
-            </button>
+            {/* ─── PREVIEW / IFRAME VIEW (Emergent dashboard) ──────────── */}
+            {isInIframe && (
+              <>
+                <p className="text-sm text-zinc-100 leading-relaxed">
+                  Sus datos están con nosotros. Karina, del equipo del
+                  <span className="text-emerald-300 font-medium"> Instituto DBT Chile</span>,
+                  le contactará personalmente.
+                </p>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-left">
+                  <p className="text-xs text-amber-100/95 leading-relaxed">
+                    <strong className="text-amber-200">Vista previa:</strong> en producción, WhatsApp se abre automáticamente al enviar.
+                  </p>
+                </div>
+              </>
+            )}
 
             <div className="pt-2 border-t border-zinc-800/60">
               <p className="text-[11px] text-zinc-400 leading-relaxed">
-                Si lo prefiere, también puede escribirnos directamente a{' '}
+                También puede escribirnos a{' '}
                 <a
                   href="mailto:contacto@dbtchile.cl?subject=Consulta%20Instituto%20DBT%20Chile"
-                  className="text-emerald-300 hover:text-emerald-200 underline-offset-2 hover:underline transition-colors"
+                  className="text-emerald-300 hover:text-emerald-200 underline-offset-2 hover:underline transition-colors font-medium"
                 >
                   contacto@dbtchile.cl
                 </a>
               </p>
             </div>
+
+            <button
+              onClick={close}
+              className="text-[10px] text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline transition-colors"
+            >
+              Cerrar
+            </button>
           </div>
         )}
       </div>

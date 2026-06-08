@@ -186,20 +186,26 @@ export default function FastCaptureModal() {
     //     navigation so the browser has time to flush the gtag beacon while
     //     this page is still alive. Wrapped in try/catch: tracking must
     //     never block the lead save flow.
-    //     🆕 Skip GTM event if server flagged this as a duplicate / repeat
-    //         lead so we don't inflate Google Ads conversion count.
-    const shouldFireConversion = !(serverResponse?.suppressConversion)
-    if (shouldFireConversion) {
-      try {
-        const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
-        trackWhatsAppClick(source || 'karina_modal', {
-          has_lead: true,
-          gclid: attribution?.gclid || undefined,
-          utm_source: attribution?.utm_source || undefined,
-          utm_campaign: attribution?.utm_campaign || undefined,
-        })
-      } catch (_) { /* tracking is best-effort */ }
-    }
+    //
+    //     🆕 Decision (June 2026, Dra. Cáceres): ALWAYS fire the conversion
+    //         when the consultante presses "Iniciar Chat" — even if backend
+    //         flagged it as a 24h repeat lead. Reasoning:
+    //           • Google Ads needs every engagement signal to feed Smart
+    //             Bidding correctly. Suppressing duplicates underfeeds the
+    //             optimizer and inflates CPL.
+    //           • Google Ads has its own "count: one/every" setting at the
+    //             conversion-action level — let the platform do dedup, not us.
+    //           • A real user pressing the button twice IS two intent signals.
+    try {
+      const { trackWhatsAppClick } = await import('@/lib/googleAdsTracking')
+      trackWhatsAppClick(source || 'karina_modal', {
+        has_lead: true,
+        is_repeat: !!serverResponse?.isRepeat,
+        gclid: attribution?.gclid || undefined,
+        utm_source: attribution?.utm_source || undefined,
+        utm_campaign: attribution?.utm_campaign || undefined,
+      })
+    } catch (_) { /* tracking is best-effort */ }
 
     // 3️⃣ Build the FINAL WhatsApp URL with a personalized pre-filled
     //     message. This is the "memory anchor" — the consultante lands on

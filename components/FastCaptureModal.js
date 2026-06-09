@@ -242,6 +242,11 @@ export default function FastCaptureModal() {
         a.href = computedHref
         a.target = '_blank'
         a.rel = 'noopener noreferrer'
+        // 🛡️ Mark so the pre-hydration interceptor (and the React-level
+        //     interceptor) skip this programmatic click. Without this,
+        //     dispatching .click() on a wa.me <a> would re-enter the modal
+        //     interceptor and cause an infinite "open modal" loop.
+        a.dataset.fcSkip = '1'
         a.style.display = 'none'
         document.body.appendChild(a)
         a.click()

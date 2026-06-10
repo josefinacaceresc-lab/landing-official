@@ -62,7 +62,7 @@ const faqs = [
   },
   {
     q: '¿Es reembolsable por Isapre?',
-    a: 'Sí. Emitimos boleta de honorarios médica reembolsable parcialmente según el plan de salud privado de cada consultante. Nuestro equipo administrativo acompaña al consultante en la gestión documental del trámite, incluyendo bonos electrónicos, certificados de atención y diagnósticos formales cuando son requeridos por la aseguradora.',
+    a: 'Sí. Emitimos boleta de honorarios médica reembolsable parcialmente según el plan de salud privado de cada consultante. Nuestro equipo administrativo acompaña al consultante en la gestión documental del trámite.',
   },
   {
     q: '¿Qué incluye exactamente la Evaluación de Ingreso?',

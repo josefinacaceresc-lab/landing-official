@@ -35,34 +35,49 @@ export default function Home() {
               />
             </div>
 
-            <div className="mb-6 text-sm font-semibold text-primary uppercase tracking-wider">
-              Miembro Institucional WDBTA · Programa La Mente Algorítmica
+            <div className="mb-6 text-xs md:text-sm font-semibold text-primary uppercase tracking-[0.18em]">
+              Acreditación Internacional · WDBTA · APA · ISST
             </div>
-            
-            <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 tracking-tight">
-              Instituto <em className="font-serif italic text-primary">DBT Chile</em>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
+              Terapia <em className="font-serif italic text-primary">DBT</em> y Trastornos de la <em className="font-serif italic text-primary">Personalidad</em>
             </h1>
-            
-            <p className="text-xl text-gray-600 mb-4 leading-relaxed max-w-3xl mx-auto">
-              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa.
+
+            <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
+              Instituto DBT Chile · Tratamiento clínico de alta complejidad
             </p>
-            <p className="text-base text-gray-500 mb-12 leading-relaxed max-w-2xl mx-auto">
-              Terapia Dialéctico Conductual de alta complejidad, basada en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
+
+            <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa. Basados en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
             </p>
-            
+
+            <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
+              <span className="flex items-center gap-1.5 text-emerald-800 font-medium">
+                <CheckCircle className="w-4 h-4 text-emerald-600" />
+                Reembolsable Isapre
+              </span>
+              <span className="text-emerald-300 hidden md:inline">·</span>
+              <span className="text-emerald-800">Modalidad presencial y telemática</span>
+              <span className="text-emerald-300 hidden md:inline">·</span>
+              <span className="text-emerald-800">Boleta médica</span>
+            </div>
+
             <div className="flex flex-col items-center mb-14">
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide"
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide shadow-lg hover:shadow-xl transition-all"
               >
                 <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
                   <span className="flex items-center gap-2">
-                    Solicitar valoración inicial
+                    Reservar Evaluación de Ingreso
                     <ArrowRight className="w-4 h-4" />
                   </span>
                 </a>
               </Button>
+              <p className="mt-3 text-xs text-gray-500 tracking-wide">
+                Respuesta clínica en menos de 24 horas hábiles
+              </p>
               <Link
                 href="/tratamiento"
                 className="mt-5 text-sm text-gray-500 hover:text-gray-800 border-b border-gray-300 hover:border-gray-700 pb-0.5 transition-colors"
@@ -70,7 +85,7 @@ export default function Home() {
                 Conocer el modelo clínico
               </Link>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">15+</div>
@@ -78,15 +93,15 @@ export default function Home() {
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">WDBTA</div>
-                <div className="text-sm text-gray-600">Miembro institucional en Chile</div>
+                <div className="text-sm text-gray-600">Única institución representante en Chile</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">2</div>
-                <div className="text-sm text-gray-600">Modelos integrados: DBT y Schema Therapy</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">Ph.D.</div>
+                <div className="text-sm text-gray-600">Dirección clínica con formación internacional</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">AI</div>
-                <div className="text-sm text-gray-600">ApoFix AI · Sistema clínico propio</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">24h</div>
+                <div className="text-sm text-gray-600">Respuesta clínica a tu primera consulta</div>
               </div>
             </div>
           </div>

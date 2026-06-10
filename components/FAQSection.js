@@ -60,6 +60,18 @@ const faqs = [
     q: '¿Tienen formación internacional certificada?',
     a: 'Sí. Nuestro equipo cuenta con formación en DBT por entrenadores certificados internacionalmente, manteniendo diálogo académico continuo con centros vinculados al modelo original de Marsha Linehan. El Instituto DBT Chile es miembro institucional de la World Dialectical Behavior Therapy Association (WDBTA), única representación de este organismo en el país.',
   },
+  {
+    q: '¿Es reembolsable por Isapre?',
+    a: 'Sí. Emitimos boleta de honorarios médica reembolsable parcialmente según el plan de salud privado de cada consultante. Nuestro equipo administrativo acompaña al consultante en la gestión documental del trámite, incluyendo bonos electrónicos, certificados de atención y diagnósticos formales cuando son requeridos por la aseguradora.',
+  },
+  {
+    q: '¿Qué incluye exactamente la Evaluación de Ingreso?',
+    a: 'La Evaluación de Ingreso es una sesión clínica conducida por psiquiatra o psicóloga DBT-certificada. Comprende historia clínica integral, aplicación de instrumentos estandarizados —MMPI-2 y BSL-23—, formulación diagnóstica diferencial conforme a criterios DSM-5-TR y elaboración de un plan de tratamiento personalizado, con indicación de modalidad, frecuencia y módulos prioritarios para el consultante.',
+  },
+  {
+    q: '¿El tratamiento es online o presencial?',
+    a: 'Operamos bajo un modelo híbrido. Atendemos de forma presencial en nuestra sede clínica de Santiago de Chile y de forma telemática mediante plataforma segura conforme a estándares internacionales de confidencialidad clínica, lo que nos permite acompañar a consultantes en todo el territorio nacional y a residentes chilenos en el extranjero. La indicación entre formato presencial, híbrido o telemático se establece tras la Evaluación de Ingreso, considerando severidad clínica, perfil de riesgo y preferencia del consultante.',
+  },
 ]
 
 /**

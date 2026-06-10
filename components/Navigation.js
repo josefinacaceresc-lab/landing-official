@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X, ChevronDown } from 'lucide-react'
-import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
+import { Menu, X, ChevronDown, Phone } from 'lucide-react'
+import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE, CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL } from '@/lib/whatsapp'
+import { trackPhoneClick } from '@/lib/googleAdsTracking'
 
 const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 
@@ -81,6 +82,18 @@ export default function Navigation() {
             >
               IDP-4
             </Link>
+
+            {/* Phone — visible CTA in header (Desktop) */}
+            <a
+              href={`tel:${CLINIC_PHONE_TEL}`}
+              onClick={() => trackPhoneClick('header_desktop')}
+              className="hidden lg:flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              aria-label={`Llamar al Instituto DBT Chile ${CLINIC_PHONE_DISPLAY}`}
+            >
+              <Phone className="w-4 h-4" strokeWidth={1.8} />
+              <span className="tracking-tight">{CLINIC_PHONE_DISPLAY}</span>
+            </a>
+
             <Button
               asChild
               className="rounded-none px-6 bg-primary hover:bg-primary/90 text-white text-sm font-medium tracking-wide transition-colors"
@@ -91,13 +104,24 @@ export default function Navigation() {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-700 hover:text-primary"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile right cluster: phone + menu button */}
+          <div className="flex items-center gap-1 md:hidden">
+            <a
+              href={`tel:${CLINIC_PHONE_TEL}`}
+              onClick={() => trackPhoneClick('header_mobile')}
+              className="flex items-center justify-center w-10 h-10 rounded-full text-primary hover:bg-primary/10 transition-colors"
+              aria-label={`Llamar al Instituto DBT Chile ${CLINIC_PHONE_DISPLAY}`}
+            >
+              <Phone className="w-5 h-5" strokeWidth={2} />
+            </a>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-gray-700 hover:text-primary"
+              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -147,6 +171,16 @@ export default function Navigation() {
                   Agendar Consulta
                 </a>
               </Button>
+
+              {/* Phone in mobile menu */}
+              <a
+                href={`tel:${CLINIC_PHONE_TEL}`}
+                onClick={() => { trackPhoneClick('mobile_menu'); setIsOpen(false) }}
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition-colors font-medium"
+              >
+                <Phone className="w-4 h-4" />
+                <span>Llamar · {CLINIC_PHONE_DISPLAY}</span>
+              </a>
             </div>
           </div>
         )}

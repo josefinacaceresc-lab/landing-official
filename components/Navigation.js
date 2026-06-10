@@ -3,9 +3,8 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X, ChevronDown, Phone } from 'lucide-react'
-import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE, CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_MOBILE_DISPLAY, CLINIC_MOBILE_TEL } from '@/lib/whatsapp'
-import { trackPhoneClick } from '@/lib/googleAdsTracking'
+import { Menu, X, ChevronDown } from 'lucide-react'
+import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
 
 const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 
@@ -83,28 +82,6 @@ export default function Navigation() {
               IDP-4
             </Link>
 
-            {/* Phones — both clickable (Desktop ≥1024px) */}
-            <div className="hidden lg:flex flex-col items-end leading-tight">
-              <a
-                href={`tel:${CLINIC_PHONE_TEL}`}
-                onClick={() => trackPhoneClick('header_landline')}
-                className="flex items-center gap-1.5 text-[13px] font-medium text-gray-700 hover:text-primary transition-colors"
-                aria-label={`Llamar al fijo del Instituto DBT Chile ${CLINIC_PHONE_DISPLAY}`}
-              >
-                <Phone className="w-3.5 h-3.5" strokeWidth={1.8} />
-                <span className="tracking-tight">Fijo · {CLINIC_PHONE_DISPLAY}</span>
-              </a>
-              <a
-                href={`tel:${CLINIC_MOBILE_TEL}`}
-                onClick={() => trackPhoneClick('header_mobile_line')}
-                className="flex items-center gap-1.5 text-[13px] font-medium text-gray-700 hover:text-primary transition-colors mt-0.5"
-                aria-label={`Llamar al celular del Instituto DBT Chile ${CLINIC_MOBILE_DISPLAY}`}
-              >
-                <Phone className="w-3.5 h-3.5" strokeWidth={1.8} />
-                <span className="tracking-tight">Cel · {CLINIC_MOBILE_DISPLAY}</span>
-              </a>
-            </div>
-
             <Button
               asChild
               className="rounded-none px-6 bg-primary hover:bg-primary/90 text-white text-sm font-medium tracking-wide transition-colors"
@@ -115,24 +92,13 @@ export default function Navigation() {
             </Button>
           </div>
 
-          {/* Mobile right cluster: phone + menu button */}
-          <div className="flex items-center gap-1 md:hidden">
-            <a
-              href={`tel:${CLINIC_PHONE_TEL}`}
-              onClick={() => trackPhoneClick('header_mobile')}
-              className="flex items-center justify-center w-10 h-10 rounded-full text-primary hover:bg-primary/10 transition-colors"
-              aria-label={`Llamar al Instituto DBT Chile ${CLINIC_PHONE_DISPLAY}`}
-            >
-              <Phone className="w-5 h-5" strokeWidth={2} />
-            </a>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-gray-700 hover:text-primary"
-              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-gray-700 hover:text-primary"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
@@ -182,26 +148,6 @@ export default function Navigation() {
                   Agendar Consulta
                 </a>
               </Button>
-
-              {/* Phones in mobile menu — both clickable */}
-              <div className="grid grid-cols-1 gap-2 pt-1">
-                <a
-                  href={`tel:${CLINIC_PHONE_TEL}`}
-                  onClick={() => { trackPhoneClick('mobile_menu_landline'); setIsOpen(false) }}
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition-colors font-medium text-sm"
-                >
-                  <Phone className="w-4 h-4" />
-                  <span>Fijo · {CLINIC_PHONE_DISPLAY}</span>
-                </a>
-                <a
-                  href={`tel:${CLINIC_MOBILE_TEL}`}
-                  onClick={() => { trackPhoneClick('mobile_menu_cell'); setIsOpen(false) }}
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition-colors font-medium text-sm"
-                >
-                  <Phone className="w-4 h-4" />
-                  <span>Cel · {CLINIC_MOBILE_DISPLAY}</span>
-                </a>
-              </div>
             </div>
           </div>
         )}

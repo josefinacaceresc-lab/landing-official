@@ -35,49 +35,34 @@ export default function Home() {
               />
             </div>
 
-            <div className="mb-6 text-xs md:text-sm font-semibold text-primary uppercase tracking-[0.18em]">
-              Acreditación Internacional · WDBTA · APA · ISST
+            <div className="mb-6 text-sm font-semibold text-primary uppercase tracking-wider">
+              Miembro Institucional WDBTA · Programa La Mente Algorítmica
             </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
-              Terapia <em className="font-serif italic text-primary">DBT</em> y Trastornos de la <em className="font-serif italic text-primary">Personalidad</em>
+            
+            <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 tracking-tight">
+              Instituto <em className="font-serif italic text-primary">DBT Chile</em>
             </h1>
-
-            <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
-              Instituto DBT Chile · Tratamiento clínico de alta complejidad
+            
+            <p className="text-xl text-gray-600 mb-4 leading-relaxed max-w-3xl mx-auto">
+              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa.
             </p>
-
-            <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa. Basados en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
+            <p className="text-base text-gray-500 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Terapia Dialéctico Conductual de alta complejidad, basada en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
             </p>
-
-            <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
-              <span className="flex items-center gap-1.5 text-emerald-800 font-medium">
-                <CheckCircle className="w-4 h-4 text-emerald-600" />
-                Reembolsable Isapre
-              </span>
-              <span className="text-emerald-300 hidden md:inline">·</span>
-              <span className="text-emerald-800">Modalidad presencial y telemática</span>
-              <span className="text-emerald-300 hidden md:inline">·</span>
-              <span className="text-emerald-800">Boleta médica</span>
-            </div>
-
+            
             <div className="flex flex-col items-center mb-14">
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide shadow-lg hover:shadow-xl transition-all"
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide"
               >
                 <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
                   <span className="flex items-center gap-2">
-                    Reservar Evaluación de Ingreso
+                    Solicitar valoración inicial
                     <ArrowRight className="w-4 h-4" />
                   </span>
                 </a>
               </Button>
-              <p className="mt-3 text-xs text-gray-500 tracking-wide">
-                Respuesta clínica en menos de 24 horas hábiles
-              </p>
               <Link
                 href="/tratamiento"
                 className="mt-5 text-sm text-gray-500 hover:text-gray-800 border-b border-gray-300 hover:border-gray-700 pb-0.5 transition-colors"
@@ -85,7 +70,7 @@ export default function Home() {
                 Conocer el modelo clínico
               </Link>
             </div>
-
+            
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">15+</div>
@@ -93,15 +78,15 @@ export default function Home() {
               </div>
               <div>
                 <div className="text-3xl font-serif font-light text-primary mb-1">WDBTA</div>
-                <div className="text-sm text-gray-600">Única institución representante en Chile</div>
+                <div className="text-sm text-gray-600">Miembro institucional en Chile</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">Ph.D.</div>
-                <div className="text-sm text-gray-600">Dirección clínica con formación internacional</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">2</div>
+                <div className="text-sm text-gray-600">Modelos integrados: DBT y Schema Therapy</div>
               </div>
               <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">24h</div>
-                <div className="text-sm text-gray-600">Respuesta clínica a tu primera consulta</div>
+                <div className="text-3xl font-serif font-light text-primary mb-1">AI</div>
+                <div className="text-sm text-gray-600">ApoFix AI · Sistema clínico propio</div>
               </div>
             </div>
           </div>
@@ -199,132 +184,6 @@ export default function Home() {
                   </div>
                   <p className="text-sm text-gray-600 mb-4 leading-relaxed">International Society of Schema Therapy</p>
                   <p className="text-amber-700 font-semibold tracking-wide">Certificación</p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Programas Clínicos — "El cuidado clínico que ofrecemos" (moved above ApoFix for CRO) */}
-      <section className="py-20 bg-gradient-to-b from-white to-emerald-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <div className="mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">El cuidado clínico que ofrecemos</div>
-              <h2 className="text-4xl md:text-5xl font-light text-gray-900">
-                Trabajamos los <em className="font-serif italic text-emerald-700">cuadros que otros lugares evitan</em>.
-              </h2>
-              <p className="mt-5 text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                TLP severo, comorbilidades complejas, adolescentes en crisis, adicciones combinadas con trastornos de personalidad. Casos donde la terapia tradicional ha quedado corta y se necesita una estructura clínica específica.
-              </p>
-            </div>
-
-            {/* Programas Clínicos — Patient-facing landing cards */}
-            <div className="mb-20">
-              <div className="text-center mb-10">
-                <div className="mb-3 text-sm font-semibold text-primary uppercase tracking-wider">Programas Clínicos</div>
-                <h3 className="text-3xl md:text-4xl font-light text-gray-900">
-                  Tratamientos de <em className="font-serif italic text-primary">alta complejidad</em>
-                </h3>
-              </div>
-              <div className="grid md:grid-cols-3 gap-6">
-                {/* TLP */}
-                <Link href="/tratamiento/tlp-alta-gama" className="group">
-                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
-                    <CardContent className="p-7">
-                      <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>
-                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">TLP</p>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        El tratamiento con la mayor evidencia científica acumulada para el TLP. Reducción consistente de crisis, conductas autolesivas y hospitalizaciones, bajo estándar WDBTA y con todos los componentes que el protocolo exige.
-                      </p>
-                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer el programa <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </CardContent>
-                  </Card>
-                </Link>
-
-                {/* Patología Dual — destacado */}
-                <Link href="/tratamientos/patologia-dual" className="group">
-                  <Card className="border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-primary/5 to-white h-full">
-                    <CardContent className="p-7">
-                      <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + adicciones)</span></h4>
-                      <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Cuando hay desregulación y consumo</p>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico ApoFix AI.
-                      </p>
-                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer el programa <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </CardContent>
-                  </Card>
-                </Link>
-
-                {/* DBT-A */}
-                <Link href="/tratamiento/dbt-infanto-juvenil" className="group">
-                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
-                    <CardContent className="p-7">
-                      <h4 className="text-xl font-bold text-primary mb-2">DBT Infanto-Juvenil</h4>
-                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">DBT-A</p>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Para adolescentes con desregulación emocional severa, autolesiones o riesgo suicida. Protocolo Rathus & Miller con trabajo multifamiliar obligatorio: los padres no son espectadores, son parte activa del proceso.
-                      </p>
-                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Conocer el programa <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
-                    <Landmark className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Miembro WDBTA</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Único miembro institucional de la World DBT Association en Chile. Estándares internacionales en cada tratamiento.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">DBT + Schema Therapy</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Integración exclusiva certificada ISST. Protocolo propio para desregulación emocional profunda.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
-                    <Microscope className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Dirección Ph.D.(c)</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Dirigido por la Dra.(c) Josefina Cáceres Cortés, con formación doctoral en curso y publicaciones científicas.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
-                    <Cpu className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">ApoFix AI</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Plataforma clínica de inteligencia artificial para apoyo en regulación emocional. Proyecto NexariaLabs.
-                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -597,6 +456,131 @@ export default function Home() {
                 </a>
               </Button>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones · Grupos cerrados</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-white to-emerald-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">El cuidado clínico que ofrecemos</div>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900">
+                Trabajamos los <em className="font-serif italic text-emerald-700">cuadros que otros lugares evitan</em>.
+              </h2>
+              <p className="mt-5 text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                TLP severo, comorbilidades complejas, adolescentes en crisis, adicciones combinadas con trastornos de personalidad. Casos donde la terapia tradicional ha quedado corta y se necesita una estructura clínica específica.
+              </p>
+            </div>
+
+            {/* Programas Clínicos — Patient-facing landing cards */}
+            <div className="mb-20">
+              <div className="text-center mb-10">
+                <div className="mb-3 text-sm font-semibold text-primary uppercase tracking-wider">Programas Clínicos</div>
+                <h3 className="text-3xl md:text-4xl font-light text-gray-900">
+                  Tratamientos de <em className="font-serif italic text-primary">alta complejidad</em>
+                </h3>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* TLP */}
+                <Link href="/tratamiento/tlp-alta-gama" className="group">
+                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>
+                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">TLP</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        El tratamiento con la mayor evidencia científica acumulada para el TLP. Reducción consistente de crisis, conductas autolesivas y hospitalizaciones, bajo estándar WDBTA y con todos los componentes que el protocolo exige.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                {/* Patología Dual — destacado */}
+                <Link href="/tratamientos/patologia-dual" className="group">
+                  <Card className="border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-primary/5 to-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + adicciones)</span></h4>
+                      <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Cuando hay desregulación y consumo</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico ApoFix AI.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                {/* DBT-A */}
+                <Link href="/tratamiento/dbt-infanto-juvenil" className="group">
+                  <Card className="border-0 shadow-lg hover:shadow-2xl transition-all bg-white h-full">
+                    <CardContent className="p-7">
+                      <h4 className="text-xl font-bold text-primary mb-2">DBT Infanto-Juvenil</h4>
+                      <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">DBT-A</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        Para adolescentes con desregulación emocional severa, autolesiones o riesgo suicida. Protocolo Rathus & Miller con trabajo multifamiliar obligatorio: los padres no son espectadores, son parte activa del proceso.
+                      </p>
+                      <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Conocer el programa <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
+                    <Landmark className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Miembro WDBTA</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Único miembro institucional de la World DBT Association en Chile. Estándares internacionales en cada tratamiento.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">DBT + Schema Therapy</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Integración exclusiva certificada ISST. Protocolo propio para desregulación emocional profunda.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
+                    <Microscope className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Dirección Ph.D.(c)</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Dirigido por la Dra.(c) Josefina Cáceres Cortés, con formación doctoral en curso y publicaciones científicas.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
+                    <Cpu className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">ApoFix AI</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Plataforma clínica de inteligencia artificial para apoyo en regulación emocional. Proyecto NexariaLabs.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>

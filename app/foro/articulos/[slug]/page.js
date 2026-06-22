@@ -226,7 +226,7 @@ export default function ArticuloPage({ params }) {
                   className={`text-white px-8 ${isPadres ? 'bg-amber-600 hover:bg-amber-700' : 'bg-primary hover:bg-primary/90'}`}
                 >
                   <a
-                    href="https://wa.me/56930550750?text=Hola%2C%20le%C3%AD%20el%20art%C3%ADculo%20del%20Foro%20y%20me%20gustar%C3%ADa%20agendar%20una%20consulta"
+                    href="https://wa.me/56937654001?text=Hola%2C%20le%C3%AD%20el%20art%C3%ADculo%20del%20Foro%20y%20me%20gustar%C3%ADa%20agendar%20una%20consulta"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

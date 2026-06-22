@@ -399,7 +399,7 @@ export default function PatologiaDualPage() {
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-lg font-semibold"
               />
               <p className="mt-4 text-sm text-gray-600">
-                WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl
+                WhatsApp: +56 9 3765 4001 | Email: contacto@dbtchile.cl
               </p>
             </div>
           </div>

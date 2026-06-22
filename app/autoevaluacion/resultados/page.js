@@ -312,7 +312,7 @@ function ResultadosContent() {
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
                 >
                   <a
-                    href={'https://wa.me/56930550750?text=' + encodeURIComponent('¡Hola! 👋 Soy el consultante que acaba de completar el IDP-4 con ayuda de Serena. Me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.')}
+                    href={'https://wa.me/56937654001?text=' + encodeURIComponent('¡Hola! 👋 Soy el consultante que acaba de completar el IDP-4 con ayuda de Serena. Me gustaría conversar sobre mis resultados para iniciar el tratamiento. ¿Qué pasos debo seguir? Saludos.')}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -320,7 +320,7 @@ function ResultadosContent() {
                   </a>
                 </Button>
                 <p className="mt-4 text-sm text-gray-600">
-                  WhatsApp: +56 9 3055 0750 | Email: contacto@dbtchile.cl
+                  WhatsApp: +56 9 3765 4001 | Email: contacto@dbtchile.cl
                 </p>
               </div>
             </CardContent>

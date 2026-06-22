@@ -364,8 +364,8 @@ export default function IDP4Page() {
                 <a href="tel:131"><Button size="lg" className="w-full bg-red-600 text-2xl py-6">SAMU 131</Button></a>
                 <a href="tel:4141"><Button size="lg" className="w-full bg-emerald-600 text-2xl py-6">Salud Responde *4141</Button></a>
               </div>
-              <a href="https://wa.me/56930550750?text=EMERGENCIA" target="_blank">
-                <Button size="lg" className="w-full bg-amber-600 mb-4">WhatsApp Instituto DBT: +56 9 3055 0750</Button>
+              <a href="https://wa.me/56937654001?text=EMERGENCIA" target="_blank">
+                <Button size="lg" className="w-full bg-amber-600 mb-4">WhatsApp Instituto DBT: +56 9 3765 4001</Button>
               </a>
               <div className="flex gap-4 mt-6">
                 <Button variant="outline" onClick={() => setShowSafety(false)} className="flex-1">Continuar Evaluación</Button>

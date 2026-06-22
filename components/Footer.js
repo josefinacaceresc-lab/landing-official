@@ -161,7 +161,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-emerald-400 transition-colors text-left"
                 >
-                  WhatsApp: +56 9 3055 0750
+                  WhatsApp: +56 9 3765 4001
                 </a>
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">

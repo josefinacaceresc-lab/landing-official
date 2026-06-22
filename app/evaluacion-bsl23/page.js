@@ -8,7 +8,7 @@ import { AlertTriangle, Phone, CheckCircle, Loader2, Heart, Lock, MessageCircle,
 import Link from 'next/link'
 // WhatsApp now uses direct <a href> tags — no JS handler needed
 
-const WA_HREF = 'https://wa.me/56930550750?text=' + encodeURIComponent('¡Hola! 👋 Vi su sitio web y me gustaría agendar una consulta. Muchas gracias.')
+const WA_HREF = 'https://wa.me/56937654001?text=' + encodeURIComponent('¡Hola! 👋 Vi su sitio web y me gustaría agendar una consulta. Muchas gracias.')
 
 // BSL-23 Questions - Dr. Martin Bohus
 // Borderline Symptom List - 23 items, 0-4 scale
@@ -371,9 +371,9 @@ export default function BSL23Page() {
                     Nuestro equipo especializado en crisis puede atenderte de inmediato:
                   </p>
                   <div className="space-y-3">
-                    <a href="https://wa.me/56930550750?text=EMERGENCIA%20-%20Necesito%20atención%20inmediata" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/56937654001?text=EMERGENCIA%20-%20Necesito%20atención%20inmediata" target="_blank" rel="noopener noreferrer">
                       <Button size="lg" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">
-                        WhatsApp Emergencia: +56 9 3055 0750
+                        WhatsApp Emergencia: +56 9 3765 4001
                       </Button>
                     </a>
                     <a href="tel:228480652">

@@ -260,7 +260,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               {
                 '@type': 'ContactPoint',
                 contactType: 'appointment',
-                telephone: '+56-9-30550750',
+                telephone: '+56-9-37654001',
                 contactOption: 'WhatsApp',
                 areaServed: 'CL',
                 availableLanguage: ['Spanish'],

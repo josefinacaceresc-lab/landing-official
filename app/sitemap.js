@@ -16,6 +16,7 @@ export default function sitemap() {
     { url: `${BASE}/terapia-dbt`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
     { url: `${BASE}/dbt-y-adicciones`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
     { url: `${BASE}/dbt-kids-and-teens`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
+    { url: `${BASE}/dbt-trauma`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
     { url: `${BASE}/equipo`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/tratamiento`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/tratamiento/tlp-alta-gama`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },

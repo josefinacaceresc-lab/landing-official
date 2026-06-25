@@ -39,29 +39,41 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata · densidad keyword Chile ───────────────────────────────
 export const metadata = {
-  title: 'DBT-SUD en Chile · Primer Programa DBT para Adicciones · Instituto DBT Chile',
-  description: 'Primer programa DBT-SUD del país. Tratamiento integrado de adicciones y desregulación emocional bajo el modelo Linehan-Dimeff. Dirección clínica con +5 años en el Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak. Formación DBT Iberoamérica.',
+  title: 'Tratamiento de Adicciones y Trastornos de Personalidad · DBT-SUD Chile · Instituto DBT Chile',
+  description: 'Centro clínico de tratamiento de adicciones y trastornos de personalidad en Santiago de Chile. Primer programa DBT-SUD del país. Atendemos alcoholismo, consumo de drogas, patología dual, TLP y consumo. Dirección clínica con experiencia en el Instituto Psiquiátrico Dr. José Horwitz Barak.',
   keywords: [
-    'DBT y adicciones',
-    'DBT adicciones',
-    'tratamiento DBT adicciones',
-    'DBT-SUD Chile',
-    'primer programa DBT-SUD',
+    // Nivel 1 — alto volumen
+    'tratamiento adicciones',
+    'tratamiento para adicciones',
+    'centro tratamiento adicciones Santiago',
+    'tratamiento adicciones Chile',
+    'psicólogo adicciones Santiago',
+    'psiquiatra adicciones Santiago',
+    'tratamiento alcoholismo Santiago',
+    'tratamiento drogas Chile',
+    // Nivel 2 — calidad clínica
     'patología dual Chile',
     'TLP y adicciones',
+    'adicciones y trastornos de personalidad',
     'trastorno límite y consumo',
-    'adicciones y trastorno límite de personalidad',
+    'tratamiento integrado adicciones',
+    'DBT adicciones',
+    'DBT y adicciones',
+    'DBT-SUD Chile',
+    'primer programa DBT-SUD',
     'abstinencia dialéctica',
-    'DBT consumo de sustancias',
-    'tratamiento integrado patología dual',
-    'comorbilidad TLP adicciones',
-    'Instituto DBT Chile adicciones',
     'Linehan Dimeff DBT adicciones',
+    // Long-tail emocional
+    'no puedo dejar de tomar',
+    'mi hijo consume drogas qué hacer',
+    'tratamiento adolescentes consumo de sustancias',
+    'centro tratamiento patología dual',
+    'Instituto DBT Chile adicciones',
   ],
   alternates: { canonical: 'https://institutodbtchile.cl/dbt-y-adicciones' },
   openGraph: {
-    title: 'DBT-SUD en Chile · Primer Programa DBT para Adicciones',
-    description: 'Hito clínico nacional: primer programa DBT-SUD del país, conforme al modelo Linehan-Dimeff. Tratamiento integrado de adicciones y desregulación emocional.',
+    title: 'Tratamiento de Adicciones y Trastornos de Personalidad · DBT-SUD Chile',
+    description: 'Primer programa DBT-SUD del país. Tratamiento integrado de adicciones y desregulación emocional bajo el modelo Linehan-Dimeff. Santiago de Chile.',
     url: 'https://institutodbtchile.cl/dbt-y-adicciones',
     type: 'article',
     locale: 'es_CL',
@@ -174,6 +186,18 @@ const pasos = [
 ]
 
 const faqs = [
+  {
+    q: '¿Atienden alcoholismo y consumo de drogas?',
+    a: 'Sí. El programa DBT-SUD aborda consumo problemático de alcohol, cocaína, cannabis, opiáceos, estimulantes y otras sustancias. Lo que distingue clínicamente al programa es que no trabajamos únicamente sobre la conducta de consumo, sino sobre la desregulación emocional y la estructura clínica subyacente que sostiene el ciclo.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre este programa y un centro de tratamiento de adicciones tradicional?',
+    a: 'Los centros tradicionales de adicciones se enfocan en la abstinencia y el control de estímulos, abordando el consumo de forma aislada. El programa DBT-SUD del Instituto trata simultáneamente el consumo y la desregulación emocional, las conductas autolesivas, la ideación suicida y el trauma complejo cuando están presentes. Es el único modelo en Chile con protocolo Linehan-Dimeff íntegro y dirección clínica formada en el Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak.',
+  },
+  {
+    q: '¿Atienden adolescentes con consumo de sustancias y trastornos de conducta?',
+    a: 'Sí. El programa atiende adolescentes y adultos jóvenes con consumo problemático y crisis emocionales recurrentes. El abordaje integra DBT-SUD con DBT-A (DBT para adolescentes), con trabajo multifamiliar obligatorio cuando la familia es parte del sistema de tratamiento. Las familias no son espectadores: son parte activa del proceso clínico.',
+  },
   {
     q: '¿Qué es exactamente DBT-SUD?',
     a: 'DBT-SUD (Dialectical Behavior Therapy for Substance Use Disorders) es la adaptación del modelo DBT original al tratamiento integrado de personas con desregulación emocional severa y conductas problemáticas de consumo de sustancias. Fue desarrollada por Marsha Linehan, Linda Dimeff y su equipo en la Universidad de Washington. Mantiene la esencia de la DBT estándar —regulación emocional, tolerancia al malestar, mindfulness y efectividad interpersonal— e incorpora estrategias específicas: abstinencia dialéctica, clear mind, burning bridges y building new ones.',
@@ -342,6 +366,10 @@ export default function DBTAdiccionesPage() {
               <em className="font-serif italic text-primary">DBT</em> y Adicciones
             </h1>
 
+            <p className="text-base md:text-lg text-gray-700 mb-4 font-normal">
+              Tratamiento clínico de <strong>adicciones y trastornos de personalidad</strong> · Santiago de Chile
+            </p>
+
             <p className="text-lg md:text-xl text-gray-700 mb-4 font-light tracking-wide">
               Patología Dual · Tratamiento integrado DBT-SUD · Instituto DBT Chile
             </p>
@@ -428,6 +456,47 @@ export default function DBTAdiccionesPage() {
                 El concepto central del modelo es la <strong>abstinencia dialéctica</strong>: la meta clínica es la abstinencia total, pero si ocurre una recaída, ésta se integra al proceso terapéutico como oportunidad de aprendizaje y no como fracaso. Con este modelo, el consumo deja de ser un círculo de culpa y abandono y se transforma en un proceso dialéctico de ensayo, error y aprendizaje.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ¿Para quién está indicado? — Sección de captura long-tail ─ */}
+      <section className="py-20 bg-white border-y border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="mb-3 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
+                Indicación clínica
+              </div>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 leading-tight">
+                ¿Para <em className="font-serif italic text-primary">quién</em> está indicado este programa?
+              </h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                El programa de DBT y Adicciones del Instituto DBT Chile está diseñado para consultantes y familias que reconocen alguna de las siguientes situaciones clínicas:
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                'El consumo de alcohol, cocaína, cannabis u otras sustancias ha comenzado a controlar áreas centrales de la vida.',
+                'Han existido intentos previos de tratamiento de adicciones que no lograron resultados sostenidos.',
+                'Coexistencia del consumo con desregulación emocional severa, autolesiones o ideación suicida recurrente.',
+                'Diagnóstico previo o sospecha clínica de Trastorno Límite de la Personalidad (TLP) acompañado de consumo problemático.',
+                'Adolescentes o adultos jóvenes con consumo de sustancias y crisis emocionales frecuentes.',
+                'Familias buscando un tratamiento clínico integrado y serio, no un centro generalista de adicciones.',
+                'Profesionales de la salud mental derivando casos de patología dual que requieren especialización DBT-SUD.',
+                'Consultantes con trauma complejo coexistente con conductas adictivas.',
+              ].map((indicacion, i) => (
+                <div key={i} className="flex gap-3 p-4 rounded-lg bg-gray-50/60 border border-gray-100">
+                  <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" strokeWidth={1.8} />
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">{indicacion}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-10 text-center text-xs text-gray-500 max-w-2xl mx-auto leading-relaxed italic">
+              Si reconoces alguna de estas situaciones, una conversación clínica confidencial es el primer paso. Atendemos en modalidad presencial en Santiago y de forma telemática para todo Chile.
+            </p>
           </div>
         </div>
       </section>

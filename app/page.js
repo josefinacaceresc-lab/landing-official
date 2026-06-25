@@ -277,6 +277,31 @@ export default function Home() {
                   </Card>
                 </Link>
               </div>
+
+              {/* ── Sub-strip de especializaciones SEO/Ads landings ── */}
+              <div className="mt-10 pt-10 border-t border-emerald-100/70">
+                <div className="text-center mb-6">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-[0.18em]">Otras especializaciones clínicas</div>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <Link href="/terapia-dbt" className="group block p-5 bg-white rounded-xl border border-gray-100 hover:border-primary/40 hover:shadow-md transition-all">
+                    <div className="text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">Terapia DBT</div>
+                    <div className="text-xs text-gray-500 leading-snug">Visión general del modelo Linehan · Acreditación WDBTA</div>
+                  </Link>
+                  <Link href="/dbt-trauma" className="group block p-5 bg-white rounded-xl border border-gray-100 hover:border-primary/40 hover:shadow-md transition-all">
+                    <div className="text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">DBT-PTSD · Trauma complejo</div>
+                    <div className="text-xs text-gray-500 leading-snug">Único en Chile · Modelo Professor Dr. Martin Bohus</div>
+                  </Link>
+                  <Link href="/dbt-y-adicciones" className="group block p-5 bg-white rounded-xl border border-gray-100 hover:border-primary/40 hover:shadow-md transition-all">
+                    <div className="text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">DBT y Adicciones</div>
+                    <div className="text-xs text-gray-500 leading-snug">Tratamiento integrado para patología dual</div>
+                  </Link>
+                  <Link href="/dbt-kids-and-teens" className="group block p-5 bg-white rounded-xl border border-gray-100 hover:border-primary/40 hover:shadow-md transition-all">
+                    <div className="text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">DBT Kids and Teens</div>
+                    <div className="text-xs text-gray-500 leading-snug">Modelo propio DialectIA Teens · Autonomía emocional</div>
+                  </Link>
+                </div>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

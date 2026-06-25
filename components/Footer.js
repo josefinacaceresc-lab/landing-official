@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-12 gap-10 mb-12">
           {/* Brand + Address + Map — wider left column */}
-          <div className="md:col-span-5">
+          <div className="md:col-span-4">
             {/* Logo on a white patch so mix-blend-multiply neutralises the JPG bg */}
             <div className="inline-block bg-white rounded-lg p-3 shadow-md mb-4">
               <img
@@ -116,8 +116,45 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Programas Clínicos — landings SEO/Ads (enlaces internos críticos para indexación) */}
+          <div className="md:col-span-2">
+            <h3 className="text-lg font-semibold mb-4 text-emerald-400">Programas</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/terapia-dbt" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  Terapia DBT
+                </Link>
+              </li>
+              <li>
+                <Link href="/dbt-trauma" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  DBT-PTSD · Trauma complejo
+                </Link>
+              </li>
+              <li>
+                <Link href="/dbt-y-adicciones" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  DBT y Adicciones
+                </Link>
+              </li>
+              <li>
+                <Link href="/dbt-kids-and-teens" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  DBT Kids and Teens
+                </Link>
+              </li>
+              <li>
+                <Link href="/tratamiento/tlp-alta-gama" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  TLP Alta Gama
+                </Link>
+              </li>
+              <li>
+                <Link href="/tratamientos/patologia-dual" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  Patología Dual
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Investigación */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <h3 className="text-lg font-semibold mb-4 text-emerald-400">Investigación</h3>
             <ul className="space-y-2">
               <li>

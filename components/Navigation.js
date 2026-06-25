@@ -36,9 +36,45 @@ export default function Navigation() {
               ¿Por qué?
             </Link>
             
-            <Link href="/tratamiento" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Tratamiento
-            </Link>
+            {/* Tratamiento Dropdown — incluye las landings SEO/Ads */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 text-gray-700 hover:text-primary transition-colors font-medium">
+                Tratamiento
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                <div className="py-2">
+                  <Link href="/tratamiento" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">Programa DBT estándar</div>
+                    <div className="text-sm text-gray-500">Doce meses · Modelo Linehan</div>
+                  </Link>
+                  <Link href="/terapia-dbt" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">Terapia DBT</div>
+                    <div className="text-sm text-gray-500">Visión general · Acreditación WDBTA</div>
+                  </Link>
+                  <Link href="/dbt-trauma" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">DBT-PTSD · Trauma complejo</div>
+                    <div className="text-sm text-gray-500">Modelo Professor Dr. Martin Bohus</div>
+                  </Link>
+                  <Link href="/dbt-y-adicciones" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">DBT y Adicciones</div>
+                    <div className="text-sm text-gray-500">Patología dual · Tratamiento integrado</div>
+                  </Link>
+                  <Link href="/dbt-kids-and-teens" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">DBT Kids and Teens</div>
+                    <div className="text-sm text-gray-500">Modelo propio DialectIA Teens</div>
+                  </Link>
+                  <Link href="/tratamiento/tlp-alta-gama" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">TLP Alta Gama</div>
+                    <div className="text-sm text-gray-500">Programa intensivo personalizado</div>
+                  </Link>
+                  <Link href="/tratamientos/patologia-dual" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">Patología Dual</div>
+                    <div className="text-sm text-gray-500">Comorbilidad psiquiátrica</div>
+                  </Link>
+                </div>
+              </div>
+            </div>
             
             <Link href="/esquema" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Esquema
@@ -142,6 +178,18 @@ export default function Navigation() {
               <Link href="/" className="block text-gray-700 hover:text-primary font-medium">
                 Inicio
               </Link>
+
+              {/* Programas clínicos en móvil — para SEO + UX */}
+              <div className="border-t border-gray-100 pt-3">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Programas Clínicos</div>
+                <Link href="/tratamiento" className="block py-1 text-gray-700 hover:text-primary">Programa DBT estándar</Link>
+                <Link href="/terapia-dbt" className="block py-1 text-gray-700 hover:text-primary">Terapia DBT</Link>
+                <Link href="/dbt-trauma" className="block py-1 text-gray-700 hover:text-primary">DBT-PTSD · Trauma complejo</Link>
+                <Link href="/dbt-y-adicciones" className="block py-1 text-gray-700 hover:text-primary">DBT y Adicciones</Link>
+                <Link href="/dbt-kids-and-teens" className="block py-1 text-gray-700 hover:text-primary">DBT Kids and Teens</Link>
+                <Link href="/tratamiento/tlp-alta-gama" className="block py-1 text-gray-700 hover:text-primary">TLP Alta Gama</Link>
+                <Link href="/tratamientos/patologia-dual" className="block py-1 text-gray-700 hover:text-primary">Patología Dual</Link>
+              </div>
               
               <div>
                 <button

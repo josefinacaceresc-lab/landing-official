@@ -6,7 +6,7 @@
  *      "DBT trauma Chile", "TEPT complejo Chile".
  *   2. Ads exact-match para campañas de trauma con CPC bajo.
  *   3. Posicionar al Instituto DBT Chile como único representante del
- *      modelo DBT-PTSD del Prof. Dr. Martin Bohus (ZI Mannheim) en Chile,
+ *      modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim) en Chile,
  *      vehiculado por la Dra.(c) Josefina Cáceres Cortés a través de la
  *      relación institucional con la WDBTA.
  *
@@ -34,7 +34,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 export const metadata = {
   title: 'DBT-PTSD · Tratamiento del Trauma Complejo en Chile · Instituto DBT Chile',
   description:
-    'Único Instituto en Chile con el modelo DBT-PTSD del Prof. Dr. Martin Bohus (ZI Mannheim). Implementación clínica conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA. Tratamiento estructurado para trauma complejo, TEPT-c y comorbilidad con TLP.',
+    'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim). Implementación clínica conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA. Tratamiento estructurado para trauma complejo, TEPT-c y comorbilidad con TLP.',
   keywords: [
     'DBT-PTSD',
     'DBT trauma',
@@ -51,7 +51,7 @@ export const metadata = {
   openGraph: {
     title: 'DBT-PTSD · Tratamiento del Trauma Complejo en Chile',
     description:
-      'Único Instituto en Chile con el modelo DBT-PTSD del Prof. Dr. Martin Bohus. Implementación local conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA.',
+      'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus. Implementación local conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA.',
     url: 'https://institutodbtchile.cl/dbt-trauma',
     type: 'article',
     locale: 'es_CL',
@@ -103,11 +103,11 @@ const indicaciones = [
 const diferenciadores = [
   {
     titulo: 'Protocolo de alta fidelidad',
-    descripcion: 'Aplicación del manual original DBT-PTSD del Prof. Dr. Martin Bohus, sin adaptaciones reduccionistas. Mismo estándar metodológico del Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania).',
+    descripcion: 'Aplicación del manual original DBT-PTSD del Professor Dr. Martin Bohus, sin adaptaciones reduccionistas. Mismo estándar metodológico del Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania).',
   },
   {
     titulo: 'Transmisión directa Bohus → Cáceres',
-    descripcion: 'La implementación clínica nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en relación institucional sostenida con el Prof. Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
+    descripcion: 'La implementación clínica nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en relación institucional sostenida con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
   },
   {
     titulo: 'Equipo de consultoría especializado',
@@ -122,7 +122,7 @@ const diferenciadores = [
 const faqs = [
   {
     q: '¿Qué es exactamente DBT-PTSD?',
-    a: 'DBT-PTSD es un protocolo de tratamiento desarrollado por el Prof. Dr. Martin Bohus en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania) para el abordaje del Trastorno por Estrés Postraumático complejo (TEPT-c) con comorbilidad frecuente al Trastorno Límite de la Personalidad. Combina los principios estructurales de DBT estándar con un módulo específico de exposición al trauma, en una secuencia clínicamente jerarquizada.',
+    a: 'DBT-PTSD es un protocolo de tratamiento desarrollado por el Professor Dr. Martin Bohus en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania) para el abordaje del Trastorno por Estrés Postraumático complejo (TEPT-c) con comorbilidad frecuente al Trastorno Límite de la Personalidad. Combina los principios estructurales de DBT estándar con un módulo específico de exposición al trauma, en una secuencia clínicamente jerarquizada.',
   },
   {
     q: '¿En qué se diferencia DBT-PTSD de EMDR o de Terapia de Exposición Prolongada?',
@@ -130,11 +130,11 @@ const faqs = [
   },
   {
     q: '¿Es el Instituto DBT Chile el único centro chileno con este modelo?',
-    a: 'Sí. El Instituto DBT Chile es el único centro clínico en Chile que implementa el modelo DBT-PTSD original del Prof. Dr. Martin Bohus, conforme al manual del ZI Mannheim. La implementación nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en el marco de su relación institucional con el Prof. Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
+    a: 'Sí. El Instituto DBT Chile es el único centro clínico en Chile que implementa el modelo DBT-PTSD original del Professor Dr. Martin Bohus, conforme al manual del ZI Mannheim. La implementación nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en el marco de su relación institucional con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
   },
   {
-    q: '¿Quién fue el Prof. Dr. Martin Bohus?',
-    a: 'El Prof. Dr. Martin Bohus es Profesor Emérito de Psiquiatría y Psicoterapia de la Universidad de Heidelberg, fundador del Departamento de Psiquiatría y Psicoterapia Psicosomática del Zentralinstitut für Seelische Gesundheit (ZI Mannheim) y autor del manual DBT-PTSD. Es una de las máximas autoridades mundiales en tratamiento de trauma complejo y comorbilidad con Trastorno Límite de la Personalidad.',
+    q: '¿Quién fue el Professor Dr. Martin Bohus?',
+    a: 'El Professor Dr. Martin Bohus es Profesor Emérito de Psiquiatría y Psicoterapia de la Universidad de Heidelberg, fundador del Departamento de Psiquiatría y Psicoterapia Psicosomática del Zentralinstitut für Seelische Gesundheit (ZI Mannheim) y autor del manual DBT-PTSD. Es una de las máximas autoridades mundiales en tratamiento de trauma complejo y comorbilidad con Trastorno Límite de la Personalidad.',
   },
   {
     q: '¿Cuánto dura el tratamiento DBT-PTSD?',
@@ -174,7 +174,7 @@ const jsonLd = {
       name: 'DBT-PTSD · Terapia Dialéctico Conductual para Trastorno por Estrés Postraumático Complejo',
       alternateName: ['DBT-PTSD', 'DBT for PTSD', 'DBT trauma', 'Tratamiento de Trauma Complejo'],
       description:
-        'Protocolo de tratamiento estructurado del trauma complejo desarrollado por el Prof. Dr. Martin Bohus en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania), específicamente indicado para Trastorno por Estrés Postraumático Complejo (TEPT-c) y comorbilidad con Trastorno Límite de la Personalidad.',
+        'Protocolo de tratamiento estructurado del trauma complejo desarrollado por el Professor Dr. Martin Bohus en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania), específicamente indicado para Trastorno por Estrés Postraumático Complejo (TEPT-c) y comorbilidad con Trastorno Límite de la Personalidad.',
       medicineSystem: 'Psicoterapia basada en evidencia',
       relevantSpecialty: ['Psiquiatría', 'Psicología clínica', 'Psicotraumatología'],
       study: {
@@ -186,7 +186,7 @@ const jsonLd = {
     {
       '@type': 'Person',
       '@id': 'https://institutodbtchile.cl/dbt-trauma#bohus',
-      name: 'Prof. Dr. Martin Bohus',
+      name: 'Professor Dr. Martin Bohus',
       honorificPrefix: 'Prof. Dr. med. Dr. phil.',
       jobTitle: 'Profesor Emérito de Psiquiatría y Psicoterapia',
       affiliation: [
@@ -243,7 +243,7 @@ export default function DBTTraumaPage() {
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-6 text-xs md:text-sm font-semibold text-primary uppercase tracking-[0.18em]">
-              Único en Chile · Modelo Prof. Dr. Martin Bohus · WDBTA
+              Único en Chile · Modelo Professor Dr. Martin Bohus · WDBTA
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
@@ -253,11 +253,11 @@ export default function DBTTraumaPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
-              Modelo del Prof. Dr. Martin Bohus · Zentralinstitut für Seelische Gesundheit, ZI Mannheim
+              Modelo del Professor Dr. Martin Bohus · Zentralinstitut für Seelische Gesundheit, ZI Mannheim
             </p>
 
             <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Implementación clínica nacional desarrollada por la Dra.(c) Josefina Cáceres Cortés, en relación institucional sostenida con el Prof. Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile con el modelo original DBT-PTSD de alta fidelidad.
+              Implementación clínica nacional desarrollada por la Dra.(c) Josefina Cáceres Cortés, en relación institucional sostenida con el Professor Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile con el modelo original DBT-PTSD de alta fidelidad.
             </p>
 
             <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
@@ -350,8 +350,8 @@ export default function DBTTraumaPage() {
                     Autor del modelo
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">Prof. Dr. Martin Bohus</h3>
-                <p className="text-sm text-gray-500 mb-4 italic">Prof. Dr. med. Dr. phil.</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-1">Professor Dr. Martin Bohus</h3>
+                <p className="text-sm text-gray-500 mb-4 italic">Doctor en Medicina · Universidad de Heidelberg</p>
                 <ul className="space-y-2 text-sm text-gray-700 leading-relaxed">
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Profesor Emérito de Psiquiatría y Psicoterapia, Universidad de Heidelberg.</li>
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Fundador del Departamento de Psiquiatría y Psicoterapia Psicosomática del ZI Mannheim.</li>
@@ -374,7 +374,7 @@ export default function DBTTraumaPage() {
                 <p className="text-sm text-gray-500 mb-4 italic">Directora clínica · Instituto DBT Chile</p>
                 <ul className="space-y-2 text-sm text-gray-700 leading-relaxed">
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Desarrolladora de la implementación clínica del modelo DBT-PTSD en Chile.</li>
-                  <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Relación institucional sostenida con el Prof. Bohus a través de la WDBTA.</li>
+                  <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Relación institucional sostenida con el Professor Bohus a través de la WDBTA.</li>
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Formación en DBT estándar, DBT-PTSD y Terapia de Esquemas bajo estándares internacionales.</li>
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Responsable del único programa DBT-PTSD de alta fidelidad activo en territorio chileno.</li>
                 </ul>

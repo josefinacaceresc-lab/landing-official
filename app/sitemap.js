@@ -14,6 +14,7 @@ export default function sitemap() {
   const staticRoutes = [
     { url: BASE, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${BASE}/terapia-dbt`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
+    { url: `${BASE}/dbt-y-adicciones`, lastModified: now, changeFrequency: 'weekly', priority: 0.98 },
     { url: `${BASE}/equipo`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/tratamiento`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/tratamiento/tlp-alta-gama`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },

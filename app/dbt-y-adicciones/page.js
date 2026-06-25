@@ -220,7 +220,7 @@ const faqs = [
   },
   {
     q: '¿Quién dirige el área de DBT y Adicciones del Instituto?',
-    a: 'El área es co-dirigida por la Ps. Trahice Véliz y el Dr. Luis Acuña, ambos con más de cinco años a cargo del Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak —centro público de referencia nacional en salud mental— y con formación especializada en DBT-SUD a través de DBT Iberoamérica.',
+    a: 'El área es co-dirigida por la Ps. Trahice Véliz y el Dr. Luis Acuña, ambos con más de cinco años a cargo del Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak —centro público de referencia nacional en salud mental—. La Ps. Véliz cuenta con formación especializada en DBT-SUD por DBT Iberoamérica.',
   },
   {
     q: '¿Qué evidencia científica respalda DBT-SUD?',
@@ -311,11 +311,10 @@ const jsonLd = {
       name: 'Luis Acuña',
       honorificPrefix: 'Dr.',
       jobTitle: 'Co-Director del área DBT y Adicciones · Instituto DBT Chile',
-      description: 'Médico especialista con más de cinco años a cargo del Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak, con formación especializada en DBT-SUD por DBT Iberoamérica.',
+      description: 'Médico especialista con más de cinco años a cargo del Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak. Especializado en abordaje farmacológico de patología dual y comorbilidad psiquiátrica.',
       worksFor: { '@id': 'https://institutodbtchile.cl/#clinic' },
       affiliation: [
         { '@type': 'Organization', name: 'Instituto Psiquiátrico Dr. José Horwitz Barak · Sector Z' },
-        { '@type': 'Organization', name: 'DBT Iberoamérica' },
       ],
     },
     {
@@ -678,11 +677,11 @@ export default function DBTAdiccionesPage() {
                     </div>
                     <div className="flex gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                      <span>Formación especializada en <strong>DBT-SUD</strong> por <strong>DBT Iberoamérica</strong>.</span>
+                      <span>Especializado en abordaje farmacológico de patología dual y comorbilidad psiquiátrica.</span>
                     </div>
                     <div className="flex gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                      <span>Especializado en abordaje farmacológico de patología dual y comorbilidad psiquiátrica.</span>
+                      <span>Experiencia clínica en pacientes con trastornos por uso de sustancias y comorbilidad mayor.</span>
                     </div>
                   </div>
                 </CardContent>

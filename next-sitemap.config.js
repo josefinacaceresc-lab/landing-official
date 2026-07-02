@@ -65,6 +65,12 @@ module.exports = {
       '/tratamiento/dbt-infanto-juvenil': { priority: 0.9, changefreq: 'monthly' },
       '/tratamientos/patologia-dual': { priority: 0.9, changefreq: 'monthly' },
 
+      // ── SEO/Ads Landings — máxima prioridad para keywords estratégicas ──
+      '/terapia-dbt': { priority: 0.98, changefreq: 'weekly' },
+      '/dbt-trauma': { priority: 0.98, changefreq: 'weekly' },
+      '/dbt-y-adicciones': { priority: 0.98, changefreq: 'weekly' },
+      '/dbt-kids-and-teens': { priority: 0.98, changefreq: 'weekly' },
+
       // Team & About
       '/equipo': { priority: 0.85, changefreq: 'monthly' },
 

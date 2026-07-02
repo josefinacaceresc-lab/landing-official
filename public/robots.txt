@@ -1,106 +1,21 @@
-# ─── Generales ────────────────────────────────────────────────────────────
+# *
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /admin/
 Disallow: /admin
-Disallow: **/resultados
+Disallow: /admin/
+Disallow: /lakaira-ai
+Disallow: /lakaira-ai/
+Disallow: /autoevaluacion/resultados
+Disallow: /evaluacion-idp4/resultados
+Disallow: /evaluacion-bsl23/resultados
 
-# ─── Googlebot ────────────────────────────────────────────────────────────
+# Googlebot
 User-agent: Googlebot
 Allow: /
-Disallow: /api/
-Disallow: /admin/
 
-# ─── Bingbot ──────────────────────────────────────────────────────────────
-User-agent: Bingbot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# ─── AI Search Crawlers (autorización explícita) ──────────────────────────
-# Estos bots indexan contenido para citarlo en respuestas generativas.
-# Las páginas clínicas son educativas y públicas: les damos permiso.
-
-# OpenAI ChatGPT
-User-agent: GPTBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-User-agent: ChatGPT-User
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-User-agent: OAI-SearchBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Anthropic Claude
-User-agent: ClaudeBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-User-agent: Claude-Web
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-User-agent: anthropic-ai
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Perplexity
-User-agent: PerplexityBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Google Gemini / Bard (entrenamiento)
-User-agent: Google-Extended
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Apple Intelligence
-User-agent: Applebot-Extended
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Meta AI
-User-agent: FacebookBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-User-agent: meta-externalagent
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# DeepSeek
-User-agent: DeepSeekBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# You.com
-User-agent: YouBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# Common Crawl (datasets de entrenamiento)
-User-agent: CCBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-# ─── Host & Sitemaps ──────────────────────────────────────────────────────
+# Host
 Host: https://institutodbtchile.cl
+
+# Sitemaps
 Sitemap: https://institutodbtchile.cl/sitemap.xml

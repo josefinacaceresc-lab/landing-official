@@ -17,6 +17,9 @@ import 'katex/dist/katex.min.css'
 import { BlockMath, InlineMath } from 'react-katex'
 
 const PDF_URL = 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/5446dac1f0494c63ba43949b795c6f34_preprint_inferencia_activa.pdf'
+const DOI = '10.5281/zenodo.20369629'
+const DOI_URL = `https://doi.org/${DOI}`
+const ZENODO_URL = 'https://zenodo.org/records/20369629'
 
 // ScholarlyArticle JSON-LD schema (Google Scholar + AI engines)
 const articleSchema = {
@@ -50,6 +53,17 @@ const articleSchema = {
   about: ['Inferencia Activa', 'Energía Libre Variacional', 'Sufrimiento Psicológico', 'Red Bayesiana', 'DBT'],
   keywords: 'inferencia activa, energía libre variacional, sufrimiento, disonancia lógica absoluta, red bayesiana, procesamiento psicológico, coherencia, DBT, regulación emocional',
   url: 'https://institutodbtchile.cl/investigacion/preprint-inferencia-activa',
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'DOI',
+    value: '10.5281/zenodo.20369629',
+    url: 'https://doi.org/10.5281/zenodo.20369629',
+  },
+  sameAs: [
+    'https://doi.org/10.5281/zenodo.20369629',
+    'https://zenodo.org/records/20369629',
+  ],
+  citation: 'Cáceres Cortés, J. (2026). Procesamiento psicológico como sistema de inferencia activa: Fundamentos computacionales de la coherencia y el sufrimiento. Zenodo. https://doi.org/10.5281/zenodo.20369629',
   encoding: {
     '@type': 'MediaObject',
     encodingFormat: 'application/pdf',
@@ -150,11 +164,22 @@ export default function PreprintInferenciaActivaPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Badge */}
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex flex-wrap items-center gap-3 mb-8">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium tracking-wider uppercase">
                 <FileText className="w-3 h-3" />
                 Preprint · Mayo 2026
               </span>
+              <a
+                href={DOI_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-medium tracking-wider hover:bg-blue-100 transition-colors"
+                aria-label={`DOI ${DOI} — abrir en doi.org`}
+              >
+                <BookOpen className="w-3 h-3" />
+                DOI: {DOI}
+                <ExternalLink className="w-3 h-3" />
+              </a>
               <span className="text-xs text-gray-400 uppercase tracking-[0.2em]">
                 La Mente Algorítmica
               </span>
@@ -187,7 +212,7 @@ export default function PreprintInferenciaActivaPage() {
               </div>
               <div>
                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Estado</div>
-                <div className="text-sm font-medium text-gray-900">Preprint v1.0</div>
+                <div className="text-sm font-medium text-gray-900">Preprint v1.0 · Zenodo</div>
               </div>
             </div>
 
@@ -205,7 +230,23 @@ export default function PreprintInferenciaActivaPage() {
                   className="inline-flex items-center gap-3"
                 >
                   <Download className="w-5 h-5" />
-                  Descargar Manuscrito LaTeX (PDF)
+                  Descargar Manuscrito (PDF)
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 h-14 px-6"
+              >
+                <a
+                  href={ZENODO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Ver en Zenodo
                 </a>
               </Button>
               <Button
@@ -216,7 +257,7 @@ export default function PreprintInferenciaActivaPage() {
               >
                 <Link href="/investigacion/la-mente-algoritmica" className="inline-flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
-                  Ver programa completo
+                  Programa completo
                 </Link>
               </Button>
             </div>
@@ -255,6 +296,47 @@ export default function PreprintInferenciaActivaPage() {
                     {kw}
                   </span>
                 ))}
+              </div>
+            </div>
+
+            {/* ─── Cómo citar (APA + BibTeX) ─────────────────────── */}
+            <div className="mt-10 pt-8 border-t border-gray-200">
+              <div className="text-xs text-gray-400 uppercase tracking-[0.3em] mb-4">
+                Cómo citar este preprint
+              </div>
+
+              {/* APA */}
+              <div className="mb-6">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">APA 7ª ed.</div>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 font-serif text-sm md:text-base text-gray-800 leading-relaxed">
+                  Cáceres Cortés, J. (2026). <em>Procesamiento psicológico como sistema de inferencia activa: Fundamentos computacionales de la coherencia y el sufrimiento</em> [Preprint]. Zenodo.
+                  {' '}
+                  <a
+                    href={DOI_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-medium"
+                  >
+                    https://doi.org/{DOI}
+                  </a>
+                </div>
+              </div>
+
+              {/* BibTeX */}
+              <div>
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">BibTeX</div>
+                <pre className="bg-gray-900 text-gray-100 rounded-lg p-5 text-xs md:text-sm overflow-x-auto font-mono leading-relaxed">
+{`@misc{caceres2026inferencia,
+  author       = {C{\\'a}ceres Cort{\\'e}s, Josefina},
+  title        = {Procesamiento psicol{\\'o}gico como sistema de inferencia activa: Fundamentos computacionales de la coherencia y el sufrimiento},
+  year         = {2026},
+  month        = {5},
+  publisher    = {Zenodo},
+  doi          = {${DOI}},
+  url          = {${DOI_URL}},
+  note         = {Preprint}
+}`}
+                </pre>
               </div>
             </div>
           </div>

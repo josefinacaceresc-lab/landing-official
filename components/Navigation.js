@@ -64,6 +64,10 @@ export default function Navigation() {
                     <div className="font-semibold">DBT Kids and Teens</div>
                     <div className="text-sm text-gray-500">Modelo propio DialectIA Teens</div>
                   </Link>
+                  <Link href="/trastornos-de-personalidad" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <div className="font-semibold">Trastornos de Personalidad</div>
+                    <div className="text-sm text-gray-500">DBT + Terapia de Esquemas · IDP-4</div>
+                  </Link>
                   <Link href="/tratamiento/tlp-alta-gama" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
                     <div className="font-semibold">TLP Alta Gama</div>
                     <div className="text-sm text-gray-500">Programa intensivo personalizado</div>
@@ -187,6 +191,7 @@ export default function Navigation() {
                 <Link href="/dbt-trauma" className="block py-1 text-gray-700 hover:text-primary">DBT-PTSD · Trauma complejo</Link>
                 <Link href="/dbt-y-adicciones" className="block py-1 text-gray-700 hover:text-primary">DBT y Adicciones</Link>
                 <Link href="/dbt-kids-and-teens" className="block py-1 text-gray-700 hover:text-primary">DBT Kids and Teens</Link>
+                <Link href="/trastornos-de-personalidad" className="block py-1 text-gray-700 hover:text-primary">Trastornos de Personalidad</Link>
                 <Link href="/tratamiento/tlp-alta-gama" className="block py-1 text-gray-700 hover:text-primary">TLP Alta Gama</Link>
                 <Link href="/tratamientos/patologia-dual" className="block py-1 text-gray-700 hover:text-primary">Patología Dual</Link>
               </div>

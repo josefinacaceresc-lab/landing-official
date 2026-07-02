@@ -141,6 +141,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/trastornos-de-personalidad" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  Trastornos de Personalidad
+                </Link>
+              </li>
+              <li>
                 <Link href="/tratamiento/tlp-alta-gama" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
                   TLP Alta Gama
                 </Link>

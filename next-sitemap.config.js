@@ -70,6 +70,7 @@ module.exports = {
       '/dbt-trauma': { priority: 0.98, changefreq: 'weekly' },
       '/dbt-y-adicciones': { priority: 0.98, changefreq: 'weekly' },
       '/dbt-kids-and-teens': { priority: 0.98, changefreq: 'weekly' },
+      '/trastornos-de-personalidad': { priority: 0.98, changefreq: 'weekly' },
 
       // Team & About
       '/equipo': { priority: 0.85, changefreq: 'monthly' },

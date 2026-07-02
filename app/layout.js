@@ -171,6 +171,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               '@type': 'Country',
               name: 'Chile',
             },
+            foundingDate: '2021',
             founder: {
               '@type': 'Physician',
               '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
@@ -233,6 +234,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               },
             ],
             sameAs: [
+              'https://dbtchile.cl',
               'https://wdbta.com',
               'https://www.apa.org',
             ],
@@ -246,7 +248,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             '@type': 'Organization',
             '@id': 'https://institutodbtchile.cl/#org',
             name: 'Instituto DBT Chile',
+            alternateName: ['DBT Chile', 'DBTCHILE'],
+            foundingDate: '2021',
             url: 'https://institutodbtchile.cl',
+            sameAs: ['https://dbtchile.cl'],
             logo: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
             contactPoint: [
               {

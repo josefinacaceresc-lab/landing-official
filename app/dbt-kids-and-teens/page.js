@@ -37,7 +37,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata ────────────────────────────────────────────────────────
 export const metadata = {
-  title: 'DBT Kids & Teens · Terapia DBT para Niños y Adolescentes · Instituto DBT Chile',
+  title: 'DBT Kids & Teens · Terapia DBT para Niños y Adolescentes',
   description: 'Programa propio del Instituto DBT Chile para niños y adolescentes. 25 talleres presenciales, 5 competencias DBT progresivas y DialectIA Teens, asistente clínico adaptativo entre sesiones. Para edades 8–18 años, presencial en Santiago y telemático en todo Chile.',
   keywords: [
     // Nivel 1 — alto volumen

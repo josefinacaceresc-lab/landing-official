@@ -29,7 +29,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata ─────────────────────────────────────────────────────────
 export const metadata = {
-  title: 'Terapia DBT en Chile · Instituto DBT Chile · WDBTA',
+  title: 'Terapia DBT en Chile · WDBTA',
   description: 'Terapia Dialéctico Conductual (DBT) de alta fidelidad en Chile. Único Instituto representante WDBTA. Reembolsable Isapre · Modalidad presencial y telemática · Boleta médica.',
   keywords: [
     'terapia DBT',

@@ -39,7 +39,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata · densidad keyword Chile ───────────────────────────────
 export const metadata = {
-  title: 'Tratamiento de Adicciones y Trastornos de Personalidad · DBT-SUD Chile · Instituto DBT Chile',
+  title: 'Tratamiento de Adicciones y Trastornos de Personalidad · DBT-SUD Chile',
   description: 'Centro clínico de tratamiento de adicciones y trastornos de personalidad en Santiago de Chile. Primer programa DBT-SUD del país. Atendemos alcoholismo, consumo de drogas, patología dual, TLP y consumo. Dirección clínica con experiencia en el Instituto Psiquiátrico Dr. José Horwitz Barak.',
   keywords: [
     // Nivel 1 — alto volumen

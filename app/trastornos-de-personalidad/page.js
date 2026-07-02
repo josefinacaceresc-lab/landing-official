@@ -31,7 +31,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata ─────────────────────────────────────────────────────────
 export const metadata = {
-  title: 'Trastornos de Personalidad · Diagnóstico y Tratamiento · Instituto DBT Chile',
+  title: 'Trastornos de Personalidad · Diagnóstico y Tratamiento en Chile',
   description:
     'Diagnóstico dimensional y tratamiento integrado para Trastornos de Personalidad en Chile. TLP, evitativo, narcisista, obsesivo y otros. Modelo DBT + Terapia de Esquemas. Evaluación IDP-4 propia. Reembolsable Isapre.',
   keywords: [

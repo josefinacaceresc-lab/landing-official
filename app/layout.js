@@ -19,8 +19,8 @@ export const metadata = {
     default: 'Instituto DBT Chile | Terapia Dialéctico Conductual',
     template: '%s | Instituto DBT Chile'
   },
-  description: 'Instituto líder en Terapia Dialéctico Conductual (DBT) en Chile. Único representante de WDBTA. Investigación científica en neurociencia y salud mental.',
-  keywords: ['DBT', 'Terapia Dialéctico Conductual', 'WDBTA', 'salud mental', 'Chile', 'neurociencia', 'investigación', 'psicología clínica'],
+  description: 'Instituto DBT Chile (antes DBT Chile) — instituto líder en Terapia Dialéctico Conductual (DBT) en Chile desde 2021. Único representante de WDBTA. Especialistas en Trastorno Límite de la Personalidad, trauma complejo y adicciones.',
+  keywords: ['DBT Chile', 'Instituto DBT Chile', 'dbtchile', 'DBT', 'Terapia Dialéctico Conductual', 'WDBTA', 'Trastorno Límite de la Personalidad', 'TLP', 'salud mental', 'Chile', 'neurociencia', 'psicología clínica'],
   authors: [{ name: 'Instituto DBT Chile' }],
   creator: 'Instituto DBT Chile',
   publisher: 'Instituto DBT Chile',

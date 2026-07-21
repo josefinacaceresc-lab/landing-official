@@ -44,7 +44,7 @@ export default function Home() {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
-              Instituto DBT Chile · Tratamiento clínico de alta complejidad
+              Instituto DBT Chile <span className="text-gray-400">·</span> <span className="text-gray-500">antes DBT Chile</span> <span className="text-gray-400">·</span> Tratamiento clínico de alta complejidad
             </p>
 
             <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">

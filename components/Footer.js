@@ -113,6 +113,11 @@ export default function Footer() {
                   Equipo
                 </Link>
               </li>
+              <li>
+                <Link href="/historia" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  Historia
+                </Link>
+              </li>
             </ul>
           </div>
 

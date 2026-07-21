@@ -75,6 +75,14 @@ module.exports = {
       // Team & About
       '/equipo': { priority: 0.85, changefreq: 'monthly' },
 
+      // Historia — sucesión de marca (traspaso de autoridad DBT Chile)
+      '/historia': { priority: 0.85, changefreq: 'monthly' },
+
+      // Foro — artículos clínicos recuperados (alto valor temático)
+      '/foro/articulos/dbt-para-trauma-complejo-tept': { priority: 0.85, changefreq: 'monthly' },
+      '/foro/articulos/dbt-sud-tratamiento-adicciones': { priority: 0.85, changefreq: 'monthly' },
+      '/foro/articulos/familias-tlp-programa-family-parents': { priority: 0.85, changefreq: 'monthly' },
+
       // Forum (HTML articles, high SEO value)
       '/foro': { priority: 0.85, changefreq: 'weekly' },
 

@@ -234,17 +234,19 @@ export default function ArticuloPage({ params }) {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </a>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className={`px-8 ${isPadres ? 'border-amber-300 text-amber-700 hover:bg-amber-50' : 'border-primary/30 text-primary hover:bg-primary/5'}`}
-                >
-                  <a href={art.pdfUrl} download>
-                    <Download className="w-4 h-4 mr-2" />
-                    Descargar PDF
-                  </a>
-                </Button>
+                {art.pdfUrl && (
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className={`px-8 ${isPadres ? 'border-amber-300 text-amber-700 hover:bg-amber-50' : 'border-primary/30 text-primary hover:bg-primary/5'}`}
+                  >
+                    <a href={art.pdfUrl} download>
+                      <Download className="w-4 h-4 mr-2" />
+                      Descargar PDF
+                    </a>
+                  </Button>
+                )}
               </div>
 
               <p className="mt-8 text-sm text-gray-500">

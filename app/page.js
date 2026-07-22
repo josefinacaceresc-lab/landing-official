@@ -90,7 +90,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
                 Lo que hay <em className="font-serif italic text-emerald-700">detrás</em> de un tratamiento serio.
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+              <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8 leading-[1.9]">
                 Hay una distancia importante entre un tratamiento improvisado y uno que se sostiene sobre estructura clínica verificable. Somos la única institución chilena que reúne tres acreditaciones internacionales que normalmente se ven separadas: <strong>WDBTA</strong> (Terapia Dialéctico Conductual), <strong>APA</strong> (Psicología Norteamericana) e <strong>ISST</strong> (Schema Therapy). No es un detalle: son los marcos que garantizan que lo que se ofrece tiene método, evidencia y rigor.
               </p>
               

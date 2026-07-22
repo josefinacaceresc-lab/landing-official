@@ -251,8 +251,8 @@ export default function ArticuloPage({ params }) {
 
               <p className="mt-8 text-sm text-gray-500">
                 ¿Prefieres una evaluación clínica estructurada?{' '}
-                <Link href="/evaluacion-idp4" className="text-primary hover:underline font-medium">
-                  Toma el Test IDP-4 gratuito →
+                <Link href="/tratamiento" className="text-primary hover:underline font-medium">
+                  Conoce nuestros programas clínicos →
                 </Link>
               </p>
             </div>

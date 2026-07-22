@@ -28,7 +28,6 @@ export default function sitemap() {
     { url: `${BASE}/investigacion/wdbta`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/esquema`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/foro`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
-    { url: `${BASE}/evaluacion-idp4`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
   ]
 

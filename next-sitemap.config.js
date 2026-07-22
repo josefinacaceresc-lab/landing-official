@@ -14,8 +14,6 @@ module.exports = {
     '/lakaira-ai/*',
     '/autoevaluacion/resultados',
     '/autoevaluacion/resultados/*',
-    '/evaluacion-idp4/resultados',
-    '/evaluacion-idp4/resultados/*',
     '/evaluacion-bsl23/resultados',
     '/evaluacion-bsl23/resultados/*',
     '/sitemap.xml',
@@ -36,7 +34,6 @@ module.exports = {
           '/lakaira-ai',
           '/lakaira-ai/',
           '/autoevaluacion/resultados',
-          '/evaluacion-idp4/resultados',
           '/evaluacion-bsl23/resultados',
         ],
       },
@@ -97,7 +94,6 @@ module.exports = {
       // Assessments - Lead generation (landing pages only, NOT /resultados)
       '/autoevaluacion': { priority: 0.75, changefreq: 'monthly' },
       '/evaluacion-bsl23': { priority: 0.75, changefreq: 'monthly' },
-      '/evaluacion-idp4': { priority: 0.8, changefreq: 'monthly' },
     }
 
     return {

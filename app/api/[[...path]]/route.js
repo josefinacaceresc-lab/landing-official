@@ -322,122 +322,7 @@ export async function GET(request) {
     return Response.json({ clicks, stats: { total, today, week, direct, afterHours } })
   }
 
-  // ─── Admin: list IDP-4 clinical results ─────────────────────────────────
-  if (pathname === '/api/admin/idp4-results') {
-    const session = await getAdminSession(request)
-    if (!session) return unauthorized()
-    const db = await connectToDatabase()
-    const since = searchParams.get('since') || ''
-    const dominant = searchParams.get('dominant') || '' // filter by adjusted-dominant phenotype
-    const query = {}
-    if (since) {
-      const sinceDate = new Date(since)
-      if (!Number.isNaN(sinceDate.getTime())) query.createdAt = { $gte: sinceDate }
-    }
-    if (dominant) query['dominantAdjusted.name'] = dominant
-    const results = await db
-      .collection('idp4_results')
-      .find(query)
-      .sort({ createdAt: -1 })
-      .limit(500)
-      .toArray()
-    for (const r of results) {
-      r.id = r._id?.toString?.() || r.id
-      delete r._id
-    }
-    // Stats
-    const now = new Date()
-    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    const startOfWeek = new Date(startOfDay)
-    startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay())
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-    const [total, today, week, month, suppressed] = await Promise.all([
-      db.collection('idp4_results').countDocuments({}),
-      db.collection('idp4_results').countDocuments({ createdAt: { $gte: startOfDay } }),
-      db.collection('idp4_results').countDocuments({ createdAt: { $gte: startOfWeek } }),
-      db.collection('idp4_results').countDocuments({ createdAt: { $gte: startOfMonth } }),
-      db.collection('idp4_results').countDocuments({ 'suppression.applied': true }),
-    ])
-    // Distribution by adjusted dominant phenotype
-    const distribution = await db.collection('idp4_results').aggregate([
-      { $match: { 'dominantAdjusted.name': { $ne: null } } },
-      { $group: { _id: '$dominantAdjusted.name', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-    ]).toArray()
-    return Response.json({
-      results,
-      stats: { total, today, week, month, suppressed, count: results.length },
-      distribution,
-    })
-  }
-
-  // ─── Admin: single IDP-4 result detail ──────────────────────────────────
-  if (pathname.startsWith('/api/admin/idp4-results/')) {
-    const session = await getAdminSession(request)
-    if (!session) return unauthorized()
-    const id = pathname.split('/').pop()
-    const db = await connectToDatabase()
-    let doc = null
-    try {
-      const { ObjectId } = await import('mongodb')
-      doc = await db.collection('idp4_results').findOne({ _id: new ObjectId(id) })
-    } catch (_) {
-      doc = await db.collection('idp4_results').findOne({ id })
-    }
-    if (!doc) return Response.json({ error: 'Not found' }, { status: 404 })
-    doc.id = doc._id?.toString?.() || doc.id
-    delete doc._id
-    return Response.json({ result: doc })
-  }
-
-  // ─── Admin: CSV export of IDP-4 results ─────────────────────────────────
-  if (pathname === '/api/admin/idp4-export-csv') {
-    const session = await getAdminSession(request)
-    if (!session) return unauthorized()
-    const db = await connectToDatabase()
-    const rows = await db
-      .collection('idp4_results')
-      .find({}, { projection: { responses: 0, responseTimes: 0 } })
-      .sort({ createdAt: -1 })
-      .toArray()
-    const escape = (v) => {
-      if (v == null) return ''
-      const s = String(v).replace(/"/g, '""')
-      return /[",\n]/.test(s) ? `"${s}"` : s
-    }
-    const headers = [
-      'createdAt', 'fullName', 'rut', 'age', 'gender', 'comuna',
-      'DE', 'SV', 'CA', 'II',
-      'TLP_raw', 'TPH_raw', 'TNP_raw', 'TEV_raw', 'TPAN_raw',
-      'TLP_adj', 'TPH_adj', 'TNP_adj', 'TEV_adj', 'TPAN_adj',
-      'dominantAdj', 'dominantAdjPct',
-      'suppressionApplied', 'motorImpulsivity',
-    ]
-    const lines = [headers.join(',')]
-    for (const r of rows) {
-      const d = r.domainScores || {}
-      const p = r.profileProbabilities || {}
-      const a = r.profileProbabilitiesAdjusted || {}
-      const row = [
-        r.createdAt?.toISOString?.() || '',
-        r.fullName, r.rut, r.age, r.gender || '', r.comuna || '',
-        d.DE?.toFixed?.(2) || '', d.SV?.toFixed?.(2) || '', d.CA?.toFixed?.(2) || '', d.II?.toFixed?.(2) || '',
-        p.TLP?.toFixed?.(1) || '', p.TPH?.toFixed?.(1) || '', p.TNP?.toFixed?.(1) || '', p.TEV?.toFixed?.(1) || '', p.TPAN?.toFixed?.(1) || '',
-        a.TLP?.toFixed?.(1) || '', a.TPH?.toFixed?.(1) || '', a.TNP?.toFixed?.(1) || '', a.TEV?.toFixed?.(1) || '', a.TPAN?.toFixed?.(1) || '',
-        r.dominantAdjusted?.name || '', r.dominantAdjusted?.value?.toFixed?.(1) || '',
-        r.suppression?.applied ? 'sí' : 'no',
-        r.motorImpulsivity?.detected ? 'sí' : 'no',
-      ]
-      lines.push(row.map(escape).join(','))
-    }
-    return new Response(lines.join('\n'), {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="idp4-results-${Date.now()}.csv"`,
-      },
-    })
-  }
+  // ─── (Test IDP-4 eliminado — endpoints admin removidos) ─────────────────
 
   // ─── Admin: CSV export ──────────────────────────────────────────────────
   if (pathname === '/api/admin/export-csv') {
@@ -571,30 +456,8 @@ export async function POST(request) {
     }
 
     const body = await request.json()
-    
-    // Register IDP-4 informed consent (Chilean Law 19.628 / 21.331 / 20.584)
-    if (pathname === '/api/leads/idp4-consent') {
-      const { consentAccepted, consentedAt, userAgent, legalFramework } = body || {}
-      if (!consentAccepted) {
-        return Response.json({ error: 'Consentimiento requerido' }, { status: 400 })
-      }
-      const db = await connectToDatabase()
-      const consents = db.collection('idp4_consents')
-      const doc = {
-        consentAccepted: true,
-        consentedAt: consentedAt || new Date().toISOString(),
-        legalFramework: Array.isArray(legalFramework) ? legalFramework : ['Ley 19.628', 'Ley 21.331', 'Ley 20.584'],
-        userAgent: typeof userAgent === 'string' ? userAgent.slice(0, 500) : '',
-        ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || null,
-        createdAt: new Date(),
-      }
-      const result = await consents.insertOne(doc)
-      return Response.json({
-        success: true,
-        consentId: result.insertedId?.toString?.() || null,
-        registeredAt: doc.consentedAt,
-      })
-    }
+
+    // (Test IDP-4 eliminado — endpoint de consentimiento removido)
 
     // Silent WhatsApp click tracking (ads conversion visibility)
     if (pathname === '/api/whatsapp-click') {
@@ -821,102 +684,7 @@ export async function POST(request) {
       })
     }
 
-    // Store IDP-4 Assessment (intake stage + full result)
-    if (pathname === '/api/leads/idp4') {
-      const {
-        fullName, age, rut, email, gender, comuna,
-        domainScores, profileProbabilities, profileProbabilitiesAdjusted,
-        suppression, motorImpulsivity, responseTimes, responses,
-        stage, source,
-      } = body
-      
-      // Mandatory: personal identifiers
-      if (!fullName || !age || !rut) {
-        return Response.json({ error: 'Nombre, edad y RUT son obligatorios' }, { status: 400 })
-      }
-      if (!validateRUT(rut)) {
-        return Response.json({ error: 'RUT inválido' }, { status: 400 })
-      }
-      // Email optional (current intake flow uses gender/comuna instead)
-      if (email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-          return Response.json({ error: 'Email inválido' }, { status: 400 })
-        }
-      }
-      
-      const { token, expiresAt } = generateAccessToken()
-      const db = await connectToDatabase()
-      const leadsCollection = db.collection('leads')
-      const resultsCollection = db.collection('idp4_results')
-      const isIntake = stage === 'intake' || (!domainScores && !profileProbabilities)
-      const now = new Date()
-      
-      // Always log a lead entry (for CRM)
-      const lead = {
-        fullName,
-        age: parseInt(age),
-        rut,
-        email: email || null,
-        gender: gender || null,
-        comuna: comuna || null,
-        lakairaToken: token,
-        lakairaExpiresAt: expiresAt,
-        source: source || 'idp4',
-        stage: isIntake ? 'intake' : 'completed',
-        createdAt: now,
-        status: 'new',
-      }
-      const leadInsert = await leadsCollection.insertOne(lead)
-      
-      // If full result (post-assessment), store in dedicated clinical collection
-      let resultId = null
-      if (!isIntake) {
-        // Compute dominant phenotypes from BOTH raw and adjusted profiles
-        const pickDominant = (p) => {
-          if (!p || typeof p !== 'object') return null
-          let best = null
-          for (const [k, v] of Object.entries(p)) {
-            if (best === null || v > best.value) best = { name: k, value: v }
-          }
-          return best
-        }
-        const resultDoc = {
-          // Identity
-          fullName, age: parseInt(age), rut,
-          gender: gender || null, comuna: comuna || null, email: email || null,
-          // Clinical scores
-          domainScores: domainScores || {},
-          profileProbabilities: profileProbabilities || {},                 // raw
-          profileProbabilitiesAdjusted: profileProbabilitiesAdjusted || {}, // suppressive-adjusted
-          dominantRaw: pickDominant(profileProbabilities),
-          dominantAdjusted: pickDominant(profileProbabilitiesAdjusted),
-          suppression: suppression || { applied: false },
-          motorImpulsivity: motorImpulsivity || null,
-          // Audit trail
-          responseTimes: responseTimes || {},
-          responses: responses || [],
-          // Linkage + provenance
-          leadId: leadInsert?.insertedId?.toString?.() || null,
-          lakairaToken: token,
-          lakairaExpiresAt: expiresAt,
-          createdAt: now,
-        }
-        const ins = await resultsCollection.insertOne(resultDoc)
-        resultId = ins?.insertedId?.toString?.() || null
-      }
-      
-      return Response.json({
-        success: true,
-        message: isIntake
-          ? 'Datos personales registrados, continúa con la evaluación'
-          : 'Evaluación IDP-4 completada y registrada',
-        leadId: leadInsert?.insertedId?.toString?.() || null,
-        resultId,
-        lakairaToken: token,
-        lakairaExpiresAt: expiresAt,
-      })
-    }
+    // (Test IDP-4 eliminado — endpoint de registro removido)
     
     // Store Lead from BSL-23 Assessment
     if (pathname === '/api/leads/bsl23') {
@@ -1121,7 +889,7 @@ export async function PATCH(request) {
         { returnDocument: 'after', includeResultMetadata: true }
       )
       if (!result?.value) {
-        // try matching by leadId field (IDP-4) or by Mongo _id (legacy)
+        // try matching by leadId field or by Mongo _id (legacy)
         let r2 = await db.collection('leads').findOneAndUpdate(
           { leadId },
           { $set: update },

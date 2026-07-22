@@ -302,7 +302,7 @@ export default function Home() {
                   </Link>
                   <Link href="/trastornos-de-personalidad" className="group block p-5 bg-white rounded-xl border border-gray-100 hover:border-primary/40 hover:shadow-md transition-all">
                     <div className="text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">Trastornos de Personalidad</div>
-                    <div className="text-xs text-gray-500 leading-snug">DBT + Terapia de Esquemas · Evaluación IDP-4</div>
+                    <div className="text-xs text-gray-500 leading-snug">DBT + Terapia de Esquemas · Diagnóstico dimensional</div>
                   </Link>
                 </div>
               </div>
@@ -405,7 +405,7 @@ export default function Home() {
                         </div>
                         <div>
                           <strong className="text-gray-900">Fenotipado Digital:</strong>
-                          <span className="text-gray-600"> Análisis multidimensional de desregulación emocional mediante IDP-4.</span>
+                          <span className="text-gray-600"> Análisis multidimensional de la desregulación emocional con instrumentos clínicos.</span>
                         </div>
                       </li>
                       <li className="flex items-start gap-3">
@@ -466,8 +466,8 @@ export default function Home() {
                     
                     <div className="grid grid-cols-2 gap-6">
                       <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                        <div className="text-3xl font-bold mb-1">IDP-4</div>
-                        <div className="text-sm text-primary-foreground/80">Test de Fenotipado</div>
+                        <div className="text-3xl font-bold mb-1">AI</div>
+                        <div className="text-sm text-primary-foreground/80">Fenotipado Digital</div>
                       </div>
                       <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                         <div className="text-3xl font-bold mb-1">24/7</div>
@@ -626,42 +626,6 @@ export default function Home() {
                 </a>
               </Button>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones · Grupos cerrados</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* IDP-4 — Acceso al instrumento clínico (estética editorial premium) */}
-      <section className="py-24 bg-white border-y border-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center">
-              <div className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
-                Instrumento clínico interno
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6 leading-tight">
-                IDP-4 · Evaluación dimensional <em className="font-serif italic text-primary">de la regulación emocional</em>
-              </h2>
-
-              <p className="text-base text-gray-600 leading-relaxed max-w-2xl mx-auto mb-3">
-                El IDP-4 es un instrumento de evaluación dimensional desarrollado por nuestro equipo clínico para la población chilena. Trabaja sobre cuatro dominios — desregulación emocional, sensación de vacío, conducta autolesiva e inestabilidad interpersonal — y entrega un reporte estructurado.
-              </p>
-              <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
-                No es un test de personalidad popular. Es un instrumento clínico, actualmente en proceso de validación, disponible como antesala a una valoración formal con nuestro equipo.
-              </p>
-
-              <Link
-                href="/evaluacion-idp4"
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-base border-b border-primary/40 hover:border-primary pb-0.5 transition-all"
-              >
-                Acceder al instrumento
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <p className="mt-8 text-xs text-gray-400 italic">
-                Aproximadamente 10 minutos · Reporte clínico inmediato · Información confidencial
-              </p>
             </div>
           </div>
         </div>

@@ -92,10 +92,6 @@ export default function AdminPage() {
 
   const [leads, setLeads] = useState([])
   const [clicks, setClicks] = useState([])
-  const [idp4Results, setIdp4Results] = useState([])
-  const [idp4Stats, setIdp4Stats] = useState({})
-  const [idp4Distribution, setIdp4Distribution] = useState([])
-  const [selectedIdp4, setSelectedIdp4] = useState(null)
   const [leadStats, setLeadStats] = useState({})
   const [clickStats, setClickStats] = useState({})
   const [refreshing, setRefreshing] = useState(false)
@@ -118,10 +114,9 @@ export default function AdminPage() {
       const params = new URLSearchParams()
       if (filterMode !== 'all') params.set('mode', filterMode)
       if (filterStatus !== 'all') params.set('status', filterStatus)
-      const [leadsRes, clicksRes, idp4Res] = await Promise.all([
+      const [leadsRes, clicksRes] = await Promise.all([
         fetch(`/api/admin/leads?${params.toString()}`, { credentials: 'include' }),
         fetch('/api/admin/whatsapp-clicks', { credentials: 'include' }),
-        fetch('/api/admin/idp4-results', { credentials: 'include' }),
       ])
       if (leadsRes.status === 401) {
         setView('login')
@@ -129,14 +124,10 @@ export default function AdminPage() {
       }
       const leadsData = await leadsRes.json()
       const clicksData = await clicksRes.json()
-      const idp4Data = await idp4Res.json().catch(() => ({}))
       setLeads(leadsData.leads || [])
       setLeadStats(leadsData.stats || {})
       setClicks(clicksData.clicks || [])
       setClickStats(clicksData.stats || {})
-      setIdp4Results(idp4Data.results || [])
-      setIdp4Stats(idp4Data.stats || {})
-      setIdp4Distribution(idp4Data.distribution || [])
     } finally {
       setRefreshing(false)
     }
@@ -335,18 +326,6 @@ export default function AdminPage() {
             <p className="text-xs text-slate-500">Instituto DBT Chile</p>
           </div>
           <div className="flex items-center gap-2">
-            <a
-              href="/evaluacion-idp4"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex"
-            >
-              <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-700 hover:bg-emerald-50">
-                <Brain className="w-4 h-4 mr-1.5" />
-                Realizar Test IDP-4
-                <ExternalLink className="w-3 h-3 ml-1" />
-              </Button>
-            </a>
             <Button variant="outline" size="sm" onClick={loadData} disabled={refreshing}>
               <RefreshCw className={`w-4 h-4 mr-1.5 ${refreshing ? 'animate-spin' : ''}`} />
               Actualizar
@@ -373,10 +352,6 @@ export default function AdminPage() {
             <TabsTrigger value="clicks">
               <MessageCircle className="w-4 h-4 mr-1.5" />
               Clics WhatsApp ({clickStats.total || 0})
-            </TabsTrigger>
-            <TabsTrigger value="idp4">
-              <Brain className="w-4 h-4 mr-1.5" />
-              Tests IDP-4 ({idp4Stats.total || 0})
             </TabsTrigger>
           </TabsList>
 
@@ -689,271 +664,9 @@ export default function AdminPage() {
             </Card>
           </TabsContent>
 
-          {/* TESTS IDP-4 */}
-          <TabsContent value="idp4" className="space-y-6">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              <StatCard label="Hoy" value={idp4Stats.today || 0} icon={TrendingUp} color="emerald" />
-              <StatCard label="Esta semana" value={idp4Stats.week || 0} icon={TrendingUp} color="sky" />
-              <StatCard label="Este mes" value={idp4Stats.month || 0} icon={Activity} color="violet" />
-              <StatCard label="Total" value={idp4Stats.total || 0} icon={Brain} color="slate" />
-              <StatCard label="Con supresión" value={idp4Stats.suppressed || 0} icon={AlertCircle} color="amber" />
-            </div>
-
-            {/* Distribución por fenotipo dominante */}
-            {idp4Distribution && idp4Distribution.length > 0 && (
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-slate-700">
-                    Distribución por fenotipo dominante (ajustado)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {idp4Distribution.map((d) => (
-                      <Badge
-                        key={d._id}
-                        className="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 text-sm py-1 px-3"
-                      >
-                        {d._id}: <span className="ml-1 font-bold">{d.count}</span>
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-3">
-                <CardTitle className="text-sm font-medium text-slate-700">
-                  Resultados de tests ({idp4Results.length})
-                </CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => { window.location.href = '/api/admin/idp4-export-csv' }}
-                >
-                  <Download className="w-4 h-4 mr-1.5" />
-                  Exportar CSV
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="rounded-md border overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-32">Fecha</TableHead>
-                        <TableHead>Nombre</TableHead>
-                        <TableHead>RUT</TableHead>
-                        <TableHead>Edad</TableHead>
-                        <TableHead>Comuna</TableHead>
-                        <TableHead>Fenotipo dominante</TableHead>
-                        <TableHead>Supresión</TableHead>
-                        <TableHead className="text-right">Detalle</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {idp4Results.length === 0 && (
-                        <TableRow>
-                          <TableCell colSpan={8} className="text-center text-slate-400 py-12">
-                            <Brain className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                            Aún no hay tests IDP-4 registrados.
-                            <div className="mt-3">
-                              <a href="/evaluacion-idp4" target="_blank" rel="noopener noreferrer">
-                                <Button size="sm" variant="outline" className="text-emerald-700 border-emerald-300">
-                                  Realizar primer test <ExternalLink className="w-3 h-3 ml-1" />
-                                </Button>
-                              </a>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      )}
-                      {idp4Results.map((r) => {
-                        const dom = r.dominantAdjusted || r.dominantRaw
-                        return (
-                          <TableRow key={r.id} className="cursor-pointer hover:bg-slate-50" onClick={() => setSelectedIdp4(r)}>
-                            <TableCell className="text-xs text-slate-600 whitespace-nowrap">
-                              {formatDate(r.createdAt)}
-                            </TableCell>
-                            <TableCell className="font-medium text-slate-900 text-sm">{r.fullName}</TableCell>
-                            <TableCell className="text-xs text-slate-600 font-mono">{r.rut}</TableCell>
-                            <TableCell className="text-xs text-slate-600">{r.age}</TableCell>
-                            <TableCell className="text-xs text-slate-600">{r.comuna || '—'}</TableCell>
-                            <TableCell>
-                              {dom?.name ? (
-                                <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100">
-                                  {dom.name} · {dom.value?.toFixed?.(1)}%
-                                </Badge>
-                              ) : '—'}
-                            </TableCell>
-                            <TableCell>
-                              {r.suppression?.applied ? (
-                                <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100 text-[10px]">
-                                  Aplicada
-                                </Badge>
-                              ) : (
-                                <span className="text-xs text-slate-400">—</span>
-                              )}
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <Button size="sm" variant="ghost" onClick={(e) => { e.stopPropagation(); setSelectedIdp4(r) }}>
-                                <FileText className="w-4 h-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
-                    </TableBody>
-                  </Table>
-                </div>
-                <p className="text-xs text-slate-400 mt-3">
-                  Datos clínicos confidenciales. Acceso restringido por Ley 19.628 / 21.331 / 20.584.
-                </p>
-              </CardContent>
-            </Card>
-          </TabsContent>
         </Tabs>
       </main>
 
-      {/* MODAL: Detalle de test IDP-4 */}
-      {selectedIdp4 && (
-        <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto"
-          onClick={() => setSelectedIdp4(null)}
-        >
-          <div
-            className="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                  <Brain className="w-5 h-5 text-emerald-600" />
-                  Test IDP-4 · {selectedIdp4.fullName}
-                </h2>
-                <p className="text-xs text-slate-500">
-                  {formatDate(selectedIdp4.createdAt)} · RUT {selectedIdp4.rut} · {selectedIdp4.age} años · {selectedIdp4.comuna || 'sin comuna'}
-                </p>
-              </div>
-              <Button variant="ghost" size="sm" onClick={() => setSelectedIdp4(null)}>
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
-            <div className="p-6 space-y-6">
-              {/* Dominios */}
-              <section>
-                <h3 className="text-sm font-medium text-slate-700 mb-2">Puntajes por dominio (0–4)</h3>
-                <div className="grid grid-cols-4 gap-2">
-                  {['DE', 'SV', 'CA', 'II'].map((d) => (
-                    <div key={d} className="rounded-md border border-slate-200 p-3 text-center">
-                      <div className="text-[10px] text-slate-500 uppercase font-medium">{d}</div>
-                      <div className="text-xl font-light text-slate-900 mt-1">
-                        {selectedIdp4.domainScores?.[d]?.toFixed?.(2) ?? '—'}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-[10px] text-slate-400 mt-2">
-                  DE: Desregulación Emocional · SV: Sensación de Vacío · CA: Conducta Autolesiva · II: Inestabilidad Interpersonal
-                </p>
-              </section>
-
-              {/* Perfiles bayesianos */}
-              <section>
-                <h3 className="text-sm font-medium text-slate-700 mb-2">Probabilidades por fenotipo</h3>
-                <div className="rounded-md border overflow-hidden">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-50 text-xs text-slate-600">
-                      <tr>
-                        <th className="text-left px-3 py-2">Fenotipo</th>
-                        <th className="text-right px-3 py-2">Crudo</th>
-                        <th className="text-right px-3 py-2">Ajustado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {['TLP', 'TPH', 'TNP', 'TEV', 'TPAN'].map((k) => {
-                        const raw = selectedIdp4.profileProbabilities?.[k]
-                        const adj = selectedIdp4.profileProbabilitiesAdjusted?.[k]
-                        const changed = raw !== undefined && adj !== undefined && Math.abs(raw - adj) > 0.05
-                        return (
-                          <tr key={k} className="border-t border-slate-100">
-                            <td className="px-3 py-2 font-medium text-slate-800">{k}</td>
-                            <td className="text-right px-3 py-2 text-slate-700">{raw?.toFixed?.(1) ?? '—'}%</td>
-                            <td className={`text-right px-3 py-2 font-medium ${changed ? 'text-amber-700' : 'text-slate-700'}`}>
-                              {adj?.toFixed?.(1) ?? '—'}%
-                              {changed && <span className="ml-1 text-[10px] text-amber-600">↓ ajustado</span>}
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                {selectedIdp4.suppression?.applied && (
-                  <div className="mt-3 p-3 rounded-md bg-amber-50 border border-amber-200 text-xs text-amber-800">
-                    <strong>Ajuste supresivo aplicado:</strong> {selectedIdp4.suppression.note}
-                  </div>
-                )}
-              </section>
-
-              {/* Impulsividad motora */}
-              {selectedIdp4.motorImpulsivity && (
-                <section>
-                  <h3 className="text-sm font-medium text-slate-700 mb-2">Análisis de impulsividad motora</h3>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="rounded-md border border-slate-200 p-3 text-center">
-                      <div className="text-[10px] text-slate-500 uppercase">Detectada</div>
-                      <div className="text-base font-medium mt-1">
-                        {selectedIdp4.motorImpulsivity.detected ? (
-                          <span className="text-amber-700">Sí</span>
-                        ) : (
-                          <span className="text-emerald-700">No</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="rounded-md border border-slate-200 p-3 text-center">
-                      <div className="text-[10px] text-slate-500 uppercase">Tiempo medio</div>
-                      <div className="text-base font-medium mt-1">{selectedIdp4.motorImpulsivity.meanTime || '—'} ms</div>
-                    </div>
-                    <div className="rounded-md border border-slate-200 p-3 text-center">
-                      <div className="text-[10px] text-slate-500 uppercase">Respuestas ultra-rápidas</div>
-                      <div className="text-base font-medium mt-1">{selectedIdp4.motorImpulsivity.ultraFastCount ?? 0}</div>
-                    </div>
-                  </div>
-                </section>
-              )}
-
-              {/* Respuestas */}
-              {Array.isArray(selectedIdp4.responses) && selectedIdp4.responses.length > 0 && (
-                <section>
-                  <h3 className="text-sm font-medium text-slate-700 mb-2">
-                    Respuestas individuales ({selectedIdp4.responses.length})
-                  </h3>
-                  <div className="rounded-md border max-h-60 overflow-y-auto">
-                    <table className="w-full text-xs">
-                      <thead className="bg-slate-50 sticky top-0">
-                        <tr>
-                          <th className="text-left px-3 py-1.5">#</th>
-                          <th className="text-left px-3 py-1.5">Valor (0–4)</th>
-                          <th className="text-right px-3 py-1.5">Tiempo (ms)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedIdp4.responses.map((r) => (
-                          <tr key={r.questionId} className="border-t border-slate-100">
-                            <td className="px-3 py-1.5 font-mono text-slate-500">Q{r.questionId}</td>
-                            <td className="px-3 py-1.5">{r.value}</td>
-                            <td className="text-right px-3 py-1.5 text-slate-500">{r.responseTime ?? '—'}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

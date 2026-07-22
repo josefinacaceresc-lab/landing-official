@@ -142,7 +142,7 @@ export default function LaMenteAlgoritmicaPage() {
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="p-8">
                 <p className="text-lg text-white/95 mb-6 leading-relaxed">
-                  Síntesis más comprehensiva de la investigación sobre desregulación emocional, integrando perspectivas <strong>neurobiológicas, cognitivas y conductuales</strong> en un marco unificado. Documento de referencia del programa <em>La Mente Algorítmica</em> y base teórica del instrumento <strong>IDP-4</strong>.
+                  Síntesis más comprehensiva de la investigación sobre desregulación emocional, integrando perspectivas <strong>neurobiológicas, cognitivas y conductuales</strong> en un marco unificado. Documento de referencia del programa <em>La Mente Algorítmica</em>.
                 </p>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
@@ -159,22 +159,9 @@ export default function LaMenteAlgoritmicaPage() {
                     <div className="text-xs text-white/80 uppercase tracking-wider">Capítulos</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-white mb-1">IDP-4</div>
-                    <div className="text-xs text-white/80 uppercase tracking-wider">Instrumento</div>
+                    <div className="text-3xl font-bold text-white mb-1">2026</div>
+                    <div className="text-xs text-white/80 uppercase tracking-wider">Edición</div>
                   </div>
-                </div>
-
-                {/* Validation cross-link */}
-                <div className="mb-8 bg-white/10 border-l-4 border-white/60 rounded-md p-4">
-                  <p className="text-sm text-white/95 leading-relaxed">
-                    <strong className="text-white">🔬 Instrumento de validación clínica:</strong> El cuestionario <strong>IDP-4</strong> es la herramienta dimensional desarrollada para operacionalizar las propuestas teóricas de este Tratado. Su aplicación permite mapear empíricamente los cinco perfiles de personalidad descritos en el documento.
-                  </p>
-                  <a
-                    href="/evaluacion-idp4"
-                    className="inline-flex items-center gap-2 mt-3 text-white font-semibold underline-offset-4 hover:underline"
-                  >
-                    Ir al instrumento IDP-4 →
-                  </a>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">

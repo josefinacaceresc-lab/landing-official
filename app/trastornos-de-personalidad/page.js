@@ -14,7 +14,7 @@
  *   - Registro formal europeo
  *   - Sin promesas absolutas ("cura", "elimina", "supera para siempre")
  *   - Nomenclatura DSM-5-TR + CIE-11 (dimensional + categorial)
- *   - Foco en evaluación IDP-4 propia como diferenciador
+ *   - Foco en diagnóstico dimensional propio como diferenciador
  *
  * Schema injected: MedicalWebPage + MedicalCondition + MedicalTherapy +
  *                  FAQPage + BreadcrumbList
@@ -33,7 +33,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 export const metadata = {
   title: 'Tratamiento de Trastornos de Personalidad y TLP en Chile',
   description:
-    'Diagnóstico dimensional y tratamiento integrado para Trastornos de Personalidad en Chile. TLP, evitativo, narcisista, obsesivo y otros. Modelo DBT + Terapia de Esquemas. Evaluación IDP-4 propia. Reembolsable Isapre.',
+    'Diagnóstico dimensional y tratamiento integrado para Trastornos de Personalidad en Chile. TLP, evitativo, narcisista, obsesivo y otros. Modelo DBT + Terapia de Esquemas. Reembolsable Isapre.',
   keywords: [
     'trastornos de personalidad',
     'trastorno límite de personalidad',
@@ -45,7 +45,6 @@ export const metadata = {
     'DBT trastorno personalidad',
     'terapia de esquemas Chile',
     'Instituto DBT Chile',
-    'IDP-4',
   ],
   alternates: { canonical: 'https://institutodbtchile.cl/trastornos-de-personalidad' },
   openGraph: {
@@ -102,7 +101,7 @@ const fasesModelo = [
   {
     n: '01',
     titulo: 'Evaluación diagnóstica estructurada',
-    text: 'Entrevista clínica en profundidad + Inventario de Trastornos de Personalidad IDP-4 (herramienta propia del Instituto) + instrumentos complementarios (MMPI-2, BSL-23, escalas de esquemas de Young).',
+    text: 'Entrevista clínica en profundidad + instrumentos psicométricos complementarios (MMPI-2, BSL-23, escalas de esquemas de Young).',
   },
   {
     n: '02',
@@ -122,8 +121,8 @@ const diferenciadores = [
     descripcion: 'Único centro en Chile que integra formalmente el protocolo DBT estándar (WDBTA) con Terapia de Esquemas (certificación ISST). Diseñado para consultantes donde la conducta y los esquemas nucleares deben abordarse simultáneamente.',
   },
   {
-    titulo: 'Instrumento diagnóstico IDP-4 propio',
-    descripcion: 'Evaluación estructurada del Instituto DBT Chile para trastornos de personalidad, calibrada al perfil clínico chileno. Permite formulación diagnóstica más precisa que las escalas anglosajonas de screening general.',
+    titulo: 'Evaluación diagnóstica estructurada propia',
+    descripcion: 'Protocolo de evaluación del Instituto DBT Chile para trastornos de personalidad, calibrado al perfil clínico chileno. Permite una formulación diagnóstica más precisa que las escalas anglosajonas de screening general.',
   },
   {
     titulo: 'Diagnóstico dimensional, no reduccionista',
@@ -150,7 +149,7 @@ const faqs = [
   },
   {
     q: '¿Cómo se diagnostica un Trastorno de Personalidad?',
-    a: 'El diagnóstico requiere una entrevista clínica estructurada, aplicación de instrumentos psicométricos validados (IDP-4 propio del Instituto, MMPI-2, escalas de esquemas de Young) y una formulación clínica integradora conforme al DSM-5-TR y CIE-11. Un diagnóstico serio no se hace en una única sesión: exige valoración clínica sostenida por parte de un profesional especializado.',
+    a: 'El diagnóstico requiere una entrevista clínica estructurada, aplicación de instrumentos psicométricos validados (MMPI-2, BSL-23, escalas de esquemas de Young) y una formulación clínica integradora conforme al DSM-5-TR y CIE-11. Un diagnóstico serio no se hace en una única sesión: exige valoración clínica sostenida por parte de un profesional especializado.',
   },
   {
     q: '¿Cuál es la diferencia entre DBT y Terapia de Esquemas?',
@@ -159,10 +158,6 @@ const faqs = [
   {
     q: '¿Cuánto dura el tratamiento?',
     a: 'El programa integrado DBT + Terapia de Esquemas tiene una duración aproximada de doce a veinticuatro meses según severidad clínica y objetivos individuales. Los primeros seis a doce meses se enfocan en desregulación aguda y construcción de habilidades. Los meses siguientes profundizan en la reestructuración de esquemas nucleares y consolidación de una identidad relacional estable.',
-  },
-  {
-    q: '¿Qué es el instrumento IDP-4?',
-    a: 'El IDP-4 (Inventario de Trastornos de Personalidad, cuarta versión) es un instrumento diagnóstico propio del Instituto DBT Chile, diseñado y calibrado para el perfil clínico chileno. Permite una evaluación estructurada de los rasgos y dominios de personalidad, complementaria a los instrumentos internacionales clásicos, con mayor sensibilidad al contexto sociocultural local.',
   },
   {
     q: '¿El tratamiento es reembolsable por Isapre?',
@@ -255,7 +250,7 @@ export default function TrastornosPersonalidadPage() {
             <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
               <span className="flex items-center gap-1.5 text-emerald-800 font-medium">
                 <CheckCircle className="w-4 h-4 text-emerald-600" />
-                Evaluación IDP-4 propia
+                Diagnóstico dimensional estructurado
               </span>
               <span className="text-emerald-300 hidden md:inline">·</span>
               <span className="text-emerald-800">Modalidad presencial y telemática</span>
@@ -433,30 +428,6 @@ export default function TrastornosPersonalidadPage() {
         </div>
       </section>
 
-      {/* ── Autoevaluación IDP-4 · CTA secundario ────────────────────── */}
-      <section className="py-16 bg-primary/5 border-y border-primary/10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-primary/10 flex items-center justify-center">
-              <ClipboardCheck className="w-7 h-7 text-primary" strokeWidth={1.5} />
-            </div>
-            <h3 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-              ¿Quieres una <em className="font-serif italic text-primary">primera aproximación</em>?
-            </h3>
-            <p className="text-base text-gray-600 mb-8 leading-relaxed">
-              Completa la <strong>Evaluación IDP-4</strong>, nuestro instrumento propio de screening de rasgos de personalidad. No reemplaza el diagnóstico clínico, pero orienta la conversación con nuestro equipo.
-            </p>
-            <Link
-              href="/evaluacion-idp4"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 border-b border-primary/40 hover:border-primary pb-0.5 transition-colors"
-            >
-              Realizar evaluación IDP-4
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── Bibliografía ─────────────────────────────────────────────── */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50/50 border-t border-gray-100">
         <div className="container mx-auto px-4">
@@ -504,7 +475,7 @@ export default function TrastornosPersonalidadPage() {
               <li className="flex gap-3 p-4 bg-white rounded-lg border border-gray-100">
                 <Microscope className="w-4 h-4 mt-1 shrink-0 text-primary" />
                 <span>
-                  Cáceres Cortés, J. (2024). <em className="italic">IDP-4 · Inventario de Trastornos de Personalidad — Manual clínico</em>. Instituto DBT Chile.
+                  Young, J. E., Klosko, J. S., &amp; Weishaar, M. E. (2003). <em className="italic">Schema Therapy: A Practitioner&apos;s Guide</em>. Guilford Press.
                 </span>
               </li>
             </ul>

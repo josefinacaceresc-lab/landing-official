@@ -80,25 +80,30 @@ const nextConfig = {
     ];
   },
   
-  // 301/307 Redirects — preserves legacy URLs and routes all test entries through IDP-4 consent.
+  // 301 Redirects — preserves legacy URLs.
   async redirects() {
     return [
-      // ── ALL test entry points go through IDP-4 (which has Informed Consent modal) ──
-      // The Dra. requires every "Test" entry to trigger consent (Ley 19.628 / 21.331 / 20.584).
-      // Older /autoevaluacion route lacks consent, so we redirect it to the canonical IDP-4
-      // page until consent is added to it too.
-      // Note: /evaluacion-bsl23 is NOT redirected — it has its own intro screen with
-      // Bohus/Soler attribution and "internal use only" disclaimer.
-      // Using non-permanent (307) so we can reverse the routing later without browser cache issues.
+      // ── TEST IDP-4 ELIMINADO (falsos positivos) — 301 permanente a home ──
+      // Se eliminó todo el flujo del test (/evaluacion-idp4 y /autoevaluacion).
       {
         source: '/autoevaluacion',
-        destination: '/evaluacion-idp4',
-        permanent: false,
+        destination: '/',
+        permanent: true,
       },
       {
         source: '/autoevaluacion/:path*',
-        destination: '/evaluacion-idp4',
-        permanent: false,
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/evaluacion-idp4',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/evaluacion-idp4/:path*',
+        destination: '/',
+        permanent: true,
       },
 
       // ── Consolidación SEO: /blog → /foro (hub único de contenido) ──────

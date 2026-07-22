@@ -169,7 +169,7 @@ export default function TLPPage() {
             </div>
             <div className="mt-12 p-6 bg-amber-50 border-l-4 border-amber-500 rounded">
               <p className="text-sm text-gray-700 leading-relaxed">
-                <strong>Diagnóstico:</strong> Recomendamos confirmar el diagnóstico de TLP (DSM-5/CIE-11) por psicólogo o psiquiatra entrenado. Nuestra evaluación clínica integra entrevista estructurada + <Link href="/evaluacion-idp4" className="text-primary underline font-medium">IDP-4</Link> + <Link href="/evaluacion-bsl23" className="text-primary underline font-medium">BSL-23</Link>.
+                <strong>Diagnóstico:</strong> Recomendamos confirmar el diagnóstico de TLP (DSM-5/CIE-11) por psicólogo o psiquiatra entrenado. Nuestra evaluación clínica integra entrevista estructurada + <Link href="/evaluacion-bsl23" className="text-primary underline font-medium">BSL-23</Link> + batería psicométrica complementaria.
               </p>
             </div>
           </div>
@@ -183,11 +183,11 @@ export default function TLPPage() {
             ¿Buscas tratamiento de <em className="font-serif italic text-primary">máxima fidelidad clínica</em>?
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Comienza con nuestra evaluación IDP-4 — instrumento dimensional para identificar perfiles de personalidad y orientar el plan terapéutico.
+            Comienza con una evaluación clínica estructurada para identificar tu perfil y orientar el plan terapéutico.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white px-8">
-              <Link href="/evaluacion-idp4">Iniciar Evaluación IDP-4 <ArrowRight className="w-4 h-4 ml-2" /></Link>
+              <Link href="/#contacto">Solicitar valoración inicial <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary/10">
               <Link href="/equipo">Conocer al equipo</Link>

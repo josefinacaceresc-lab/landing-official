@@ -121,10 +121,10 @@ export default function EsquemaPage() {
             Descubre tu <em className="font-serif italic text-primary">perfil de personalidad</em>
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            La evaluación IDP-4 entrega un mapa inicial de rasgos que permite orientar el trabajo con Esquemas y Modos.
+            Una evaluación clínica estructurada entrega el mapa inicial de rasgos que permite orientar el trabajo con Esquemas y Modos.
           </p>
           <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white px-8">
-            <Link href="/evaluacion-idp4">Iniciar Evaluación IDP-4 <ArrowRight className="w-4 h-4 ml-2" /></Link>
+            <Link href="/#contacto">Solicitar valoración inicial <ArrowRight className="w-4 h-4 ml-2" /></Link>
           </Button>
         </div>
       </section>

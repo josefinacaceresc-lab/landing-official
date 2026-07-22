@@ -66,7 +66,7 @@ export default function Navigation() {
                   </Link>
                   <Link href="/trastornos-de-personalidad" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
                     <div className="font-semibold">Trastornos de Personalidad</div>
-                    <div className="text-sm text-gray-500">DBT + Terapia de Esquemas · IDP-4</div>
+                    <div className="text-sm text-gray-500">DBT + Terapia de Esquemas</div>
                   </Link>
                   <Link href="/tratamiento/tlp-alta-gama" className="block px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
                     <div className="font-semibold">TLP Alta Gama</div>
@@ -114,13 +114,6 @@ export default function Navigation() {
             
             <Link href="/equipo" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Equipo
-            </Link>
-            
-            <Link
-              href="/evaluacion-idp4"
-              className="text-sm text-gray-600 hover:text-primary transition-colors font-medium"
-            >
-              IDP-4
             </Link>
 
             {/* Phones — both clickable (Desktop ≥1024px) */}

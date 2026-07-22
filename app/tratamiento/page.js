@@ -45,7 +45,7 @@ const fases = [
   {
     n: '01',
     titulo: 'Evaluación clínica integral',
-    descripcion: 'Entrevista diagnóstica estructurada, aplicación de IDP-4, BSL-23 y batería complementaria. Formulación clínica colaborativa y definición de objetivos jerarquizados.',
+    descripcion: 'Entrevista diagnóstica estructurada, aplicación de BSL-23 y batería psicométrica complementaria. Formulación clínica colaborativa y definición de objetivos jerarquizados.',
   },
   {
     n: '02',
@@ -203,11 +203,11 @@ export default function TratamientoPage() {
             ¿Listo para comenzar tu <em className="font-serif italic text-primary">proceso clínico</em>?
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Comienza con nuestra evaluación clínica IDP-4, validada para identificar perfiles de personalidad y orientar el plan terapéutico.
+            Comienza con una evaluación clínica estructurada, orientada a identificar tu perfil y definir el plan terapéutico adecuado.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white px-8">
-              <Link href="/evaluacion-idp4">Iniciar Evaluación IDP-4</Link>
+              <Link href="/#contacto">Solicitar valoración inicial</Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary/10">
               <Link href="/equipo">Conocer al equipo</Link>

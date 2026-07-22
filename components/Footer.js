@@ -182,11 +182,6 @@ export default function Footer() {
                   WDBTA Chile
                 </Link>
               </li>
-              <li>
-                <Link href="/evaluacion-idp4" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
-                  Evaluación IDP-4
-                </Link>
-              </li>
             </ul>
           </div>
 

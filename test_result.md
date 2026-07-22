@@ -1059,3 +1059,137 @@ agent_communication:
         - No regressions detected
         
         Test file: /app/backend_test_ghost_defense.py (10/10 tests passed)
+
+# ══════════════════════════════════════════════════════════════════
+# SESIÓN: Eliminación completa Test IDP-4 (falsos positivos)
+# ══════════════════════════════════════════════════════════════════
+user_problem_statement: |
+  URGENTE: Eliminar de institutodbtchile.cl cualquier rastro del Test IDP4
+  (falsos positivos). Borrar páginas del test, eliminar código/endpoints,
+  aplicar 301 de las URLs antiguas del test hacia la home, y dejar el resto
+  del sitio intacto (BSL-23, leads, admin).
+
+backend:
+  - task: "Eliminación endpoints API IDP-4 (/api/leads/idp4, /api/leads/idp4-consent, /api/admin/idp4-results, /api/admin/idp4-results/:id, /api/admin/idp4-export-csv)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Removí los 5 endpoints IDP4 de route.js. Verificado con curl: devuelven 404. Los datos en MongoDB (colecciones idp4_results/idp4_consents) NO fueron borrados, solo el acceso."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED - All 5 IDP-4 endpoints correctly return 404. Tested: GET /api/admin/idp4-results (404), GET /api/admin/idp4-results/123 (404), GET /api/admin/idp4-export-csv (404), POST /api/leads/idp4 (404), POST /api/leads/idp4-consent (404). MongoDB data preserved as intended (not deleted, only access removed)."
+  - task: "Redirects 301 del test eliminado (/evaluacion-idp4, /evaluacion-idp4/*, /autoevaluacion, /autoevaluacion/* -> /)"
+    implemented: true
+    working: true
+    file: "next.config.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Páginas app/evaluacion-idp4/ y app/autoevaluacion/ eliminadas. Redirects 308 permanent configurados en next.config.js. Verificado con curl."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED - All 4 IDP-4 page redirects working correctly with 308 permanent redirects to home. Tested: /evaluacion-idp4 (308 → /), /evaluacion-idp4/resultados (308 → /), /autoevaluacion (308 → /), /autoevaluacion/resultados (308 → /). All redirects configured correctly in next.config.js."
+  - task: "APIs restantes intactas (fast-capture, bsl23, whatsapp-click, admin leads/clicks)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "POST /api/leads/fast-capture verificado OK con curl (200, success:true). Falta verificar bsl23, whatsapp-click y admin (login password en /app/memory/test_credentials.md, admin pass: Elcoihue3776)."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED - All remaining APIs working correctly with no regression. Tested: POST /api/leads/fast-capture (200, success:true, leadId returned), POST /api/leads/bsl23 (200, success:true), POST /api/whatsapp-click (200, success:true), Admin login with password Elcoihue3776 (200, session cookie set), GET /api/admin/leads (200, 34 leads returned, some with source='idp4' - data preserved as intended), GET /api/admin/whatsapp-clicks (200, 1 click returned). No IDP-4 data in admin leads response structure."
+
+frontend:
+  - task: "Eliminación de enlaces/menciones IDP-4 en Nav, Footer, home, tratamiento, tlp-alta-gama, esquema, trastornos-de-personalidad, la-mente-algoritmica, foro, admin"
+    implemented: true
+    working: "NA"
+    file: "varios"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Grep final: cero referencias IDP4 salvo las reglas de redirect. Todas las páginas devuelven 200. Hubo un syntax error residual en app/page.js (}v>) ya corregido."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 2
+  run_ui: false
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Eliminé por completo el Test IDP-4: páginas (/evaluacion-idp4, /autoevaluacion), 5 endpoints API, sección admin, enlaces y menciones en 10+ archivos. Redirects 308 a home configurados. Necesito verificación backend: (1) redirects de las 4 URLs del test a /, (2) endpoints idp4 devuelven 404, (3) APIs restantes funcionan: POST /api/leads/fast-capture, POST /api/leads/bsl23, POST /api/whatsapp-click, admin login (password Elcoihue3776) + GET /api/admin/leads + GET /api/admin/whatsapp-clicks, (4) páginas clave devuelven 200. NO borrar datos de MongoDB."
+  - agent: "testing"
+    message: |
+      ✅ IDP-4 COMPLETE REMOVAL VERIFICATION PASSED - All 26 tests successful (100% pass rate).
+      
+      COMPREHENSIVE TEST RESULTS:
+      
+      1. IDP-4 REDIRECTS (4/4 tests passed) - ✅ WORKING
+         - /evaluacion-idp4 → 308 permanent redirect to /
+         - /evaluacion-idp4/resultados → 308 permanent redirect to /
+         - /autoevaluacion → 308 permanent redirect to /
+         - /autoevaluacion/resultados → 308 permanent redirect to /
+         All redirects configured correctly in next.config.js
+      
+      2. DELETED IDP-4 ENDPOINTS (5/5 tests passed) - ✅ WORKING
+         - GET /api/admin/idp4-results → 404 ✅
+         - GET /api/admin/idp4-results/123 → 404 ✅
+         - GET /api/admin/idp4-export-csv → 404 ✅
+         - POST /api/leads/idp4 → 404 ✅
+         - POST /api/leads/idp4-consent → 404 ✅
+         All IDP-4 endpoints correctly removed from route.js
+      
+      3. REMAINING APIS INTACT (5/5 tests passed) - ✅ NO REGRESSION
+         - POST /api/leads/fast-capture → 200, success:true, leadId returned ✅
+         - POST /api/leads/bsl23 → 200, success:true ✅
+         - POST /api/whatsapp-click → 200, success:true ✅
+         - Admin login (password: Elcoihue3776) → 200, session cookie set ✅
+         - GET /api/admin/leads → 200, 34 leads returned (some with source='idp4' - data preserved) ✅
+         - GET /api/admin/whatsapp-clicks → 200, 1 click returned ✅
+      
+      4. KEY PAGES SMOKE TEST (9/9 tests passed) - ✅ WORKING
+         All pages return 200: /, /tratamiento, /tratamiento/tlp-alta-gama, /trastornos-de-personalidad,
+         /esquema, /evaluacion-bsl23, /admin, /foro, /investigacion/la-mente-algoritmica
+      
+      5. NO IDP-4 IN PUBLIC HTML (3/3 tests passed) - ✅ CLEAN
+         - / → No IDP-4 mentions found ✅
+         - /trastornos-de-personalidad → No IDP-4 mentions found ✅
+         - /tratamiento → No IDP-4 mentions found ✅
+         No "IDP-4", "idp4", or "evaluacion-idp4" strings found in public HTML
+      
+      MONGODB DATA PRESERVATION VERIFIED:
+      - Admin endpoint shows 34 leads total, some with source='idp4'
+      - Historical data preserved as intended (collections not deleted, only API access removed)
+      
+      PRODUCTION STATUS: ✅ READY
+      - IDP-4 test completely removed from public site
+      - All redirects working (308 permanent to home)
+      - All IDP-4 endpoints return 404
+      - Rest of site intact (BSL-23, fast-capture, admin panel all working)
+      - No IDP-4 mentions in public HTML
+      - Historical data preserved in MongoDB
+      
+      Test file: /app/backend_test_idp4_removal.py (26/26 tests passed)

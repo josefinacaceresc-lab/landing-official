@@ -91,7 +91,7 @@ export default function Home() {
                 Lo que hay <em className="font-serif italic text-emerald-700">detrás</em> de un tratamiento serio.
               </h2>
               <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8 leading-[1.9]">
-                Hay una distancia importante entre un tratamiento improvisado y uno que se sostiene sobre estructura clínica verificable. Somos la única institución chilena que reúne tres acreditaciones internacionales que normalmente se ven separadas: <strong>WDBTA</strong> (Terapia Dialéctico Conductual), <strong>APA</strong> (Psicología Norteamericana) e <strong>ISST</strong> (Schema Therapy). No es un detalle: son los marcos que garantizan que lo que se ofrece tiene método, evidencia y rigor.
+                Nuestro rigor no es una declaración de intenciones, sino un respaldo verificable. Somos la única institución chilena que reúne tres acreditaciones internacionales que normalmente se encuentran por separado: <strong>WDBTA</strong> (Terapia Dialéctico Conductual), <strong>APA</strong> (Psicología Norteamericana) e <strong>ISST</strong> (Schema Therapy). Son los marcos que garantizan que cada intervención tiene método, evidencia y estándar internacional.
               </p>
               
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">

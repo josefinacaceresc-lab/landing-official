@@ -31,7 +31,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata ─────────────────────────────────────────────────────────
 export const metadata = {
-  title: 'Trastornos de Personalidad · Diagnóstico y Tratamiento en Chile',
+  title: 'Tratamiento de Trastornos de Personalidad y TLP en Chile',
   description:
     'Diagnóstico dimensional y tratamiento integrado para Trastornos de Personalidad en Chile. TLP, evitativo, narcisista, obsesivo y otros. Modelo DBT + Terapia de Esquemas. Evaluación IDP-4 propia. Reembolsable Isapre.',
   keywords: [
@@ -241,7 +241,7 @@ export default function TrastornosPersonalidadPage() {
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
-              <em className="font-serif italic text-primary">Trastornos</em> de Personalidad
+              Tratamiento de <em className="font-serif italic text-primary">Trastornos de Personalidad</em>
             </h1>
 
             <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">

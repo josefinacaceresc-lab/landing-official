@@ -32,7 +32,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 
 // ── SEO metadata ─────────────────────────────────────────────────────────
 export const metadata = {
-  title: 'DBT-PTSD · Tratamiento del Trauma Complejo en Chile',
+  title: 'DBT-PTSD · Tratamiento del Trauma Complejo y TEPT en Chile',
   description:
     'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim). Implementación clínica conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA. Tratamiento estructurado para trauma complejo, TEPT-c y comorbilidad con TLP.',
   keywords: [
@@ -49,7 +49,7 @@ export const metadata = {
   ],
   alternates: { canonical: 'https://institutodbtchile.cl/dbt-trauma' },
   openGraph: {
-    title: 'DBT-PTSD · Tratamiento del Trauma Complejo en Chile',
+    title: 'DBT-PTSD · Tratamiento del Trauma Complejo y TEPT en Chile',
     description:
       'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus. Implementación local conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA.',
     url: 'https://institutodbtchile.cl/dbt-trauma',

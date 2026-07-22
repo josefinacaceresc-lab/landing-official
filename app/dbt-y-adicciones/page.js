@@ -362,7 +362,7 @@ export default function DBTAdiccionesPage() {
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
-              <em className="font-serif italic text-primary">DBT</em> y Adicciones
+              <em className="font-serif italic text-primary">Tratamiento de Adicciones</em> con DBT
             </h1>
 
             <p className="text-base md:text-lg text-gray-700 mb-4 font-normal">

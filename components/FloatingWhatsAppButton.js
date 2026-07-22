@@ -16,7 +16,8 @@ export default function FloatingWhatsAppButton() {
     const checkPath = () => {
       if (typeof window === 'undefined') return
       const p = window.location.pathname || ''
-      setPathHidden(p.startsWith('/admin'))
+      // Oculto en /admin y en la home (rediseño CRO: CTA único "Agendar evaluación inicial")
+      setPathHidden(p.startsWith('/admin') || p === '/')
     }
     checkPath()
     window.addEventListener('popstate', checkPath)

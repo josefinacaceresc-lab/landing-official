@@ -10,100 +10,73 @@ import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
 import FAQSection from '@/components/FAQSection'
 
 const WA_HREF_DEFAULT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
-const WA_HREF_FAMILY = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! 👋 Vi su página web y me gustaría recibir información sobre su Programa Familia (DBT-A). ¿Me podrían ayudar a agendar una hora? Gracias.')}`
+const WA_HREF_REMOTE = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, me gustaría agendar una evaluación inicial online (DBT Remote). ¿Me podrían indicar los pasos? Gracias.')}`
 
 export default function Home() {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-primary/4 to-primary/12" />
-        
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Vertical Logo - white JPG bg neutralized via mix-blend-mode: multiply on tinted gradient */}
-            <div className="flex justify-center mb-8">
+      {/* Hero Section — sobrio, editorial, CTA único */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white">
+        <div className="container relative z-10 mx-auto px-4 py-24">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="flex justify-center mb-10">
               <img
                 src="https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg"
                 alt="Instituto DBT Chile"
                 width="320"
                 height="320"
                 draggable="false"
-                className="h-32 md:h-40 w-auto object-contain select-none"
+                className="h-24 md:h-28 w-auto object-contain select-none"
                 style={{ mixBlendMode: 'multiply' }}
                 loading="eager"
               />
             </div>
 
-            <div className="mb-6 text-xs md:text-sm font-semibold text-primary uppercase tracking-[0.18em]">
-              Acreditación Internacional · WDBTA · APA · ISST
+            <div className="mb-8 text-[11px] md:text-xs text-gray-400 uppercase tracking-[0.25em]">
+              Anteriormente DBT Chile · Desde 2021
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-5 tracking-tight leading-[1.05]">
-              Terapia <em className="font-serif italic text-primary">DBT</em> y Trastornos de la <em className="font-serif italic text-primary">Personalidad</em>
+            <h1 className="mb-8">
+              <span className="block font-serif text-5xl md:text-6xl lg:text-7xl font-light text-gray-900 tracking-tight leading-[1.05]">
+                Instituto DBT Chile
+              </span>
+              <span className="block mt-6 text-xl md:text-2xl font-light text-gray-700 leading-snug tracking-wide">
+                Tratamiento DBT de alta especialización para desregulación emocional severa y casos complejos
+              </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
-              Instituto DBT Chile <span className="text-gray-400">·</span> <span className="text-gray-500">antes DBT Chile</span> <span className="text-gray-400">·</span> Tratamiento clínico de alta complejidad
+            <p className="text-base md:text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Programa anual estructurado, presencial en Vitacura y online en todo Chile y el extranjero (DBT Remote). Un modelo que integra DBT con Terapia de Esquemas para los casos donde otros tratamientos no han funcionado.
             </p>
 
-            <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Para quienes han buscado ayuda durante años y no han encontrado un lugar que <em className="font-serif italic text-gray-800">realmente entienda</em> la profundidad de lo que les pasa. Basados en evidencia internacional y una comprensión clínica seria del sufrimiento humano.
-            </p>
-
-            <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
-              <span className="flex items-center gap-1.5 text-emerald-800 font-medium">
-                <CheckCircle className="w-4 h-4 text-emerald-600" />
-                Reembolsable Isapre
-              </span>
-              <span className="text-emerald-300 hidden md:inline">·</span>
-              <span className="text-emerald-800">Modalidad presencial y telemática</span>
-              <span className="text-emerald-300 hidden md:inline">·</span>
-              <span className="text-emerald-800">Boleta médica</span>
-            </div>
-
-            <div className="flex flex-col items-center mb-14">
+            <div className="flex flex-col items-center">
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-10 py-6 text-base font-medium tracking-wide shadow-lg hover:shadow-xl transition-all"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-7 text-base font-medium tracking-wide shadow-sm hover:shadow-md transition-all"
               >
                 <a href={WA_HREF_DEFAULT} target="_blank" rel="noopener noreferrer">
-                  <span className="flex items-center gap-2">
-                    Solicitar valoración inicial
-                    <ArrowRight className="w-4 h-4" />
-                  </span>
+                  Agendar evaluación inicial
                 </a>
               </Button>
               <p className="mt-3 text-xs text-gray-500 tracking-wide">
-                Respuesta clínica en menos de 24 horas hábiles
+                presencial u online
               </p>
-              <Link
-                href="/tratamiento"
-                className="mt-5 text-sm text-gray-500 hover:text-gray-800 border-b border-gray-300 hover:border-gray-700 pb-0.5 transition-colors"
-              >
-                Conocer el modelo clínico
-              </Link>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-              <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">15+</div>
-                <div className="text-sm text-gray-600">Años de práctica clínica especializada</div>
-              </div>
-              <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">WDBTA</div>
-                <div className="text-sm text-gray-600">Única institución representante en Chile</div>
-              </div>
-              <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">Ph.D.</div>
-                <div className="text-sm text-gray-600">Dirección clínica con formación internacional</div>
-              </div>
-              <div>
-                <div className="text-3xl font-serif font-light text-primary mb-1">24h</div>
-                <div className="text-sm text-gray-600">Respuesta clínica a tu primera consulta</div>
-              </div>
-            </div>
+      {/* ── Por qué Instituto DBT Chile — bloque editorial ─────────────── */}
+      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto" style={{ maxWidth: '700px' }}>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+              Por qué Instituto DBT Chile
+            </h2>
+            <p className="text-lg text-gray-700 leading-[1.9]">
+              No somos un taller de habilidades ni un programa breve. Ofrecemos un programa clínico anual estructurado: terapia individual y entrenamiento grupal cada 15 días, acompañamiento entre sesiones y un equipo clínico en consultoría permanente. Nuestro modelo integra DBT con Terapia de Esquemas para patología de personalidad compleja, y nuestra directora es investigadora activa y miembro del capítulo de investigación de la WDBTA.
+            </p>
           </div>
         </div>
       </section>
@@ -361,6 +334,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── DBT Remote: el mismo programa, donde usted esté ─────────────── */}
+      <section className="py-20 md:py-24 bg-stone-50 border-y border-stone-100">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto text-center" style={{ maxWidth: '700px' }}>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8">
+              DBT Remote: el mismo programa, donde usted esté
+            </h2>
+            <p className="text-lg text-gray-700 leading-[1.9] mb-10">
+              Todos los componentes del programa — sesiones individuales, grupo de habilidades y evaluación inicial — están disponibles en modalidad online con el mismo equipo clínico y la misma estructura. Atendemos pacientes en todo Chile y chilenos residentes en el extranjero.
+            </p>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-gray-400 text-gray-800 hover:bg-white px-10 py-6 text-base font-medium tracking-wide"
+            >
+              <a href={WA_HREF_REMOTE} target="_blank" rel="noopener noreferrer">
+                Agendar evaluación online
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* ApoFix AI & NexariaLabs Section - PROMINENT */}
       <section className="py-24 bg-gradient-to-br from-primary/10 via-white to-primary/5 relative overflow-hidden">
         {/* Background Pattern */}
@@ -614,17 +611,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* CTA */}
+            {/* Enlace informativo al programa */}
             <div className="text-center mt-4">
-              <Button
-                asChild
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
+              <Link
+                href="/tratamiento/dbt-infanto-juvenil"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-base border-b border-primary/40 hover:border-primary pb-0.5 transition-all"
               >
-                <a href={WA_HREF_FAMILY} target="_blank" rel="noopener noreferrer">
-                  Conversemos sobre el programa
-                </a>
-              </Button>
+                Conocer el programa para familias
+                <ArrowRight className="w-4 h-4" />
+              </Link>
               <p className="mt-4 text-sm text-gray-500">Modalidad presencial y online · 12 sesiones · Grupos cerrados</p>
             </div>
           </div>
@@ -634,6 +629,20 @@ export default function Home() {
       {/* ── FAQ Section (SEO: FAQPage schema + Speakable) ───────────────── */}
       <FAQSection />
 
+
+      {/* ── Programa y valores — información institucional ──────────────── */}
+      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto" style={{ maxWidth: '700px' }}>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+              Programa y valores
+            </h2>
+            <p className="text-lg text-gray-700 leading-[1.9]">
+              El tratamiento completo tiene una duración de 12 meses, en modalidad presencial u online. La inversión es de $580.000 mensuales e incluye todos los componentes del programa. El ingreso comienza con una evaluación clínica inicial de $90.000. Atendemos exclusivamente de forma particular, sin convenios institucionales. Entregamos boleta reembolsable según su seguro complementario.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section id="contacto" className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="container mx-auto px-4">
@@ -654,7 +663,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-base border-b border-primary/40 hover:border-primary pb-0.5 transition-all"
             >
-              Iniciar conversación por WhatsApp
+              Agendar evaluación inicial
               <ArrowRight className="w-4 h-4" />
             </a>
 

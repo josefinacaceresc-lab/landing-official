@@ -59,6 +59,8 @@ module.exports = {
 
       // Research Hub - High authority content
       '/investigacion': { priority: 0.95, changefreq: 'weekly' },
+      '/investigacion/preprint-inferencia-activa': { priority: 0.9, changefreq: 'monthly' },
+      '/investigacion/preprint-apofenia-relacional-recursiva': { priority: 0.9, changefreq: 'monthly' },
       '/investigacion/la-mente-algoritmica': { priority: 0.9, changefreq: 'weekly' },
       '/investigacion/wdbta': { priority: 0.85, changefreq: 'monthly' },
 

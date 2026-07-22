@@ -103,6 +103,65 @@ export default function InvestigacionPage() {
               </Card>
             </Link>
 
+            {/* ─── SECOND PREPRINT — Apofenia Relacional Recursiva (ARR) ─── */}
+            <Link
+              href="/investigacion/preprint-apofenia-relacional-recursiva"
+              className="block mb-12 group"
+            >
+              <Card className="border border-blue-200/60 bg-gradient-to-br from-blue-50/40 via-white to-blue-50/20 shadow-md hover:shadow-2xl transition-all overflow-hidden">
+                <div className="grid md:grid-cols-5 gap-0">
+                  {/* Left accent bar */}
+                  <div className="bg-gradient-to-b from-gray-900 to-gray-800 p-8 md:p-10 md:col-span-2 flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-400/20 border border-blue-400/40 text-blue-200 text-xs font-medium tracking-wider uppercase mb-6">
+                        <FileText className="w-3 h-3" />
+                        Nuevo Preprint · 2026
+                      </div>
+                      <div className="text-xs text-white/50 uppercase tracking-[0.2em] mb-2">
+                        La Mente Algorítmica
+                      </div>
+                      <h3 className="font-serif text-2xl md:text-3xl leading-tight mb-4 text-white">
+                        Apofenia Relacional <em className="text-blue-300 not-italic font-normal">Recursiva</em>
+                      </h3>
+                    </div>
+                    <div className="mt-6">
+                      <div className="text-xs text-white/40 uppercase tracking-wider mb-1">Autora</div>
+                      <div className="text-sm font-medium text-white/90">Josefina Cáceres Cortés</div>
+                      <div className="text-xs text-white/40 mt-2 font-mono">DOI: 10.5281/zenodo.21346541</div>
+                    </div>
+                  </div>
+
+                  {/* Right content */}
+                  <CardContent className="md:col-span-3 p-8 md:p-10">
+                    <p className="text-gray-700 leading-relaxed mb-6 text-[15px]">
+                      Un punto ciego en la <em className="text-blue-700 not-italic">Teoría de los Marcos Relacionales</em>: la <em className="text-blue-700 not-italic">ignición eidética</em>, el operador ARR (radio espectral del subgrafo de amenaza) y su validación por simulación agéntica, con convergencia emergente al modelo biosocial de Linehan.
+                    </p>
+                    <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-gray-200">
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">400</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Agentes simulados</div>
+                      </div>
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">377→6</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Ablación de ignición</div>
+                      </div>
+                      <div>
+                        <div className="font-mono text-2xl font-light text-gray-900">9.6h</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Anticipación de crisis</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500 font-serif italic">Preprint · Zenodo · con DOI</span>
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 group-hover:text-blue-700 transition-colors">
+                        Leer manuscrito
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+            </Link>
+
             <div className="grid md:grid-cols-2 gap-8">
               {/* ApoFix AI */}
               <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-primary/5">

@@ -138,6 +138,30 @@ const nextConfig = {
         destination: '/tratamiento/tlp-alta-gama',
         permanent: true,
       },
+
+      // ── Legacy /terapia_dbt/* (WordPress viejo, cacheado por Google) ──
+      // Resultado obsoleto "Plataforma de IA Lakaira" en /terapia_dbt/especialistas.
+      // Específica primero, luego comodín.
+      {
+        source: '/terapia_dbt/especialistas',
+        destination: '/equipo',
+        permanent: true,
+      },
+      {
+        source: '/terapia_dbt/especialistas/',
+        destination: '/equipo',
+        permanent: true,
+      },
+      {
+        source: '/terapia_dbt',
+        destination: '/terapia-dbt',
+        permanent: true,
+      },
+      {
+        source: '/terapia_dbt/:slug*',
+        destination: '/terapia-dbt',
+        permanent: true,
+      },
       {
         source: '/tratamiento/tlp',
         destination: '/tratamiento/tlp-alta-gama',

@@ -71,10 +71,10 @@ export default function Home() {
       <section className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4">
           <div className="mx-auto" style={{ maxWidth: '700px' }}>
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-10 text-center">
               Por qué Instituto DBT Chile
             </h2>
-            <p className="text-lg text-gray-700 leading-[1.9]">
+            <p className="text-lg text-gray-700 leading-[1.9] text-justify">
               No somos un taller de habilidades ni un programa breve. Ofrecemos un programa clínico anual estructurado: terapia individual y entrenamiento grupal cada 15 días, acompañamiento entre sesiones y un equipo clínico en consultoría permanente. Nuestro modelo integra DBT con Terapia de Esquemas para patología de personalidad compleja, y nuestra directora es investigadora activa y miembro del capítulo de investigación de la WDBTA.
             </p>
           </div>
@@ -338,10 +338,10 @@ export default function Home() {
       <section className="py-20 md:py-24 bg-stone-50 border-y border-stone-100">
         <div className="container mx-auto px-4">
           <div className="mx-auto text-center" style={{ maxWidth: '700px' }}>
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8">
+            <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-10">
               DBT Remote: el mismo programa, donde usted esté
             </h2>
-            <p className="text-lg text-gray-700 leading-[1.9] mb-10">
+            <p className="text-lg text-gray-700 leading-[1.9] text-justify mb-10">
               Todos los componentes del programa — sesiones individuales, grupo de habilidades y evaluación inicial — están disponibles en modalidad online con el mismo equipo clínico y la misma estructura. Atendemos pacientes en todo Chile y chilenos residentes en el extranjero.
             </p>
             <Button
@@ -634,10 +634,10 @@ export default function Home() {
       <section className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4">
           <div className="mx-auto" style={{ maxWidth: '700px' }}>
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-10 text-center">
               Programa y valores
             </h2>
-            <p className="text-lg text-gray-700 leading-[1.9]">
+            <p className="text-lg text-gray-700 leading-[1.9] text-justify">
               El tratamiento completo tiene una duración de 12 meses, en modalidad presencial u online. La inversión es de $580.000 mensuales e incluye todos los componentes del programa. El ingreso comienza con una evaluación clínica inicial de $90.000. Atendemos exclusivamente de forma particular, sin convenios institucionales. Entregamos boleta reembolsable según su seguro complementario.
             </p>
           </div>

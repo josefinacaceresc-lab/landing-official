@@ -222,8 +222,11 @@ export default function Navigation() {
               <Link href="/equipo" className="block text-gray-700 hover:text-primary font-medium">
                 Equipo
               </Link>
-              <Link href="/blog" className="block text-gray-700 hover:text-primary font-medium">
-                Blog
+              <Link href="/foro" className="block text-gray-700 hover:text-primary font-medium">
+                Foro
+              </Link>
+              <Link href="/historia" className="block text-gray-700 hover:text-primary font-medium">
+                Historia
               </Link>
               
               <Button

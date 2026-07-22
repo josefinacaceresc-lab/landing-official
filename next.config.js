@@ -101,6 +101,20 @@ const nextConfig = {
         permanent: false,
       },
 
+      // ── Consolidación SEO: /blog → /foro (hub único de contenido) ──────
+      // El /blog tenía enlaces rotos (404) y canibalizaba keywords con el Foro.
+      // 301 permanente: consolida la autoridad histórica de /blog en /foro.
+      {
+        source: '/blog',
+        destination: '/foro',
+        permanent: true,
+      },
+      {
+        source: '/blog/:path*',
+        destination: '/foro',
+        permanent: true,
+      },
+
       // ── Legacy "ugly" WordPress URLs → clean SEO paths (301) ──────────
       // The Dra. reported seeing /tlp_-_dbt/alta-gama in the wild (likely a Google-cached
       // legacy URL). Catch all variants.

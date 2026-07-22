@@ -20,6 +20,9 @@ module.exports = {
     '/evaluacion-bsl23/resultados/*',
     '/sitemap.xml',
     '/sitemap-*.xml',
+    // /blog eliminado: consolidado en /foro (301). Excluir de sitemap.
+    '/blog',
+    '/blog/*',
   ],
   robotsTxtOptions: {
     policies: [
@@ -88,9 +91,6 @@ module.exports = {
 
       // Esquema institucional
       '/esquema': { priority: 0.8, changefreq: 'monthly' },
-
-      // Blog - Fresh content signal
-      '/blog': { priority: 0.75, changefreq: 'daily' },
 
       // Assessments - Lead generation (landing pages only, NOT /resultados)
       '/autoevaluacion': { priority: 0.75, changefreq: 'monthly' },

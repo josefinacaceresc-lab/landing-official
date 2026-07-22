@@ -1193,3 +1193,157 @@ agent_communication:
       - Historical data preserved in MongoDB
       
       Test file: /app/backend_test_idp4_removal.py (26/26 tests passed)
+
+# ══════════════════════════════════════════════════════════════════
+# SESIÓN: Rediseño CRO de la home (5 prompts del usuario)
+# ══════════════════════════════════════════════════════════════════
+user_problem_statement: |
+  Rediseño de la home: (1) Hero sobrio con H1 "Instituto DBT Chile" + subtítulo
+  y CTA único "Agendar evaluación inicial"; (2) sección editorial "Por qué
+  Instituto DBT Chile"; (3) sección "DBT Remote" con CTA "Agendar evaluación
+  online"; (4) sección "Programa y valores" con precios; (5) limpieza de CTAs,
+  botón flotante WhatsApp oculto SOLO en home, jerarquía H1/H2, sin noindex.
+  Los CTAs deben seguir pasando por el modal de captura (FastCaptureModal
+  intercepta clics a wa.me y captura nombre+teléfono antes de abrir WhatsApp).
+
+frontend:
+  - task: "Home rediseñada: Hero + Por qué + DBT Remote + Programa y valores + CTA único"
+    implemented: true
+    working: true
+    file: "app/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Rediseño completo aplicado. Verificado con curl: H1 único, secciones presentes, precios visibles, 0 noindex, 5 schemas JSON-LD. Falta verificación de interacción (modal de captura al hacer clic en CTAs) y responsive móvil."
+      - working: true
+        agent: "testing"
+        comment: |
+          ✅ VERIFIED - All home redesign requirements working correctly. Comprehensive testing completed:
+          
+          1. HERO SECTION (Desktop 1920x800) - ✅ PASS
+             - H1 único contains "Instituto DBT Chile" AND "Tratamiento DBT de alta especialización para desregulación emocional severa y casos complejos"
+             - Button "Agendar evaluación inicial" visible with subtitle "presencial u online"
+             - NO floating WhatsApp button visible in Hero
+          
+          2. LEAD CAPTURE FLOW - ✅ PASS
+             - Click "Agendar evaluación inicial" → Modal opened (did NOT navigate to wa.me)
+             - Form filled: name "Test Frontend Agent", phone "+56 9 8765 4321"
+             - POST /api/leads/fast-capture → 200 OK
+             - Response: {success: true, leadId: 'e4324cdb-1d50-4d66-9ac6-ab0fa9f17d4a', mode: 'karina-capture', channel: 'whatsapp'}
+             - Success view "Mensaje recibido" displayed
+          
+          3. SECTIONS PRESENT AND IN ORDER - ✅ PASS
+             - "Por qué Instituto DBT Chile" found
+             - "DBT Remote: el mismo programa, donde usted esté" found
+             - "Programa y valores" found with prices "$580.000 mensuales" and "$90.000"
+             - Contact section "¿Conversamos?" found
+             - ORDER VERIFIED: "Programa y valores" (index 8) is BEFORE "¿Conversamos?" (index 9)
+          
+          4. DBT REMOTE BUTTON - ✅ PASS
+             - "Agendar evaluación online" button opens modal (correct interception)
+          
+          5. MOBILE RESPONSIVE (390x844) - ✅ PASS
+             - H1 fits within viewport (width=358px), legible, no cuts
+             - Button visible and clickable
+             - NO horizontal overflow (scrollWidth=390)
+             - Prices visible on mobile
+          
+          6. CONSOLE - ✅ PASS
+             - NO critical React/JavaScript errors
+             - 24 console logs (all non-critical tracking/analytics)
+  - task: "FloatingWhatsAppButton oculto solo en home (visible en otras rutas)"
+    implemented: true
+    working: true
+    file: "components/FloatingWhatsAppButton.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Condición pathname === '/' agregada. Verificar que NO aparece en / y SÍ aparece en /terapia-dbt."
+      - working: true
+        agent: "testing"
+        comment: |
+          ✅ VERIFIED - Floating WhatsApp button visibility working correctly.
+          - Home page (/): Button NOT visible (correct - hidden per CRO redesign)
+          - Control page (/terapia-dbt): Button IS visible with data-source="floating_button" (correct)
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Testear SOLO frontend de la home rediseñada (usuario autorizó). Casos: (1) clic en 'Agendar evaluación inicial' del hero abre el modal de captura (FastCaptureModal) y NO navega directo a wa.me; llenar nombre+teléfono válido chileno y verificar POST /api/leads/fast-capture 200; (2) clic 'Agendar evaluación online' en sección DBT Remote también abre modal; (3) botón flotante WhatsApp NO visible en /, SÍ visible en /terapia-dbt; (4) secciones presentes en orden: Hero → Por qué Instituto DBT Chile → ... → DBT Remote → ... → Programa y valores → Contacto; (5) responsive 390px: hero legible, botón accesible, sin overflow horizontal; (6) H1 único correcto; (7) sin botón de WhatsApp visible en el Hero. NO testear otras páginas a fondo."
+  - agent: "testing"
+    message: |
+      ✅ HOME REDESIGN TESTING COMPLETE - All 7 test cases PASSED (100% success rate).
+      
+      COMPREHENSIVE TEST RESULTS:
+      
+      1. DESKTOP HERO SECTION (1920x800) - ✅ PASS
+         - H1 único found containing both "Instituto DBT Chile" AND "Tratamiento DBT de alta especialización para desregulación emocional severa y casos complejos" ✅
+         - Button "Agendar evaluación inicial" visible with subtitle "presencial u online" ✅
+         - NO floating WhatsApp button visible in Hero (correct behavior) ✅
+         - Screenshot: 01_hero_desktop.png
+      
+      2. LEAD CAPTURE FLOW - HERO BUTTON - ✅ PASS
+         - Click "Agendar evaluación inicial" → Modal opened (did NOT navigate to wa.me) ✅
+         - Modal title "Soy Karina" displayed ✅
+         - Form filled with name "Test Frontend Agent" and phone "+56 9 8765 4321" ✅
+         - POST /api/leads/fast-capture → 200 OK ✅
+         - Response: {success: true, leadId: 'e4324cdb-1d50-4d66-9ac6-ab0fa9f17d4a', mode: 'karina-capture', channel: 'whatsapp', location: 'Council Bluffs, Iowa, United States', isRepeat: false} ✅
+         - Success view "Mensaje recibido" displayed ✅
+         - Screenshots: 02_modal_opened.png, 03_modal_success.png
+      
+      3. SECTIONS PRESENT AND IN ORDER - ✅ PASS
+         - "Por qué Instituto DBT Chile" section found ✅
+         - "DBT Remote: el mismo programa, donde usted esté" section found ✅
+         - "Programa y valores" section found ✅
+         - Prices "$580.000 mensuales" and "$90.000" both visible ✅
+         - Contact section "¿Conversamos?" found ✅
+         - ORDER VERIFIED: "Programa y valores" (index 8) is BEFORE "¿Conversamos?" (index 9) ✅
+      
+      4. DBT REMOTE BUTTON - ✅ PASS
+         - "Agendar evaluación online" button found in DBT Remote section ✅
+         - Click → Modal opened (correct interception behavior) ✅
+      
+      5. FLOATING WHATSAPP BUTTON VISIBILITY - ✅ PASS
+         - Home page (/): Floating button NOT visible (correct - hidden per CRO redesign) ✅
+         - Control page (/terapia-dbt): Floating button IS visible (correct) ✅
+         - Screenshot: 04_floating_button_visible.png
+      
+      6. MOBILE RESPONSIVE (390x844) - ✅ PASS
+         - H1 bounding box: width=358px (fits within 390px viewport) ✅
+         - H1 legible, no text cuts ✅
+         - "Agendar evaluación inicial" button visible and clickable ✅
+         - NO horizontal overflow: scrollWidth=390, clientWidth=390 ✅
+         - "Programa y valores" section legible on mobile ✅
+         - Prices "$580.000" and "$90.000" visible on mobile ✅
+         - Screenshot: 05_mobile_responsive.png
+      
+      7. CONSOLE ERRORS CHECK - ✅ PASS
+         - NO critical React/JavaScript errors found ✅
+         - NO page errors detected ✅
+         - Total console logs: 24 (all non-critical, tracking/analytics only)
+         - Ignored: doubleclick, googletagmanager, analytics errors (as expected)
+      
+      PRODUCTION STATUS: ✅ READY FOR LAUNCH
+      - All CRO redesign requirements met
+      - Lead capture modal working correctly (intercepts wa.me links)
+      - FastCaptureModal integration verified (POST /api/leads/fast-capture 200 OK)
+      - Floating WhatsApp button correctly hidden on home only
+      - All sections present in correct order
+      - Prices visible and correct
+      - Mobile responsive (no overflow, all elements legible)
+      - No critical errors in console
+      
+      NOTE: WhatsApp redirect after modal submission may fail in headless/iframe context (X-Frame-Options: DENY) - this is EXPECTED and NOT a bug. The modal and POST work correctly.
+      
+      Test file: Playwright script executed successfully (7/7 tests passed)

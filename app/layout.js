@@ -79,6 +79,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es-CL" className={poppins.variable}>
       <head>
+        {/* ── Preconnect / DNS-prefetch a orígenes de terceros (acelera FCP) ── */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://customer-assets.emergentagent.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://region1.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+
         {/* ─── Google Tag Manager (CRITICAL: must be the FIRST thing in <head>) ─── */}
         {/* GTM Container: GTM-N8JFCNWT · Independiente de gtag.js (coexisten sin conflicto) */}
         <script dangerouslySetInnerHTML={{

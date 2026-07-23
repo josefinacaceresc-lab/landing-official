@@ -1678,3 +1678,153 @@ agent_communication:
       
       Test execution: Playwright automation with Performance API measurements
       Screenshots: mobile_home_390x844.png, modal_opened.png
+
+# ══════════════════════════════════════════════════════════════════
+# SESIÓN: Mejoras tabla de leads (admin) — estados + contacto clicable
+# ══════════════════════════════════════════════════════════════════
+user_problem_statement: |
+  3 mejoras en la tabla de leads del panel admin:
+  (1) Estado: añadir opciones 'EN PROCESO' e 'INGRESADO' (además de Pendiente/Contactado).
+  (2) Contacto: que el email se muestre completo sin cortarse (antes truncaba en '@gm').
+  (3) Interactividad: Email clicable (mailto:) y WhatsApp clicable (https://wa.me/numero).
+
+backend:
+  - task: "PATCH /api/admin/leads/:id acepta 4 estados (new, en_proceso, contacted, ingresado)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Antes solo aceptaba 'contacted'/'new'. Ahora valida contra ALLOWED_STATUSES=[new,en_proceso,contacted,ingresado] y guarda statusUpdatedAt. Verificar que persiste cada estado y que un valor inválido cae en 'new'."
+
+      - working: true
+        agent: "testing"
+        comment: |
+          ✅ VERIFIED - PATCH /api/admin/leads/:id with 4-status system working correctly. All 15 tests PASSED.
+          
+          COMPREHENSIVE TEST RESULTS:
+          
+          1. Admin Authentication - ✅ PASS
+             - POST /api/admin/login with password "Elcoihue3776" → 200 with admin_session cookie
+          
+          2. Get Existing Lead ID - ✅ PASS
+             - GET /api/admin/leads → 200 with leads array
+             - Found existing lead ID: e4324cdb-1d50-4d66-9ac6-ab0fa9f17d4a
+          
+          3. PATCH status='en_proceso' - ✅ PASS
+             - PATCH /api/admin/leads/{id} with {"status":"en_proceso"} → 200
+             - Response: {success: true, status: "en_proceso"}
+             - Verified persistence: GET /api/admin/leads confirms status='en_proceso' in DB
+          
+          4. PATCH status='ingresado' - ✅ PASS
+             - PATCH /api/admin/leads/{id} with {"status":"ingresado"} → 200
+             - Response: {success: true, status: "ingresado"}
+             - Verified persistence: status='ingresado' correctly stored in DB
+          
+          5. PATCH status='contacted' - ✅ PASS
+             - PATCH /api/admin/leads/{id} with {"status":"contacted"} → 200
+             - Response: {success: true, status: "contacted"}
+             - Verified persistence: status='contacted' correctly stored in DB
+          
+          6. PATCH status='new' - ✅ PASS
+             - PATCH /api/admin/leads/{id} with {"status":"new"} → 200
+             - Response: {success: true, status: "new"}
+             - Verified persistence: status='new' correctly stored in DB
+          
+          7. Invalid Status Fallback - ✅ PASS
+             - PATCH /api/admin/leads/{id} with {"status":"valor_invalido_xyz"} → 200
+             - Response: {success: true, status: "new"} (correctly fell back to 'new')
+             - Verified persistence: invalid value NOT stored, status='new' in DB
+          
+          8. Authentication Required - ✅ PASS
+             - PATCH /api/admin/leads/{id} without cookie → 401 (correctly rejected)
+          
+          9. Non-existent Lead ID - ✅ PASS
+             - PATCH /api/admin/leads/id-inexistente-9999 → 404 (correctly returned)
+          
+          10. Regression Test - ✅ PASS
+              - POST /api/leads/fast-capture → 200 with success=true (no regression)
+          
+          PRODUCTION STATUS: ✅ READY
+          - All 4 status values working correctly: new, en_proceso, contacted, ingresado
+          - Each status persists correctly to MongoDB after PATCH
+          - Invalid status values correctly fallback to "new" (no invalid data stored)
+          - Authentication enforced (401 without session cookie)
+          - Non-existent lead IDs return 404
+          - No regression in fast-capture endpoint
+          - Previous minor issue with 404 response (from line 216-227) appears to be RESOLVED
+          
+          Test file: /app/backend_test_lead_status.py (15/15 tests passed, 100% pass rate)
+
+frontend:
+  - task: "Tabla leads admin: dropdown de estado (4 opciones), email completo, email/whatsapp clicables"
+    implemented: true
+    working: "NA"
+    file: "app/admin/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Columna Estado ahora es un <Select> con 4 opciones que llama changeStatus (PATCH). Columna Contacto: teléfono es link wa.me y email es link mailto sin truncar (break-all). Filtro de estado ampliado a 4."
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Testear SOLO backend del PATCH de estado. Login admin: POST /api/admin/login password 'Elcoihue3776' (ver /app/memory/test_credentials.md) para cookie. Luego: (1) GET /api/admin/leads para obtener un lead id existente (si no hay leads, crear uno con POST /api/leads/fast-capture {fullName:'Test Estado',phone:'+56987654321',intent:'info'}). (2) PATCH /api/admin/leads/:id con cada status: 'en_proceso','ingresado','contacted','new' → cada uno debe responder 200 y {status:<valor>}; verificar con GET que el lead quedó con ese status. (3) PATCH con status inválido 'xxx' → debe guardar 'new' (fallback). (4) PATCH sin cookie → 401. NO borrar datos. Reportar resultados."
+  - agent: "testing"
+    message: |
+      ✅ LEAD STATUS PATCH ENDPOINT TESTING COMPLETE - All 15 tests PASSED (100% pass rate).
+      
+      COMPREHENSIVE TEST RESULTS:
+      
+      ✅ Test 1: Admin Login - PASS
+         - POST /api/admin/login with password "Elcoihue3776" → 200 with admin_session cookie
+      
+      ✅ Test 2: Get Existing Lead ID - PASS
+         - GET /api/admin/leads → 200 with leads array
+         - Found existing lead ID for testing
+      
+      ✅ Test 3-6: All 4 Status Values - PASS
+         - PATCH with status='en_proceso' → 200, persisted correctly ✅
+         - PATCH with status='ingresado' → 200, persisted correctly ✅
+         - PATCH with status='contacted' → 200, persisted correctly ✅
+         - PATCH with status='new' → 200, persisted correctly ✅
+         - Each status verified in database after PATCH
+      
+      ✅ Test 7: Invalid Status Fallback - PASS
+         - PATCH with status='valor_invalido_xyz' → 200 with status='new'
+         - Invalid value NOT stored, correctly fell back to 'new'
+      
+      ✅ Test 8: Authentication Required - PASS
+         - PATCH without cookie → 401 (correctly rejected)
+      
+      ✅ Test 9: Non-existent Lead ID - PASS
+         - PATCH /api/admin/leads/id-inexistente-9999 → 404
+      
+      ✅ Test 10: Regression Test - PASS
+         - POST /api/leads/fast-capture → 200 with success=true
+      
+      IMPORTANT FINDING:
+      - Previous minor issue (line 216-227 in test_result.md) about PATCH returning 404 even when update succeeds appears to be RESOLVED
+      - All PATCH operations now return correct 200 status codes when successful
+      - Database updates working perfectly for all 4 status values
+      
+      PRODUCTION STATUS: ✅ READY
+      - 4-status system fully functional: new, en_proceso, contacted, ingresado
+      - All status transitions persist correctly to MongoDB
+      - Invalid status values safely fallback to "new"
+      - Authentication and authorization working correctly
+      - No regressions detected
+      
+      Test file: /app/backend_test_lead_status.py (15/15 tests passed)

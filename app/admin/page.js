@@ -64,6 +64,21 @@ function formatPhoneDisplay(raw) {
   return `+${digits}`
 }
 
+// Estados del lead (pipeline de gestión)
+const STATUS_OPTIONS = [
+  { value: 'new', label: 'Pendiente' },
+  { value: 'en_proceso', label: 'En proceso' },
+  { value: 'contacted', label: 'Contactado' },
+  { value: 'ingresado', label: 'Ingresado' },
+]
+const STATUS_META = {
+  new: { label: 'Pendiente', trigger: 'border-slate-300 text-slate-700 bg-white' },
+  en_proceso: { label: 'En proceso', trigger: 'border-amber-300 text-amber-800 bg-amber-50' },
+  contacted: { label: 'Contactado', trigger: 'border-emerald-300 text-emerald-800 bg-emerald-50' },
+  ingresado: { label: 'Ingresado', trigger: 'border-sky-300 text-sky-800 bg-sky-50' },
+}
+
+
 function StatCard({ label, value, icon: Icon, color = 'emerald' }) {
   const colorMap = {
     emerald: 'bg-emerald-50 text-emerald-700 border-emerald-100',
@@ -168,8 +183,8 @@ export default function AdminPage() {
     setView('login')
   }
 
-  const toggleContacted = async (lead) => {
-    const newStatus = lead.status === 'contacted' ? 'new' : 'contacted'
+  const changeStatus = async (lead, newStatus) => {
+    if (!newStatus || newStatus === lead.status) return
     const res = await fetch(`/api/admin/leads/${encodeURIComponent(lead.id)}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -179,9 +194,9 @@ export default function AdminPage() {
     if (res.ok) loadData()
   }
 
-  const openWhatsApp = (phone, name) => {
+  const buildWaLink = (phone, name) => {
     let digits = String(phone || '').replace(/\D/g, '')
-    if (!digits) return
+    if (!digits) return ''
     // Defense-in-depth: clean duplicate country codes that legacy leads may have
     while (digits.startsWith('5656')) digits = digits.slice(2)
     // Local 9-digit mobile (starts with 9) → prepend 56
@@ -190,7 +205,12 @@ export default function AdminPage() {
     const intl = digits.startsWith('56') ? digits : `56${digits}`
     const firstName = name?.split(' ')[0] || ''
     const text = encodeURIComponent(`Hola ${firstName}, te contacto desde Instituto DBT Chile. ¿Cómo estás?`)
-    window.open(`https://wa.me/${intl}?text=${text}`, '_blank', 'noopener,noreferrer')
+    return `https://wa.me/${intl}?text=${text}`
+  }
+
+  const openWhatsApp = (phone, name) => {
+    const link = buildWaLink(phone, name)
+    if (link) window.open(link, '_blank', 'noopener,noreferrer')
   }
 
   const exportCsv = () => { window.location.href = '/api/admin/export-csv' }
@@ -466,8 +486,10 @@ export default function AdminPage() {
                     <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Estado" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">Todos los estados</SelectItem>
-                      <SelectItem value="new">Nuevos</SelectItem>
-                      <SelectItem value="contacted">Contactados</SelectItem>
+                      <SelectItem value="new">Pendiente</SelectItem>
+                      <SelectItem value="en_proceso">En proceso</SelectItem>
+                      <SelectItem value="contacted">Contactado</SelectItem>
+                      <SelectItem value="ingresado">Ingresado</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -495,22 +517,33 @@ export default function AdminPage() {
                         </TableRow>
                       )}
                       {filteredLeads.map((lead) => (
-                        <TableRow key={lead.id} className={lead.status === 'contacted' ? 'opacity-60' : ''}>
+                        <TableRow key={lead.id} className={lead.status === 'ingresado' ? 'opacity-60' : ''}>
                           <TableCell className="text-xs text-slate-600 whitespace-nowrap">
                             {formatDate(lead.createdAt)}
                           </TableCell>
                           <TableCell className="font-medium">{lead.fullName}</TableCell>
-                          <TableCell className="text-sm space-y-0.5">
+                          <TableCell className="text-sm space-y-1 min-w-[230px]">
                             {lead.phone && (
-                              <div className="flex items-center gap-1.5 text-slate-700">
-                                <Phone className="w-3 h-3 text-slate-400" />{formatPhoneDisplay(lead.phone)}
-                              </div>
+                              <a
+                                href={buildWaLink(lead.phone, lead.fullName)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-emerald-700 hover:text-emerald-800 hover:underline"
+                                title="Abrir chat de WhatsApp"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                {formatPhoneDisplay(lead.phone)}
+                              </a>
                             )}
                             {lead.email && (
-                              <div className="flex items-center gap-1.5 text-slate-700">
-                                <Mail className="w-3 h-3 text-slate-400" />
-                                <span className="truncate max-w-[180px]">{lead.email}</span>
-                              </div>
+                              <a
+                                href={`mailto:${lead.email}`}
+                                className="flex items-start gap-1.5 text-sky-700 hover:text-sky-800 hover:underline break-all"
+                                title="Enviar correo"
+                              >
+                                <Mail className="w-3.5 h-3.5 text-sky-500 shrink-0 mt-0.5" />
+                                <span className="break-all">{lead.email}</span>
+                              </a>
                             )}
                             {lead.message && (
                               <details className="mt-1">
@@ -556,15 +589,18 @@ export default function AdminPage() {
                             </Badge>
                           </TableCell>
                           <TableCell>
-                            {lead.status === 'contacted' ? (
-                              <Badge className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                                <CheckCircle2 className="w-3 h-3 mr-1" /> Contactado
-                              </Badge>
-                            ) : (
-                              <Badge variant="outline" className="text-slate-700">
-                                <Clock className="w-3 h-3 mr-1" /> Pendiente
-                              </Badge>
-                            )}
+                            <Select value={lead.status || 'new'} onValueChange={(v) => changeStatus(lead, v)}>
+                              <SelectTrigger className={`h-8 w-36 text-xs font-medium ${(STATUS_META[lead.status] || STATUS_META.new).trigger}`}>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {STATUS_OPTIONS.map((o) => (
+                                  <SelectItem key={o.value} value={o.value} className="text-xs">
+                                    {o.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                           </TableCell>
                           <TableCell className="text-right space-x-1">
                             {lead.phone && (
@@ -577,14 +613,18 @@ export default function AdminPage() {
                                 <MessageCircle className="w-4 h-4" />
                               </Button>
                             )}
-                            <Button
-                              size="sm" variant="ghost"
-                              onClick={() => toggleContacted(lead)}
-                              title={lead.status === 'contacted' ? 'Desmarcar' : 'Marcar contactado'}
-                              className={lead.status === 'contacted' ? 'text-slate-500' : 'text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50'}
-                            >
-                              <CheckCircle2 className="w-4 h-4" />
-                            </Button>
+                            {lead.email && (
+                              <Button
+                                asChild
+                                size="sm" variant="ghost"
+                                className="text-sky-700 hover:text-sky-800 hover:bg-sky-50"
+                                title="Enviar correo"
+                              >
+                                <a href={`mailto:${lead.email}`}>
+                                  <Mail className="w-4 h-4" />
+                                </a>
+                              </Button>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}

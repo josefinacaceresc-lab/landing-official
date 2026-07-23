@@ -867,19 +867,21 @@ export async function POST(request) {
 export async function PATCH(request) {
   const { pathname } = new URL(request.url)
   try {
-    // ─── Admin: mark a lead as contacted / un-contacted ───────────────────
-    // PATCH /api/admin/leads/:id  body: { status: 'contacted' | 'new', notes? }
+    // ─── Admin: update a lead's status ────────────────────────────────────
+    // PATCH /api/admin/leads/:id  body: { status: 'new'|'en_proceso'|'contacted'|'ingresado', notes? }
     const leadPatchMatch = pathname.match(/^\/api\/admin\/leads\/([^/]+)$/)
     if (leadPatchMatch) {
       const session = await getAdminSession(request)
       if (!session) return unauthorized()
       const leadId = leadPatchMatch[1]
       const body = await request.json().catch(() => ({}))
-      const newStatus = body.status === 'contacted' ? 'contacted' : 'new'
+      const ALLOWED_STATUSES = ['new', 'en_proceso', 'contacted', 'ingresado']
+      const newStatus = ALLOWED_STATUSES.includes(body.status) ? body.status : 'new'
       const notes = typeof body.notes === 'string' ? body.notes.slice(0, 1000) : undefined
       const db = await connectToDatabase()
       const update = {
         status: newStatus,
+        statusUpdatedAt: new Date(),
         contactedAt: newStatus === 'contacted' ? new Date() : null,
       }
       if (notes !== undefined) update.adminNotes = notes

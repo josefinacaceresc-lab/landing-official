@@ -7,7 +7,6 @@ Disallow: /admin/
 Disallow: /lakaira-ai
 Disallow: /lakaira-ai/
 Disallow: /autoevaluacion/resultados
-Disallow: /evaluacion-idp4/resultados
 Disallow: /evaluacion-bsl23/resultados
 
 # Googlebot

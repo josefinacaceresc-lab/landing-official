@@ -32,8 +32,10 @@ const nextConfig = {
     return config;
   },
   onDemandEntries: {
-    maxInactiveAge: 10000,
-    pagesBufferLength: 2,
+    // Keep compiled pages in memory for 5 minutes in dev so navigation in
+    // the preview doesn't re-compile routes on every visit (was 10s).
+    maxInactiveAge: 300000,
+    pagesBufferLength: 5,
   },
   async headers() {
     return [

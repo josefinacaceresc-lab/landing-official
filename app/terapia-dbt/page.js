@@ -386,7 +386,7 @@ export default function TerapiaDBTPage() {
               <span className="text-emerald-700">”</span>
             </blockquote>
             <div className="mt-8 text-sm text-gray-500 tracking-wide">
-              — Instituto DBT Chile · Dirección clínica Dra.(c) Josefina Cáceres Cortés
+              — Instituto DBT Chile · Dirección clínica: Josefina Cáceres Cortés, Ph.D.(c)
             </div>
           </div>
         </div>

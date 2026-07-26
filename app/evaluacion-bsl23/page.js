@@ -655,7 +655,7 @@ export default function BSL23Page() {
               </div>
 
               <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                Cáceres, J. & equipo Instituto DBT Chile · Aplicación clínica supervisada · Ley 19.628 / 21.331 / 20.584.
+                Cáceres Cortés, J. & equipo Instituto DBT Chile · Aplicación clínica supervisada · Ley 19.628 / 21.331 / 20.584.
               </p>
             </CardContent>
           </Card>

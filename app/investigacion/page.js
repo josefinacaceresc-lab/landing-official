@@ -68,7 +68,7 @@ export default function InvestigacionPage() {
                     </div>
                     <div className="mt-6">
                       <div className="text-xs text-white/40 uppercase tracking-wider mb-1">Autora</div>
-                      <div className="text-sm font-medium text-white/90">Dra. Josefina Cáceres, Ph.D.</div>
+                      <div className="text-sm font-medium text-white/90">Josefina Cáceres Cortés, Ph.D.(c)</div>
                     </div>
                   </div>
 
@@ -284,7 +284,7 @@ export default function InvestigacionPage() {
         </div>
       </section>
 
-      {/* CTA - Join Research (CRITICAL FEATURE - Dra. Cáceres Priority) */}
+      {/* CTA - Join Research (CRITICAL FEATURE - Cáceres Cortés Priority) */}
       <section className="py-24 bg-gradient-to-br from-primary via-primary/95 to-secondary text-white relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-10">

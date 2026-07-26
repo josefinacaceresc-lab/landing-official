@@ -67,7 +67,7 @@ export default function FastCaptureModal() {
       //     guard, clicking that button re-opens the modal → infinite loop.
       if (a.dataset?.fcSkip === '1' || a.closest('[data-fc-modal-root]')) return
 
-      // Don't intercept inside /admin (Dra. opening WA with a lead)
+      // Don't intercept inside /admin (Cáceres Cortés opening WA with a lead)
       const path = window.location.pathname || ''
       if (path.startsWith('/admin') || path.startsWith('/lakaira-ai')) return
 
@@ -187,7 +187,7 @@ export default function FastCaptureModal() {
     //     this page is still alive. Wrapped in try/catch: tracking must
     //     never block the lead save flow.
     //
-    //     🆕 Decision (June 2026, Dra. Cáceres): ALWAYS fire the conversion
+    //     🆕 Decision (June 2026, Cáceres Cortés): ALWAYS fire the conversion
     //         when the consultante presses "Iniciar Chat" — even if backend
     //         flagged it as a 24h repeat lead. Reasoning:
     //           • Google Ads needs every engagement signal to feed Smart

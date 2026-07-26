@@ -97,7 +97,7 @@ export default function Home() {
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">
                 <div><strong className="text-emerald-700">Cobertura:</strong> Única institución chilena con las tres</div>
                 <div><strong className="text-emerald-700">Acreditaciones:</strong> WDBTA · APA · ISST</div>
-                <div><strong className="text-emerald-700">Dirección clínica:</strong> Ph.D. con formación internacional</div>
+                <div><strong className="text-emerald-700">Dirección clínica:</strong> Ph.D.(c) con formación internacional</div>
               </div>
             </div>
 
@@ -311,9 +311,9 @@ export default function Home() {
                   <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
                     <Microscope className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Dirección Ph.D.(c)</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Dirección científica</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Dirigido por la Dra.(c) Josefina Cáceres Cortés, con formación doctoral en curso y publicaciones científicas.
+                    Josefina Cáceres Cortés, Ph.D.(c), con formación doctoral en curso y publicaciones científicas.
                   </p>
                 </CardContent>
               </Card>

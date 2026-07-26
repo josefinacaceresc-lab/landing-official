@@ -107,7 +107,7 @@ export default function HistoriaPage() {
                     <h3 className="text-lg font-medium text-gray-900">2021 · Origen como DBT Chile</h3>
                     <p className="text-gray-600 leading-relaxed">
                       Inicio del proyecto clínico especializado en Terapia Dialéctico Conductual,
-                      bajo la dirección de la Dra. Josefina Cáceres Cortés.
+                      bajo la dirección de Josefina Cáceres Cortés, Ph.D.(c).
                     </p>
                   </div>
                 </div>

@@ -2,7 +2,7 @@
 
 /**
  * Preprint: Procesamiento psicológico como sistema de inferencia activa
- * Author: Dra. Josefina Cáceres, Ph.D. · Instituto DBT Chile
+ * Author: Josefina Cáceres Cortés, Ph.D.(c) · Instituto DBT Chile
  * Date: Mayo 2026
  *
  * Design: Ultra-luxury academic. Serif typography, generous whitespace,
@@ -34,8 +34,8 @@ const articleSchema = {
   dateModified: '2026-05-22',
   author: {
     '@type': 'Person',
-    name: 'Josefina Cáceres',
-    honorificSuffix: 'Ph.D.',
+    name: 'Josefina Cáceres Cortés',
+    honorificSuffix: 'Ph.D.(c)',
     email: 'jcaceres@institutodbtchile.cl',
     affiliation: {
       '@type': 'MedicalOrganization',
@@ -200,7 +200,7 @@ export default function PreprintInferenciaActivaPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 pb-10 border-b border-gray-200">
               <div>
                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Autor</div>
-                <div className="text-sm font-medium text-gray-900">Josefina Cáceres, Ph.D.</div>
+                <div className="text-sm font-medium text-gray-900">Josefina Cáceres Cortés, Ph.D.(c)</div>
               </div>
               <div>
                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Afiliación</div>
@@ -507,7 +507,7 @@ export default function PreprintInferenciaActivaPage() {
             </Button>
 
             <p className="text-xs text-gray-500 mt-8 leading-relaxed max-w-md mx-auto">
-              Cita sugerida: Cáceres, J. (2026). <em className="font-serif">Procesamiento psicológico como sistema de inferencia activa: Fundamentos computacionales de la coherencia y el sufrimiento</em>. Preprint, Instituto DBT Chile.
+              Cita sugerida: Cáceres Cortés, J. (2026). <em className="font-serif">Procesamiento psicológico como sistema de inferencia activa: Fundamentos computacionales de la coherencia y el sufrimiento</em>. Preprint, Instituto DBT Chile.
             </p>
           </div>
         </div>

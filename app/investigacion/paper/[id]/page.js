@@ -64,9 +64,8 @@ export default function PaperDetailPage({ params }) {
             '@type': 'Person',
             '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
             name: 'Josefina Cáceres Cortés',
-            honorificPrefix: 'Dra.',
             honorificSuffix: 'Ph.D.(c)',
-            jobTitle: 'Directora Científica · Instituto DBT Chile',
+            jobTitle: 'Directora científica',
             affiliation: {
               '@type': 'Organization',
               '@id': 'https://institutodbtchile.cl/#clinic',
@@ -185,7 +184,7 @@ export default function PaperDetailPage({ params }) {
             </p>
           )}
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 border-l-4 border-primary pl-4 py-2">
-            <span className="font-semibold text-primary">Dra. Josefina Cáceres, Ph.D.(c)</span>
+            <span className="font-semibold text-primary">Josefina Cáceres Cortés, Ph.D.(c)</span>
             <span className="text-gray-300">·</span>
             <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-primary" /> {paper.date}</span>
             <span className="text-gray-300">·</span>
@@ -247,7 +246,7 @@ export default function PaperDetailPage({ params }) {
             <div className="mt-4 flex flex-wrap gap-2 print:hidden">
               <Button asChild className="bg-primary hover:bg-primary/90 text-white font-semibold">
                 <a
-                  href={`mailto:contacto@dbtchile.cl?subject=${encodeURIComponent('Solicitud de acceso a artículo: ' + paper.title)}&body=${encodeURIComponent('Hola Instituto DBT Chile,\n\nSolicito acceso a la versión completa del artículo doctoral:\n\n• Título: ' + paper.title + '\n• Autor: Dra. Josefina Cáceres, Ph.D.(c)\n• Referencia: https://institutodbtchile.cl/investigacion/paper/' + paper.id + '\n\nMis datos:\nNombre completo: \nProfesión / Institución: \nMotivo de la solicitud: \n\nGracias.')}`}
+                  href={`mailto:contacto@dbtchile.cl?subject=${encodeURIComponent('Solicitud de acceso a artículo: ' + paper.title)}&body=${encodeURIComponent('Hola Instituto DBT Chile,\n\nSolicito acceso a la versión completa del artículo doctoral:\n\n• Título: ' + paper.title + '\n• Autor: Josefina Cáceres Cortés, Ph.D.(c)\n• Referencia: https://institutodbtchile.cl/investigacion/paper/' + paper.id + '\n\nMis datos:\nNombre completo: \nProfesión / Institución: \nMotivo de la solicitud: \n\nGracias.')}`}
                 >
                   Solicitar acceso
                 </a>
@@ -260,7 +259,7 @@ export default function PaperDetailPage({ params }) {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-gray-900 mb-3 print:text-lg">Cómo citar</h2>
           <div className="bg-gray-50 border-l-4 border-primary p-4 rounded text-sm text-gray-700 leading-relaxed print:bg-white print:border print:border-gray-300">
-            Cáceres, J. ({paper.date}). <em>{paper.title}</em>. Instituto DBT Chile — La Mente Algorítmica.
+            Cáceres Cortés, J. ({paper.date}). <em>{paper.title}</em>. Instituto DBT Chile — La Mente Algorítmica.
             Recuperado de https://institutodbtchile.cl/investigacion/paper/{paper.id}
           </div>
         </section>

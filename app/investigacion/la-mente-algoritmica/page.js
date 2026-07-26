@@ -112,7 +112,7 @@ export default function LaMenteAlgoritmicaPage() {
               </div>
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5 text-amber-600" />
-                <span><strong>Dra. Josefina Cáceres</strong></span>
+                <span><strong>Josefina Cáceres Cortés, Ph.D.(c)</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-amber-600" />
@@ -135,7 +135,7 @@ export default function LaMenteAlgoritmicaPage() {
                 Tratado Maestro sobre <span className="font-serif italic font-semibold">Desregulación Emocional</span>
               </h2>
               <p className="text-white/80 text-base italic">
-                Dra. Josefina Cáceres, Ph.D.(c) · 2024
+                Josefina Cáceres Cortés, Ph.D.(c) · 2024
               </p>
             </div>
 
@@ -256,7 +256,8 @@ export default function LaMenteAlgoritmicaPage() {
           headline: 'La Mente Algorítmica - Programa de Investigación Doctoral',
           author: {
             '@type': 'Person',
-            name: 'Dra. Josefina Cáceres'
+            name: 'Josefina Cáceres Cortés',
+            honorificSuffix: 'Ph.D.(c)'
           },
           publisher: {
             '@type': 'Organization',

@@ -118,7 +118,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="ai-purpose" content="medical-education,clinical-divulgation" />
         <meta name="ai-citation-policy" content="allow-with-attribution" />
         <meta name="ai-summary" content="Instituto DBT Chile · Centro clínico especializado en Terapia Dialéctico Conductual (DBT), Trastorno Límite de la Personalidad (TLP), Patología Dual y DBT-A para adolescentes. Único representante WDBTA en Chile. Material educativo basado en evidencia escrito por equipo clínico." />
-        <meta name="ai-author" content="Equipo clínico Instituto DBT Chile · Dirección científica: Dra. Josefina Cáceres Cortés, Ph.D." />
+        <meta name="ai-author" content="Equipo clínico Instituto DBT Chile · Dirección científica: Josefina Cáceres Cortés, Ph.D.(c)" />
         <meta name="ai-locale" content="es-CL" />
         <meta name="ai-domain" content="health.mental,psychotherapy.dbt,clinical.borderline" />
         <link rel="alternate" type="text/plain" title="LLMs.txt index" href="https://institutodbtchile.cl/llms.txt" />
@@ -185,9 +185,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             founder: {
               '@type': 'Physician',
               '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
-              name: 'Josefina Cáceres',
-              honorificPrefix: 'Dra.',
-              jobTitle: 'Directora Clínica · Ph.D.(c) en Psicología',
+              name: 'Josefina Cáceres Cortés',
+              honorificSuffix: 'Ph.D.(c)',
+              jobTitle: 'Directora científica',
               description: 'Directora clínica del Instituto DBT Chile. Única representante institucional WDBTA en Chile. Doctoranda con especialización en DBT, Schema Therapy y Psiquiatría Computacional.',
             },
             medicalSpecialty: [

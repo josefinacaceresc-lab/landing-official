@@ -130,7 +130,7 @@ const diferenciadores = [
   },
   {
     titulo: 'Direccción clínica especializada',
-    descripcion: 'Programa dirigido por la Dra.(c) Josefina Cáceres Cortés, con formación en DBT estándar, DBT-PTSD, Terapia de Esquemas y relación institucional sostenida con la WDBTA y con figuras internacionales como el Professor Dr. Martin Bohus.',
+    descripcion: 'Programa dirigido por Josefina Cáceres Cortés, Ph.D.(c), con formación en DBT estándar, DBT-PTSD, Terapia de Esquemas y relación institucional sostenida con la WDBTA y con figuras internacionales como el Professor Dr. Martin Bohus.',
   },
 ]
 
@@ -363,7 +363,7 @@ export default function TrastornosPersonalidadPage() {
               <span className="text-emerald-700">”</span>
             </blockquote>
             <div className="mt-8 text-sm text-gray-500 tracking-wide">
-              — Instituto DBT Chile · Dirección clínica Dra.(c) Josefina Cáceres Cortés
+              — Instituto DBT Chile · Dirección clínica: Josefina Cáceres Cortés, Ph.D.(c)
             </div>
           </div>
         </div>

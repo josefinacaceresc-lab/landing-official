@@ -58,7 +58,7 @@ const faqs = [
   },
   {
     q: '¿Quién dirige el Instituto DBT Chile?',
-    a: 'La dirección clínica y científica del Instituto está a cargo de la Dra. Josefina Cáceres Cortés, Ph.D., con formación internacional en Terapia Dialéctico Conductual y en Terapia de Esquemas. Es representante institucional de la World Dialectical Behavior Therapy Association (WDBTA) en Chile, miembro de la International Society of Schema Therapy (ISST) y de la American Psychological Association (APA).',
+    a: 'La dirección clínica y científica del Instituto está a cargo de Josefina Cáceres Cortés, Ph.D.(c), con formación internacional en Terapia Dialéctico Conductual y en Terapia de Esquemas. Es representante institucional de la World Dialectical Behavior Therapy Association (WDBTA) en Chile, miembro de la International Society of Schema Therapy (ISST) y de la American Psychological Association (APA).',
   },
   {
     q: '¿Tienen formación internacional certificada?',

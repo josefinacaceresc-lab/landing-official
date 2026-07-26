@@ -37,6 +37,7 @@ const articleSchema = {
   author: {
     '@type': 'Person',
     name: 'Josefina Cáceres Cortés',
+    honorificSuffix: 'Ph.D.(c)',
     email: 'jcaceres@institutodbtchile.cl',
     affiliation: [
       { '@type': 'MedicalOrganization', name: 'Instituto DBT Chile', url: 'https://institutodbtchile.cl' },
@@ -218,7 +219,7 @@ export default function PreprintARRPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 pb-10 border-b border-gray-200">
               <div>
                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Autora</div>
-                <div className="text-sm font-medium text-gray-900">Josefina Cáceres Cortés</div>
+                <div className="text-sm font-medium text-gray-900">Josefina Cáceres Cortés, Ph.D.(c)</div>
               </div>
               <div>
                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Afiliación</div>

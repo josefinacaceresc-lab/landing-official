@@ -110,9 +110,8 @@ export default function EquipoPage() {
         '@type': 'Physician',
         '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
         name: 'Josefina Cáceres Cortés',
-        honorificPrefix: 'Dra.',
         honorificSuffix: 'Ph.D.(c)',
-        jobTitle: 'Directora Científica & Fundadora · Instituto DBT Chile',
+        jobTitle: 'Directora científica',
         description:
           'Psicóloga clínica, doctoranda en Psicología. Única representante institucional en Chile dentro del capítulo de investigación de la WDBTA (World Dialectical Behavior Therapy Association). Especialista en Terapia Dialéctico Conductual (DBT), Schema Therapy y Psiquiatría Computacional.',
         url: 'https://institutodbtchile.cl/equipo',

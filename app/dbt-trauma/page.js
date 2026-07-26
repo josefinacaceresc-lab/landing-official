@@ -7,7 +7,7 @@
  *   2. Ads exact-match para campañas de trauma con CPC bajo.
  *   3. Posicionar al Instituto DBT Chile como único representante del
  *      modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim) en Chile,
- *      vehiculado por la Dra.(c) Josefina Cáceres Cortés a través de la
+ *      vehiculado por Josefina Cáceres Cortés, Ph.D.(c), a través de la
  *      relación institucional con la WDBTA.
  *
  * Lineamientos editoriales (CRÍTICO):
@@ -15,7 +15,7 @@
  *   - Sin emojis
  *   - Registro formal europeo
  *   - Sin promesas terapéuticas absolutas ("cura", "elimina", etc.)
- *   - Manifiesto institucional sobre la transmisión directa Bohus → Cáceres
+ *   - Manifiesto institucional sobre la transmisión directa Bohus → Cáceres Cortés
  *
  * Schema injected: MedicalWebPage + MedicalTherapy + Person + FAQPage +
  *                  BreadcrumbList
@@ -34,7 +34,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 export const metadata = {
   title: 'DBT-PTSD · Tratamiento del Trauma Complejo y TEPT en Chile',
   description:
-    'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim). Implementación clínica conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA. Tratamiento estructurado para trauma complejo, TEPT-c y comorbilidad con TLP.',
+    'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus (ZI Mannheim). Implementación clínica conducida por Josefina Cáceres Cortés, Ph.D.(c), bajo estándar WDBTA. Tratamiento estructurado para trauma complejo, TEPT-c y comorbilidad con TLP.',
   keywords: [
     'DBT-PTSD',
     'DBT trauma',
@@ -51,7 +51,7 @@ export const metadata = {
   openGraph: {
     title: 'DBT-PTSD · Tratamiento del Trauma Complejo y TEPT en Chile',
     description:
-      'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus. Implementación local conducida por la Dra.(c) Josefina Cáceres Cortés bajo estándar WDBTA.',
+      'Único Instituto en Chile con el modelo DBT-PTSD del Professor Dr. Martin Bohus. Implementación local conducida por Josefina Cáceres Cortés, Ph.D.(c), bajo estándar WDBTA.',
     url: 'https://institutodbtchile.cl/dbt-trauma',
     type: 'article',
     locale: 'es_CL',
@@ -106,8 +106,8 @@ const diferenciadores = [
     descripcion: 'Aplicación del manual original DBT-PTSD del Professor Dr. Martin Bohus, siguiendo la metodología desarrollada en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania), con adaptaciones de cadencia fundamentadas clínicamente.',
   },
   {
-    titulo: 'Transmisión directa Bohus → Cáceres',
-    descripcion: 'La implementación clínica nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en relación institucional sostenida con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
+    titulo: 'Transmisión directa Bohus → Cáceres Cortés',
+    descripcion: 'La implementación clínica nacional fue desarrollada por Josefina Cáceres Cortés, Ph.D.(c), en relación institucional sostenida con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
   },
   {
     titulo: 'Equipo de consultoría especializado',
@@ -130,7 +130,7 @@ const faqs = [
   },
   {
     q: '¿Es el Instituto DBT Chile el único centro chileno con este modelo?',
-    a: 'Sí. El Instituto DBT Chile es el único centro clínico en Chile que implementa el modelo DBT-PTSD original del Professor Dr. Martin Bohus, conforme al manual del ZI Mannheim. La implementación nacional fue desarrollada por la Dra.(c) Josefina Cáceres Cortés en el marco de su relación institucional con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
+    a: 'Sí. El Instituto DBT Chile es el único centro clínico en Chile que implementa el modelo DBT-PTSD original del Professor Dr. Martin Bohus, conforme al manual del ZI Mannheim. La implementación nacional fue desarrollada por Josefina Cáceres Cortés, Ph.D.(c), en el marco de su relación institucional con el Professor Bohus a través de la World Dialectical Behavior Therapy Association (WDBTA).',
   },
   {
     q: '¿Quién fue el Professor Dr. Martin Bohus?',
@@ -199,8 +199,9 @@ const jsonLd = {
     {
       '@type': 'Person',
       '@id': 'https://institutodbtchile.cl/dbt-trauma#caceres',
-      name: 'Dra.(c) Josefina Cáceres Cortés',
-      jobTitle: 'Directora clínica · Instituto DBT Chile',
+      name: 'Josefina Cáceres Cortés',
+      honorificSuffix: 'Ph.D.(c)',
+      jobTitle: 'Directora científica',
       affiliation: [
         { '@type': 'Organization', name: 'Instituto DBT Chile' },
         { '@type': 'Organization', name: 'World Dialectical Behavior Therapy Association (WDBTA)' },
@@ -257,7 +258,7 @@ export default function DBTTraumaPage() {
             </p>
 
             <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Implementación clínica nacional desarrollada por la Dra.(c) Josefina Cáceres Cortés, en relación institucional sostenida con el Professor Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile que implementa el modelo original DBT-PTSD.
+              Implementación clínica nacional desarrollada por Josefina Cáceres Cortés, Ph.D.(c), en relación institucional sostenida con el Professor Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile que implementa el modelo original DBT-PTSD.
             </p>
 
             <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
@@ -323,7 +324,7 @@ export default function DBTTraumaPage() {
         </div>
       </section>
 
-      {/* ── Transmisión Bohus → Cáceres (Manifiesto E-E-A-T) ──────────── */}
+      {/* ── Transmisión Bohus → Cáceres Cortés (Manifiesto E-E-A-T) ──────────── */}
       <section className="py-24 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/50 border-y border-emerald-100/60">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -370,7 +371,7 @@ export default function DBTTraumaPage() {
                     Implementación nacional
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">Dra.(c) Josefina Cáceres Cortés</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-1">Josefina Cáceres Cortés, Ph.D.(c)</h3>
                 <p className="text-sm text-gray-500 mb-4 italic">Directora clínica · Instituto DBT Chile</p>
                 <ul className="space-y-2 text-sm text-gray-700 leading-relaxed">
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Desarrolladora de la implementación clínica del modelo DBT-PTSD en Chile.</li>
@@ -388,7 +389,7 @@ export default function DBTTraumaPage() {
                 <span className="text-emerald-700">”</span>
               </blockquote>
               <div className="mt-5 text-sm text-gray-500 tracking-wide">
-                — Dra.(c) Josefina Cáceres Cortés · Directora clínica
+                — Josefina Cáceres Cortés, Ph.D.(c) · Directora clínica
               </div>
             </div>
           </div>

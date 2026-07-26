@@ -67,16 +67,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── ¿Es esto lo que le pasa? — bloque de reconocimiento ─────────── */}
+      <section id="es-esto-lo-que-le-pasa" className="py-20 md:py-24 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto" style={{ maxWidth: '700px' }}>
+            <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-10 text-center">
+              ¿Es esto lo que le pasa?
+            </h2>
+            <div className="space-y-6">
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Hay personas que sienten todo con una intensidad que a los demás les cuesta entender. La rabia llega antes de alcanzar a pensarla. Una discusión menor deja tres días de derrumbe. Las relaciones se vuelven urgentes y después insoportables. Y de fondo, la sensación permanente de no saber bien quién se es.
+              </p>
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Muchos han pasado ya por varios tratamientos. Algunos ayudaron un tiempo y después dejaron de funcionar. Eso no significa que no haya salida: significa que el problema está en un nivel que esos tratamientos no alcanzaron.
+              </p>
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                A ese patrón la clínica lo llama desregulación emocional, y suele estar en la base del trastorno límite de la personalidad. El tratamiento con mayor evidencia acumulada para abordarlo es la Terapia Dialéctico Conductual, o DBT.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Por qué Instituto DBT Chile — bloque editorial ─────────────── */}
-      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
+      <section id="por-que" className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4">
           <div className="mx-auto" style={{ maxWidth: '700px' }}>
             <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-10 text-center">
               Por qué Instituto DBT Chile
             </h2>
-            <p className="text-lg text-gray-700 leading-[1.9] text-justify">
-              No somos un taller de habilidades ni un programa breve. Ofrecemos un programa clínico anual estructurado: terapia individual y entrenamiento grupal cada 15 días, acompañamiento entre sesiones y un equipo clínico en consultoría permanente. Nuestro modelo integra DBT con Terapia de Esquemas para patología de personalidad compleja, y nuestra directora es investigadora activa y miembro del capítulo de investigación de la WDBTA.
-            </p>
+            <div className="space-y-6">
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Un modelo propio, sostenido durante doce meses. Al año, el 73% de nuestros consultantes permanece en tratamiento activo.
+              </p>
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Trabajamos sobre la arquitectura de la Terapia Dialéctico Conductual —sesión individual, entrenamiento en habilidades, coaching entre sesiones y consultoría clínica semanal del equipo— integrada con Terapia de Esquemas bajo certificación ISST, para los casos en que el patrón de personalidad, y no la habilidad ausente, sostiene el problema.
+              </p>
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Junto a NexariaLabs desarrollamos ApoFix: la primera aplicación de psiquiatría computacional a la desregulación emocional en una práctica clínica de habla hispana. Hoy en fase piloto, con participación voluntaria.
+              </p>
+              <p className="text-lg text-gray-700 leading-[1.9] text-justify">
+                Atendemos exclusivamente de forma particular, sin convenios institucionales, y nunca más de cien casos activos.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -638,7 +671,7 @@ export default function Home() {
               Programa y valores
             </h2>
             <p className="text-lg text-gray-700 leading-[1.9] text-justify">
-              El tratamiento completo tiene una duración de 12 meses, en modalidad presencial u online. La inversión es de $580.000 mensuales e incluye todos los componentes del programa. El ingreso comienza con una evaluación clínica inicial de $90.000. Atendemos exclusivamente de forma particular, sin convenios institucionales. Entregamos boleta reembolsable según su seguro complementario.
+              El tratamiento completo tiene una duración de 12 meses, en modalidad presencial u online. La inversión es de $580.000 mensuales e incluye todos los componentes del programa. El ingreso comienza con una evaluación clínica inicial de $90.000. Entregamos boleta reembolsable según su seguro complementario.
             </p>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { ArrowRight, Brain, Users, Heart, Shield, Sparkles, Layers } from 'lucid
 
 export const metadata = {
   title: 'DBT Infanto-Juvenil (DBT-A) | Instituto DBT Chile',
-  description: 'Programa DBT para Adolescentes (DBT-A) con Fidelidad Total al modelo Rathus & Miller. Integración del sistema familiar vía Camino del Medio. Tratamiento de alta complejidad para adolescentes con desregulación emocional, ideación de daño y descontrol impulsivo.',
+  description: 'Programa DBT para Adolescentes (DBT-A) basado en el modelo Rathus & Miller, con los cuatro componentes sostenidos durante doce meses. Integración del sistema familiar vía Camino del Medio. Tratamiento de alta complejidad para adolescentes con desregulación emocional, ideación de daño y descontrol impulsivo.',
   keywords: [
     'DBT adolescentes Chile',
     'DBT-A Santiago',
@@ -17,7 +17,7 @@ export const metadata = {
   alternates: { canonical: 'https://institutodbtchile.cl/tratamiento/dbt-infanto-juvenil' },
   openGraph: {
     title: 'DBT-A: Programa DBT para Adolescentes | Instituto DBT Chile',
-    description: 'Programa DBT Infanto-Juvenil con Fidelidad Total al modelo Rathus & Miller.',
+    description: 'Programa DBT Infanto-Juvenil basado en el modelo Rathus & Miller.',
     url: 'https://institutodbtchile.cl/tratamiento/dbt-infanto-juvenil',
     type: 'article',
   },
@@ -26,8 +26,8 @@ export const metadata = {
 const caracteristicas = [
   {
     icon: Shield,
-    title: 'Fidelidad Total al modelo',
-    text: 'Adherencia estricta al modelo DBT-A de Rathus & Miller (2015). Único programa en Chile con esta fidelidad documentada.',
+    title: 'Modelo Rathus & Miller completo',
+    text: 'Programa basado en el modelo DBT-A de Rathus & Miller (2015), con los cuatro componentes del tratamiento sostenidos durante doce meses y adaptación de cadencia fundamentada clínicamente.',
   },
   {
     icon: Users,
@@ -78,7 +78,7 @@ export default function DBTAdolescentesPage() {
               DBT <em className="font-serif italic text-primary">Infanto-Juvenil</em>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Nuestro programa DBT para Adolescentes (<strong>DBT-A</strong>) sigue estrictamente el modelo de <strong>Fidelidad Total</strong> de Rathus & Miller. Nos enfocamos en la estabilización de la <strong>desregulación emocional y conductual</strong> en etapas críticas del desarrollo. El tratamiento integra de forma mandatoria al sistema familiar a través del entrenamiento en habilidades del <em>“Camino del Medio”</em> (Middle Path), validación y dialéctica. Diseñado para adolescentes con alta complejidad clínica, ideación de daño o descontrol impulsivo, garantizando un entorno de seguridad y precisión terapéutica.
+              Nuestro programa DBT para Adolescentes (<strong>DBT-A</strong>) se basa en el modelo de Rathus & Miller, sosteniendo sus componentes durante doce meses. Nos enfocamos en la estabilización de la <strong>desregulación emocional y conductual</strong> en etapas críticas del desarrollo. El tratamiento integra de forma mandatoria al sistema familiar a través del entrenamiento en habilidades del <em>“Camino del Medio”</em> (Middle Path), validación y dialéctica. Diseñado para adolescentes con alta complejidad clínica, ideación de daño o descontrol impulsivo, en un entorno de seguridad y precisión terapéutica.
             </p>
           </div>
         </div>

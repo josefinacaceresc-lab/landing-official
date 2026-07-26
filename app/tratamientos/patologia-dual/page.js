@@ -6,11 +6,11 @@ import { Brain, Activity, Shield, Cpu, AlertTriangle, TrendingDown, CheckCircle 
 import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
-  title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD de Fidelidad Total',
-  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD de Fidelidad Total + monitoreo ApoFix AI. Único en Chile con certificación WDBTA.',
+  title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD programa anual',
+  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD adaptado a nuestro programa anual + monitoreo ApoFix AI. Único en Chile con certificación WDBTA.',
   keywords: [
     'Patología Dual Chile',
-    'DBT-SUD de Fidelidad Total',
+    'DBT-SUD programa anual',
     'TLP y adicción',
     'Trastorno Límite de Personalidad y sustancias',
     'Centro Alta Complejidad Chile',
@@ -22,7 +22,7 @@ export const metadata = {
     canonical: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
   },
   openGraph: {
-    title: 'Patología Dual: DBT-SUD de Fidelidad Total | Instituto DBT Chile',
+    title: 'Patología Dual: DBT-SUD adaptado a programa anual | Instituto DBT Chile',
     description: 'Centro de Alta Complejidad en Patología Dual. Protocolo DBT-SUD + monitoreo ApoFix AI para TLP + Trastorno por Uso de Sustancias.',
     url: 'https://institutodbtchile.cl/tratamientos/patologia-dual',
     type: 'article',
@@ -42,8 +42,8 @@ const clinicalFramework = [
   },
   {
     icon: Activity,
-    title: 'DBT-SUD de Fidelidad Total',
-    description: 'Adaptación protocolizada de DBT para patología dual, integrando módulos de abstinencia dialéctica, prevención de recaídas y tolerancia al craving. Único programa en Chile con adherencia estricta a estándares WDBTA.'
+    title: 'DBT-SUD adaptado a programa anual',
+    description: 'Adaptación protocolizada de DBT para patología dual, integrando módulos de abstinencia dialéctica, prevención de recaídas y tolerancia al craving. Los cuatro componentes del modelo se sostienen durante doce meses, bajo estándar WDBTA.'
   },
   {
     icon: Cpu,
@@ -149,11 +149,11 @@ export default function PatologiaDualPage() {
             </p>
             
             <p className="text-xl text-gray-600 leading-relaxed mb-6 text-center max-w-4xl mx-auto">
-              Protocolo especializado <strong className="text-emerald-700">DBT-SUD de Fidelidad Total</strong> para el tratamiento de la comorbilidad más desafiante en salud mental: Trastorno Límite de Personalidad con Trastorno por Uso de Sustancias.
+              Protocolo especializado <strong className="text-emerald-700">DBT-SUD adaptado a nuestro programa anual</strong> para el tratamiento de la comorbilidad más desafiante en salud mental: Trastorno Límite de Personalidad con Trastorno por Uso de Sustancias.
             </p>
             
             <p className="text-lg text-gray-600 leading-relaxed mb-12 text-center max-w-3xl mx-auto">
-              Único programa en Chile con <strong>certificación WDBTA</strong>, integración de <strong>monitoreo ApoFix AI</strong> y adherencia estricta a protocolos de fidelidad internacional.
+              Único programa en Chile con <strong>certificación WDBTA</strong>, integración de <strong>monitoreo ApoFix AI</strong> y los cuatro componentes del modelo sostenidos durante doce meses.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -235,7 +235,7 @@ export default function PatologiaDualPage() {
             <div className="text-center mb-16">
               <span className="inline-block mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Protocolo DBT-SUD</span>
               <h2 className="text-4xl font-light text-gray-900 mb-4">
-                Módulos de <span className="font-serif font-semibold text-emerald-700">Fidelidad Total</span>
+                Módulos del <span className="font-serif font-semibold text-emerald-700">protocolo DBT-SUD</span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Adaptación protocolizada de DBT para el tratamiento de la comorbilidad TLP-TUS
@@ -348,7 +348,7 @@ export default function PatologiaDualPage() {
                 La revisión sistemática más reciente sobre intervenciones psicológicas en patología dual concluye que <strong>DBT y DBT-SUD muestran evidencia moderada-alta</strong> (Level A) para reducción de consumo, mejora de retención terapéutica y disminución de conductas autolesivas en población con TLP + TUS.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                <strong>Recomendación NICE (National Institute for Health and Care Excellence):</strong> DBT es tratamiento de primera línea para TLP con comorbilidad adictiva cuando está disponible con fidelidad al protocolo.
+                <strong>Recomendación NICE (National Institute for Health and Care Excellence):</strong> DBT es tratamiento de primera línea para TLP con comorbilidad adictiva.
               </p>
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function PatologiaDualPage() {
               Centro de Alta Complejidad con <span className="font-semibold">Certificación WDBTA</span>
             </h2>
             <p className="text-xl mb-8 text-emerald-50">
-              Único programa en Chile con adherencia estricta a estándares internacionales de DBT-SUD y monitoreo asistido por inteligencia artificial
+              Único programa en Chile con protocolo DBT-SUD adaptado a un programa anual, estándar WDBTA y monitoreo asistido por inteligencia artificial
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 px-8">

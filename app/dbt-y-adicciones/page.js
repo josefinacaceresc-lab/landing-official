@@ -159,7 +159,7 @@ const componentesOperativos = [
   },
   {
     titulo: 'Equipo de consultoría clínica',
-    descripcion: 'Supervisión cruzada semanal del equipo terapéutico. Mantiene la fidelidad al modelo Linehan-Dimeff y evita los errores clásicos del tratamiento fragmentado entre lo psiquiátrico y lo adictivo.',
+    descripcion: 'Supervisión cruzada semanal del equipo terapéutico. Mantiene la coherencia del modelo Linehan-Dimeff y evita los errores clásicos del tratamiento fragmentado entre lo psiquiátrico y lo adictivo.',
   },
   {
     titulo: 'Monitoreo clínico ApoFix AI',
@@ -192,7 +192,7 @@ const faqs = [
   },
   {
     q: '¿Cuál es la diferencia entre este programa y un centro de tratamiento de adicciones tradicional?',
-    a: 'Los centros tradicionales de adicciones se enfocan en la abstinencia y el control de estímulos, abordando el consumo de forma aislada. El programa DBT-SUD del Instituto trata simultáneamente el consumo y la desregulación emocional, las conductas autolesivas, la ideación suicida y el trauma complejo cuando están presentes. Es el único modelo en Chile con protocolo Linehan-Dimeff íntegro y dirección clínica formada en el Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak.',
+    a: 'Los centros tradicionales de adicciones se enfocan en la abstinencia y el control de estímulos, abordando el consumo de forma aislada. El programa DBT-SUD del Instituto trata simultáneamente el consumo y la desregulación emocional, las conductas autolesivas, la ideación suicida y el trauma complejo cuando están presentes. Es el único modelo en Chile con protocolo Linehan-Dimeff adaptado a nuestro programa anual y dirección clínica formada en el Sector Z del Instituto Psiquiátrico Dr. José Horwitz Barak.',
   },
   {
     q: '¿Atienden adolescentes con consumo de sustancias y trastornos de conducta?',
@@ -704,10 +704,10 @@ export default function DBTAdiccionesPage() {
                 Arquitectura clínica
               </div>
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4">
-                Componentes del <em className="font-serif italic text-primary">programa íntegro</em>
+                Componentes del <em className="font-serif italic text-primary">programa anual</em>
               </h2>
               <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Seis componentes simultáneos. Sin atajos, sin versiones reducidas, sin fragmentación entre lo psiquiátrico y lo adictivo.
+                Seis componentes simultáneos, sostenidos durante doce meses, sin fragmentación entre lo psiquiátrico y lo adictivo.
               </p>
             </div>
 
@@ -745,7 +745,7 @@ export default function DBTAdiccionesPage() {
               <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
                 <div className="text-3xl font-serif font-light text-primary mb-2">01</div>
                 <h3 className="text-base font-semibold text-gray-900 mb-2">Primera vez en Chile</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">Nunca antes se había implementado un programa DBT especializado en adicciones bajo protocolo Linehan-Dimeff íntegro en el país.</p>
+                <p className="text-sm text-gray-600 leading-relaxed">Nunca antes se había implementado en el país un programa DBT especializado en adicciones basado en el protocolo Linehan-Dimeff.</p>
               </div>
               <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
                 <div className="text-3xl font-serif font-light text-primary mb-2">02</div>

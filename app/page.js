@@ -209,7 +209,7 @@ export default function Home() {
                       <h4 className="text-xl font-bold text-primary mb-2">Trastorno Límite de Personalidad</h4>
                       <p className="text-sm font-semibold text-primary/80 uppercase tracking-wide mb-4">TLP</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        El tratamiento con la mayor evidencia científica acumulada para el TLP. Reducción consistente de crisis, conductas autolesivas y hospitalizaciones, bajo estándar WDBTA y con todos los componentes que el protocolo exige.
+                        El tratamiento con la mayor evidencia científica acumulada para el TLP. Reducción consistente de crisis, conductas autolesivas y hospitalizaciones, bajo estándar WDBTA, con los cuatro componentes del modelo sostenidos durante doce meses.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
                         Conocer el programa <ArrowRight className="w-4 h-4" />
@@ -225,7 +225,7 @@ export default function Home() {
                       <h4 className="text-xl font-bold text-primary mb-2">Patología Dual <span className="font-light text-gray-700">(TLP + adicciones)</span></h4>
                       <p className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Cuando hay desregulación y consumo</p>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD íntegro y monitoreo clínico ApoFix AI.
+                        Cuando la sustancia funciona como un intento desesperado de regular un dolor que el sistema nervioso no puede contener, el tratamiento tiene que abordar las dos cosas a la vez. Centro de alta complejidad con protocolo DBT-SUD adaptado a nuestro programa anual y monitoreo clínico ApoFix AI.
                       </p>
                       <span className="text-primary font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
                         Conocer el programa <ArrowRight className="w-4 h-4" />
@@ -527,9 +527,9 @@ export default function Home() {
               {/* Right: Description */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Fidelidad clínica al protocolo original</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Modelo completo, cadencia propia</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Adherencia estricta a los manuales de Marsha Linehan. Significa que cada componente del tratamiento — individual, grupo de habilidades, coaching, consultoría de equipo — se sostiene como fue investigado, sin atajos.
+                    Sostenemos los cuatro componentes del modelo de Linehan durante doce meses: terapia individual cada quince días, entrenamiento grupal de habilidades cada quince días, coaching telefónico en crisis y consultoría clínica semanal del equipo. El currículum completo de los cuatro módulos se cubre a lo largo del año, con una cadencia grupal ampliada de forma deliberada: más tiempo entre sesiones significa más práctica de cada habilidad en la vida real antes de avanzar a la siguiente.
                   </p>
                 </div>
                 <div>

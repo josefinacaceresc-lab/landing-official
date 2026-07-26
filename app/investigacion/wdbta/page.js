@@ -131,8 +131,8 @@ export default function WDBTAPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600">
-                    Garantizamos adherencia estricta a los protocolos de tratamiento 
-                    validados empíricamente.
+                    Trabajamos con los protocolos de tratamiento 
+                    validados empíricamente, sosteniendo los componentes del modelo durante todo el programa.
                   </p>
                 </CardContent>
               </Card>

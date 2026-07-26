@@ -45,12 +45,16 @@ const faqs = [
     a: 'El programa DBT estándar tiene una duración aproximada de doce meses, organizados en dos ciclos de seis meses que cubren los cuatro módulos de habilidades. Algunos consultantes consolidan los aprendizajes en seis a nueve meses; otros requieren extensiones según la severidad clínica, la comorbilidad presente y los objetivos individuales acordados con el equipo tratante.',
   },
   {
+    q: '¿Con qué frecuencia son las sesiones?',
+    a: 'La terapia individual es quincenal. El entrenamiento grupal de habilidades es cada quince días, a lo largo de doce meses, cubriendo el currículum completo de los cuatro módulos. Es una decisión clínica deliberada del Instituto: el intervalo mayor entrega más tiempo para practicar cada habilidad en contextos reales antes de incorporar la siguiente. El coaching telefónico está disponible entre sesiones.',
+  },
+  {
     q: '¿Dónde queda el Instituto DBT Chile?',
     a: 'Nuestras instalaciones clínicas se encuentran en Vitacura, Santiago de Chile. Atendemos a consultantes de la Región Metropolitana y de todo el país, con modalidades presencial y telemática según indicación clínica.',
   },
   {
     q: '¿Atienden online o solo presencial?',
-    a: 'Ofrecemos ambas modalidades. La indicación entre formato presencial, híbrido o telemático se establece tras la valoración inicial considerando severidad clínica, perfil de riesgo, comorbilidad y preferencia del consultante. La evidencia disponible muestra que las habilidades DBT y la terapia individual mantienen su eficacia en formato online cuando se aplican con fidelidad al protocolo original.',
+    a: 'Ofrecemos ambas modalidades. La indicación entre formato presencial, híbrido o telemático se establece tras la valoración inicial considerando severidad clínica, perfil de riesgo, comorbilidad y preferencia del consultante. La evidencia disponible muestra que las habilidades DBT y la terapia individual mantienen su eficacia en formato online cuando se conservan la estructura y los componentes del modelo.',
   },
   {
     q: '¿Quién dirige el Instituto DBT Chile?',

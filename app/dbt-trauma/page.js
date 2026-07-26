@@ -102,8 +102,8 @@ const indicaciones = [
 
 const diferenciadores = [
   {
-    titulo: 'Protocolo de alta fidelidad',
-    descripcion: 'Aplicación del manual original DBT-PTSD del Professor Dr. Martin Bohus, sin adaptaciones reduccionistas. Mismo estándar metodológico del Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania).',
+    titulo: 'Modelo original de Bohus',
+    descripcion: 'Aplicación del manual original DBT-PTSD del Professor Dr. Martin Bohus, siguiendo la metodología desarrollada en el Zentralinstitut für Seelische Gesundheit (ZI Mannheim, Alemania), con adaptaciones de cadencia fundamentadas clínicamente.',
   },
   {
     titulo: 'Transmisión directa Bohus → Cáceres',
@@ -257,7 +257,7 @@ export default function DBTTraumaPage() {
             </p>
 
             <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Implementación clínica nacional desarrollada por la Dra.(c) Josefina Cáceres Cortés, en relación institucional sostenida con el Professor Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile con el modelo original DBT-PTSD de alta fidelidad.
+              Implementación clínica nacional desarrollada por la Dra.(c) Josefina Cáceres Cortés, en relación institucional sostenida con el Professor Bohus a través de la <strong>World Dialectical Behavior Therapy Association (WDBTA)</strong>. Único Instituto en Chile que implementa el modelo original DBT-PTSD.
             </p>
 
             <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mb-10 px-5 py-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-full text-xs md:text-sm">
@@ -376,7 +376,7 @@ export default function DBTTraumaPage() {
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Desarrolladora de la implementación clínica del modelo DBT-PTSD en Chile.</li>
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Relación institucional sostenida con el Professor Bohus a través de la WDBTA.</li>
                   <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Formación en DBT estándar, DBT-PTSD y Terapia de Esquemas bajo estándares internacionales.</li>
-                  <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Responsable del único programa DBT-PTSD de alta fidelidad activo en territorio chileno.</li>
+                  <li className="flex gap-2"><span className="text-emerald-700 font-medium">·</span> Responsable del único programa DBT-PTSD activo en territorio chileno.</li>
                 </ul>
               </div>
             </div>
@@ -384,7 +384,7 @@ export default function DBTTraumaPage() {
             <div className="mt-10 max-w-3xl mx-auto text-center">
               <blockquote className="text-lg md:text-xl font-serif italic font-light text-gray-700 leading-snug">
                 <span className="text-emerald-700">“</span>
-                La fidelidad al modelo no es un detalle técnico, es la diferencia entre tratar el trauma y replicar su daño. Implementar DBT-PTSD significa sostener la misma exigencia clínica que en Mannheim, aquí en Chile.
+                Sostener los componentes del modelo no es un detalle técnico, es la diferencia entre tratar el trauma y replicar su daño. Implementar DBT-PTSD significa sostener la exigencia clínica aprendida en Mannheim, aquí en Chile.
                 <span className="text-emerald-700">”</span>
               </blockquote>
               <div className="mt-5 text-sm text-gray-500 tracking-wide">

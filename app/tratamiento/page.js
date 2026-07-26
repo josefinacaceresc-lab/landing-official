@@ -4,11 +4,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Brain, Activity, Shield, Cpu, Layers, CheckCircle, Microscope, Users } from 'lucide-react'
 
 export const metadata = {
-  title: 'Tratamiento DBT de Fidelidad Total | Instituto DBT Chile',
+  title: 'Tratamiento DBT: Modelo completo de doce meses | Instituto DBT Chile',
   description: 'Programa clínico integrado DBT + Schema Therapy de máxima evidencia. Único centro WDBTA en Chile con monitoreo ApoFix AI. Tratamiento ambulatorio intensivo para TLP, patología dual y desregulación emocional severa.',
   keywords: [
     'Tratamiento DBT Chile',
-    'DBT de Fidelidad Total',
+    'Programa DBT de doce meses',
     'Schema Therapy Santiago',
     'TLP tratamiento Chile',
     'Patología Dual DBT-SUD',
@@ -22,7 +22,7 @@ const pilares = [
   {
     icon: Brain,
     title: 'DBT Comprehensivo',
-    text: 'Terapia Dialéctico-Conductual estándar (Linehan) en su forma completa: terapia individual semanal, entrenamiento grupal de habilidades, coaching telefónico y equipo de consulta. Adherencia estricta a los principios de la WDBTA.',
+    text: 'Sostenemos los cuatro componentes del modelo de Linehan durante doce meses: terapia individual quincenal, entrenamiento grupal de habilidades cada quince días, coaching telefónico y equipo de consulta semanal. El currículum completo de los cuatro módulos se cubre a lo largo del año.',
   },
   {
     icon: Layers,
@@ -50,7 +50,7 @@ const fases = [
   {
     n: '02',
     titulo: 'Pre-tratamiento y compromiso',
-    descripcion: 'Sesiones de orientación, contrato terapéutico, análisis de motivación y prevención de abandono. Etapa crítica para la fidelidad al modelo DBT.',
+    descripcion: 'Sesiones de orientación, contrato terapéutico, análisis de motivación y prevención de abandono. Etapa crítica para la continuidad del tratamiento durante los doce meses del programa.',
   },
   {
     n: '03',
@@ -84,12 +84,12 @@ const poblaciones = [
     titulo: 'Patología Dual (TLP + TUS)',
     subtitulo: 'Desregulación con adicciones',
     href: '/tratamientos/patologia-dual',
-    descripcion: 'Protocolo DBT-SUD de Fidelidad Total. Único Centro de Alta Complejidad en Chile para comorbilidad TLP + Trastorno por Uso de Sustancias.',
+    descripcion: 'Protocolo DBT-SUD adaptado a nuestro programa anual. Único Centro de Alta Complejidad en Chile para comorbilidad TLP + Trastorno por Uso de Sustancias.',
   },
   {
     titulo: 'DBT Infanto-Juvenil (DBT-A)',
     href: '/tratamiento/dbt-infanto-juvenil',
-    descripcion: 'Programa DBT para Adolescentes con Fidelidad Total al modelo Rathus & Miller. Integración mandatoria del sistema familiar a través del Camino del Medio.',
+    descripcion: 'Programa DBT para Adolescentes basado en el modelo Rathus & Miller. Integración mandatoria del sistema familiar a través del Camino del Medio.',
   },
 ]
 
@@ -105,10 +105,10 @@ export default function TratamientoPage() {
               Programa Clínico
             </div>
             <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-6 tracking-tight">
-              Tratamiento <em className="font-serif italic text-primary">DBT</em> de Fidelidad Total
+              Tratamiento <em className="font-serif italic text-primary">DBT</em>: modelo completo, cadencia propia
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Programa integrado de Terapia Dialéctico-Conductual y Schema Therapy con monitoreo clínico mediante <strong>ApoFix AI</strong>. Único centro en Chile con membresía institucional <strong>WDBTA</strong>, garantizando adherencia estricta a los estándares internacionales del modelo.
+              Programa integrado de Terapia Dialéctico-Conductual y Schema Therapy con monitoreo clínico mediante <strong>ApoFix AI</strong>. Único centro en Chile con membresía institucional <strong>WDBTA</strong>, con los cuatro componentes del modelo sostenidos durante doce meses.
             </p>
           </div>
         </div>

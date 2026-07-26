@@ -5,7 +5,7 @@ import { ArrowRight, Brain, Heart, Layers, Shield, Microscope, Activity, CheckCi
 
 export const metadata = {
   title: 'Trastorno Límite de Personalidad (TLP) | Instituto DBT Chile',
-  description: 'Centro de referencia nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA. Enfoque dimensional y computacional con DBT de Fidelidad Total + Schema Therapy + monitoreo ApoFix AI.',
+  description: 'Centro de referencia nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA. Enfoque dimensional y computacional con programa DBT de doce meses + Schema Therapy + monitoreo ApoFix AI.',
   keywords: [
     'TLP Chile',
     'Trastorno Límite de Personalidad',
@@ -16,7 +16,7 @@ export const metadata = {
   ],
   alternates: { canonical: 'https://institutodbtchile.cl/tratamiento/tlp-alta-gama' },
   openGraph: {
-    title: 'TLP: Tratamiento DBT de Fidelidad Total | Instituto DBT Chile',
+    title: 'TLP: Tratamiento DBT de doce meses | Instituto DBT Chile',
     description: 'Referente nacional en tratamiento del Trastorno Límite de Personalidad bajo estándar WDBTA.',
     url: 'https://institutodbtchile.cl/tratamiento/tlp-alta-gama',
     type: 'article',
@@ -180,7 +180,7 @@ export default function TLPPage() {
       <section className="py-20 bg-primary/5">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-            ¿Buscas tratamiento de <em className="font-serif italic text-primary">máxima fidelidad clínica</em>?
+            ¿Buscas tratamiento con <em className="font-serif italic text-primary">el modelo clínico completo</em>?
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Comienza con una evaluación clínica estructurada para identificar tu perfil y orientar el plan terapéutico.

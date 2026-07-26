@@ -30,7 +30,7 @@ const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHAT
 // ── SEO metadata ─────────────────────────────────────────────────────────
 export const metadata = {
   title: 'Terapia DBT en Chile · WDBTA',
-  description: 'Terapia Dialéctico Conductual (DBT) de alta fidelidad en Chile. Único Instituto representante WDBTA. Reembolsable Isapre · Modalidad presencial y telemática · Boleta médica.',
+  description: 'Terapia Dialéctico Conductual (DBT) en Chile: programa de doce meses con los cuatro componentes del modelo. Único Instituto representante WDBTA. Reembolsable Isapre · Modalidad presencial y telemática · Boleta médica.',
   keywords: [
     'terapia DBT',
     'terapia DBT Chile',
@@ -44,7 +44,7 @@ export const metadata = {
   alternates: { canonical: 'https://institutodbtchile.cl/terapia-dbt' },
   openGraph: {
     title: 'Terapia DBT en Chile · Instituto DBT Chile',
-    description: 'Terapia Dialéctico Conductual de alta fidelidad. Único Instituto representante WDBTA en Chile. Reembolsable Isapre.',
+    description: 'Terapia Dialéctico Conductual: programa de doce meses con los cuatro componentes del modelo. Único Instituto representante WDBTA en Chile. Reembolsable Isapre.',
     url: 'https://institutodbtchile.cl/terapia-dbt',
     type: 'article',
     locale: 'es_CL',
@@ -90,7 +90,7 @@ const componentes = [
   },
   {
     titulo: 'Equipo de consultoría clínica',
-    descripcion: 'Reunión semanal del equipo terapéutico para revisión de casos, supervisión cruzada y mantenimiento de la fidelidad al modelo.',
+    descripcion: 'Reunión semanal del equipo terapéutico para revisión de casos, supervisión cruzada y mantenimiento de la coherencia del modelo.',
   },
 ]
 
@@ -158,7 +158,7 @@ const jsonLd = {
       '@id': 'https://institutodbtchile.cl/terapia-dbt#therapy',
       name: 'Terapia Dialéctico Conductual (DBT)',
       alternateName: ['DBT', 'Dialectical Behavior Therapy', 'Terapia Dialéctica Conductual'],
-      description: 'Tratamiento psicoterapéutico estructurado de alta fidelidad para desregulación emocional severa, Trastorno Límite de la Personalidad y condiciones afines, conforme al modelo de Marsha Linehan.',
+      description: 'Tratamiento psicoterapéutico estructurado de doce meses para desregulación emocional severa, Trastorno Límite de la Personalidad y condiciones afines, basado en el modelo de Marsha Linehan.',
       medicineSystem: 'Psicoterapia basada en evidencia',
       relevantSpecialty: ['Psiquiatría', 'Psicología clínica'],
       study: {
@@ -211,7 +211,7 @@ export default function TerapiaDBTPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-700 mb-6 font-light tracking-wide">
-              Terapia Dialéctico Conductual de alta fidelidad · Instituto DBT Chile
+              Terapia Dialéctico Conductual · Programa de doce meses · Instituto DBT Chile
             </p>
 
             <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">

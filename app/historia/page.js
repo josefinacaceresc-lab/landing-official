@@ -85,7 +85,7 @@ export default function HistoriaPage() {
                 </p>
                 <p>
                   Fundado en <strong>2021</strong>, DBT Chile nació con una convicción: llevar a Chile la
-                  Terapia Dialéctico Conductual con <strong>fidelidad al modelo original</strong> de
+                  Terapia Dialéctico Conductual con <strong>los cuatro componentes del modelo original</strong> de
                   Marsha Linehan y a los estándares internacionales de tratamiento del Trastorno Límite
                   de la Personalidad, el trauma complejo y la desregulación emocional. Esa misión
                   permanece intacta.

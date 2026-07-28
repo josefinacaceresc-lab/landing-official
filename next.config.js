@@ -259,16 +259,8 @@ const nextConfig = {
       },
       
       // Psychiatric evaluation
-      {
-        source: '/evaluacion-psiquiatrica',
-        destination: '/servicios/evaluacion-psiquiatrica',
-        permanent: true,
-      },
-      {
-        source: '/evaluacion-psiquiatrica/',
-        destination: '/servicios/evaluacion-psiquiatrica',
-        permanent: true,
-      },
+      // (Redirect legacy eliminado: la página vive ahora en /evaluacion-psiquiatrica
+      // como hub clínico dedicado — ver /app/app/evaluacion-psiquiatrica/page.js)
       
       // Blog posts - Content authority
       {

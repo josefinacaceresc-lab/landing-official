@@ -193,7 +193,49 @@ const jsonLd = {
       name: 'Dr. Luis Acuña San Martín',
       alternateName: 'Luis Acuña San Martín',
       jobTitle: 'Médico Psiquiatra de Adultos · Psicoterapeuta',
-      medicalSpecialty: ['Psiquiatría', 'Psicoterapia'],
+      medicalSpecialty: ['Psychiatry', 'Psychotherapy'],
+      knowsAbout: [
+        'Adicciones',
+        'Patología dual',
+        'Trastornos de la personalidad',
+        'Psicosis',
+        'Trastornos del ánimo',
+        'Terapia Dialéctico Conductual (DBT)',
+        'Terapia Gestalt',
+      ],
+      alumniOf: [
+        {
+          '@type': 'EducationalOrganization',
+          name: 'Instituto Psiquiátrico Dr. José Horwitz Barak',
+          description: 'Formación de especialidad en Psiquiatría',
+        },
+      ],
+      hasCredential: [
+        {
+          '@type': 'EducationalOccupationalCredential',
+          credentialCategory: 'Board Certification',
+          name: 'Certificación de especialidad en Psiquiatría',
+          recognizedBy: {
+            '@type': 'Organization',
+            name: 'CONACEM — Corporación Nacional Autónoma de Certificación de Especialidades Médicas',
+          },
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          credentialCategory: 'Training',
+          name: 'Formación en Terapia Gestalt con Dra. Adriana Schnake',
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          credentialCategory: 'Training',
+          name: 'Formación especializada en adicciones y patología dual (SETA — Instituto Psiquiátrico Dr. José Horwitz Barak)',
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          credentialCategory: 'Training',
+          name: 'Formación en Terapia Dialéctico Conductual (DBT) — Instituto DBT Chile',
+        },
+      ],
       worksFor: {
         '@type': 'MedicalOrganization',
         name: 'Instituto DBT Chile',
@@ -318,32 +360,20 @@ export default function EvaluacionPsiquiatricaPage() {
             <div className="bg-white border border-emerald-100 rounded-2xl p-8 md:p-12 shadow-sm">
               <blockquote className="text-base md:text-lg text-gray-700 leading-relaxed space-y-4 font-light">
                 <p>
-                  Hola, le agradezco llegar a este espacio y el confiar desde ya en mi trabajo.
+                  Hola. Gracias por llegar a este espacio y por depositar su confianza en mi trabajo.
                 </p>
                 <p>
-                  Soy psiquiatra de adultos, psicoterapeuta, trabajo en el Instituto DBT Chile y tengo la fortuna de contar con la disposición de un equipo de tremendos profesionales de la salud mental.
+                  Soy médico psiquiatra de adultos, psicoterapeuta y miembro del equipo clínico del Instituto DBT Chile. Me formé como especialista en Psiquiatría en el <strong>Instituto Psiquiátrico Dr. José Horwitz Barak</strong> y cuento con certificación de especialidad otorgada por <strong>CONACEM</strong>.
                 </p>
                 <p>
-                  Puede acceder a mi currículo profesional en{' '}
-                  <a
-                    href="https://www.linkedin.com/in/luisacunasanmartin"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary transition-colors"
-                  >
-                    LinkedIn
-                  </a>
-                  .
+                  Poseo una amplia trayectoria en el diagnóstico y tratamiento de adicciones, patología dual, trastornos de la personalidad, psicosis y trastornos del ánimo.
                 </p>
                 <p>
-                  Ofrezco atención <strong>presencial los lunes por la tarde en Vitacura</strong> (cerca de Alonso de Córdova) y en <strong>teleconsulta los jueves y viernes por la tarde</strong> (vía Zoom, Google Meet o Telegram). Más abajo puede escoger la modalidad y horario que más le acomode.
-                </p>
-                <p>
-                  Y una vez más, gracias por su confianza.
+                  Realizo <strong>atenciones presenciales los lunes por la tarde en Vitacura</strong>, cerca de Alonso de Córdova. También ofrezco <strong>teleconsultas los jueves y viernes por la tarde</strong>, mediante Zoom, Telegram o Google Meet. Más abajo podrá escoger la modalidad y el horario que mejor se adapten a sus necesidades.
                 </p>
               </blockquote>
               <div className="mt-8 pt-6 border-t border-emerald-100 text-sm text-gray-500 tracking-wide">
-                — Dr. Luis Acuña San Martín · Médico Psiquiatra de Adultos
+                — Dr. Luis Acuña San Martín · Médico Psiquiatra de Adultos · Psicoterapeuta
               </div>
             </div>
           </div>
@@ -509,32 +539,102 @@ export default function EvaluacionPsiquiatricaPage() {
       {/* ── Bio Dr. Acuña ────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <div className="mb-3 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
-                Perfil del clínico
+                Perfil profesional
               </div>
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4">
                 Dr. <em className="font-serif italic text-primary">Luis Acuña San Martín</em>
               </h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Médico Psiquiatra de Adultos · Psicoterapeuta · Instituto DBT Chile
+              </p>
             </div>
 
-            <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-8 md:p-10">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="shrink-0 w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Stethoscope className="w-7 h-7 text-primary" strokeWidth={1.5} />
+            {/* Credenciales estructuradas */}
+            <div className="grid md:grid-cols-2 gap-6 mb-10">
+              {/* Formación de especialidad */}
+              <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-7">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Stethoscope className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Formación de especialidad</h3>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">Médico Psiquiatra de Adultos</h3>
-                  <p className="text-sm text-gray-600">Psicoterapeuta · Instituto DBT Chile</p>
-                </div>
+                <ul className="space-y-3 text-sm text-gray-700 leading-relaxed">
+                  <li className="flex gap-2">
+                    <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                    <span>Especialista en Psiquiatría, <strong>Instituto Psiquiátrico Dr. José Horwitz Barak</strong>.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                    <span>Certificación de especialidad otorgada por <strong>CONACEM</strong> (Corporación Nacional Autónoma de Certificación de Especialidades Médicas).</span>
+                  </li>
+                </ul>
               </div>
 
-              <p className="text-base text-gray-700 leading-relaxed mb-6">
-                El Dr. Luis Acuña San Martín es médico psiquiatra de adultos y psicoterapeuta con formación clínica y práctica sostenida en el diagnóstico y tratamiento de trastornos afectivos, ansiosos, de personalidad y comorbilidades complejas. Integra la evaluación psiquiátrica rigurosa con una comprensión psicoterapéutica del consultante.
+              {/* Áreas de expertise */}
+              <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-7">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <ClipboardCheck className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Áreas de expertise clínica</h3>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700 leading-relaxed">
+                  <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" /><span>Adicciones</span></li>
+                  <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" /><span>Patología dual</span></li>
+                  <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" /><span>Trastornos de la personalidad</span></li>
+                  <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" /><span>Psicosis</span></li>
+                  <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" /><span>Trastornos del ánimo</span></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Formación psicoterapéutica */}
+            <div className="bg-gradient-to-br from-emerald-50/50 to-white border border-emerald-100 rounded-2xl p-8 md:p-10 mb-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-11 h-11 rounded-full bg-emerald-100/80 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-emerald-700" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Formación psicoterapéutica</h3>
+              </div>
+              <ul className="space-y-4 text-base text-gray-700 leading-relaxed">
+                <li className="flex gap-3">
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 text-xs font-semibold mt-0.5">1</div>
+                  <span>
+                    Formación en <strong>Terapia Gestalt</strong> con la Dra. Adriana &ldquo;Nana&rdquo; Schnake, una de las principales precursoras de esta corriente psicoterapéutica en Chile.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 text-xs font-semibold mt-0.5">2</div>
+                  <span>
+                    Formación y experiencia especializada en <strong>adicciones y patología dual</strong>, vinculada al <em className="italic">Servicio de Estabilización de Trastornos Adictivos (SETA)</em> del Instituto Psiquiátrico Dr. José Horwitz Barak.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 text-xs font-semibold mt-0.5">3</div>
+                  <span>
+                    Formación en <strong>Terapia Dialéctico Conductual (DBT)</strong> en el Instituto DBT Chile.
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Modelo interdisciplinario */}
+            <div className="bg-white border border-gray-100 rounded-2xl p-8 md:p-10 shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <UserCheck className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">Modelo interdisciplinario</h3>
+              </div>
+              <p className="text-base text-gray-700 leading-relaxed">
+                En el Instituto DBT Chile, el Dr. Acuña trabaja coordinadamente con un equipo interdisciplinario de profesionales de la salud mental. Este modelo permite integrar la <strong>evaluación psiquiátrica</strong>, la <strong>psicoterapia</strong> y el <strong>seguimiento clínico</strong>, ofreciendo un tratamiento personalizado y coherente con las necesidades de cada consultante.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="mt-6 pt-6 border-t border-gray-100 flex flex-wrap items-center gap-4">
                 <a
                   href="https://www.linkedin.com/in/luisacunasanmartin"
                   target="_blank"

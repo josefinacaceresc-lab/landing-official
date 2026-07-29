@@ -139,14 +139,14 @@ export default function Home() {
               <Card className="group border border-rose-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
                 <div className="h-1 bg-gradient-to-r from-rose-300 via-rose-500 to-rose-300" />
                 <CardContent className="p-8">
-                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl ring-1 ring-rose-100">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-white rounded-xl ring-1 ring-rose-200/70 shadow-inner">
                     <Image
                       src="https://customer-assets-m6fa6gv7.emergentagent.net/job_nextjs-dbt-cl/artifacts/nawqoqza_image.png"
                       alt="Asociación Española de DBT Logo"
                       width={400}
                       height={200}
-                      className="object-contain h-24 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                      style={{ mixBlendMode: 'multiply', imageRendering: '-webkit-optimize-contrast' }}
+                      className="object-contain h-32 w-auto transition-transform duration-500 group-hover:scale-105"
+                      style={{ filter: 'contrast(1.35) saturate(1.1)' }}
                       unoptimized
                     />
                   </div>

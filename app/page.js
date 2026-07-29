@@ -124,17 +124,41 @@ export default function Home() {
                 Lo que hay <em className="font-serif italic text-emerald-700">detrás</em> de un tratamiento serio.
               </h2>
               <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8 leading-[1.9]">
-                Nuestro rigor no es una declaración de intenciones, sino un respaldo verificable. Somos la única institución chilena que reúne tres acreditaciones internacionales que normalmente se encuentran por separado: <strong>WDBTA</strong> (Terapia Dialéctico Conductual), <strong>APA</strong> (Psicología Norteamericana) e <strong>ISST</strong> (Schema Therapy). Son los marcos que garantizan que cada intervención tiene método, evidencia y estándar internacional.
+                Nuestro rigor no es una declaración de intenciones, sino un respaldo verificable. Somos la única institución chilena que reúne cuatro acreditaciones internacionales que normalmente se encuentran por separado: <strong>Asociación Española de DBT</strong> (certificación de psicólogos especialistas en DBT), <strong>WDBTA</strong> (World Dialectical Behavior Therapy Association), <strong>APA</strong> (American Psychological Association) e <strong>ISST</strong> (International Society of Schema Therapy). Son los marcos que garantizan que cada intervención tiene método, evidencia y estándar internacional.
               </p>
               
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">
-                <div><strong className="text-emerald-700">Cobertura:</strong> Única institución chilena con las tres</div>
-                <div><strong className="text-emerald-700">Acreditaciones:</strong> WDBTA · APA · ISST</div>
+                <div><strong className="text-emerald-700">Cobertura:</strong> Única institución chilena con las cuatro</div>
+                <div><strong className="text-emerald-700">Acreditaciones:</strong> AEDBT · WDBTA · APA · ISST</div>
                 <div><strong className="text-emerald-700">Dirección clínica:</strong> Ph.D.(c) con formación internacional</div>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {/* ── AEDBT · Asociación Española de DBT ──────────────── */}
+              <Card className="group border border-rose-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
+                <div className="h-1 bg-gradient-to-r from-rose-300 via-rose-500 to-rose-300" />
+                <CardContent className="p-8">
+                  <div className="mb-6 relative h-44 flex items-center justify-center bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl ring-1 ring-rose-100">
+                    <Image
+                      src="https://customer-assets-m6fa6gv7.emergentagent.net/job_nextjs-dbt-cl/artifacts/nawqoqza_image.png"
+                      alt="Asociación Española de DBT Logo"
+                      width={400}
+                      height={200}
+                      className="object-contain h-24 w-auto drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                      style={{ mixBlendMode: 'multiply', imageRendering: '-webkit-optimize-contrast' }}
+                      unoptimized
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-6 bg-rose-600 rounded-full" />
+                    <h3 className="text-2xl font-serif font-semibold text-gray-900">AEDBT</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">Asociación Española de DBT</p>
+                  <p className="text-rose-700 font-semibold tracking-wide">Certificación especialista</p>
+                </CardContent>
+              </Card>
+
               {/* ── WDBTA ─────────────────────────────────────────── */}
               <Card className="group border border-emerald-100/60 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-white overflow-hidden rounded-2xl">
                 <div className="h-1 bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-300" />

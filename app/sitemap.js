@@ -8,6 +8,11 @@ import { articulos } from '@/lib/articulos'
 
 const BASE = 'https://institutodbtchile.cl'
 
+// Force runtime generation so any new paper/article picks up immediately
+// without waiting for a full rebuild of the pre-rendered sitemap output.
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function sitemap() {
   const now = new Date().toISOString()
 

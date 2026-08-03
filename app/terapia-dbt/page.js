@@ -428,7 +428,7 @@ export default function TerapiaDBTPage() {
                 },
                 {
                   criterio: 'Soporte entre Sesiones',
-                  col1: 'Coaching telefónico estructurado en tiempo real para evitar conductas de riesgo.',
+                  col1: 'Coaching telefónico estructurado en tiempo real para evitar conductas de riesgo. Apoyo con AI DialectIA · ApoFix.',
                   col2: 'Limitado a tareas para la casa; generalmente sin contacto de crisis habitual.',
                   col3: 'Exclusivo dentro de la hora de sesión semanal.',
                 },

@@ -431,7 +431,7 @@ export default function Home() {
                 {
                   criterio: 'Coaching Telefónico / Entre Sesiones',
                   col1: 'Según necesidad · Protocolo de crisis',
-                  col2: 'Generalización de habilidades en tiempo real antes de conductas desadaptativas.',
+                  col2: 'Generalización de habilidades en tiempo real antes de conductas desadaptativas. Apoyo con AI DialectIA · ApoFix.',
                   col3: 'Consultante principal',
                 },
                 {
@@ -510,8 +510,8 @@ export default function Home() {
                 },
                 {
                   criterio: 'Coaching Telefónico en Crisis',
-                  col1: 'Disponible vía canal telefónico / celular directo.',
-                  col2: 'Disponible vía canal telefónico / plataforma directa.',
+                  col1: 'Disponible vía canal telefónico / celular directo. Apoyo con AI DialectIA · ApoFix.',
+                  col2: 'Disponible vía canal telefónico / plataforma directa. Apoyo con AI DialectIA · ApoFix.',
                 },
                 {
                   criterio: 'Evidencia de Eficacia',

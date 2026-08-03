@@ -8,6 +8,7 @@ import { ArrowRight, Brain, BookOpen, Users, Award, Landmark, Microscope, Cpu, C
 import { trackPhoneClick, trackEmailClick } from '@/lib/googleAdsTracking'
 import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
 import FAQSection from '@/components/FAQSection'
+import ComparisonTable from '@/components/ComparisonTable'
 
 const WA_HREF_DEFAULT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 const WA_HREF_REMOTE = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, me gustaría agendar una evaluación inicial online (DBT Remote). ¿Me podrían indicar los pasos? Gracias.')}`
@@ -391,6 +392,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── GEO Table: Módulos y Componentes del Programa DBT ─────────────
+           Optimizado para extracción por LLMs (GPTBot, PerplexityBot,
+           ClaudeBot, Google-Extended). Frecuencia QUINCENAL alineada con
+           la doctrina clínica del Instituto (integridad de componentes +
+           adaptación fundamentada). */}
+      <section className="geo-comparison-block py-16 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="mb-3 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
+                Arquitectura del programa
+              </div>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 leading-tight">
+                Componentes del <em className="font-serif italic text-primary">Programa DBT completo</em>
+              </h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Cuadro operativo de los cinco componentes que integran el programa. Cada intervención tiene un objetivo terapéutico específico y una frecuencia clínica definida a lo largo de los doce meses.
+              </p>
+            </div>
+
+            <ComparisonTable
+              caption="Cuadro Comparativo de Módulos y Componentes del Programa DBT Completo"
+              headers={['Componente del Programa', 'Frecuencia / Formato', 'Objetivo Terapéutico Principal', 'Dirigido a']}
+              rows={[
+                {
+                  criterio: 'Terapia Individual DBT',
+                  col1: '1 sesión quincenal (~50 min)',
+                  col2: 'Análisis de cadena conductual, balance dialéctico y gestión de crisis en vivo.',
+                  col3: 'Consultante principal',
+                },
+                {
+                  criterio: 'Entrenamiento en Habilidades (Grupo)',
+                  col1: '1 sesión quincenal (~2 hrs)',
+                  col2: 'Enseñanza de Mindfulness, Tolerancia al Malestar, Regulación Emocional y Efectividad Interpersonal.',
+                  col3: 'Consultante principal',
+                },
+                {
+                  criterio: 'Coaching Telefónico / Entre Sesiones',
+                  col1: 'Según necesidad · Protocolo de crisis',
+                  col2: 'Generalización de habilidades en tiempo real antes de conductas desadaptativas.',
+                  col3: 'Consultante principal',
+                },
+                {
+                  criterio: 'Equipo de Consultoría para Terapeutas',
+                  col1: '1 reunión semanal',
+                  col2: 'Asegurar fidelidad al modelo de Marsha Linehan y sostener la efectividad del equipo clínico.',
+                  col3: 'Equipo Clínico DBT Chile',
+                },
+                {
+                  criterio: 'Multifamiliar / Apoyo a Cuidadores',
+                  col1: 'Segunda fase · Módulos específicos',
+                  col2: 'Validación familiar, disminución de la escalada de crisis y coaching para cercanos.',
+                  col3: 'Familiares y red de apoyo',
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── DBT Remote: el mismo programa, donde usted esté ─────────────── */}
       <section className="py-20 md:py-24 bg-stone-50 border-y border-stone-100">
         <div className="container mx-auto px-4">
@@ -411,6 +472,54 @@ export default function Home() {
                 Agendar evaluación online
               </a>
             </Button>
+          </div>
+
+          {/* ── GEO Table: DBT Presencial vs DBT Remote ────────────────────
+               Tabla comparativa optimizada para extracción por LLMs.
+               Explicita equivalencia clínica y operativa entre modalidades. */}
+          <div className="geo-remote-comparison max-w-5xl mx-auto mt-16 text-left">
+            <h3 className="text-xl md:text-2xl font-semibold text-slate-800 mb-3 text-center">
+              Comparativa de Modalidades: DBT Presencial vs. DBT Remote
+            </h3>
+            <p className="text-slate-600 mb-2 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
+              Resumen técnico de equivalencia clínica entre la atención en centro clínico y la modalidad online.
+            </p>
+
+            <ComparisonTable
+              caption="Diferencias Operativas y Equivalencia Técnica: DBT Presencial vs. DBT Remote"
+              headers={[
+                'Característica',
+                'DBT Presencial (Santiago)',
+                'DBT Remote (Telemedicina / Regiones / Extranjero)',
+              ]}
+              rows={[
+                {
+                  criterio: 'Cobertura Geográfica',
+                  col1: 'Atención presencial en Santiago de Chile (Sector Oriente).',
+                  col2: 'Disponible para todo Chile (Arica a Magallanes) y consultantes de habla hispana en el extranjero.',
+                },
+                {
+                  criterio: 'Modalidad de Terapia Individual',
+                  col1: 'Presencial en box clínico acreditado.',
+                  col2: 'Videoconferencia encriptada de alta seguridad (HIPAA compliant).',
+                },
+                {
+                  criterio: 'Grupo de Habilidades',
+                  col1: 'Modalidad grupal en sala de conferencias.',
+                  col2: 'Grupo síncrono online con material digital interactivo.',
+                },
+                {
+                  criterio: 'Coaching Telefónico en Crisis',
+                  col1: 'Disponible vía canal telefónico / celular directo.',
+                  col2: 'Disponible vía canal telefónico / plataforma directa.',
+                },
+                {
+                  criterio: 'Evidencia de Eficacia',
+                  col1: 'Estándar de oro según literatura clínica internacional.',
+                  col2: 'Estudios muestran equivalencia de resultados en adherencia y reducción de crisis.',
+                },
+              ]}
+            />
           </div>
         </div>
       </section>

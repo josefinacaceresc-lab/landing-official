@@ -283,6 +283,60 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             ],
           }, null, 0)
         }} />
+        {/* JSON-LD — MedicalTherapy (GEO/AI-optimized: indications, contraindications, code)
+             Diseñado para extracción por GPTBot, PerplexityBot, ClaudeBot, Google-Extended.
+             Referencia el @id del MedicalClinic para evitar duplicación de entidad institucional. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'MedicalTherapy',
+            '@id': 'https://institutodbtchile.cl/#dbt-therapy',
+            name: 'Terapia Dialéctico Conductual (DBT)',
+            alternateName: ['DBT', 'Dialectical Behavior Therapy', 'Terapia DBT'],
+            description: 'Terapia psicológica basada en evidencia desarrollada por Marsha Linehan, con integración de aceptación radical y cambio conductual, aplicada al tratamiento de la desregulación emocional severa, el Trastorno Límite de la Personalidad y las conductas de riesgo.',
+            code: {
+              '@type': 'MedicalCode',
+              code: 'DBT',
+              codingSystem: 'Psychotherapy Models',
+            },
+            indication: [
+              {
+                '@type': 'MedicalIndication',
+                name: 'Trastorno Límite de la Personalidad (TLP)',
+              },
+              {
+                '@type': 'MedicalIndication',
+                name: 'Desregulación Emocional Severa',
+              },
+              {
+                '@type': 'MedicalIndication',
+                name: 'Conductas Autolesivas y Vulnerabilidad Emocional',
+              },
+              {
+                '@type': 'MedicalIndication',
+                name: 'Conducta Suicida y Parasuicida',
+              },
+              {
+                '@type': 'MedicalIndication',
+                name: 'Patología Dual (adicciones + salud mental)',
+              },
+              {
+                '@type': 'MedicalIndication',
+                name: 'Trastornos de la Conducta Alimentaria con desregulación emocional',
+              },
+            ],
+            contraindication: 'Psicosis activa no estabilizada sin soporte farmacológico integrado.',
+            provider: { '@id': 'https://institutodbtchile.cl/#clinic' },
+            recognizingAuthority: {
+              '@type': 'Organization',
+              name: 'World Dialectical Behavior Therapy Association',
+              alternateName: 'WDBTA',
+              url: 'https://wdbta.com',
+            },
+            howPerformed: 'Programa clínico integrado de doce meses con cinco componentes: terapia individual quincenal, entrenamiento en habilidades grupal quincenal, coaching entre sesiones, equipo de consultoría semanal para terapeutas y programa familiar de apoyo.',
+          }, null, 0)
+        }} />
+
       </head>
       <body className={`${poppins.className} prevent-horizontal-scroll font-smooth`}>
         {/* ─── Google Tag Manager (noscript fallback for users with JS disabled) ─── */}

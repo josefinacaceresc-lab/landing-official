@@ -24,6 +24,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { ArrowRight, Brain, Heart, Layers, Shield, CheckCircle, BookOpen, Users, Phone, MessageSquare } from 'lucide-react'
 import { WHATSAPP_NUMBER, WHATSAPP_DEFAULT_MESSAGE } from '@/lib/whatsapp'
+import ComparisonTable from '@/components/ComparisonTable'
 
 const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`
 
@@ -388,6 +389,63 @@ export default function TerapiaDBTPage() {
             <div className="mt-8 text-sm text-gray-500 tracking-wide">
               — Instituto DBT Chile · Dirección clínica: Josefina Cáceres Cortés, Ph.D.(c)
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── GEO Table: DBT vs CBT vs Terapia Convencional ─────────────
+           Optimizado para responder consultas directas de LLMs sobre
+           diferencias entre modelos terapéuticos. */}
+      <section className="geo-dbt-vs-cbt py-20 bg-gradient-to-b from-white to-slate-50 border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="mb-3 text-xs font-medium text-gray-500 uppercase tracking-[0.2em]">
+                Orientación y diferencias clínicas
+              </div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-slate-800 mb-4 leading-tight">
+                ¿Cómo se diferencia la <em className="font-serif italic text-primary">Terapia Dialéctico Conductual (DBT)</em> de otros enfoques?
+              </h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Cuadro comparativo estructural entre DBT, la Terapia Cognitivo Conductual (CBT) tradicional y la psicoterapia convencional, según foco clínico, estructura y evidencia empírica.
+              </p>
+            </div>
+
+            <ComparisonTable
+              caption="Comparativa Clínica: Terapia DBT vs. CBT Tradicional vs. Terapia Psicológica Convencional"
+              headers={[
+                'Criterio de Comparación',
+                'DBT (Dialectical Behavior Therapy)',
+                'CBT (Cognitivo Conductual Tradicional)',
+                'Terapia Psicológica Convencional',
+              ]}
+              rows={[
+                {
+                  criterio: 'Foco Principal',
+                  col1: 'Aceptación radical y cambio conductual simultáneo; gestión de la desregulación emocional extrema.',
+                  col2: 'Modificación de pensamientos disfuncionales y reestructuración cognitiva.',
+                  col3: 'Exploración de procesos de personalidad, insight y origen de conflictos.',
+                },
+                {
+                  criterio: 'Soporte entre Sesiones',
+                  col1: 'Coaching telefónico estructurado en tiempo real para evitar conductas de riesgo.',
+                  col2: 'Limitado a tareas para la casa; generalmente sin contacto de crisis habitual.',
+                  col3: 'Exclusivo dentro de la hora de sesión semanal.',
+                },
+                {
+                  criterio: 'Estructura del Tratamiento',
+                  col1: '4 componentes integrados (Individual, Grupo de Habilidades, Coaching y Equipo de Consultoría).',
+                  col2: '1 sesión semanal individual estructurada por objetivos.',
+                  col3: '1 sesión semanal individual con estructura abierta según el emergente.',
+                },
+                {
+                  criterio: 'Indicación Clínica Primaria',
+                  col1: 'TLP, conducta suicida/parasuicida, desregulación emocional severa, adicciones complejas.',
+                  col2: 'Trastornos de ansiedad, depresión moderada, fobias específicas.',
+                  col3: 'Conflictos relacionales, autoconocimiento, malestar psicológico general.',
+                },
+              ]}
+            />
           </div>
         </div>
       </section>

@@ -33,7 +33,7 @@ export default function Footer() {
               />
             </div>
 
-            {/* NexariaLabs sub-brand link */}
+            {/* NEXARYALABS sub-brand link */}
             <div className="mb-5">
               <a
                 href="https://www.nexaryalabs.cl"
@@ -41,7 +41,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                NexariaLabs <ExternalLink className="w-3.5 h-3.5" />
+                NEXARYALABS <ExternalLink className="w-3.5 h-3.5" />
               </a>
               <p className="text-xs text-gray-500 mt-0.5">Laboratorio de inteligencia clínica</p>
             </div>

@@ -7,13 +7,13 @@ import AcademicAuthor from '@/components/AcademicAuthor'
 
 export const metadata = {
   title: 'Investigación Científica',
-  description: 'Hub de investigación del Instituto DBT Chile: ApoFix AI, La Mente Algorítmica, NexariaLabs. Ciencia aplicada en neurociencia y salud mental.',
+  description: 'Hub de investigación del Instituto DBT Chile: ApoFix AI, La Mente Algorítmica, NEXARYALABS. Ciencia aplicada en neurociencia y salud mental.',
   alternates: {
     canonical: 'https://institutodbtchile.cl/investigacion',
   },
   openGraph: {
     title: 'Investigación Científica | Instituto DBT Chile',
-    description: 'Hub de investigación: ApoFix AI, La Mente Algorítmica, NexariaLabs.',
+    description: 'Hub de investigación: ApoFix AI, La Mente Algorítmica, NEXARYALABS.',
     url: 'https://institutodbtchile.cl/investigacion',
     images: [{
       url: 'https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?fm=jpg&q=80&w=1200&h=630&fit=crop',
@@ -244,13 +244,13 @@ export default function InvestigacionPage() {
                 </CardContent>
               </Card>
 
-              {/* NexariaLabs */}
+              {/* NEXARYALABS */}
               <Card className="border-0 shadow-xl hover:shadow-2xl transition-all bg-gradient-to-br from-white to-blue-50 md:col-span-2">
                 <CardHeader>
                   <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                     <Database className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-3xl font-semibold text-gray-900">NexariaLabs</CardTitle>
+                  <CardTitle className="text-3xl font-semibold text-gray-900">NEXARYALABS</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-8">
@@ -277,7 +277,7 @@ export default function InvestigacionPage() {
                     <div className="relative h-64 md:h-full rounded-xl overflow-hidden">
                       <Image
                         src="https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?fm=jpg&q=60&w=3000&auto=format&fit=crop"
-                        alt="NexariaLabs research"
+                        alt="NEXARYALABS research"
                         fill
                         className="object-cover"
                       />

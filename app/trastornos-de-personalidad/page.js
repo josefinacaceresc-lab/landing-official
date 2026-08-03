@@ -118,7 +118,7 @@ const fasesModelo = [
 const diferenciadores = [
   {
     titulo: 'Modelo integrado DBT + Schema Therapy',
-    descripcion: 'Único centro en Chile que integra formalmente el protocolo DBT estándar (WDBTA) con Terapia de Esquemas (certificación ISST). Diseñado para consultantes donde la conducta y los esquemas nucleares deben abordarse simultáneamente.',
+    descripcion: 'Único centro en Chile que integra formalmente el protocolo DBT estándar (con participación internacional en investigación WDBTA) con Terapia de Esquemas (membresía institucional ISST). Diseñado para consultantes donde la conducta y los esquemas nucleares deben abordarse simultáneamente.',
   },
   {
     titulo: 'Evaluación diagnóstica estructurada propia',

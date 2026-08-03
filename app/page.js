@@ -102,10 +102,10 @@ export default function Home() {
                 Un modelo propio, sostenido durante doce meses. Al año, el 73% de nuestros consultantes permanece en tratamiento activo.
               </p>
               <p className="text-lg text-gray-700 leading-[1.9] text-justify">
-                Trabajamos sobre la arquitectura de la Terapia Dialéctico Conductual —sesión individual, entrenamiento en habilidades, coaching entre sesiones y consultoría clínica semanal del equipo— integrada con Terapia de Esquemas bajo certificación ISST, para los casos en que el patrón de personalidad, y no la habilidad ausente, sostiene el problema.
+                Trabajamos sobre la arquitectura de la Terapia Dialéctico Conductual —sesión individual, entrenamiento en habilidades, coaching entre sesiones y consultoría clínica semanal del equipo— integrada con Terapia de Esquemas bajo membresía ISST, para los casos en que el patrón de personalidad, y no la habilidad ausente, sostiene el problema.
               </p>
               <p className="text-lg text-gray-700 leading-[1.9] text-justify">
-                Junto a NexariaLabs desarrollamos ApoFix: la primera aplicación de psiquiatría computacional a la desregulación emocional en una práctica clínica de habla hispana. Hoy en fase piloto, con participación voluntaria.
+                Junto a NEXARYALABS desarrollamos ApoFix: la primera aplicación de psiquiatría computacional a la desregulación emocional en una práctica clínica de habla hispana. Hoy en fase piloto, con participación voluntaria.
               </p>
               <p className="text-lg text-gray-700 leading-[1.9] text-justify">
                 Atendemos exclusivamente de forma particular, sin convenios institucionales, y nunca más de cien casos activos.
@@ -383,7 +383,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">ApoFix AI</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Plataforma clínica de inteligencia artificial para apoyo en regulación emocional. Proyecto NexariaLabs.
+                    Plataforma clínica de inteligencia artificial para apoyo en regulación emocional. Proyecto NEXARYALABS.
                   </p>
                 </CardContent>
               </Card>
@@ -524,7 +524,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ApoFix AI & NexariaLabs Section - PROMINENT */}
+      {/* ApoFix AI & NEXARYALABS Section - PROMINENT */}
       <section className="py-24 bg-gradient-to-br from-primary/10 via-white to-primary/5 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
@@ -548,7 +548,7 @@ export default function Home() {
                 <span className="text-3xl md:text-4xl">El Puente entre DBT Clínico y Ciencia de Datos</span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Desarrollado por <strong>NexariaLabs</strong>, ApoFix AI es nuestra extensión de inteligencia artificial que integra análisis de lenguaje natural, modelos predictivos y psicometría computacional para potenciar la precisión diagnóstica y el monitoreo terapéutico en tiempo real.
+                Desarrollado por <strong>NEXARYALABS</strong>, ApoFix AI es nuestra extensión de inteligencia artificial que integra análisis de lenguaje natural, modelos predictivos y psicometría computacional para potenciar la precisión diagnóstica y el monitoreo terapéutico en tiempo real.
               </p>
             </div>
 
@@ -611,7 +611,7 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2"
                       >
-                        Explorar NexariaLabs
+                        Explorar NEXARYALABS
                         <ArrowRight className="w-5 h-5" />
                       </a>
                     </Button>
@@ -621,7 +621,7 @@ export default function Home() {
                   <div className="bg-gradient-to-br from-primary to-primary/80 p-10 text-white flex flex-col justify-center">
                     <div className="mb-8">
                       <Cpu className="w-16 h-16 mb-4 opacity-90" />
-                      <h4 className="text-2xl font-bold mb-2">NexariaLabs</h4>
+                      <h4 className="text-2xl font-bold mb-2">NEXARYALABS</h4>
                       <p className="text-primary-foreground/90 leading-relaxed">
                         Laboratorio de Psiquiatría Computacional y Data Science aplicado a salud mental. Desarrollo de herramientas IA para clínica de alta complejidad.
                       </p>
@@ -653,7 +653,7 @@ export default function Home() {
             {/* Bottom Badge */}
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500">
-                <strong className="text-primary">ApoFix AI</strong> es una marca registrada de NexariaLabs · Desarrollo científico exclusivo para Instituto DBT Chile
+                <strong className="text-primary">ApoFix AI</strong> es una marca registrada de NEXARYALABS · Desarrollo científico exclusivo para Instituto DBT Chile
               </p>
             </div>
           </div>

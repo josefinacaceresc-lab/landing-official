@@ -271,7 +271,7 @@ export default function PatologiaDualPage() {
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
                 <Cpu className="w-10 h-10 text-white" />
               </div>
-              <span className="inline-block mb-4 text-sm font-semibold text-emerald-300 uppercase tracking-wider">NexariaLabs · IA Clínica</span>
+              <span className="inline-block mb-4 text-sm font-semibold text-emerald-300 uppercase tracking-wider">NEXARYALABS · IA Clínica</span>
               <h2 className="text-4xl font-light mb-4">
                 Monitoreo <span className="font-serif font-semibold text-emerald-400">ApoFix AI</span>
               </h2>

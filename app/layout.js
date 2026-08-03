@@ -174,9 +174,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             },
             geo: {
               '@type': 'GeoCoordinates',
-              latitude: -33.3870,
-              longitude: -70.5811,
+              latitude: -33.4026217,
+              longitude: -70.5957372,
             },
+            hasMap: 'https://maps.google.com/?cid=9135739218813008979',
+            sameAs: [
+              'https://maps.google.com/?cid=9135739218813008979',
+              'https://www.google.com/maps/place/institutodbtchile/@-33.4026217,-70.5957372,17z/data=!3m1!4b1!4m6!3m5!1s0x9662cf4487f521f7:0x7ec8aa6a91f43c53',
+              'https://dbtchile.cl',
+            ],
             areaServed: {
               '@type': 'Country',
               name: 'Chile',
@@ -261,7 +267,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             alternateName: ['DBT Chile', 'DBTCHILE'],
             foundingDate: '2021',
             url: 'https://institutodbtchile.cl',
-            sameAs: ['https://dbtchile.cl'],
+            sameAs: [
+              'https://dbtchile.cl',
+              'https://maps.google.com/?cid=9135739218813008979',
+              'https://www.google.com/maps/place/institutodbtchile/@-33.4026217,-70.5957372,17z/data=!3m1!4b1!4m6!3m5!1s0x9662cf4487f521f7:0x7ec8aa6a91f43c53',
+            ],
             logo: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/508ec6e06fbe47fd935a5e124ba0eae3_logodbt_vertical%2050-50.jpg',
             contactPoint: [
               {

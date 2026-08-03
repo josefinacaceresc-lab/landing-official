@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Brain, Sparkles, Database, ArrowRight, FileText } from 'lucide-react'
+import AcademicAuthor from '@/components/AcademicAuthor'
 
 export const metadata = {
   title: 'Investigación Científica',
@@ -37,6 +38,11 @@ export default function InvestigacionPage() {
               Desarrollamos ciencia aplicada de vanguardia en neurociencia, 
               inteligencia artificial y salud mental para transformar el tratamiento clínico.
             </p>
+
+            {/* Autor\u00eda cient\u00edfica \u2014 directora cient\u00edfica del Instituto */}
+            <div className="mt-10 max-w-md mx-auto">
+              <AcademicAuthor variant="card" />
+            </div>
           </div>
         </div>
       </section>

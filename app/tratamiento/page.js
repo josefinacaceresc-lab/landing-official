@@ -37,7 +37,7 @@ const pilares = [
   {
     icon: Shield,
     title: 'Equipo Acreditado',
-    text: 'Dirección clínica con formación doctoral (Ph.D.(c)) y certificación WDBTA. Único equipo en Chile con esta combinación de credenciales internacionales sobre DBT y Schema Therapy.',
+    text: 'Dirección clínica con formación doctoral (Ph.D.(c)) y participación internacional en investigación WDBTA. Programa clínico chileno que integra DBT y Terapia de Esquemas bajo membresías internacionales.',
   },
 ]
 

@@ -6,7 +6,9 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowLeft, FileText, Printer, Download, Calendar, BookOpen, Tag, X, Info } from 'lucide-react'
-import { papers, getPaperById } from '@/lib/papers'
+import { papers, getPaperById, getPaperDoi } from '@/lib/papers'
+import { josefinaCaceres } from '@/lib/authors'
+import AcademicAuthor from '@/components/AcademicAuthor'
 
 // Note: this is a client component (needs print trigger via query param).
 // Metadata is set via the parent <head> tags through layout / not needed here for PDF flow.
@@ -62,17 +64,41 @@ export default function PaperDetailPage({ params }) {
           keywords: paper.keywords || [],
           author: {
             '@type': 'Person',
-            '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
-            name: 'Josefina Cáceres Cortés',
-            honorificSuffix: 'Ph.D.(c)',
-            jobTitle: 'Directora científica',
-            affiliation: {
-              '@type': 'Organization',
-              '@id': 'https://institutodbtchile.cl/#clinic',
-              name: 'Instituto DBT Chile',
-              url: 'https://institutodbtchile.cl',
+            '@id': josefinaCaceres.personId,
+            name: josefinaCaceres.name,
+            honorificSuffix: josefinaCaceres.honorificSuffix,
+            jobTitle: josefinaCaceres.role,
+            sameAs: [josefinaCaceres.orcidUrl],
+            identifier: {
+              '@type': 'PropertyValue',
+              propertyID: 'ORCID',
+              value: josefinaCaceres.orcid,
+              url: josefinaCaceres.orcidUrl,
             },
+            affiliation: [
+              {
+                '@type': 'Organization',
+                '@id': 'https://institutodbtchile.cl/#clinic',
+                name: 'Instituto DBT Chile',
+                url: 'https://institutodbtchile.cl',
+              },
+              {
+                '@type': 'Organization',
+                name: 'NEXARYALABS \u2014 Laboratorio de Ciencias Cognitivas',
+              },
+            ],
           },
+          ...(getPaperDoi(paper.id)
+            ? {
+                identifier: {
+                  '@type': 'PropertyValue',
+                  propertyID: 'DOI',
+                  value: getPaperDoi(paper.id),
+                  url: `https://doi.org/${getPaperDoi(paper.id)}`,
+                },
+                sameAs: [`https://doi.org/${getPaperDoi(paper.id)}`],
+              }
+            : {}),
           publisher: {
             '@type': 'Organization',
             '@id': 'https://institutodbtchile.cl/#org',
@@ -191,6 +217,11 @@ export default function PaperDetailPage({ params }) {
             <span className="flex items-center gap-1"><FileText className="w-4 h-4 text-primary" /> {paper.words.toLocaleString()} palabras</span>
             <span className="text-gray-300">·</span>
             <span className="flex items-center gap-1"><BookOpen className="w-4 h-4 text-primary" /> {paper.references} referencias</span>
+          </div>
+
+          {/* Autor\u00eda acad\u00e9mica \u2014 ORCID + (DOI si el paper lo posee) */}
+          <div className="mt-6 max-w-lg">
+            <AcademicAuthor variant="card" doi={getPaperDoi(paper.id)} />
           </div>
         </div>
 

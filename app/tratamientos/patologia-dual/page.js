@@ -7,7 +7,7 @@ import AgendarConsultaButton from '@/components/AgendarConsultaButton'
 
 export const metadata = {
   title: 'Patología Dual (TLP + TUS): Desregulación con adicciones | DBT-SUD programa anual',
-  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD adaptado a nuestro programa anual + monitoreo ApoFix AI. Único en Chile con certificación WDBTA.',
+  description: 'Centro de Alta Complejidad especializado en Patología Dual (TLP + TUS) — Desregulación con adicciones. Protocolo DBT-SUD adaptado al programa anual del Instituto, complementado con el programa ApoFix (en desarrollo y evaluación).',
   keywords: [
     'Patología Dual Chile',
     'DBT-SUD programa anual',
@@ -153,7 +153,7 @@ export default function PatologiaDualPage() {
             </p>
             
             <p className="text-lg text-gray-600 leading-relaxed mb-12 text-center max-w-3xl mx-auto">
-              Único programa en Chile con <strong>certificación WDBTA</strong>, integración de <strong>monitoreo ApoFix AI</strong> y los cuatro componentes del modelo sostenidos durante doce meses.
+              Programa clínico chileno que integra <strong>DBT-SUD</strong> con el <strong>programa ApoFix</strong> (en desarrollo y evaluación) y los cuatro componentes del modelo sostenidos durante doce meses.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">

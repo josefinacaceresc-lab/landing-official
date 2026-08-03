@@ -337,6 +337,65 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }, null, 0)
         }} />
 
+        {/* JSON-LD — Person (Josefina C\u00e1ceres Cort\u00e9s, directora)
+             Identificador global con ORCID visible para todos los buscadores + AI crawlers.
+             Este @id se referencia desde ScholarlyArticle en cada paper y art\u00edculo. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            '@id': 'https://institutodbtchile.cl/#josefina-caceres-cortes',
+            name: 'Josefina C\u00e1ceres Cort\u00e9s',
+            givenName: 'Josefina',
+            familyName: 'C\u00e1ceres Cort\u00e9s',
+            honorificSuffix: 'Ph.D.(c)',
+            jobTitle: 'Directora cl\u00ednica y cient\u00edfica',
+            url: 'https://institutodbtchile.cl/equipo',
+            sameAs: ['https://orcid.org/0009-0001-9148-4244'],
+            identifier: {
+              '@type': 'PropertyValue',
+              propertyID: 'ORCID',
+              value: '0009-0001-9148-4244',
+              url: 'https://orcid.org/0009-0001-9148-4244',
+            },
+            worksFor: { '@id': 'https://institutodbtchile.cl/#clinic' },
+            affiliation: [
+              { '@type': 'Organization', name: 'Instituto DBT Chile', url: 'https://institutodbtchile.cl' },
+              { '@type': 'Organization', name: 'NEXARYALABS \u2014 Laboratorio de Ciencias Cognitivas' },
+            ],
+            memberOf: [
+              {
+                '@type': 'Organization',
+                name: 'American Psychological Association \u2014 Division 49',
+                alternateName: 'Society of Group Psychology and Group Psychotherapy',
+              },
+              {
+                '@type': 'Organization',
+                name: 'International Society of Schema Therapy',
+                alternateName: 'ISST',
+              },
+            ],
+            hasCredential: [
+              {
+                '@type': 'EducationalOccupationalCredential',
+                credentialCategory: 'Certificaci\u00f3n profesional',
+                name: 'Certificaci\u00f3n como especialista en Terapia Dial\u00e9ctico-Conductual',
+                recognizedBy: { '@type': 'Organization', name: 'Asociaci\u00f3n Espa\u00f1ola de DBT' },
+              },
+              {
+                '@type': 'EducationalOccupationalCredential',
+                credentialCategory: 'Grado acad\u00e9mico',
+                name: 'Mag\u00edster en Psicolog\u00eda Cl\u00ednica',
+              },
+              {
+                '@type': 'EducationalOccupationalCredential',
+                credentialCategory: 'Formaci\u00f3n doctoral en curso',
+                name: 'Candidata a doctorado en Psicolog\u00eda Cl\u00ednica y de la Salud',
+              },
+            ],
+          }, null, 0)
+        }} />
+
       </head>
       <body className={`${poppins.className} prevent-horizontal-scroll font-smooth`}>
         {/* ─── Google Tag Manager (noscript fallback for users with JS disabled) ─── */}

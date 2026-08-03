@@ -120,18 +120,18 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="mb-12 text-center">
-              <div className="inline-block mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Estándar clínico internacional</div>
+              <div className="inline-block mb-4 text-sm font-semibold text-emerald-700 uppercase tracking-wider">Certificación, membresías y participación internacional</div>
               <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
                 Lo que hay <em className="font-serif italic text-emerald-700">detrás</em> de un tratamiento serio.
               </h2>
               <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8 leading-[1.9]">
-                Nuestro rigor no es una declaración de intenciones, sino un respaldo verificable. Somos la única institución chilena que reúne cuatro acreditaciones internacionales que normalmente se encuentran por separado: <strong>Asociación Española de DBT</strong> (certificación de psicólogos especialistas en DBT), <strong>WDBTA</strong> (World Dialectical Behavior Therapy Association), <strong>APA</strong> (American Psychological Association) e <strong>ISST</strong> (International Society of Schema Therapy). Son los marcos que garantizan que cada intervención tiene método, evidencia y estándar internacional.
+                Nuestro rigor no es una declaración de intenciones, sino un respaldo verificable. Somos la única institución chilena que reúne cuatro reconocimientos internacionales diferenciados: <strong>Asociación Española de DBT</strong> (certificación de psicólogos especialistas en DBT), <strong>WDBTA</strong> (participación internacional en investigación · Barcelona 2023 · Amberes 2024), <strong>APA</strong> (membresía institucional · División 49) e <strong>ISST</strong> (membresía institucional en Terapia de Esquemas). Cada uno tiene un alcance clínico y académico específico.
               </p>
               
               <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm text-gray-700">
-                <div><strong className="text-emerald-700">Cobertura:</strong> Única institución chilena con las cuatro</div>
-                <div><strong className="text-emerald-700">Acreditaciones:</strong> AEDBT · WDBTA · APA · ISST</div>
-                <div><strong className="text-emerald-700">Dirección clínica:</strong> Ph.D.(c) con formación internacional</div>
+                <div><strong className="text-emerald-700">Certificación:</strong> AEDBT (especialista en DBT)</div>
+                <div><strong className="text-emerald-700">Membresías:</strong> APA · ISST</div>
+                <div><strong className="text-emerald-700">Participación:</strong> WDBTA (Barcelona 2023 · Amberes 2024)</div>
               </div>
             </div>
 
@@ -181,7 +181,7 @@ export default function Home() {
                     <h3 className="text-2xl font-serif font-semibold text-gray-900">WDBTA</h3>
                   </div>
                   <p className="text-sm text-gray-600 mb-4 leading-relaxed">World Dialectical Behavior Therapy Association</p>
-                  <p className="text-emerald-700 font-semibold tracking-wide">Miembro institucional</p>
+                  <p className="text-emerald-700 font-semibold tracking-wide">Participación internacional · Barcelona 2023 · Amberes 2024</p>
                 </CardContent>
               </Card>
 
@@ -205,7 +205,7 @@ export default function Home() {
                     <h3 className="text-2xl font-serif font-semibold text-gray-900">APA</h3>
                   </div>
                   <p className="text-sm text-gray-600 mb-4 leading-relaxed">American Psychological Association</p>
-                  <p className="text-blue-700 font-semibold uppercase tracking-wider text-sm">Categoría Miembro</p>
+                  <p className="text-blue-700 font-semibold uppercase tracking-wider text-sm">Membresía · División 49</p>
                 </CardContent>
               </Card>
 
@@ -229,7 +229,7 @@ export default function Home() {
                     <h3 className="text-2xl font-serif font-semibold text-gray-900">ISST</h3>
                   </div>
                   <p className="text-sm text-gray-600 mb-4 leading-relaxed">International Society of Schema Therapy</p>
-                  <p className="text-amber-700 font-semibold tracking-wide">Certificación</p>
+                  <p className="text-amber-700 font-semibold tracking-wide">Membresía institucional</p>
                 </CardContent>
               </Card>
             </div>
@@ -345,9 +345,9 @@ export default function Home() {
                   <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
                     <Landmark className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Miembro WDBTA</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Participación WDBTA</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Único miembro institucional de la World DBT Association en Chile. Estándares internacionales en cada tratamiento.
+                    Participación internacional en investigación WDBTA — Barcelona 2023 y Amberes 2024. Vinculación viva con el capítulo de investigación del modelo.
                   </p>
                 </CardContent>
               </Card>

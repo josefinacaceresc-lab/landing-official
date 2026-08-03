@@ -355,7 +355,7 @@ export default function TrastornosPersonalidadPage() {
               <em className="font-serif italic text-primary">DBT</em> + <em className="font-serif italic text-primary">Terapia de Esquemas</em>
             </h2>
             <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
-              Por primera vez en Chile, un único programa terapéutico integra formalmente el protocolo <strong>DBT estándar</strong> (certificación WDBTA) con la <strong>Terapia de Esquemas</strong> de Jeffrey Young (certificación ISST).
+              Por primera vez en Chile, un único programa terapéutico integra formalmente el protocolo <strong>DBT estándar</strong> (con participación internacional en investigación WDBTA) con la <strong>Terapia de Esquemas</strong> de Jeffrey Young (membresía ISST).
             </p>
             <blockquote className="text-xl md:text-2xl font-serif italic font-light text-gray-800 leading-snug mt-10">
               <span className="text-emerald-700">“</span>

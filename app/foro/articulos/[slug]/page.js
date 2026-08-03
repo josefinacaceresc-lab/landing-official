@@ -4,7 +4,9 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Button } from '@/components/ui/button'
 import { FileText, Download, ArrowLeft, Clock, BookOpen, Calendar, ArrowRight } from 'lucide-react'
-import { articulos, getArticuloBySlug, getAllArticleSlugs } from '@/lib/articulos'
+import { articulos, getArticuloBySlug, getAllArticleSlugs, getArticleAuthorIds, getArticleDoi } from '@/lib/articulos'
+import { getAuthorById, josefinaCaceres } from '@/lib/authors'
+import AcademicAuthor from '@/components/AcademicAuthor'
 
 // ─── Static generation: precompile all article pages at build time ───────
 export async function generateStaticParams() {
@@ -51,22 +53,64 @@ export default function ArticuloPage({ params }) {
   const accent = isPadres ? 'amber' : 'primary'
   const url = `https://institutodbtchile.cl/foro/articulos/${art.slug}`
 
+  // Autor\u00eda estructurada \u2014 solo asocia ORCID cuando el autor est\u00e1 en el mapeo
+  const authorIds = getArticleAuthorIds(art.slug)
+  const primaryAuthor = authorIds.length > 0 ? getAuthorById(authorIds[0]) : null
+  const articleDoi = getArticleDoi(art.slug)
+
   // Schema.org Article JSON-LD (rich snippet support)
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'MedicalScholarlyArticle',
     headline: art.titulo,
     description: art.resumen,
-    author: {
-      '@type': 'Person',
-      name: art.autor,
-      jobTitle: art.autor_rol,
-      affiliation: {
-        '@type': 'MedicalOrganization',
-        name: 'Instituto DBT Chile',
-        url: 'https://institutodbtchile.cl',
-      },
-    },
+    author: primaryAuthor
+      ? {
+          '@type': 'Person',
+          '@id': primaryAuthor.personId,
+          name: primaryAuthor.name,
+          honorificSuffix: primaryAuthor.honorificSuffix,
+          jobTitle: primaryAuthor.role,
+          sameAs: [primaryAuthor.orcidUrl],
+          identifier: {
+            '@type': 'PropertyValue',
+            propertyID: 'ORCID',
+            value: primaryAuthor.orcid,
+            url: primaryAuthor.orcidUrl,
+          },
+          affiliation: [
+            {
+              '@type': 'MedicalOrganization',
+              name: 'Instituto DBT Chile',
+              url: 'https://institutodbtchile.cl',
+            },
+            {
+              '@type': 'Organization',
+              name: 'NEXARYALABS \u2014 Laboratorio de Ciencias Cognitivas',
+            },
+          ],
+        }
+      : {
+          '@type': 'Person',
+          name: art.autor,
+          jobTitle: art.autor_rol,
+          affiliation: {
+            '@type': 'MedicalOrganization',
+            name: 'Instituto DBT Chile',
+            url: 'https://institutodbtchile.cl',
+          },
+        },
+    ...(articleDoi
+      ? {
+          identifier: {
+            '@type': 'PropertyValue',
+            propertyID: 'DOI',
+            value: articleDoi,
+            url: `https://doi.org/${articleDoi}`,
+          },
+          sameAs: [`https://doi.org/${articleDoi}`],
+        }
+      : {}),
     publisher: {
       '@type': 'MedicalOrganization',
       name: 'Instituto DBT Chile',
@@ -156,6 +200,13 @@ export default function ArticuloPage({ params }) {
                   </>
                 )}
               </div>
+
+              {/* Autor\u00eda acad\u00e9mica (ORCID + DOI) \u2014 solo cuando el autor est\u00e1 identificado en /lib/authors */}
+              {primaryAuthor && (
+                <div className="mt-5 max-w-md">
+                  <AcademicAuthor author={primaryAuthor} variant="card" doi={articleDoi} />
+                </div>
+              )}
             </div>
           </div>
         </header>

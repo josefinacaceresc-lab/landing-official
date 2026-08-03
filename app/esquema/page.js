@@ -108,7 +108,7 @@ export default function EsquemaPage() {
               DBT entrega <strong>estabilización conductual y emocional</strong> con la mayor evidencia disponible. Schema Therapy aporta <strong>profundidad estructural</strong> para trabajar las raíces evolutivas del sufrimiento. Su integración —documentada en literatura clínica reciente— maximiza la efectividad en casos de alta complejidad: TLP severo, patología dual, trauma complejo y trastornos resistentes.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              En el Instituto DBT Chile esta integración es realizada por clínicos con formación doctoral, certificación WDBTA y entrenamiento ISST.
+              En el Instituto DBT Chile esta integración es realizada por clínicos con formación doctoral (Ph.D.(c)), certificación como especialistas en DBT por la Asociación Española de DBT y membresía en la International Society of Schema Therapy (ISST).
             </p>
           </div>
         </div>

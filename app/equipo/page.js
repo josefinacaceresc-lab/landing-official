@@ -1,15 +1,17 @@
 import { Card, CardContent } from '@/components/ui/card'
 import AgendarConsultaButton from '@/components/AgendarConsultaButton'
+import AcademicAuthor from '@/components/AcademicAuthor'
+import { josefinaCaceres } from '@/lib/authors'
 
 export const metadata = {
   title: 'Equipo Clínico - Instituto DBT Chile',
-  description: 'Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Liderado por la única Ph.D.(c) con afiliación WDBTA activa en Chile.',
+  description: 'Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Dirección clínica y científica de Josefina Cáceres Cortés, Ph.D.(c), candidata a doctorado en Psicología Clínica y de la Salud.',
   alternates: {
     canonical: 'https://institutodbtchile.cl/equipo',
   },
   openGraph: {
     title: 'Equipo Clínico | Instituto DBT Chile',
-    description: 'Equipo de especialistas en DBT con certificación WDBTA e ISST.',
+    description: 'Equipo de especialistas en DBT con certificación AEDBT (Asociación Española de DBT) y membresías internacionales ISST y APA.',
     url: 'https://institutodbtchile.cl/equipo',
     images: [{
       url: 'https://customer-assets.emergentagent.com/wingman/b9932b1d-f12b-47b0-abb0-8ea617673486/attachments/aecd20208fec4060be44c1b61f5f61a0_1697991434321.jpeg',
@@ -23,16 +25,19 @@ const direccion = [
   {
     initials: 'JCC',
     name: 'Josefina Cáceres Cortés, Ph.D.(c)',
-    role: 'Directora Científica & Fundadora',
-    description: 'Psicóloga clínica y directora de Instituto DBT Chile. Única representante en Chile dentro del capítulo de investigación de la WDBTA. Formada y afiliada en terapia de esquemas, ISST. Su enfoque integra los aportes de Linehan, Bohus, Damasio, Porges, Siegel y Yi-Yuan Tang.',
+    role: 'Directora clínica y científica · Fundadora',
+    description: 'Psicóloga clínica, Magíster en Psicología Clínica y candidata a doctorado en Psicología Clínica y de la Salud. Dirige el desarrollo clínico e investigativo del modelo integrado de Instituto DBT Chile —Terapia Dialéctico-Conductual y Terapia de Esquemas— y las líneas de investigación desarrolladas en NEXARYALABS \u2014 Laboratorio de Ciencias Cognitivas. Su enfoque integra los aportes de Linehan, Bohus, Young, Damasio, Porges, Siegel y Yi-Yuan Tang.',
     credentials: [
-      'Ph.D.(c) — Formación doctoral en curso',
-      'WDBTA Research Member — única en Chile',
-      'Miembro Sociedad Española de Estudios de los Trastornos Límite de la Personalidad',
-      'Certificación ISST — Schema Therapy',
-      'Fundadora NexariaLabs · ApoFix AI'
+      'Psicóloga clínica · Magíster en Psicología Clínica',
+      'Candidata a doctorado en Psicología Clínica y de la Salud',
+      'Certificación como especialista en Terapia Dialéctico-Conductual — Asociación Española de DBT',
+      'Miembro de American Psychological Association (APA) — División 49: Society of Group Psychology and Group Psychotherapy',
+      'Miembro de International Society of Schema Therapy (ISST)',
+      'Participación internacional en investigación WDBTA: Barcelona 2023 · Amberes 2024',
+      'Fundadora de NEXARYALABS · Programa ApoFix (en desarrollo y evaluación)',
+      'ORCID: 0009-0001-9148-4244',
     ],
-    tags: ['WDBTA', 'ISST', 'APA', 'SEETLP', 'Ph.D.(c)'],
+    tags: ['AEDBT', 'WDBTA', 'ISST', 'APA', 'Ph.D.(c)'],
   },
   {
     initials: 'TV',
@@ -107,18 +112,28 @@ export default function EquipoPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Physician',
-        '@id': 'https://institutodbtchile.cl/equipo#josefina-caceres',
-        name: 'Josefina Cáceres Cortés',
-        honorificSuffix: 'Ph.D.(c)',
-        jobTitle: 'Directora científica',
+        '@type': 'Person',
+        '@id': josefinaCaceres.personId,
+        name: josefinaCaceres.name,
+        honorificSuffix: josefinaCaceres.honorificSuffix,
+        jobTitle: josefinaCaceres.jobTitle,
         description:
-          'Psicóloga clínica, doctoranda en Psicología. Única representante institucional en Chile dentro del capítulo de investigación de la WDBTA (World Dialectical Behavior Therapy Association). Especialista en Terapia Dialéctico Conductual (DBT), Schema Therapy y Psiquiatría Computacional.',
-        url: 'https://institutodbtchile.cl/equipo',
+          'Psicóloga clínica, Magíster en Psicología Clínica y candidata a doctorado en Psicología Clínica y de la Salud. Directora clínica y científica de Instituto DBT Chile. Certificación como especialista en Terapia Dialéctico-Conductual por la Asociación Española de DBT. Miembro de la American Psychological Association (División 49) y de la International Society of Schema Therapy. Participación internacional en investigación WDBTA: Barcelona 2023 y Amberes 2024.',
+        url: josefinaCaceres.profileUrl,
+        sameAs: [josefinaCaceres.orcidUrl],
+        identifier: {
+          '@type': 'PropertyValue',
+          propertyID: 'ORCID',
+          value: josefinaCaceres.orcid,
+          url: josefinaCaceres.orcidUrl,
+        },
         worksFor: {
           '@id': 'https://institutodbtchile.cl/#clinic',
         },
-        medicalSpecialty: ['Psychology', 'Psychiatry', 'Mental Health'],
+        affiliation: [
+          { '@type': 'Organization', name: 'Instituto DBT Chile', url: 'https://institutodbtchile.cl' },
+          { '@type': 'Organization', name: 'NEXARYALABS \u2014 Laboratorio de Ciencias Cognitivas' },
+        ],
         knowsAbout: [
           'Dialectical Behavior Therapy (DBT)',
           'Borderline Personality Disorder (BPD/TLP)',
@@ -131,35 +146,39 @@ export default function EquipoPage() {
         hasCredential: [
           {
             '@type': 'EducationalOccupationalCredential',
-            credentialCategory: 'doctoral degree',
-            name: 'Ph.D.(c) en Psicología',
+            credentialCategory: 'Certificación profesional',
+            name: 'Certificación como especialista en Terapia Dialéctico-Conductual',
+            recognizedBy: {
+              '@type': 'Organization',
+              name: 'Asociación Española de DBT',
+            },
           },
           {
             '@type': 'EducationalOccupationalCredential',
-            credentialCategory: 'professional certification',
-            name: 'Schema Therapy Certification — ISST',
+            credentialCategory: 'Grado académico',
+            name: 'Magíster en Psicología Clínica',
           },
           {
             '@type': 'EducationalOccupationalCredential',
-            credentialCategory: 'professional certification',
-            name: 'WDBTA Research Member — Única en Chile',
+            credentialCategory: 'Formación doctoral en curso',
+            name: 'Candidata a doctorado en Psicología Clínica y de la Salud',
           },
         ],
         memberOf: [
-          { '@type': 'Organization', name: 'World Dialectical Behavior Therapy Association', alternateName: 'WDBTA', url: 'https://wdbta.com' },
-          { '@type': 'Organization', name: 'American Psychological Association', alternateName: 'APA', url: 'https://www.apa.org' },
-          { '@type': 'Organization', name: 'International Society of Schema Therapy', alternateName: 'ISST', url: 'https://schematherapysociety.org' },
-          { '@type': 'Organization', name: 'Sociedad Española de Estudios de los Trastornos Límite de la Personalidad', alternateName: 'SEETLP' },
-        ],
-        affiliation: [
-          { '@type': 'Organization', name: 'American Psychological Association', url: 'https://www.apa.org' },
-          { '@type': 'Organization', name: 'NexariaLabs · ApoFix AI' },
+          {
+            '@type': 'Organization',
+            name: 'American Psychological Association \u2014 Division 49',
+            alternateName: 'Society of Group Psychology and Group Psychotherapy',
+            url: 'https://www.apa.org',
+          },
+          {
+            '@type': 'Organization',
+            name: 'International Society of Schema Therapy',
+            alternateName: 'ISST',
+            url: 'https://schematherapysociety.org',
+          },
         ],
         nationality: 'CL',
-        availableService: [
-          { '@type': 'MedicalTherapy', name: 'Terapia Dialéctico Conductual (DBT)' },
-          { '@type': 'MedicalTherapy', name: 'Schema Therapy' },
-        ],
       },
       {
         '@type': 'Physician',
@@ -189,8 +208,13 @@ export default function EquipoPage() {
               Las personas que te <em className="font-serif italic text-emerald-700">acompañan</em>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Liderado por la única Ph.D.(c) con afiliación WDBTA activa en Chile.
+              Psiquiatras, psicólogos y profesionales de salud dedicados a terapias basadas en evidencia. Dirección clínica y científica de Josefina Cáceres Cortés, Ph.D.(c), candidata a doctorado en Psicología Clínica y de la Salud.
             </p>
+
+            {/* Bloque de autor\u00eda acad\u00e9mica con ORCID clicable */}
+            <div className="mt-10 max-w-md mx-auto">
+              <AcademicAuthor variant="card" />
+            </div>
           </div>
         </div>
       </section>

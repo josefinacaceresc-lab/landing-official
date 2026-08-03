@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { FileText, Download, Calendar, User } from 'lucide-react'
+import AcademicAuthor from '@/components/AcademicAuthor'
 
 export const metadata = {
   title: 'La Mente Algorítmica - Programa de Investigación Doctoral',
@@ -118,6 +119,11 @@ export default function LaMenteAlgoritmicaPage() {
                 <Calendar className="w-5 h-5 text-amber-600" />
                 <span><strong>2024</strong></span>
               </div>
+            </div>
+
+            {/* Bloque de autor\u00eda acad\u00e9mica \u2014 ORCID clicable */}
+            <div className="mt-10 max-w-md mx-auto">
+              <AcademicAuthor variant="card" />
             </div>
           </div>
         </div>

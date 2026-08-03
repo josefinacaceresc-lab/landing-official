@@ -3,7 +3,6 @@
  * Served at /sitemap.xml automatically.
  */
 
-import { papers } from '@/lib/papers'
 import { articulos } from '@/lib/articulos'
 
 const BASE = 'https://institutodbtchile.cl'
@@ -42,8 +41,8 @@ export default function sitemap() {
     { url: `${BASE}/terminos`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
-  const paperRoutes = (papers || []).map((p) => ({
-    url: `${BASE}/investigacion/paper/${p.id}`,
+  const paperRoutes = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
+    url: `${BASE}/investigacion/paper/${id}`,
     lastModified: now,
     changeFrequency: 'yearly',
     priority: 0.85,

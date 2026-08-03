@@ -27,9 +27,14 @@ export default function sitemap() {
     { url: `${BASE}/investigacion`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/investigacion/la-mente-algoritmica`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/investigacion/wdbta`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/investigacion/preprint-apofenia-relacional-recursiva`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/investigacion/preprint-inferencia-activa`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/esquema`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/historia`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/evaluacion-bsl23`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${BASE}/foro`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
-    { url: `${BASE}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${BASE}/privacidad`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/terminos`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   const paperRoutes = (papers || []).map((p) => ({
